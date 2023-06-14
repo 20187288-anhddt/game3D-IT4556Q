@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c11dbc2205c91489eaeb3549a5e9cd, type: 3}
+  m_Name: DataPrice
+  m_EditorClassIdentifier: 
+  Data:
+    chickenOutfit: 1
+    cowOutfit: 3
+    bearOutfit: 5
+    lionOutfit: 11
+    crocOutfit: 9
+    eleOutfit: 13
+    zebraOutfit: 7
+    chickenBag: 1
+    cowBag: 3
+    bearBag: 5
+    lionBag: 11
+    crocBag: 9
+    eleBag: 13
+    zebraBag: 7
