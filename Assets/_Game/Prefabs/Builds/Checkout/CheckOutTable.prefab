@@ -85,7 +85,10 @@ MonoBehaviour:
   defaultCoin: 0
   gameManager: {fileID: 0}
   levelManager: {fileID: 0}
-  checkoutPos: {fileID: 0}
+  isHaveCus: 0
+  isMoving: 0
+  curCus: {fileID: 0}
+  checkOutPos: {fileID: 7499969369922175484}
 --- !u!1001 &7499969370069112062
 PrefabInstance:
   m_ObjectHideFlags: 0

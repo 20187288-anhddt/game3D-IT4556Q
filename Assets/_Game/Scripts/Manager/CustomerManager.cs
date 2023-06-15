@@ -12,16 +12,16 @@ public class CustomerManager : MonoBehaviour
     private Transform checkOutPos;
     public List<Customer> customerList;
     public List<Customer> customerOnCloset;
-    public List<Customer> customerOnCheckOut;
     public Customer customerPrefab;
     public List<Transform> transformList;
     public int maxCus;
     [SerializeField]
-    private PlaceManager placeManager;
+    private ClosetManager closetManager;
     public List<PlaceToBuy> listAvailablePlace;
     public bool isReadySpawn;
     public float delayTime;
     public float consDelayTime;
+
 
     void Start()
     {
@@ -33,21 +33,44 @@ public class CustomerManager : MonoBehaviour
         if (isReadySpawn && customerList.Count < maxCus)
         {
             isReadySpawn = false;
-            placeManager.CheckPlaceEmpty();
-            if(placeManager.listAvailablePlace.Count > 0)
-            {             
-                int i = Random.Range(0, placeManager.listAvailablePlace.Count);
-                PlaceToBuy curPlace = placeManager.listAvailablePlace[i];
-                if (curPlace != null)
+            closetManager.CheckClosetEmpty();
+            if(closetManager.listAvailableClosets.Count > 0)
+            {
+                int r = Random.Range(0, closetManager.listAvailableClosets.Count);
+                int x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count+1);
+                for(int i = 0; i < x; i++)
                 {
-                    Customer curCus = SpawnCus();
-                    if (curCus != null)
+                    PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i];
+                    if (curPlace != null)
                     {
-                        curPlace.AddCus(curCus);
-                        placeManager.listAvailablePlace.Clear();
+                        Customer curCus = SpawnCus();
+                        if (curCus != null)
+                        {
+                            curPlace.AddCus(curCus);
+                        }
+                    }
+                    if(i == x - 1)
+                    {
+                        closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
+                        closetManager.listAvailableClosets.Clear();
                     }
                 }
             }
+            //placeManager.CheckPlaceEmpty();
+            //if(placeManager.listAvailablePlace.Count > 0)
+            //{             
+            //    int i = Random.Range(0, placeManager.listAvailablePlace.Count);
+            //    PlaceToBuy curPlace = placeManager.listAvailablePlace[i];
+            //    if (curPlace != null)
+            //    {
+            //        Customer curCus = SpawnCus();
+            //        if (curCus != null)
+            //        {
+            //            curPlace.AddCus(curCus);
+            //            placeManager.listAvailablePlace.Clear();
+            //        }
+            //    }
+            //}
         }
         if (!isReadySpawn)
         {
@@ -82,5 +105,9 @@ public class CustomerManager : MonoBehaviour
         else
             curCus = null;
         return curCus as Customer;
+    }
+    public void SpawnManyCus(int n)
+    {
+
     }
 }

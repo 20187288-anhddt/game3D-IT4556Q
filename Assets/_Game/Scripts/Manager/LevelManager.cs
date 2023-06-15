@@ -5,8 +5,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public CustomerManager customerManager;
-    public PlaceManager placeManager;
     public CheckOutManager checkOutManager;
+    public ClosetManager closetManager;
     
     public void StartInGame()
     {

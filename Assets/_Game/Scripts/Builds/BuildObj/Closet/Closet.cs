@@ -9,10 +9,8 @@ public class Closet : BuildObj
     public List<OutfitPos> listOutfitPos;
     public IngredientType outfitType;
     public int maxObj;
-    //[SerializeField]
-    //private Transform[] outfitPos;
-    [SerializeField]
-    private List<PlaceToBuy> listPlaceToBuy;
+    public List<PlaceToBuy> listPlaceToBuy;
+    public List<PlaceToBuy> listEmtyPlaceToBuy;
     [SerializeField]
     private OutfitBase outFitPrefab;
 
@@ -74,5 +72,18 @@ public class Closet : BuildObj
             }
         }
         return o;
+    }
+    public void GetEmtyPlaceNum()
+    {
+        for(int i = 0; i < listPlaceToBuy.Count; i++)
+        {
+            if (!listPlaceToBuy[i].isHaveCus)
+            {           
+                if (!listEmtyPlaceToBuy.Contains(listPlaceToBuy[i]))
+                {
+                    listEmtyPlaceToBuy.Add(listPlaceToBuy[i]);
+                }
+            }      
+        }
     }
 }

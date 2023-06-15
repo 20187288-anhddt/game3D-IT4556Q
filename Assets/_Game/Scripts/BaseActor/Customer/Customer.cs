@@ -12,7 +12,7 @@ public class Customer : BaseCustomer
     public Vector3 transExit;
     public Vector3 transCheckOut;
     public PlaceToBuy placeToBuy;
-    public CheckOutPosition checkOutPos;
+    public Checkout checkOut;
     public bool onPlacePos;
     public bool onCheckoutPos;
     public IngredientType cusType;
@@ -27,7 +27,7 @@ public class Customer : BaseCustomer
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
         fsm.add(new FsmState(MOVE_CHECKOUT_STATE, StartMoveToCheckOut, OnMoveToCheckOutState));
-        fsm.add(new FsmState(EXIT_STATE, null, OnExitState));
+        fsm.add(new FsmState(EXIT_STATE, StartExit, null));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
         onPlacePos = false;
         onCheckoutPos = false;
@@ -45,6 +45,10 @@ public class Customer : BaseCustomer
     private void StartMoveToCheckOut(FsmSystem _fsm)
     {
         MoveToCheckOut();
+    }
+    private void StartExit(FsmSystem _fsm)
+    {
+        MoveToExit();
     }
     private FsmSystem.ACTION OnIdleState(FsmSystem _fsm)
     {
@@ -77,6 +81,7 @@ public class Customer : BaseCustomer
     public virtual void MoveToCloset()
     { 
         navMeshAgent.SetDestination(transCloset);
+        //navMeshAgent.transform.LookAt(transCloset);
         navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckMoveToCloset()
@@ -84,6 +89,7 @@ public class Customer : BaseCustomer
         if (Vector3.Distance(transCloset,this.transform.position) < 0.1f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
+            //navMeshAgent.transform.LookAt(transCloset);
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
@@ -93,11 +99,17 @@ public class Customer : BaseCustomer
         navMeshAgent.SetDestination(transCheckOut);
         navMeshAgent.stoppingDistance = 0;
     }
+    public virtual void MoveToExit()
+    {
+        navMeshAgent.SetDestination(transExit);
+        navMeshAgent.stoppingDistance = 0;
+    }
     public virtual void CheckMoveToCheckOut()
     {
         if (Vector3.Distance(transCheckOut, this.transform.position) < 0.1f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
+            //navMeshAgent.transform.LookAt(transCheckOut);
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
