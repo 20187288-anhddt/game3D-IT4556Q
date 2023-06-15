@@ -13,8 +13,8 @@ public class Customer : BaseCustomer
     public Vector3 transCheckOut;
     public PlaceToBuy placeToBuy;
     public CheckOutPosition checkOutPos;
-    public bool checkPlaceToBuyPos;
-    public bool checkCheckOutPos;
+    public bool onPlacePos;
+    public bool onCheckoutPos;
     public IngredientType cusType;
     [SerializeField]
     private GameObject mainModel;
@@ -29,7 +29,8 @@ public class Customer : BaseCustomer
         fsm.add(new FsmState(MOVE_CHECKOUT_STATE, StartMoveToCheckOut, OnMoveToCheckOutState));
         fsm.add(new FsmState(EXIT_STATE, null, OnExitState));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
-        checkPlaceToBuyPos = false;
+        onPlacePos = false;
+        onCheckoutPos = false;
         cusType = IngredientType.NONE;
     }
     protected void Update()
@@ -83,7 +84,7 @@ public class Customer : BaseCustomer
         if (Vector3.Distance(transCloset,this.transform.position) < 0.1f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
-            this.checkPlaceToBuyPos = true;
+            this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
     }
@@ -97,19 +98,9 @@ public class Customer : BaseCustomer
         if (Vector3.Distance(transCheckOut, this.transform.position) < 0.1f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
-            this.checkCheckOutPos = true;
+            this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
-    }
-    public virtual void MoveToPos(Vector3 pos)
-    {
-        if (navMeshAgent.velocity.magnitude < 0.1f)
-        {
-            this.transform.DORotate(Vector3.zero, 0f);
-            UpdateState(IDLE_STATE);
-        }
-        navMeshAgent.SetDestination(pos);
-        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void Exit()
     {
@@ -121,6 +112,8 @@ public class Customer : BaseCustomer
     }
     public void ResetStatus()
     {
+        onPlacePos = false;
+        onCheckoutPos = false;
         placeToBuy = null;
         mainModel.SetActive(true);
         for(int i = 0; i < outfitModel.Length; i++)
@@ -135,12 +128,6 @@ public class Customer : BaseCustomer
         {
             //animator.Play("Running");
         }
-    }
-    public void MoveToNewShort(Vector3 pos)
-    {
-        navMeshAgent.SetDestination(pos);
-        this.transform.LookAt(pos);
-        navMeshAgent.stoppingDistance = 0;
     }
     public void ChangeOutfit(IngredientType type)
     {
@@ -160,6 +147,6 @@ public class Customer : BaseCustomer
                 outfitModel[3].SetActive(true);
                 break;
         }
-        UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
+        
     }
 }

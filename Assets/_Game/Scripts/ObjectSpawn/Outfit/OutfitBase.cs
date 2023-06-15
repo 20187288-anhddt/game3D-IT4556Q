@@ -5,7 +5,6 @@ using UnityEngine;
 public class OutfitBase : IngredientBase
 {
     public PlaceToBuy placeToBuy;
-    public OutfitPos outfitPos;
     public bool isHaveCus;
     public Customer curCus;
 
@@ -18,10 +17,6 @@ public class OutfitBase : IngredientBase
         isHaveCus = true;
         this.placeToBuy = p;
         this.curCus = p.curCus;
-    }
-    public void AddPos(OutfitPos o)
-    {
-        this.outfitPos = o;
     }
     public void ResetOutfit()
     {
