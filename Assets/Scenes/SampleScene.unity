@@ -265,3 +265,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+      propertyPath: placeManager
+      value: 
+      objectReference: {fileID: 502836148}
+    - target: {fileID: 8697623621469416365, guid: 3ded1203f42cbc64d97ec7e2af3fc429, type: 3}
+      propertyPath: consDelayTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697623621469416365, guid: 3ded1203f42cbc64d97ec7e2af3fc429, type: 3}

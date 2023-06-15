@@ -5,21 +5,25 @@ using UnityEngine;
 public class PlaceManager : MonoBehaviour
 {
     public List<PlaceToBuy> listPlaceToBuy;
-    public List<PlaceToBuy> listAvailablePlace;
+    public PlaceToBuy curPlaceToBuy;
+    
 
-    public void CheckPlaceOutfitEmpty()
+    public PlaceToBuy CheckPlaceEmpty()
     {
         if (listPlaceToBuy.Count == 0)
-            return;
+            curPlaceToBuy = null;
         for (int i = 0; i < listPlaceToBuy.Count; i++)
         {
             if (!listPlaceToBuy[i].isHaveCus)
             {
-                if (!listAvailablePlace.Contains(listPlaceToBuy[i]))
-                {
-                    listAvailablePlace.Add(listPlaceToBuy[i]);
-                }
+                curPlaceToBuy = listPlaceToBuy[i];
+                break;
             }
         }
+        return curPlaceToBuy;
+    }
+    public void ResetPlace()
+    {
+        curPlaceToBuy = null;
     }
 }
