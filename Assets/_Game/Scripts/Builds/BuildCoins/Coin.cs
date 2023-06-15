@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using MoreMountains.NiceVibrations;
-using Utilities.Components;
 
 public class Coin : AllPool
 {
@@ -26,12 +24,11 @@ public class Coin : AllPool
         float distance = Vector3.Distance(player.transform.position + Vector3.up * 0.5f, this.transform.position);
         float time = (float)distance / moveSpeed;
         transform.rotation = Quaternion.identity;
-        transform.DOJump(player.myTransform.position+ Vector3.up*1.5f, 5f, 1, 0.15f).OnComplete(() => {
-            MMVibrationManager.Haptic(HapticTypes.LightImpact);
+        transform.DOJump(player.transform.position, 2.5f, 1, 0.4f).OnComplete(() => {
             AllPoolContainer.Instance.Release(this);
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[15], 1, false);
+            //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
             //Vibration.Vibrate(25);
-        }).SetEase(Ease.OutCirc);
+        }).SetEase(Ease.Linear);
     }
     //public void MoveToThief(Thief thief)
     //{
@@ -49,14 +46,13 @@ public class Coin : AllPool
     //{
 
     //}
-    public void MoveToBuildLock(Vector3 trans, float time)
-    {
-        this.transform.DOJump(trans,1f,1, time).OnComplete(() =>
-        {
-            AllPoolContainer.Instance.Release(this);
-            //Vibration.Vibrate(20);
-        }).SetEase(Ease.OutCirc);
-    }
+    //public void MoveToBuildLock(Vector3 trans, float time)
+    //{
+    //    this.transform.DOMove(trans, time).OnComplete(() => {
+    //        AllPoolContainer.Instance.Release(this);
+    //        Vibration.Vibrate(20);
+    //    }).SetEase(Ease.Linear);
+    //}
     //public void MoveToPlayer(Player player, float time)
     //{
     //    transform.DOMove(player.transform.position + Vector3.up, time).OnComplete(() => {

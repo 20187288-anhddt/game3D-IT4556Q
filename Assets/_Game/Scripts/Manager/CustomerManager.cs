@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CustomerManager : MonoBehaviour
 {
@@ -124,6 +125,7 @@ public class CustomerManager : MonoBehaviour
     public Customer SpawnCus(Vector3 spawnPos)
     {
         AllPool curCus = AllPoolContainer.Instance.Spawn(customerPrefab, spawnPos, Quaternion.identity);
+        curCus.transform.DORotate(new Vector3(0f, 180f, 0f), 0f);
         if (!customerList.Contains(curCus as Customer))
         {
             customerList.Add(curCus as Customer);
@@ -137,7 +139,7 @@ public class CustomerManager : MonoBehaviour
     }
     public GroupCustomer SpawnOneGroup(int n, Transform closetPos)
     {
-        AllPool curGroup = AllPoolContainer.Instance.Spawn(grCusPrefab, startPos.position, Quaternion.identity); ;
+        AllPool curGroup = AllPoolContainer.Instance.Spawn(grCusPrefab, startPos.position, Quaternion.identity);
         (curGroup as GroupCustomer).grNum = n;
         Customer c = SpawnCus(startPos.position);
         if (!(curGroup as GroupCustomer).listCus.Contains(c))
@@ -149,7 +151,7 @@ public class CustomerManager : MonoBehaviour
             c.transCloset = closetPos.position;
             for (int i = 1; i < n; i++)
             {
-                Customer x = SpawnCus(startPos.position - new Vector3(i * 2.5f, 0f, 0f));
+                Customer x = SpawnCus(startPos.position + new Vector3(0f, 0f, i * 2.5f));
                 (curGroup as GroupCustomer).AddTeammate(x);
             }
             if (!listGroups.Contains((curGroup as GroupCustomer)) && (curGroup as GroupCustomer).listCus.Count > 0)

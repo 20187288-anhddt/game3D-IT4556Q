@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class PlaceToBuyBag : PlaceBase
 {
-    public bool readyCheckout;
     public BagBase curBag;
 
 
@@ -13,7 +12,7 @@ public class PlaceToBuyBag : PlaceBase
     {
         isHaveCus = false;
         cusMoving = false;
-        readyCheckout = false;
+        readyGo = false;
         haveOutFit = false;
     }
     void Update()
@@ -70,7 +69,7 @@ public class PlaceToBuyBag : PlaceBase
                     }
                 }
             }
-            if (readyCheckout)
+            if (readyGo)
             {
                 if (curCus.isLeader)
                 {
@@ -79,12 +78,22 @@ public class PlaceToBuyBag : PlaceBase
                         Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
                         if (c != null)
                         {
-                            readyCheckout = false;             
+                            readyGo = false;             
                             c.AddCus(curCus);
                             closet.levelManager.checkOutManager.listGrCusCheckout.Add(curCus.grCus);
+                            for (int i = 0; i < curCus.grCus.listCus.Count; i++)
+                            {
+                                curCus.grCus.listCus[i].onBagPos = false;
+                                closet.listCurCus.Remove(curCus.grCus.listCus[i]);
+                            }
                             isHaveCus = false;
                         }
                     }
+                }
+                if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))
+                {
+                    readyGo = false;
+                    isHaveCus = false;
                 }
             }
         }
@@ -102,6 +111,6 @@ public class PlaceToBuyBag : PlaceBase
         AllPoolContainer.Instance.Release(curBag);
         curCus.ChangeBag(this.type);
         haveOutFit = false;
-        readyCheckout = true;
+        readyGo = true;
     }
 }
