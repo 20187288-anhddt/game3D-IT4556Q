@@ -18,51 +18,46 @@ public class CustomerManager : MonoBehaviour
     public int maxCus;
     [SerializeField]
     private PlaceManager placeManager;
+    public List<PlaceToBuy> listAvailablePlace;
     public bool isReadySpawn;
-    public bool isDelaySpawn;
     public float delayTime;
     public float consDelayTime;
 
     void Start()
     {
         isReadySpawn = true;
-        isDelaySpawn = false;
         delayTime = consDelayTime;
     }
     void Update()
     {
-        if(customerList.Count > maxCus)
+        if (isReadySpawn && customerList.Count < maxCus)
         {
             isReadySpawn = false;
-        }
-        else
-        {
-            if (isReadySpawn)
-            {
-                PlaceToBuy curPlace = placeManager.CheckPlaceEmpty();
+            placeManager.CheckPlaceEmpty();
+            if(placeManager.listAvailablePlace.Count > 0)
+            {             
+                int i = Random.Range(0, placeManager.listAvailablePlace.Count);
+                PlaceToBuy curPlace = placeManager.listAvailablePlace[i];
                 if (curPlace != null)
                 {
-                    isReadySpawn = false;
-                    isDelaySpawn = true;
                     Customer curCus = SpawnCus();
                     if (curCus != null)
                     {
                         curPlace.AddCus(curCus);
-                        placeManager.ResetPlace();
+                        placeManager.listAvailablePlace.Clear();
                     }
                 }
             }
-            if (isDelaySpawn)
-            {
-                delayTime -= Time.deltaTime;
-            }
-            if (delayTime < 0)
-            {
-                isReadySpawn = true;
-                delayTime = consDelayTime;
-            }
         }
-        
+        if (!isReadySpawn)
+        {
+            delayTime -= Time.deltaTime;
+        }
+        if (delayTime < 0)
+        {
+            isReadySpawn = true;
+            delayTime = consDelayTime;
+        }     
     }
      
     public void ResetCusOnOpen()
@@ -82,6 +77,7 @@ public class CustomerManager : MonoBehaviour
             customerList.Add(curCus as Customer);
             (curCus as Customer).ResetStatus();
             (curCus as Customer).transExit = exitPos.position;
+            (curCus as Customer).transCheckOut = checkOutPos.position;
         }
         else
             curCus = null;

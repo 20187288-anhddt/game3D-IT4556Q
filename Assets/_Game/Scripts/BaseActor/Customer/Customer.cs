@@ -15,6 +15,11 @@ public class Customer : BaseCustomer
     public CheckOutPosition checkOutPos;
     public bool checkPlaceToBuyPos;
     public bool checkCheckOutPos;
+    public IngredientType cusType;
+    [SerializeField]
+    private GameObject mainModel;
+    [SerializeField]
+    private GameObject[] outfitModel;
 
     protected void Start()
     {
@@ -25,6 +30,7 @@ public class Customer : BaseCustomer
         fsm.add(new FsmState(EXIT_STATE, null, OnExitState));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
         checkPlaceToBuyPos = false;
+        cusType = IngredientType.NONE;
     }
     protected void Update()
     {
@@ -83,8 +89,8 @@ public class Customer : BaseCustomer
     }
     public virtual void MoveToCheckOut()
     {
-        //navMeshAgent.SetDestination(transCheckOut);
-        //navMeshAgent.stoppingDistance = 0;
+        navMeshAgent.SetDestination(transCheckOut);
+        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckMoveToCheckOut()
     {
@@ -116,6 +122,11 @@ public class Customer : BaseCustomer
     public void ResetStatus()
     {
         placeToBuy = null;
+        mainModel.SetActive(true);
+        for(int i = 0; i < outfitModel.Length; i++)
+        {
+            outfitModel[i].SetActive(false);
+        }
         UpdateState(IDLE_STATE);
     }
     public void ChangeAnim()
@@ -130,5 +141,25 @@ public class Customer : BaseCustomer
         navMeshAgent.SetDestination(pos);
         this.transform.LookAt(pos);
         navMeshAgent.stoppingDistance = 0;
+    }
+    public void ChangeOutfit(IngredientType type)
+    {
+        mainModel.SetActive(false);
+        switch (type)
+        {
+            case IngredientType.COW:
+                outfitModel[0].SetActive(true);
+                break;
+            case IngredientType.SHEEP:
+                outfitModel[1].SetActive(true);
+                break;
+            case IngredientType.CHICKEN:
+                outfitModel[2].SetActive(true);
+                break;
+            case IngredientType.BEAR:
+                outfitModel[3].SetActive(true);
+                break;
+        }
+        UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
     }
 }
