@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckOutManager : MonoBehaviour
 {
-    public List<Customer> listCusCheckout;
+    public List<GroupCustomer> listGrCusCheckout;
     public List<Checkout> listCheckout;
     public int maxCusCheckout;
 

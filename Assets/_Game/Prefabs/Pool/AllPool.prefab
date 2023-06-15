@@ -593,6 +593,10 @@ Transform:
   - {fileID: 418300495}
   - {fileID: 802655057}
   - {fileID: 4921353872010566846}
+  - {fileID: 2513345009132521916}
+  - {fileID: 2567083062581971915}
+  - {fileID: 3638940570742156047}
+  - {fileID: 7994600382243755652}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -626,6 +630,10 @@ MonoBehaviour:
     - {fileID: 418300496}
     - {fileID: 802655058}
     - {fileID: 5610147182057463669}
+    - {fileID: 5082027824879872214}
+    - {fileID: 2635445268047050924}
+    - {fileID: 1686679892382098988}
+    - {fileID: 421714415736167184}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -644,13 +652,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 14
+      Data: 18
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 29572
+      Data: 9478
     - Name: $v
       Entry: 10
       Data: 0
@@ -662,7 +670,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 28214
+      Data: 29652
     - Name: $v
       Entry: 10
       Data: 1
@@ -674,7 +682,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 25268
+      Data: 28348
     - Name: $v
       Entry: 10
       Data: 2
@@ -686,7 +694,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 26878
+      Data: 10554
     - Name: $v
       Entry: 10
       Data: 3
@@ -698,7 +706,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 27550
+      Data: 29276
     - Name: $v
       Entry: 10
       Data: 4
@@ -710,7 +718,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 27716
+      Data: 27920
     - Name: $v
       Entry: 10
       Data: 5
@@ -722,7 +730,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 26038
+      Data: 11046
     - Name: $v
       Entry: 10
       Data: 6
@@ -734,7 +742,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 27868
+      Data: 29448
     - Name: $v
       Entry: 10
       Data: 7
@@ -746,7 +754,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 28080
+      Data: 28160
     - Name: $v
       Entry: 10
       Data: 8
@@ -758,7 +766,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 28506
+      Data: 9908
     - Name: $v
       Entry: 10
       Data: 9
@@ -770,7 +778,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 27302
+      Data: 29028
     - Name: $v
       Entry: 10
       Data: 10
@@ -782,7 +790,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 25420
+      Data: 28514
     - Name: $v
       Entry: 10
       Data: 11
@@ -794,7 +802,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 29966
+      Data: 30500
     - Name: $v
       Entry: 10
       Data: 12
@@ -806,10 +814,58 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 667824
+      Data: 30516
     - Name: $v
       Entry: 10
       Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 94518
+    - Name: $v
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 94572
+    - Name: $v
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 94626
+    - Name: $v
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 41544
+    - Name: $v
+      Entry: 10
+      Data: 17
     - Name: 
       Entry: 8
       Data: 
@@ -870,6 +926,106 @@ MonoBehaviour:
   mPushToLastSibling: 0
   mAutoRelocate: 0
   mLimitNumber: 40
+--- !u!1 &2546828250428776114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2567083062581971915}
+  - component: {fileID: 2635445268047050924}
+  m_Layer: 0
+  m_Name: CowBag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2567083062581971915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546828250428776114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516291910500395283}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2635445268047050924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2546828250428776114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5712d307956be6c46aca23a14cbd5072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPrefab: {fileID: 3146379933382489757, guid: 8545445e3179b2f44a906f8e095a2e9c, type: 3}
+  mParent: {fileID: 2567083062581971915}
+  mName: 
+  mPushToLastSibling: 0
+  mAutoRelocate: 0
+  mLimitNumber: 0
+--- !u!1 &3534601217394976877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638940570742156047}
+  - component: {fileID: 1686679892382098988}
+  m_Layer: 0
+  m_Name: ChickenBag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638940570742156047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534601217394976877}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516291910500395283}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1686679892382098988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534601217394976877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5712d307956be6c46aca23a14cbd5072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPrefab: {fileID: 452276422359307857, guid: ab1694da5ec9c6a47a0b163e7e837ee6, type: 3}
+  mParent: {fileID: 3638940570742156047}
+  mName: 
+  mPushToLastSibling: 0
+  mAutoRelocate: 0
+  mLimitNumber: 0
 --- !u!1 &3968948256017608081
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,6 +1076,106 @@ MonoBehaviour:
   mPushToLastSibling: 0
   mAutoRelocate: 0
   mLimitNumber: 20
+--- !u!1 &5090863834534703343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2513345009132521916}
+  - component: {fileID: 5082027824879872214}
+  m_Layer: 0
+  m_Name: SheepBag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2513345009132521916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5090863834534703343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516291910500395283}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5082027824879872214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5090863834534703343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5712d307956be6c46aca23a14cbd5072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPrefab: {fileID: 7596994975647450806, guid: 0cf6dd0f6d769d842915926285687179, type: 3}
+  mParent: {fileID: 2513345009132521916}
+  mName: 
+  mPushToLastSibling: 0
+  mAutoRelocate: 0
+  mLimitNumber: 0
+--- !u!1 &5287671424647729301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7994600382243755652}
+  - component: {fileID: 421714415736167184}
+  m_Layer: 0
+  m_Name: BearBag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7994600382243755652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287671424647729301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516291910500395283}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &421714415736167184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287671424647729301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5712d307956be6c46aca23a14cbd5072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPrefab: {fileID: 7041544587026344998, guid: b154e7179741e6c4e9580a4c13bb2c9d, type: 3}
+  mParent: {fileID: 7994600382243755652}
+  mName: 
+  mPushToLastSibling: 0
+  mAutoRelocate: 0
+  mLimitNumber: 0
 --- !u!1 &7531623134743456956
 GameObject:
   m_ObjectHideFlags: 0

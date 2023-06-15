@@ -55,31 +55,36 @@ public class PlaceToBuyBag : PlaceBase
             }
             if (curCus.onBagPos)
             {
-                if (!haveOutFit)
+                if (!haveOutFit && !curCus.gotBag)
                 {
-                    //OutfitBase o = (closet as Closet).GetAvailableOutfit();
-                    //if (o != null)
-                    //{
-                    //    haveOutFit = true;
-                    //    //AddOutfit(o);
-                    //    //o.AddPlace(this as PlaceToBuyBag);
-                    //    curOutfit.transform.DOMove(curCus.transform.position, 0.25f).OnComplete(() =>
-                    //    {
-                    //        Buy();
-                    //    });
-
-                    //}
+                    BagBase o = (closet as BagCloset).GetAvailableOutfit();
+                    if (o != null)
+                    {
+                        haveOutFit = true;
+                        AddOutfit(o);
+                        o.AddPlace(this);
+                        curBag.transform.DOMove(curCus.transform.position, 0.25f).OnComplete(() =>
+                        {
+                            Buy();
+                        });
+                    }
                 }
             }
             if (readyCheckout)
             {
-                Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
-                if (c != null)
+                if (curCus.isLeader)
                 {
-                    readyCheckout = false;
-                    isHaveCus = false;
-                    c.AddCus(curCus);
-                    closet.levelManager.checkOutManager.listCusCheckout.Add(curCus);
+                    if (curCus.grCus.CheckGotBag())
+                    {
+                        Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
+                        if (c != null)
+                        {
+                            readyCheckout = false;             
+                            c.AddCus(curCus);
+                            closet.levelManager.checkOutManager.listGrCusCheckout.Add(curCus.grCus);
+                            isHaveCus = false;
+                        }
+                    }
                 }
             }
         }
@@ -92,11 +97,11 @@ public class PlaceToBuyBag : PlaceBase
     public void Buy()
     {
         curBag.bagPos.haveOutfit = false;
+        curCus.gotBag = true;
         (closet as BagCloset).listBags.Remove(curBag);
         AllPoolContainer.Instance.Release(curBag);
-        curCus.ChangeOutfit(this.type);
+        curCus.ChangeBag(this.type);
         haveOutFit = false;
-        curCus.onPlacePos = false;
         readyCheckout = true;
     }
 }

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPushBagCloset : MonoBehaviour
+public class CheckPushBagMachine : MonoBehaviour
 {
     [SerializeField]
-    private BagCloset closet;
-    private BagBase curBag;
+    private BagMachine machine;
+    private IngredientBase curIngredient;
     private int v;
-
 
     private void OnTriggerEnter(Collider other)
     {
-        if (closet.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
+        if (machine.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
         var player = other.GetComponent<ICollect>();
         if (player != null)
@@ -25,62 +24,52 @@ public class CheckPushBagCloset : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            if (!player.canCatch || closet.listBags.Count >= closet.maxObj)
-                return;
-            switch (closet.type)
+            switch (machine.machineType)
             {
                 case IngredientType.SHEEP:
-                    v = player.sheepCloths.Count - 1;
+                    v = player.fleeces.Count - 1;
                     break;
                 case IngredientType.COW:
-                    v = player.cowCloths.Count - 1;
+                    v = player.cowFurs.Count - 1;
                     break;
                 case IngredientType.CHICKEN:
-                    v = player.chickenCloths.Count - 1;
+                    v = player.chickenFurs.Count - 1;
                     break;
                 case IngredientType.BEAR:
-                    v = player.bearCloths.Count - 1;
+                    v = player.bearFurs.Count - 1;
                     break;
             }
+
             if (v >= 0)
             {
-                switch (closet.type)
+                if (!player.canCatch || machine.ingredients.Count >= machine.maxObjInput)
+                    return;
+                player.canCatch = false;
+                switch (machine.machineType)
                 {
                     case IngredientType.SHEEP:
-                        curBag = player.sheepBags[v];
+                        curIngredient = player.fleeces[v];
                         break;
                     case IngredientType.COW:
-                        curBag = player.cowBags[v];
+                        curIngredient = player.cowFurs[v];
                         break;
                     case IngredientType.CHICKEN:
-                        curBag = player.chickenBags[v];
+                        curIngredient = player.chickenFurs[v];
                         break;
                     case IngredientType.BEAR:
-                        curBag = player.bearBags[v];
+                        curIngredient = player.bearFurs[v];
                         break;
                     default:
-                        curBag = null;
+                        curIngredient = null;
                         break;
                 }
-                if (curBag != null)
+                if (curIngredient != null)
                 {
-                    player.canCatch = false;
-                    player.RemoveIngredient(curBag);
+                    (curIngredient as FurBase).MoveToMachine(machine);
+                    player.RemoveIngredient(curIngredient);
                     player.objHave--;
-                    //curCloth.transform.DOMoveY(curCloth.transform.position.y + 0.5f, 0.125f).OnComplete(() =>
-                    //{
-                    //    curCloth.transform.DOJump(closet.transform.position, 0.75f, 1, 0.125f).OnComplete(() =>
-                    //    {
-                    //        //transform.DOLocalMove(Vector3.up, 0.125f).OnComplete(() =>
-                    //        //{
-
-                    //        //});
-                    //    }).SetEase(Ease.Linear);
-                    //});
-                    AllPoolContainer.Instance.Release(curBag);
-                    closet.SpawnOutfit();
-                    player.DelayCatch(player.timeDelayCatch);
                     (player as BaseActor).ShortObj();
+                    player.DelayCatch(player.timeDelayCatch);
                 }
             }
         }
