@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MoreMountains.NiceVibrations;
-using Utilities.Components;
+
 public class CheckPushBagCloset : MonoBehaviour
 {
     [SerializeField]
@@ -15,67 +14,37 @@ public class CheckPushBagCloset : MonoBehaviour
     {
         if (closet.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Player)
-                player.canCatch = true;
-            if (player is Staff)
-            {
-                if ((player as Staff).ingredientType == closet.ingredientType)
-                {
-                    player.canCatch = true;
-                };
-            }
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Staff)
-            {
-                if ((player as Staff).ingredientType != closet.ingredientType)
-                {
-                    return;
-                };
-            }
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
             if (!player.canCatch || closet.listBags.Count >= closet.maxObj)
                 return;
-            switch (closet.ingredientType)
+            switch (closet.type)
             {
                 case IngredientType.SHEEP:
-                    v = player.sheepBags.Count - 1;
+                    v = player.sheepCloths.Count - 1;
                     break;
                 case IngredientType.COW:
-                    v = player.cowBags.Count - 1;
+                    v = player.cowCloths.Count - 1;
                     break;
                 case IngredientType.CHICKEN:
-                    v = player.chickenBags.Count - 1;
+                    v = player.chickenCloths.Count - 1;
                     break;
                 case IngredientType.BEAR:
-                    v = player.bearBags.Count - 1;
-                    break;
-                case IngredientType.LION:
-                    v = player.lionBags.Count - 1;
-                    break;
-                case IngredientType.CROC:
-                    v = player.crocBags.Count - 1;
-                    break;
-                case IngredientType.ELE:
-                    v = player.eleBags.Count - 1;
-                    break;
-                case IngredientType.ZEBRA:
-                    v = player.zebraBags.Count - 1;
+                    v = player.bearCloths.Count - 1;
                     break;
             }
             if (v >= 0)
             {
-               // Debug.Log("a");
-                switch (closet.ingredientType)
+                switch (closet.type)
                 {
                     case IngredientType.SHEEP:
                         curBag = player.sheepBags[v];
@@ -88,18 +57,6 @@ public class CheckPushBagCloset : MonoBehaviour
                         break;
                     case IngredientType.BEAR:
                         curBag = player.bearBags[v];
-                        break;
-                    case IngredientType.LION:
-                        curBag = player.lionBags[v];
-                        break;
-                    case IngredientType.CROC:
-                        curBag = player.crocBags[v];
-                        break;
-                    case IngredientType.ELE:
-                        curBag = player.eleBags[v];
-                        break;
-                    case IngredientType.ZEBRA:
-                        curBag = player.zebraBags[v];
                         break;
                     default:
                         curBag = null;
@@ -121,17 +78,12 @@ public class CheckPushBagCloset : MonoBehaviour
                     //    }).SetEase(Ease.Linear);
                     //});
                     AllPoolContainer.Instance.Release(curBag);
-                    if (player is Player)
-                    {
-                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
-                    }
                     closet.SpawnOutfit();
-                    player.DelayCatch(0.1f);
-                    //(player as BaseActor).ShortObj();
+                    player.DelayCatch(player.timeDelayCatch);
+                    (player as BaseActor).ShortObj();
                 }
             }
-        //}
+        }
     }
     //private void OnTriggerExit(Collider other)
     //{

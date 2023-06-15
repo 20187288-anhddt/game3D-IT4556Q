@@ -9,12 +9,14 @@ public class Customer : BaseCustomer
     [SerializeField]
     private NavMeshAgent navMeshAgent;
     public Vector3 transCloset;
+    public Vector3 transBag;
     public Vector3 transExit;
     public Vector3 transCheckOut;
     public PlaceToBuy placeToBuy;
     public PlaceToBuyBag placeToBuyBag;
     public Checkout checkOut;
     public bool onPlacePos;
+    public bool onBagPos;
     public bool onCheckoutPos;
     public IngredientType outfitType;
     public IngredientType bagType;
@@ -23,19 +25,21 @@ public class Customer : BaseCustomer
     [SerializeField]
     private GameObject[] outfitModel;
     public bool isLeader;
+    public bool gotOutfit;
+    public bool gotBag;
     public Customer leader;
+    public GroupCustomer grCus;
 
     protected void Start()
     {
-        fsm.init(6);
+        fsm.init(7);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
+        fsm.add(new FsmState(MOVE_TO_BAG_STATE, StartMoveToBag, OnMoveToBagState));
         fsm.add(new FsmState(MOVE_CHECKOUT_STATE, StartMoveToCheckOut, OnMoveToCheckOutState));
         fsm.add(new FsmState(FOLLOW_LEADER_STATE, null, OnFollowLeaderState));
         fsm.add(new FsmState(EXIT_STATE, StartExit, null));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
-        onPlacePos = false;
-        onCheckoutPos = false;
     }
     protected void Update()
     {
@@ -45,6 +49,10 @@ public class Customer : BaseCustomer
     private void StartMoveToCloset(FsmSystem _fsm)
     {
         MoveToCloset();
+    }
+    private void StartMoveToBag(FsmSystem _fsm)
+    {
+        MoveToBag();
     }
     private void StartMoveToCheckOut(FsmSystem _fsm)
     {
@@ -66,6 +74,11 @@ public class Customer : BaseCustomer
     private FsmSystem.ACTION OnMoveToClosetState(FsmSystem _fsm)
     {
         CheckMoveToCloset();
+        return FsmSystem.ACTION.END;
+    }
+    private FsmSystem.ACTION OnMoveToBagState(FsmSystem _fsm)
+    {
+        CheckMoveToBag();
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToCheckOutState(FsmSystem _fsm)
@@ -94,7 +107,6 @@ public class Customer : BaseCustomer
     public virtual void MoveToCloset()
     { 
         navMeshAgent.SetDestination(transCloset);
-        //navMeshAgent.transform.LookAt(transCloset);
         navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckMoveToCloset()
@@ -102,8 +114,21 @@ public class Customer : BaseCustomer
         if (Vector3.Distance(transCloset,this.transform.position) < 0.1f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
-            //navMeshAgent.transform.LookAt(transCloset);
             this.onPlacePos = true;
+            UpdateState(IDLE_STATE);
+        }
+    }
+    public virtual void MoveToBag()
+    {
+        navMeshAgent.SetDestination(transBag);
+        navMeshAgent.stoppingDistance = 0;
+    }
+    public virtual void CheckMoveToBag()
+    {
+        if (Vector3.Distance(transBag, this.transform.position) < 0.1f)
+        {
+            this.transform.DORotate(Vector3.zero, 0f);
+            this.onBagPos = true;
             UpdateState(IDLE_STATE);
         }
     }
@@ -134,9 +159,19 @@ public class Customer : BaseCustomer
     {
         navMeshAgent.SetDestination(leader.transform.position);
         navMeshAgent.stoppingDistance = 0;
-        if (Vector3.Distance(transCloset, this.transform.position) < 4f || leader.onPlacePos)
+        if (!leader.gotOutfit && !leader.gotBag)
         {
-            UpdateState(MOVE_TO_CLOSET_STATE);
+            if (Vector3.Distance(transCloset, this.transform.position) < 4f || leader.onPlacePos)
+            {
+                UpdateState(MOVE_TO_CLOSET_STATE);
+            }
+        }
+        else if (leader.gotOutfit && !leader.gotBag)
+        {
+            if (Vector3.Distance(transBag, this.transform.position) < 4f || leader.onBagPos)
+            {
+                UpdateState(MOVE_TO_BAG_STATE);
+            }
         }
     }
     public virtual void MoveToExit()
@@ -156,8 +191,12 @@ public class Customer : BaseCustomer
     public void ResetStatus()
     {
         onPlacePos = false;
+        onBagPos = false;
         onCheckoutPos = false;
+        gotOutfit = false;
+        gotBag = false;
         placeToBuy = null;
+        placeToBuyBag = null;
         mainModel.SetActive(true);
         outfitType = IngredientType.NONE;
         bagType = IngredientType.NONE;
@@ -192,6 +231,5 @@ public class Customer : BaseCustomer
                 outfitModel[3].SetActive(true);
                 break;
         }
-        
     }
 }

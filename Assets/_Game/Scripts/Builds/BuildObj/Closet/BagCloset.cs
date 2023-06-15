@@ -70,4 +70,21 @@ public class BagCloset : ClosetBase
         }
         return o;
     }
+    public void GetEmtyPlaceNum(int n)
+    {
+        for (int i = 0; i < listPlaceToBuyBag.Count; i++)
+        {
+            if (!listPlaceToBuyBag[i].isHaveCus)
+            {
+                if (!listEmtyPlaceToBuyBag.Contains(listPlaceToBuyBag[i]))
+                {
+                    listEmtyPlaceToBuyBag.Add(listPlaceToBuyBag[i]);
+                }
+            }
+        }
+        if(listEmtyPlaceToBuyBag.Count < n)
+        {
+            listEmtyPlaceToBuyBag.Clear();
+        }
+    }
 }

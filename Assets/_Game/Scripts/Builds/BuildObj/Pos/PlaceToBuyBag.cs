@@ -28,7 +28,7 @@ public class PlaceToBuyBag : PlaceBase
         cusMoving = false;
         curCus.placeToBuyBag = this;
         curCus.bagType = type;
-        curCus.transCloset = this.transform.position;
+        curCus.transBag = this.transform.position;
         closet.listCurCus.Add(curCus);
     }
 
@@ -41,12 +41,19 @@ public class PlaceToBuyBag : PlaceBase
     {
         if (isHaveCus)
         {
-            if (!cusMoving && !curCus.onPlacePos)
+            if (!cusMoving && !curCus.onBagPos)
             {
-                curCus.UpdateState(BaseCustomer.MOVE_TO_CLOSET_STATE);
                 cusMoving = true;
+                if (curCus.isLeader)
+                {
+                    curCus.UpdateState(BaseCustomer.MOVE_TO_BAG_STATE);
+                }
+                else
+                {
+                    curCus.UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
+                }
             }
-            if (curCus.onPlacePos)
+            if (curCus.onBagPos)
             {
                 if (!haveOutFit)
                 {
