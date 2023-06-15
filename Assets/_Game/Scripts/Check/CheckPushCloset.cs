@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using MoreMountains.NiceVibrations;
-using Utilities.Components;
+
+
 public class CheckPushCloset : MonoBehaviour
 {
     [SerializeField]
@@ -16,37 +15,20 @@ public class CheckPushCloset : MonoBehaviour
     {
         if (closet.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Player)
-                player.canCatch = true;
-            if (player is Staff)
-            {
-                if ((player as Staff).ingredientType == closet.ingredientType)
-                {
-                    player.canCatch = true;
-                };
-            }
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Staff)
-            {
-                if ((player as Staff).ingredientType != closet.ingredientType)
-                {
-                    return;
-                };
-            }
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
             if (!player.canCatch || closet.listOutfits.Count >= closet.maxObj)
                 return;         
-            switch (closet.ingredientType)
+            switch (closet.type)
             {
                 case IngredientType.SHEEP:
                     v = player.sheepCloths.Count - 1;
@@ -60,22 +42,10 @@ public class CheckPushCloset : MonoBehaviour
                 case IngredientType.BEAR:
                     v = player.bearCloths.Count - 1;
                     break;
-                case IngredientType.LION:
-                    v = player.lionCloths.Count - 1;
-                    break;
-                case IngredientType.CROC:
-                    v = player.crocCloths.Count - 1;
-                    break;
-                case IngredientType.ELE:
-                    v = player.eleCloths.Count - 1;
-                    break;
-                case IngredientType.ZEBRA:
-                    v = player.zebraCloths.Count - 1;
-                    break;
             }
             if (v >= 0)
             {
-                switch (closet.ingredientType)
+                switch (closet.type)
                 {
                     case IngredientType.SHEEP:
                         curCloth = player.sheepCloths[v];
@@ -89,18 +59,6 @@ public class CheckPushCloset : MonoBehaviour
                     case IngredientType.BEAR:
                         curCloth = player.bearCloths[v];
                         break;
-                    case IngredientType.LION:
-                        curCloth = player.lionCloths[v];
-                        break;
-                    case IngredientType.CROC:
-                        curCloth = player.crocCloths[v];
-                        break;
-                    case IngredientType.ELE:
-                        curCloth = player.eleCloths[v];
-                        break;
-                    case IngredientType.ZEBRA:
-                        curCloth = player.zebraCloths[v];
-                        break;
                     default:
                         curCloth = null;
                         break;
@@ -110,23 +68,23 @@ public class CheckPushCloset : MonoBehaviour
                     player.canCatch = false;
                     player.RemoveIngredient(curCloth);  
                     player.objHave--;
-                    //curCloth.transform.DOJump(closet.transform.position, 3f, 1, 0.5f).OnComplete(() =>
+                    //curCloth.transform.DOMoveY(curCloth.transform.position.y + 0.5f, 0.125f).OnComplete(() =>
                     //{
-                    //    closet.SpawnOutfit();
-                    //    AllPoolContainer.Instance.Release(curCloth);
-                    //}).SetEase(Ease.OutCirc);
+                    //    curCloth.transform.DOJump(closet.transform.position, 0.75f, 1, 0.125f).OnComplete(() =>
+                    //    {
+                    //        //transform.DOLocalMove(Vector3.up, 0.125f).OnComplete(() =>
+                    //        //{
+                            
+                    //        //});
+                    //    }).SetEase(Ease.Linear);
+                    //});
                     AllPoolContainer.Instance.Release(curCloth);
-                    if (player is Player)
-                    {
-                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
-                    }
                     closet.SpawnOutfit();
-                    player.DelayCatch(0.1f);
+                    player.DelayCatch(player.timeDelayCatch);
                     //(player as BaseActor).ShortObj();     
                 }
             }
-        //}
+        }
     }
     //private void OnTriggerExit(Collider other)
     //{

@@ -27,6 +27,10 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<ChickenCloth> chickenCloths { get => ChickenCloths; set => ChickenCloths = value; }
     public List<BearFur> bearFurs { get => BearFurs; set => BearFurs = value; }
     public List<BearCloth> bearCloths { get => BearCloths; set => BearCloths = value; }
+    public List<SheepBag> sheepBags { get => SheepBags; set => SheepBags = value; }
+    public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
+    public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
+    public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
     private void Awake()
     {
         if (Instance != null)
@@ -152,10 +156,27 @@ public class Player : BaseActor,ICollect,IUnlock
                 if (!bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Add(ingredient as BearCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (!sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Add(ingredient as SheepBag);
+                break;
+            case IngredientType.COW_BAG:
+                if (!cowBags.Contains(ingredient as CowBag))
+                    cowBags.Add(ingredient as CowBag);
+                break;
+            case IngredientType.CHICKEN_BAG:
+                if (!chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Add(ingredient as ChickenBag);
+                break;
+            case IngredientType.BEAR_BAG:
+                if (!bearBags.Contains(ingredient as BearBag))
+                    bearBags.Add(ingredient as BearBag);
+                break;
         }
     }
     public void RemoveIngredient(IngredientBase ingredient)
     {
+        int n = allIngredients.IndexOf(ingredient);
         if (allIngredients.Contains(ingredient))
             allIngredients.Remove(ingredient);
         switch (ingredient.ingredientType)
@@ -192,7 +213,29 @@ public class Player : BaseActor,ICollect,IUnlock
                 if (bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Remove(ingredient as BearCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Remove(ingredient as SheepBag);
+                break;
+            case IngredientType.COW_BAG:
+                if (cowBags.Contains(ingredient as CowBag))
+                    cowBags.Remove(ingredient as CowBag);
+                break;
+            case IngredientType.CHICKEN_BAG:
+                if (chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Remove(ingredient as ChickenBag);
+                break;
+            case IngredientType.BEAR_BAG:
+                if (bearBags.Contains(ingredient as BearBag))
+                    bearBags.Remove(ingredient as BearBag);
+                break;
         }
+        ShortObj();
+    }
+    public override void ShortObj()
+    {
+        Debug.Log(allIngredients.Count);
+        
     }
     public void UnlockMap(float coin)
     {

@@ -39,13 +39,21 @@ public class CustomerManager : MonoBehaviour
             if (closetManager.listAvailableClosets.Count > 0)
             {
                 int r = Random.Range(0, closetManager.listAvailableClosets.Count);
-                int x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count + 1);
+                int x;
+                if (closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count >= 3)
+                {
+                    x = Random.Range(1, 4);
+                }
+                else
+                {   
+                    x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count + 1);
+                }
                 PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
-                if(curPlace != null)
+                if (curPlace != null)
                 {
                     GroupCustomer curGr = SpawnOneGroup(x, curPlace.transform);
                     curGr.AddCloset(closetManager.listAvailableClosets[r]);
-                    curGr.type = closetManager.listAvailableClosets[r].type;
+                    curGr.typeOutfit = closetManager.listAvailableClosets[r].type;
                     if (curGr != null)
                     {
                         curPlace.AddCus(curGr.leader);
@@ -53,7 +61,7 @@ public class CustomerManager : MonoBehaviour
                         {
                             PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
                             curGr.teammates[i].transform.parent = curGr.transform;
-                            nextPlace.AddCus(curGr.teammates[i]);  
+                            nextPlace.AddCus(curGr.teammates[i]);
                         }
                         closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
                         closetManager.listAvailableClosets.Clear();

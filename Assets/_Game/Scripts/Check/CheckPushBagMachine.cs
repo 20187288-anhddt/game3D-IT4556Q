@@ -13,35 +13,18 @@ public class CheckPushBagMachine : MonoBehaviour
     {
         if (machine.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Player)
-                player.canCatch = true;
-            if (player is Staff)
-            {
-                if ((player as Staff).ingredientType == machine.ingredientType)
-                {
-                    player.canCatch = true;
-                };
-            }
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        if (player is Staff)
-            {
-                if ((player as Staff).ingredientType != machine.ingredientType)
-                {
-                    return;
-                };
-            }
-            switch (machine.ingredientType)
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            switch (machine.machineType)
             {
                 case IngredientType.SHEEP:
                     v = player.fleeces.Count - 1;
@@ -55,18 +38,6 @@ public class CheckPushBagMachine : MonoBehaviour
                 case IngredientType.BEAR:
                     v = player.bearFurs.Count - 1;
                     break;
-                case IngredientType.LION:
-                    v = player.lionFurs.Count - 1;
-                    break;
-                case IngredientType.CROC:
-                    v = player.crocFurs.Count - 1;
-                    break;
-                case IngredientType.ELE:
-                    v = player.eleFurs.Count - 1;
-                    break;
-                case IngredientType.ZEBRA:
-                    v = player.zebraFurs.Count - 1;
-                    break;
             }
 
             if (v >= 0)
@@ -74,7 +45,7 @@ public class CheckPushBagMachine : MonoBehaviour
                 if (!player.canCatch || machine.ingredients.Count >= machine.maxObjInput)
                     return;
                 player.canCatch = false;
-                switch (machine.ingredientType)
+                switch (machine.machineType)
                 {
                     case IngredientType.SHEEP:
                         curIngredient = player.fleeces[v];
@@ -88,32 +59,20 @@ public class CheckPushBagMachine : MonoBehaviour
                     case IngredientType.BEAR:
                         curIngredient = player.bearFurs[v];
                         break;
-                    case IngredientType.LION:
-                        curIngredient = player.lionFurs[v];
-                        break;
-                    case IngredientType.CROC:
-                        curIngredient = player.crocFurs[v];
-                        break;
-                    case IngredientType.ELE:
-                        curIngredient = player.eleFurs[v];
-                        break;
-                    case IngredientType.ZEBRA:
-                        curIngredient = player.zebraFurs[v];
-                        break;
                     default:
                         curIngredient = null;
                         break;
                 }
                 if (curIngredient != null)
                 {
-                    (curIngredient as FurBase).MoveToMachine(machine,player);
+                    (curIngredient as FurBase).MoveToMachine(machine);
                     player.RemoveIngredient(curIngredient);
                     player.objHave--;
                     //(player as BaseActor).ShortObj();
                     player.DelayCatch(player.timeDelayCatch);
                 }
             }
-        //}
+        }
     }
     //private void OnTriggerExit(Collider other)
     //{

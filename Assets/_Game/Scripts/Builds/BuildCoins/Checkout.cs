@@ -31,19 +31,32 @@ public class Checkout : BuildCoins
     {
         if (isHaveCus)
         {
-            isMoving = true;
             if (curCus.isLeader)
             {
-                curCus.UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
-                curCus.grCus.TeamFollowLeader();
-            }
-            if (curCus.onCheckoutPos)
-            {
-                curCus.UpdateState(BaseCustomer.EXIT_STATE);
-                levelManager.customerManager.customerList.Remove(curCus);
-                isHaveCus = false;
-                isMoving = false;
+                if (!isMoving && !curCus.onCheckoutPos)
+                {
+                    isMoving = true;
+                    curCus.UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
+                    curCus.grCus.TeamFollowLeader();
+                }
+                if (curCus.onCheckoutPos)
+                {
+                    curCus.onCheckoutPos = false;
+                    curCus.UpdateState(BaseCustomer.EXIT_STATE);
+                    levelManager.customerManager.customerList.Remove(curCus);
+                    for(int i = 0; i < curCus.grCus.teammates.Count; i++)
+                    {
+                        levelManager.customerManager.customerList.Remove(curCus.grCus.teammates[i]);
+                    }
+                    levelManager.customerManager.customerList.Remove(curCus);
+                    isHaveCus = false;
+                }
             }
         }
+    }
+    public void SpawnMoney(int n, IngredientType typeOutfit, IngredientType typeBag)
+    {
+        //TODO
+        //Spawn tien
     }
 }
