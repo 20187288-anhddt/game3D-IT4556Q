@@ -170,19 +170,23 @@ public class CustomerManager : MonoBehaviour
                     listGroupsHaveOutfit[0].AddCloset(closetManager.listAvailableBagClosets[r]);
                     listGroupsHaveOutfit[0].typeBag = closetManager.listAvailableBagClosets[r].type;
                     curBagPlace.AddCus(leader);
+                    leader.placeToBuy.isHaveCus = false;
+                    leader.onPlacePos = false;
                     for (int i = 0; i < listGroupsHaveOutfit[0].teammates.Count; i++)
                     {
                         PlaceToBuyBag nextPlace = closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag[i + 1];
                         nextPlace.AddCus(listGroupsHaveOutfit[0].teammates[i]);
+                        listGroupsHaveOutfit[0].teammates[i].placeToBuy.isHaveCus = false;
+                        listGroupsHaveOutfit[0].teammates[i].onPlacePos = false;
                     }
                     //closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag.Clear();
                     //closetManager.listAvailableBagClosets.Clear();
                     for (int i = 0; i < listGroupsHaveOutfit[0].listCus.Count; i++)
                     {
-                        listGroupsHaveOutfit[0].listCus[i].onPlacePos = false;
+                        //listGroupsHaveOutfit[0].listCus[i].onPlacePos = false;
                         listGroupsHaveOutfit[0].listCus[i].placeToBuy.closet.listCurCus.Remove(listGroupsHaveOutfit[0].listCus[i]);
                     }
-                    leader.placeToBuy.isHaveCus = false;
+                    //leader.placeToBuy.isHaveCus = false;
                     listGroupsHaveOutfit.Remove(listGroupsHaveOutfit[0]);
                 }
             }
@@ -207,12 +211,14 @@ public class CustomerManager : MonoBehaviour
             {
                 isCheckout = true;
                 c.AddCus(listGroupsHaveBag[0].leader);
+                listGroupsHaveBag[0].leader.placeToBuyBag.isHaveCus = false;
                 checkoutManager.listGrCusCheckout.Add(listGroupsHaveBag[0]);
                 for (int i = 0; i < listGroupsHaveBag[0].listCus.Count; i++)
                 {
                     listGroupsHaveBag[0].listCus[i].onBagPos = false;
+                    listGroupsHaveBag[0].listCus[i].placeToBuyBag.isHaveCus = false;
                     listGroupsHaveBag[0].listCus[i].placeToBuyBag.closet.listCurCus.Remove(listGroupsHaveBag[0].listCus[i]);
-                }
+                }         
                 listGroupsHaveBag.Remove(listGroupsHaveBag[0]);
             }
 

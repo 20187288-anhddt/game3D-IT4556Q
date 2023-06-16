@@ -107,11 +107,11 @@ public class PlaceToBuy : PlaceBase
                         //}
                     } 
                 }
-                if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))
-                {
-                    readyGo = false;
-                    isHaveCus = false;
-                }
+                //if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))
+                //{
+                //    readyGo = false;
+                //    isHaveCus = false;
+                //}
             }
         }
     }
