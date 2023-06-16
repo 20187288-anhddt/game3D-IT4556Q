@@ -50,17 +50,34 @@ public class Player : BaseActor,ICollect,IUnlock
         fsm.execute();
         if(gun.activeSelf)
             gun.SetActive(false);
+
+        EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
+        EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
     }
+    protected void OnMove()
+    {
+        if (!isUnlock)
+        {
+            UpdateState(RUN_STATE);
+        }
+        else UpdateState(IDLE_STATE);
+    }
+    protected void StopMove()
+    {
+        UpdateState(IDLE_STATE);
+    }
+
+
     protected void Update()
     {
         fsm.execute();
         var rig = GetComponent<Rigidbody>();
         animSpd = rig.velocity.magnitude;
-        if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
-        {
-            UpdateState(RUN_STATE);
-        }
-        else UpdateState(IDLE_STATE);
+        //if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
+        //{
+        //    UpdateState(RUN_STATE);
+        //}
+        //else UpdateState(IDLE_STATE);
     }
     public Vector2 Config(Vector2 input)
     {
@@ -82,20 +99,25 @@ public class Player : BaseActor,ICollect,IUnlock
     }
     public virtual void UpdateMove(float speed)
     {
-        Joystick joystick = GameManager.Instance.joystick;
-        Vector2 inputAxist = joystick.Direction;
+        Canvas_Joystick joystick = Canvas_Joystick.Instance;
+        Vector3 inputAxist = joystick.Get_Diraction();
         //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
-        var rig = GetComponent<Rigidbody>();
-        rig.velocity = new Vector3(joystick.Horizontal * speed, rig.velocity.y, joystick.Vertical * speed);
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+       
+        if (inputAxist.x != 0 || inputAxist.z != 0)
         {
-            Vector3 moveDir = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+            var rig = GetComponent<Rigidbody>();
+            //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
+            rig.MovePosition(transform.position + transform.forward.normalized * speed * 0.02f);
+            Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
             transform.rotation = Quaternion.LookRotation(moveDir).normalized;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+           // transform.Translate(Vector3.forward * speed * 0.02f);
         }
     }
     public virtual void Idle()
     {
-
+        var rig = GetComponent<Rigidbody>();
+        rig.velocity = Vector3.zero;
     }
     public void Collect()
     {

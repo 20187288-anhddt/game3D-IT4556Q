@@ -35,10 +35,10 @@ public class CustomerManager : MonoBehaviour
     {
         if (isReadySpawn && customerList.Count < maxCus)
         {
-            isReadySpawn = false;
             closetManager.CheckClosetEmpty();
             if (closetManager.listAvailableClosets.Count > 0)
             {
+                isReadySpawn = false;
                 int r = Random.Range(0, closetManager.listAvailableClosets.Count);
                 int x;
                 if (closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count >= 3)
