@@ -24,6 +24,8 @@ public class Customer : BaseCustomer
     private GameObject mainModel;
     [SerializeField]
     private GameObject[] outfitModel;
+    [SerializeField]
+    private GameObject[] bagModel;
     public bool isLeader;
     public bool gotOutfit;
     public bool gotBag;
@@ -161,18 +163,25 @@ public class Customer : BaseCustomer
         navMeshAgent.stoppingDistance = 0;
         if (!leader.gotOutfit && !leader.gotBag)
         {
-            if (Vector3.Distance(transCloset, this.transform.position) < 4f || leader.onPlacePos)
+            if (Vector3.Distance(transCloset, this.transform.position) < 6f || leader.onPlacePos)
             {
                 UpdateState(MOVE_TO_CLOSET_STATE);
             }
         }
         else if (leader.gotOutfit && !leader.gotBag)
         {
-            if (Vector3.Distance(transBag, this.transform.position) < 4f || leader.onBagPos)
+            if (Vector3.Distance(transBag, this.transform.position) < 6f || leader.onBagPos)
             {
                 UpdateState(MOVE_TO_BAG_STATE);
             }
         }
+        else if (leader.gotOutfit && leader.gotBag && leader.onCheckoutPos)
+        {
+            if(Vector3.Distance(transBag, leader.transform.position) < 3f)
+            {
+                UpdateState(IDLE_STATE);
+            }
+        } 
     }
     public virtual void MoveToExit()
     {
@@ -190,6 +199,10 @@ public class Customer : BaseCustomer
     }
     public void ResetStatus()
     {
+        transCloset = Vector3.zero;
+        transBag = Vector3.zero;
+        transExit = Vector3.zero;
+        transCheckOut = Vector3.zero;
         onPlacePos = false;
         onBagPos = false;
         onCheckoutPos = false;
@@ -197,12 +210,20 @@ public class Customer : BaseCustomer
         gotBag = false;
         placeToBuy = null;
         placeToBuyBag = null;
+        checkOut = null;
+        grCus = null;
+        leader = null;
+        isLeader = false;
         mainModel.SetActive(true);
         outfitType = IngredientType.NONE;
         bagType = IngredientType.NONE;
         for (int i = 0; i < outfitModel.Length; i++)
         {
             outfitModel[i].SetActive(false);
+        }
+        for (int i = 0; i < bagModel.Length; i++)
+        {
+            bagModel[i].SetActive(false);
         }
         UpdateState(IDLE_STATE);
     }
@@ -229,6 +250,24 @@ public class Customer : BaseCustomer
                 break;
             case IngredientType.BEAR:
                 outfitModel[3].SetActive(true);
+                break;
+        }
+    }
+    public void ChangeBag(IngredientType type)
+    {
+        switch (type)
+        {
+            case IngredientType.COW:
+                bagModel[0].SetActive(true);
+                break;
+            case IngredientType.SHEEP:
+                bagModel[1].SetActive(true);
+                break;
+            case IngredientType.CHICKEN:
+                bagModel[2].SetActive(true);
+                break;
+            case IngredientType.BEAR:
+                bagModel[3].SetActive(true);
                 break;
         }
     }

@@ -75,19 +75,22 @@ public class PlaceToBuyBag : PlaceBase
                 {
                     if (curCus.grCus.CheckGotBag())
                     {
-                        Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
-                        if (c != null)
-                        {
-                            readyGo = false;             
-                            c.AddCus(curCus);
-                            closet.levelManager.checkOutManager.listGrCusCheckout.Add(curCus.grCus);
-                            for (int i = 0; i < curCus.grCus.listCus.Count; i++)
-                            {
-                                curCus.grCus.listCus[i].onBagPos = false;
-                                closet.listCurCus.Remove(curCus.grCus.listCus[i]);
-                            }
-                            isHaveCus = false;
-                        }
+                        readyGo = false;
+                        CustomerManager cusManager = closet.levelManager.customerManager;
+                        cusManager.listGroupsHaveBag.Add(curCus.grCus);
+                        //Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
+                        //if (c != null)
+                        //{
+                        //    readyGo = false;             
+                        //    c.AddCus(curCus);
+                        //    closet.levelManager.checkOutManager.listGrCusCheckout.Add(curCus.grCus);
+                        //    for (int i = 0; i < curCus.grCus.listCus.Count; i++)
+                        //    {
+                        //        curCus.grCus.listCus[i].onBagPos = false;
+                        //        closet.listCurCus.Remove(curCus.grCus.listCus[i]);
+                        //    }
+                        //    isHaveCus = false;
+                        //}
                     }
                 }
                 if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))

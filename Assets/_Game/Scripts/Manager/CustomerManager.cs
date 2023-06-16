@@ -11,106 +11,46 @@ public class CustomerManager : MonoBehaviour
     public List<Customer> customerList;
     public List<Customer> customerOnCloset;
     public List<GroupCustomer> listGroups;
+    public List<GroupCustomer> listGroupsHaveOutfit;
+    public List<GroupCustomer> listGroupsHaveBag;
+    //public List<GroupCustomer> listGroupRdCheckout;
     public Customer customerPrefab;
     public GroupCustomer grCusPrefab;
     public List<Transform> transformList;
     public int maxCus;
     [SerializeField]
     private ClosetManager closetManager;
+    [SerializeField]
+    private CheckOutManager checkoutManager;
 
     //[SerializeField]
     //private PlaceManager placeManager;
     public List<PlaceToBuy> listAvailablePlace;
     public bool isReadySpawn;
+    public bool isCheckBag;
+    public bool isCheckout;
     public float delayTime;
     public float consDelayTime;
+    public float delayCheckBagTime;
+    public float consDelayCheckBagTime;
+    public float delayCheckoutTime;
+    public float consDelayCheckoutTime;
 
 
     void Start()
     {
         isReadySpawn = true;
+        isCheckBag = false;
+        isCheckout = false;
         delayTime = consDelayTime;
+        delayCheckBagTime = consDelayCheckBagTime;
+        delayCheckoutTime = consDelayCheckoutTime;
     }
     void Update()
     {
-        if (isReadySpawn && customerList.Count < maxCus)
-        {
-            closetManager.CheckClosetEmpty();
-            if (closetManager.listAvailableClosets.Count > 0)
-            {
-                isReadySpawn = false;
-                int r = Random.Range(0, closetManager.listAvailableClosets.Count);
-                int x;
-                if (closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count >= 3)
-                {
-                    x = Random.Range(1, 4);
-                }
-                else
-                {   
-                    x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count + 1);
-                }
-                PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
-                if (curPlace != null)
-                {
-                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.transform);
-                    curGr.AddCloset(closetManager.listAvailableClosets[r]);
-                    curGr.typeOutfit = closetManager.listAvailableClosets[r].type;
-                    if (curGr != null)
-                    {
-                        curPlace.AddCus(curGr.leader);
-                        for (int i = 0; i < curGr.teammates.Count; i++)
-                        {
-                            PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
-                            curGr.teammates[i].transform.parent = curGr.transform;
-                            nextPlace.AddCus(curGr.teammates[i]);
-                        }
-                        closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
-                        closetManager.listAvailableClosets.Clear();
-                    }
-                }
-                //for (int i = 0; i < x; i++)
-                //{
-                //    PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i];
-                //    if (curPlace != null)
-                //    {
-                //        Customer curCus = SpawnCus();
-                //        if (curCus != null)
-                //        {
-                //            curPlace.AddCus(curCus);
-                //        }
-                //    }
-                //    if (i == x - 1)
-                //    {
-                //        closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
-                //        closetManager.listAvailableClosets.Clear();
-                //    }
-                //}
-            }
-            //placeManager.CheckPlaceOutfitEmpty();
-            //if (placeManager.listAvailablePlace.Count > 0)
-            //{
-            //    int i = Random.Range(0, placeManager.listAvailablePlace.Count);
-            //    PlaceToBuy curPlace = placeManager.listAvailablePlace[i];
-            //    if (curPlace != null)
-            //    {
-            //        Customer curCus = SpawnCus();
-            //        if (curCus != null)
-            //        {
-            //            curPlace.AddCus(curCus);
-            //            placeManager.listAvailablePlace.Clear();
-            //        }
-            //    }
-            //}
-        }
-        if (!isReadySpawn)
-        {
-            delayTime -= Time.deltaTime;
-        }
-        if (delayTime < 0)
-        {
-            isReadySpawn = true;
-            delayTime = consDelayTime;
-        }     
+        CheckCusToOutfit();
+        CheckCusToBag();
+        CheckCusCheckOut();
     }
      
     public void ResetCusOnOpen()
@@ -126,10 +66,10 @@ public class CustomerManager : MonoBehaviour
     {
         AllPool curCus = AllPoolContainer.Instance.Spawn(customerPrefab, spawnPos, Quaternion.identity);
         curCus.transform.DORotate(new Vector3(0f, 180f, 0f), 0f);
+        (curCus as Customer).ResetStatus();
         if (!customerList.Contains(curCus as Customer))
         {
             customerList.Add(curCus as Customer);
-            (curCus as Customer).ResetStatus();
             (curCus as Customer).transExit = exitPos.position;
             (curCus as Customer).transCheckOut = checkOutPos.position;
         }
@@ -140,6 +80,7 @@ public class CustomerManager : MonoBehaviour
     public GroupCustomer SpawnOneGroup(int n, Transform closetPos)
     {
         AllPool curGroup = AllPoolContainer.Instance.Spawn(grCusPrefab, startPos.position, Quaternion.identity);
+        (curGroup as GroupCustomer).ResetGroup();
         (curGroup as GroupCustomer).grNum = n;
         Customer c = SpawnCus(startPos.position);
         if (!(curGroup as GroupCustomer).listCus.Contains(c))
@@ -162,5 +103,128 @@ public class CustomerManager : MonoBehaviour
         else 
             curGroup = null;
         return curGroup as GroupCustomer;
+    }
+    private void CheckCusToOutfit()
+    {
+        if (isReadySpawn && customerList.Count < maxCus)
+        {
+            closetManager.CheckClosetEmpty();
+            if (closetManager.listAvailableClosets.Count > 0)
+            {
+                isReadySpawn = false;
+                int r = Random.Range(0, closetManager.listAvailableClosets.Count);
+                int x;
+                if (closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count >= 3)
+                {
+                    x = Random.Range(1, 4);
+                }
+                else
+                {
+                    x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count + 1);
+                }
+                PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
+                if (curPlace != null)
+                {
+                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.transform);
+                    curGr.AddCloset(closetManager.listAvailableClosets[r]);
+                    curGr.typeOutfit = closetManager.listAvailableClosets[r].type;
+                    if (curGr != null)
+                    {
+                        curPlace.AddCus(curGr.leader);
+                        for (int i = 0; i < curGr.teammates.Count; i++)
+                        {
+                            PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
+                            curGr.teammates[i].transform.parent = curGr.transform;
+                            nextPlace.AddCus(curGr.teammates[i]);
+                        }
+                        closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
+                        closetManager.listAvailableClosets.Clear();
+                    }
+                }
+            }
+        }
+        if (!isReadySpawn)
+        {
+            delayTime -= Time.deltaTime;
+        }
+        if (delayTime < 0)
+        {
+            isReadySpawn = true;
+            delayTime = consDelayTime;
+        }
+    }
+
+    private void CheckCusToBag()
+    {
+        if (listGroupsHaveOutfit.Count > 0 && !isCheckBag)
+        {
+            closetManager.CheckBagClosetEmptyWithNum(listGroupsHaveOutfit[0].grNum);
+            if (closetManager.listAvailableBagClosets.Count > 0)
+            {
+                isCheckBag = true;
+                int r = Random.Range(0, closetManager.listAvailableBagClosets.Count);
+                PlaceToBuyBag curBagPlace = closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag[0];
+                if (curBagPlace != null)
+                {
+                    Customer leader = listGroupsHaveOutfit[0].leader;
+                    listGroupsHaveOutfit[0].AddCloset(closetManager.listAvailableBagClosets[r]);
+                    listGroupsHaveOutfit[0].typeBag = closetManager.listAvailableBagClosets[r].type;
+                    curBagPlace.AddCus(leader);
+                    for (int i = 0; i < listGroupsHaveOutfit[0].teammates.Count; i++)
+                    {
+                        PlaceToBuyBag nextPlace = closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag[i + 1];
+                        nextPlace.AddCus(listGroupsHaveOutfit[0].teammates[i]);
+                    }
+                    //closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag.Clear();
+                    //closetManager.listAvailableBagClosets.Clear();
+                    for (int i = 0; i < listGroupsHaveOutfit[0].listCus.Count; i++)
+                    {
+                        listGroupsHaveOutfit[0].listCus[i].onPlacePos = false;
+                        listGroupsHaveOutfit[0].listCus[i].placeToBuy.closet.listCurCus.Remove(listGroupsHaveOutfit[0].listCus[i]);
+                    }
+                    leader.placeToBuy.isHaveCus = false;
+                    listGroupsHaveOutfit.Remove(listGroupsHaveOutfit[0]);
+                }
+            }
+
+        }
+        if (isCheckBag)
+        {
+            delayCheckBagTime -= Time.deltaTime;
+        }
+        if (delayCheckBagTime < 0)
+        {
+            isCheckBag = false;
+            delayCheckBagTime = consDelayCheckBagTime;
+        }
+    }
+    private void CheckCusCheckOut()
+    {
+        if (listGroupsHaveBag.Count > 0 && !isCheckout)
+        {
+            Checkout c = checkoutManager.GetEmtyCheckout();
+            if (c != null)
+            {
+                isCheckout = true;
+                c.AddCus(listGroupsHaveBag[0].leader);
+                checkoutManager.listGrCusCheckout.Add(listGroupsHaveBag[0]);
+                for (int i = 0; i < listGroupsHaveBag[0].listCus.Count; i++)
+                {
+                    listGroupsHaveBag[0].listCus[i].onBagPos = false;
+                    listGroupsHaveBag[0].listCus[i].placeToBuyBag.closet.listCurCus.Remove(listGroupsHaveBag[0].listCus[i]);
+                }
+                listGroupsHaveBag.Remove(listGroupsHaveBag[0]);
+            }
+
+        }
+        if (isCheckout)
+        {
+            delayCheckoutTime -= Time.deltaTime;
+        }
+        if (delayCheckoutTime < 0)
+        {
+            isCheckout = false;
+            delayCheckoutTime = consDelayCheckoutTime;
+        }
     }
 }

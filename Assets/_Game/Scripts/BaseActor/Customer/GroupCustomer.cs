@@ -67,4 +67,11 @@ public class GroupCustomer : AllPool
             teammates[i].UpdateState(BaseCustomer.IDLE_STATE);
         }
     }
+    public void ResetGroup()
+    {
+        listCus.Clear();
+        leader = null;
+        teammates.Clear();
+        grNum = 0;
+    }
 }

@@ -19,7 +19,7 @@ public class BagCloset : ClosetBase
     {
         BagPos o = GetEmtyPos();
         var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, o.transform.position, transform.rotation);
-        (curBag as OutfitBase).ResetOutfit();
+        (curBag as BagBase).ResetOutfit();
         if (!listBags.Contains(curBag as BagBase))
         {
             o.AddOutfit(curBag as BagBase);
@@ -72,6 +72,7 @@ public class BagCloset : ClosetBase
     }
     public void GetEmtyPlaceNum(int n)
     {
+        listEmtyPlaceToBuyBag.Clear();
         for (int i = 0; i < listPlaceToBuyBag.Count; i++)
         {
             if (!listPlaceToBuyBag[i].isHaveCus)
