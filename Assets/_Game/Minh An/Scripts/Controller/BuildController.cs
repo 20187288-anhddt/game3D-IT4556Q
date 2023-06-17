@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildController : MonoBehaviour
+public class BuildController : Singleton<BuildController>
 {
-    public NameMap nameMap;
     [SerializeField] private List<BuildIngredientController> buildIngredientControllers;
 
     public BuildIngredientController GetBuildIngredientController(IngredientType ingredientType)

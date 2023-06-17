@@ -5,59 +5,67 @@ using UnityEngine;
 public class BuildIngredientController : MonoBehaviour
 {
     public IngredientType ingredientType;
-    [SerializeField] private List<BaseBuild> baseBuilds;
-    [SerializeField] private List<DataStatusObject> dataStatusObjects;
+    [SerializeField] private Habitat Habitat;
+    [SerializeField] private ClothMachine ClothMachine;
+    [SerializeField] private Closet Closet;
+    [SerializeField] private Closet Closet_1;
 
+    [SerializeField] private DataStatusObject statusObject_Habitat;
+    [SerializeField] private DataStatusObject statusObject_ClothMachine;
+    [SerializeField] private DataStatusObject statusObject_Closet;
+    [SerializeField] private DataStatusObject statusObjectCloset_1;
 
-    public bool IsBuild_Complete(NameObject_This nameObject_This)
+    public bool IsHabitat_Complete()
     {
-        foreach(BaseBuild baseBuild in baseBuilds)
-        {
-            if(baseBuild.nameObject_This == nameObject_This)
-            {
-                return true;
-            }
-        }
         return false;
     }
-    public BaseBuild GetBaseBuild(NameObject_This nameObject_This)
+    public bool IsClothMachine_Complete()
     {
-        foreach (BaseBuild baseBuild in baseBuilds)
-        {
-            if (baseBuild.nameObject_This == nameObject_This)
-            {
-                return baseBuild;
-            }
-        }
-        return null;
+        return false;
+    }
+    public bool IsCloset_Complete()
+    {
+        return false;
+    }
+    public bool IsCloset_1_Complete()
+    {
+        return false;
+    }
+    public DataStatusObject GetDataStatusObject_statusObject_Habitat()
+    {
+        return statusObject_Habitat;
+    }
+    public DataStatusObject GetDataStatusObject_statusObject_ClothMachine()
+    {
+        return statusObject_ClothMachine;
+    }
+    public DataStatusObject GetDataStatusObject_statusObject_Closet()
+    {
+        return statusObject_Closet;
+    }
+    public DataStatusObject GetDataStatusObject_statusObjectCloset_1()
+    {
+        return statusObjectCloset_1;
     }
 
-    public DataStatusObject GetDataStatusObject(NameObject_This nameObject_This)
-    {
-        foreach (DataStatusObject dataStatusObject in dataStatusObjects)
-        {
-            if(dataStatusObject.GetStatus_All_Level_Object().nameObject_This == nameObject_This)
-            {
-                return dataStatusObject;
-            }
-        }
-        return null;
-    }
-
-    public void OnBuy(NameObject_This nameObject_This)
+    public void Habitat_OnBuy()
     {
         //neu Habitat da hoat dong thi k OnBuy
-        Debug.Log(nameObject_This);
-        //Debug.Log(GetDataStatusObject(nameObject_This) == null);
-        GetDataStatusObject(nameObject_This).OnBuy();
+        GetDataStatusObject_statusObject_Habitat().OnBuy();
     }
-    public void OnBought(NameObject_This nameObject_This)
+    public void ClothMachine_OnBuy()
     {
-        GetDataStatusObject(nameObject_This).OnBought();
-        EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
+        //tuong tu
+        GetDataStatusObject_statusObject_ClothMachine().OnBuy();
     }
-    public List<DataStatusObject> GetDataStatusObject()
+    public void Closet_OnBuy()
     {
-        return dataStatusObjects;
+        //tuong tu
+        GetDataStatusObject_statusObject_Closet().OnBuy();
+    }
+    public void Closet_1_OnBuy()
+    {
+        //tuong tu
+        GetDataStatusObject_statusObjectCloset_1().OnBuy();
     }
 }

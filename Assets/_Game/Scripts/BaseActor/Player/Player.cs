@@ -252,11 +252,18 @@ public class Player : BaseActor,ICollect,IUnlock
                     bearBags.Remove(ingredient as BearBag);
                 break;
         }
-        ShortObj();
+        ShortObj(ingredient, n);
     }
-    public override void ShortObj()
+    public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
-        Debug.Log(allIngredients.Count);
+        for(int i = allIngredients.Count - 1; i >= 0; i--)
+        {
+            if(i + 1 > indexIngredientInList)
+            {
+                allIngredients[i].transform.localPosition -= Vector3.up * ingredient.ingreScale;
+            }
+           
+        }
         
     }
     public void UnlockMap(float coin)
