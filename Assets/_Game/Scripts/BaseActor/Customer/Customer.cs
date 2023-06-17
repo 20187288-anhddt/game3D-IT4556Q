@@ -32,7 +32,7 @@ public class Customer : BaseCustomer
     public Customer leader;
     public GroupCustomer grCus;
 
-    protected void Start()
+    protected void Awake()
     {
         fsm.init(7);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
@@ -105,7 +105,7 @@ public class Customer : BaseCustomer
     }
     public virtual void Idle()
     {
-        Debug.Log("Idle");
+      //  Debug.Log("Idle");
     }
     public virtual void MoveToCloset()
     { 
@@ -120,7 +120,7 @@ public class Customer : BaseCustomer
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
-        Debug.Log("Closet");
+       // Debug.Log("Closet");
     }
     public virtual void MoveToBag()
     {

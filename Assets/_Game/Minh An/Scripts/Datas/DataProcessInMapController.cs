@@ -133,7 +133,7 @@ public class DataApparatusProcessCurrent
     }
     public void ResetData()
     {
-        LevelCurrent = 2;
+        LevelCurrent = 1;
         ingredientType = IngredientType.CHICKEN;
     }
 }
@@ -300,11 +300,21 @@ public class RewardProcessCompleteMission
             case EventName.BearCloset_1_OnBuy:
                 OnBuy(IngredientType.BEAR, NameObject_This.BearCloset_1);
                 break;
+            case EventName.CheckOutTable_OnBought:
+                OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable);
+                break;
+            case EventName.CheckOutTable_1_OnBought:
+                OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
+                break;
         }
     }
 
     public void OnBuy(IngredientType ingredientType, NameObject_This nameObject_This)
     {
         BuildController.Instance.GetBuildIngredientController(ingredientType).OnBuy(nameObject_This);
+    }
+    public void OnBought(IngredientType ingredientType, NameObject_This nameObject_This)
+    {
+        BuildController.Instance.GetBuildIngredientController(ingredientType).OnBought(nameObject_This);
     }
 }

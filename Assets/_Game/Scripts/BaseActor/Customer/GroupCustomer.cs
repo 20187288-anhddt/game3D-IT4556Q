@@ -60,13 +60,13 @@ public class GroupCustomer : AllPool
             teammates[i].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
         }
     }
-    public void TeamIdle()
-    {
-        for (int i = 0; i < teammates.Count; i++)
-        {
-            teammates[i].UpdateState(BaseCustomer.IDLE_STATE);
-        }
-    }
+    //public void TeamIdle()
+    //{
+    //    for (int i = 0; i < teammates.Count; i++)
+    //    {
+    //        teammates[i].UpdateState(BaseCustomer.IDLE_STATE);
+    //    }
+    //}
     public void ResetGroup()
     {
         listCus.Clear();

@@ -38,5 +38,9 @@ public class BuildIngredientController : MonoBehaviour
         //neu Habitat da hoat dong thi k OnBuy
         GetDataStatusObject(nameObject_This).OnBuy();
     }
-  
+    public void OnBought(NameObject_This nameObject_This)
+    {
+        GetDataStatusObject(nameObject_This).OnBought();
+        EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
+    }
 }
