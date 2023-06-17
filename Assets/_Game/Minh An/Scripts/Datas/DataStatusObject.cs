@@ -193,28 +193,5 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     {
         statusObjectCurrent = statusObjects[0];
     }
-    public enum NameObject_This
-    {
-        ChickenHabitat,
-        ChickenClothMachine,
-        ChickenCloset,
-        ChickenCloset_1,
-
-        SheepHabitat,
-        SheepClothMachine,
-        SheepCloset,
-        SheepCloset_1,
-
-        CowHabitat,
-        CowClothMachine,
-        CowCloset,
-        CowCloset_1,
-
-        BearHabitat,
-        BearClothMachine,
-        BearCloset,
-        BearCloset_1,
-    }
-
 }
 

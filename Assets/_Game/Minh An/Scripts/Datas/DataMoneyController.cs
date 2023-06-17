@@ -6,31 +6,15 @@ using System.IO;
 public class DataMoneyController : DataBase
 {
     public MoneyData moneyData;
-    private bool isDoubleAddMoney = false;
-    private bool isInItData;
+
     public void Awake()
     {
-        CheckInItData();
-    }
-    private void Start()
-    {
-        EnventManager.AddListener(EventName.OnEventDoubleMoney.ToString(), OnDoubleMoneyAdd);
-        EnventManager.AddListener(EventName.OffEventDoubleMoney.ToString(), OffDoubleMoneyAdd);
-        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
+        InItData();
     }
     public void InItData()
     {
-        isDoubleAddMoney = false;
         SetFileName(nameof(DataMoneyController));
         LoadData();
-        isInItData = true;
-    }
-    public void CheckInItData()
-    {
-        if (!isInItData)
-        {
-            InItData();
-        }
     }
     public override void SaveData()
     {
@@ -52,55 +36,26 @@ public class DataMoneyController : DataBase
     }
     public void AddMoney(Money.TypeMoney typeMoney, int value)
     {
-        CheckInItData();
-        if (isDoubleAddMoney)
-        {
-            value *= 2;
-        }
         moneyData.AddMoney(typeMoney, value);
         SaveData();
         LoadData();
-        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public void RemoveMoney(Money.TypeMoney typeMoney, int value)
     {
-        CheckInItData();
         moneyData.RemoveMoney(typeMoney, value);
         SaveData();
         LoadData();
-        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public void SetMoney(Money.TypeMoney typeMoney, int value)
     {
-        CheckInItData();
         moneyData.SetMoney(typeMoney, value);
         SaveData();
         LoadData();
-        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public int GetMoney(Money.TypeMoney typeMoney)
     {
-        CheckInItData();
         LoadData();
         return moneyData.GetMoney(typeMoney);
-    }
-    private void OnDoubleMoneyAdd()
-    {
-        isDoubleAddMoney = true;
-        Player.Instance.DoubleMoneyBuff();
-        Debug.Log("ON Double Add Money");
-    }
-    private void OffDoubleMoneyAdd()
-    {
-        isDoubleAddMoney = true;
-        Player.Instance.ResetMoneyBuff();
-        Debug.Log("OFF Double Add Money");
-    }
-    public void ClearData()
-    {
-        ResetData();
-        SaveData();
-        LoadData();
     }
 }
 [System.Serializable]
@@ -183,7 +138,7 @@ public class Money
     }
     public void ResetData()
     {
-        value = 200;
+        value = 0;
     }
     public enum TypeMoney
     {

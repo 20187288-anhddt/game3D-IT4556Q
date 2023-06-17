@@ -18,6 +18,8 @@ public class Habitat : BuildObj, ILock
     public bool IsLock { get => isLock; set => isLock = value; }
     public float DefaultCoin { get => defaultCoin; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
+    public Transform staffPos;
+    public bool isHaveStaff;
 
     public override void UnLock()
     {
@@ -68,20 +70,21 @@ public class Habitat : BuildObj, ILock
             }); ;
         });
         checkUnlock.gameObject.SetActive(false);
+        levelManager.habitatManager.allActiveHabitats.Add(this);
         //GetComponent<BoxCollider>().enabled = true;
         switch (habitatType)
         {
             case IngredientType.BEAR:
-                levelManager.listBearHabitatActive.Add(this);
+                levelManager.habitatManager.listBearHabitatsActive.Add(this);
                 break;
             case IngredientType.COW:
-                levelManager.listCowHabitatActive.Add(this);
+                levelManager.habitatManager.listCowHabitatsActive.Add(this);
                 break;
             case IngredientType.CHICKEN:
-                levelManager.listSheepHabitatActive.Add(this);
+                levelManager.habitatManager.listSheepHabitatsActive.Add(this);
                 break;
             case IngredientType.SHEEP:
-                levelManager.listChickenHabitatActive.Add(this);
+                levelManager.habitatManager.listChickenHabitatsActive.Add(this);
                 break;
         }
     }
@@ -93,6 +96,7 @@ public class Habitat : BuildObj, ILock
     public override void StartInGame()
     {
         base.StartInGame();
+        isHaveStaff = false;
         foreach(AnimalBase a in allAnimals)
         {
             a.SetHabitat(this);

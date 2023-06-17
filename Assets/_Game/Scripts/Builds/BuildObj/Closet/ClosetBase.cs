@@ -10,4 +10,7 @@ public class ClosetBase : BuildObj,ILock
     public bool IsLock { get => isLock; set => isLock = value; }
     public float DefaultCoin { get => defaultCoin; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
+    public bool isHaveStaff;
+    public Transform staffPos;
+
 }

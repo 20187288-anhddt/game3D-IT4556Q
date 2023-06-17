@@ -119,56 +119,44 @@ public class MissionProcess
         switch (eventName)
         {
             case EventName.CowHabitat_Complete:
-                return IsHabitat_Complete(IngredientType.COW);
+                return Is_Complete(IngredientType.COW, NameObject_This.CowHabitat);
             case EventName.CowClothMachine_Complete:
-                return IsClothMachine_Complete(IngredientType.COW);
+                return Is_Complete(IngredientType.COW, NameObject_This.CowClothMachine);
             case EventName.CowCloset_Complete:
-                return IsCloset_Complete(IngredientType.COW);
+                return Is_Complete(IngredientType.COW, NameObject_This.CowCloset);
             case EventName.CowCloset_1_Complete:
-                return IsCloset_1_Complete(IngredientType.COW);
+                return Is_Complete(IngredientType.COW, NameObject_This.CowCloset_1);
             case EventName.SheepHabitat_Complete:
-                return IsHabitat_Complete(IngredientType.SHEEP);
+                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepHabitat);
             case EventName.SheepClothMachine_Complete:
-                return IsClothMachine_Complete(IngredientType.SHEEP);
+                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepClothMachine);
             case EventName.SheepCloset_Complete:
-                return IsCloset_Complete(IngredientType.SHEEP);
+                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepCloset);
             case EventName.SheepCloset_1_Complete:
-                return IsCloset_1_Complete(IngredientType.SHEEP);
+                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepCloset_1);
             case EventName.ChickenHabitat_Complete:
-                return IsHabitat_Complete(IngredientType.CHICKEN);
+                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenHabitat);
             case EventName.ChickenClothMachine_Complete:
-                return IsClothMachine_Complete(IngredientType.CHICKEN);
+                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine);
             case EventName.ChickenCloset_Complete:
-                return IsCloset_Complete(IngredientType.CHICKEN);
+                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenCloset);
             case EventName.ChickenCloset_1_Complete:
-                return IsCloset_1_Complete(IngredientType.CHICKEN);
+                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenCloset_1);
             case EventName.BearHabitat_Complete:
-                return IsHabitat_Complete(IngredientType.BEAR);
+                return Is_Complete(IngredientType.BEAR, NameObject_This.BearHabitat);
             case EventName.BearClothMachine_Complete:
-                return IsClothMachine_Complete(IngredientType.BEAR);
+                return Is_Complete(IngredientType.BEAR, NameObject_This.BearClothMachine);
             case EventName.BearCloset_Complete:
-                return IsCloset_Complete(IngredientType.BEAR);
+                return Is_Complete(IngredientType.BEAR, NameObject_This.BearCloset);
             case EventName.BearCloset_1_Complete:
-                return IsCloset_1_Complete(IngredientType.BEAR);
+                return Is_Complete(IngredientType.BEAR, NameObject_This.BearCloset_1);
 
         }
         return false;
     }
-    public bool IsHabitat_Complete(IngredientType ingredientType)
+    public bool Is_Complete(IngredientType ingredientType, NameObject_This nameObject_This)
     {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsHabitat_Complete();
-    }
-    public bool IsClothMachine_Complete(IngredientType ingredientType)
-    {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsClothMachine_Complete();
-    }
-    public bool IsCloset_Complete(IngredientType ingredientType)
-    {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsCloset_Complete();
-    }
-    public bool IsCloset_1_Complete(IngredientType ingredientType)
-    {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsCloset_1_Complete();
+        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsBuild_Complete(nameObject_This);
     }
 }
 [System.Serializable]
@@ -187,71 +175,59 @@ public class RewardProcessCompleteMission
         switch (eventName)
         {
             case EventName.CowHabitat_Complete:
-                Habitat_OnBuy(IngredientType.COW);
+                OnBuy(IngredientType.COW, NameObject_This.CowHabitat);
                 break;
             case EventName.CowClothMachine_Complete:
-                ClothMachine_OnBuy(IngredientType.COW);
+                OnBuy(IngredientType.COW, NameObject_This.CowClothMachine);
                 break;
             case EventName.CowCloset_Complete:
-                Closet_OnBuy(IngredientType.COW);
+                OnBuy(IngredientType.COW, NameObject_This.CowCloset);
                 break;
             case EventName.CowCloset_1_Complete:
-                Closet_1_OnBuy(IngredientType.COW);
+                OnBuy(IngredientType.COW, NameObject_This.CowCloset_1);
                 break;
             case EventName.SheepHabitat_Complete:
-                Habitat_OnBuy(IngredientType.SHEEP);
+                OnBuy(IngredientType.SHEEP, NameObject_This.SheepHabitat);
                 break;
             case EventName.SheepClothMachine_Complete:
-                ClothMachine_OnBuy(IngredientType.SHEEP);
+                OnBuy(IngredientType.SHEEP, NameObject_This.SheepClothMachine);
                 break;
             case EventName.SheepCloset_Complete:
-                Closet_OnBuy(IngredientType.SHEEP);
+                OnBuy(IngredientType.SHEEP, NameObject_This.SheepCloset);
                 break;
             case EventName.SheepCloset_1_Complete:
-                Closet_1_OnBuy(IngredientType.SHEEP);
+                OnBuy(IngredientType.SHEEP, NameObject_This.SheepCloset_1);
                 break;
             case EventName.ChickenHabitat_Complete:
-                Habitat_OnBuy(IngredientType.CHICKEN);
+                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenHabitat);
                 break;
             case EventName.ChickenClothMachine_Complete:
-                ClothMachine_OnBuy(IngredientType.CHICKEN);
+                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine);
                 break;
             case EventName.ChickenCloset_Complete:
-                Closet_OnBuy(IngredientType.CHICKEN);
+                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenCloset);
                 break;
             case EventName.ChickenCloset_1_Complete:
-                Closet_1_OnBuy(IngredientType.CHICKEN);
+                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenCloset_1);
                 break;
             case EventName.BearHabitat_Complete:
-                Habitat_OnBuy(IngredientType.BEAR);
+                OnBuy(IngredientType.BEAR, NameObject_This.BearHabitat);
                 break;
             case EventName.BearClothMachine_Complete:
-                ClothMachine_OnBuy(IngredientType.BEAR);
+                OnBuy(IngredientType.BEAR, NameObject_This.BearClothMachine);
                 break;
             case EventName.BearCloset_Complete:
-                Closet_OnBuy(IngredientType.BEAR);
+                OnBuy(IngredientType.BEAR, NameObject_This.BearCloset);
                 break;
             case EventName.BearCloset_1_Complete:
-                Closet_1_OnBuy(IngredientType.BEAR);
+                OnBuy(IngredientType.BEAR, NameObject_This.BearCloset_1);
                 break;
         }
     }
 
-    public void Habitat_OnBuy(IngredientType ingredientType)
+    public void OnBuy(IngredientType ingredientType, NameObject_This nameObject_This)
     {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).Habitat_OnBuy();
+        BuildController.Instance.GetBuildIngredientController(ingredientType).OnBuy(nameObject_This);
     }
-    public void ClothMachine_OnBuy(IngredientType ingredientType)
-    {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).ClothMachine_OnBuy();
-    }
-    public void Closet_OnBuy(IngredientType ingredientType)
-    {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).Closet_OnBuy();
-    }
-    public void Closet_1_OnBuy(IngredientType ingredientType)
-    {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).Closet_1_OnBuy();
-    }
-
+   
 }

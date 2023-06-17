@@ -19,9 +19,7 @@ public class BagCloset : ClosetBase
     private CheckUnlock checkUnlock;
     [SerializeField]
     private CheckPushBagCloset checkPushBagCloset;
-    public bool IsLock { get => isLock; set => isLock = value; }
-    public float DefaultCoin { get => defaultCoin; }
-    public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
+   
 
     public override void UnLock()
     {
@@ -54,20 +52,21 @@ public class BagCloset : ClosetBase
         checkUnlock.gameObject.SetActive(false);
         checkPushBagCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
+       //levelManager.closetManager.listAllActiveClosets.Add(this);
         levelManager.closetManager.listBagClosets.Add(this);
         switch (type)
         {
             case IngredientType.BEAR:
-                levelManager.listBearBagClosetActive.Add(this);
+                levelManager.closetManager.listBearBagClosetActive.Add(this);
                 break;
             case IngredientType.COW:
-                levelManager.listCowBagClosetActive.Add(this);
+                levelManager.closetManager.listCowBagClosetActive.Add(this);
                 break;
             case IngredientType.CHICKEN:
-                levelManager.listSheepBagClosetActive.Add(this);
+                levelManager.closetManager.listSheepBagClosetActive.Add(this);
                 break;
             case IngredientType.SHEEP:
-                levelManager.listChickenBagClosetActive.Add(this);
+                levelManager.closetManager.listChickenBagClosetActive.Add(this);
                 break;
         }
     }
@@ -159,5 +158,17 @@ public class BagCloset : ClosetBase
         {
             listEmtyPlaceToBuyBag.Clear();
         }
+    }
+    public int GetListEmptyBag()
+    {
+        int n = 0;
+        for (int i = 0; i < listBagPos.Count; i++)
+        {
+            if (listBagPos[i].haveOutfit)
+            {
+                n++;
+            }
+        }
+        return n;
     }
 }
