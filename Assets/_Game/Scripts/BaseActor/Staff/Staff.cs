@@ -26,6 +26,7 @@ public class Staff : BaseStaff, ICollect
     public int objHave { get => ObjHave; set => ObjHave = value; }
     public float timeDelayCatch { get => TimeDelayCatch; set => TimeDelayCatch = value; }
     public float CoinValue { get => coinValue; set => coinValue = value; }
+    public float yOffset { get => Yoffset; set => Yoffset = value; }
     public bool canCatch { get => CanCatch; set => CanCatch = value; }
     //public bool isTiming { get => IsTiming; set => IsTiming = value; }
     public Transform handPos { get => HandPos; set => HandPos = value; }
@@ -44,6 +45,8 @@ public class Staff : BaseStaff, ICollect
     public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+
+
     public GameManager gameManager;
 
     protected void Start()
@@ -322,16 +325,14 @@ public class Staff : BaseStaff, ICollect
     }
     public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
-        ingredient.ReSetYOffset();
+        yOffset = 0;
         for (int i = 0; i < allIngredients.Count; i++)
         {
-            ingredient.AddYOffset(ingredient.ingreScale);
-            allIngredients[i].transform.localPosition = Vector3.up * allIngredients[i].GetYOffset() +
+            yOffset += ingredient.ingreScale;
+            allIngredients[i].transform.localPosition = Vector3.up * yOffset +
                 Vector3.right * allIngredients[i].transform.localPosition.x +
                 Vector3.forward * allIngredients[i].transform.localPosition.z;
         }
-
-
     }
     public void ResetStaff()
     {

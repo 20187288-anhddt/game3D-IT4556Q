@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class IngredientBase : AllPool
 {
-    public static float yOffset = 0;
     public IngredientType ingredientType;
     public float ingreScale;
     public void MoveToICollect(ICollect actor)
@@ -16,11 +15,11 @@ public class IngredientBase : AllPool
         actor.objHave++;
         this.transform.parent = actor.carryPos;
         transform.localRotation = Quaternion.identity;
-        yOffset += ingreScale;
-
+        // yOffset += ingreScale;
+        actor.yOffset += ingreScale;
         //transform.DOMove(baseActor.CarryPos.position, 0.1f).OnComplete(() =>
         //{
-        this.transform.DOLocalJump(Vector3.up * yOffset + Vector3.right * x + Vector3.forward * z, 0.75f, 1, 0.25f).OnComplete(() =>
+        this.transform.DOLocalJump(Vector3.up * actor.yOffset + Vector3.right * x + Vector3.forward * z, 0.75f, 1, 0.25f).OnComplete(() =>
         {
             //baseActor.ShortObj();
         });
@@ -32,18 +31,7 @@ public class IngredientBase : AllPool
         //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
         //}
     }
-    public float GetYOffset()
-    {
-        return yOffset;
-    }
-    public void ReSetYOffset()
-    {
-        yOffset = 0;
-    }
-    public void AddYOffset(float value)
-    {
-        yOffset += value;
-    }
+   
     public void MoveToTrash(TrashCan gar)
     {
         float x = Random.Range(-0.05f, 0.05f);
