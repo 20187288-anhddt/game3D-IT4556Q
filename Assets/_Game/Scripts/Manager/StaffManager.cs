@@ -13,6 +13,16 @@ public class StaffManager : MonoBehaviour
     {
         gameManager = GameManager.Instance;
     }
+    void Update()
+    {
+        if( listAllActiveStaffs.Count > 0)
+        {
+            if(listFarmers.Count > 0)
+            {
+                CheckFarmerMisson();
+            }
+        }       
+    }
     public void CheckFarmerMisson()
     {
         if (listAllActiveStaffs.Count <= 0)
@@ -20,32 +30,37 @@ public class StaffManager : MonoBehaviour
         for(int i = 0; i < listFarmers.Count; i++)
         {
             if (!listFarmers[i].onMission)
-            {
+            { 
                 Staff curStaff = listFarmers[i];
                 MachineBase curMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.CheckMachineInputEmty();
                 if (curMachine != null)
                 {
+                    Debug.Log(curMachine.ingredientType);
                     Habitat curHabitat = null;
-                    switch (curMachine.ingredientType)
-                    {
-                        case IngredientType.SHEEP:
-                            curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.SHEEP);
-                            break;
-                        case IngredientType.COW:
-                            curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.COW);
-                            break;
-                        case IngredientType.CHICKEN:
-                            curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.CHICKEN);
-                            break;
-                        case IngredientType.BEAR:
-                            curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.BEAR);
-                            break;
-                    }
+                    curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(curMachine.ingredientType);
+                    //switch (curMachine.ingredientType)
+                    //{
+                    //    case IngredientType.SHEEP:
+                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.SHEEP);
+                    //        break;
+                    //    case IngredientType.COW:
+                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.COW);
+                    //        break;
+                    //    case IngredientType.CHICKEN:
+                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.CHICKEN);
+                    //        break;
+                    //    case IngredientType.BEAR:
+                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.BEAR);
+                    //        break;
+                    //}
                     if (curHabitat != null)
                     {
-                        curStaff.transHabitat = curHabitat.staffPos.transform.position;
-                        curStaff.transMachine = curMachine.inStaffPos.transform.position;
+                        
                         curStaff.onMission = true;
+                        curStaff.curMachine = curMachine;
+                        curStaff.curHabitat = curHabitat;
+                        curStaff.transHabitat = curHabitat.staffPos.transform.position;
+                        curStaff.transMachine = curMachine.inStaffPos.transform.position; 
                         curHabitat.isHaveStaff = true;
                         curMachine.isHaveInStaff = true;
                         curStaff.UpdateState(BaseStaff.MOVE_TO_HABITAT_STATE);

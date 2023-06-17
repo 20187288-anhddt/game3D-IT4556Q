@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public class Staff : BaseStaff, ICollect
 {
@@ -9,12 +10,18 @@ public class Staff : BaseStaff, ICollect
     private NavMeshAgent navMeshAgent;
     public GameObject gun;
     [Header("-----Status-----")]
-    public bool isUnlock;
     public bool onMission;
     public float coinValue;
+    public Vector3 transIdle;
     public Vector3 transHabitat;
     public Vector3 transMachine;
     public Vector3 transCloset;
+    public bool onHabitatPos;
+    public bool onMachinePos;
+    public bool onClosetPos;
+    public Habitat curHabitat;
+    public MachineBase curMachine;
+    public ClosetBase curCloset;
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
     public float timeDelayCatch { get => TimeDelayCatch; set => TimeDelayCatch = value; }
@@ -41,8 +48,9 @@ public class Staff : BaseStaff, ICollect
 
     protected void Start()
     {
-        fsm.init(4);
+        fsm.init(5);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
+        fsm.add(new FsmState(MOVE_TO_IDLE_STATE, StartMoveToIdle, OnMoveToIdleState));
         fsm.add(new FsmState(MOVE_TO_HABITAT_STATE, StartMoveToHabitat, OnMoveToHabitatState));
         fsm.add(new FsmState(MOVE_TO_MACHINE_STATE, StartMoveToMachine, OnMoveToMachineState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
@@ -51,17 +59,22 @@ public class Staff : BaseStaff, ICollect
         if (gun.activeSelf)
             gun.SetActive(false);
         gameManager = GameManager.Instance;
+        ResetStaff();
     }
    
     protected void Update()
     {
         fsm.execute();
         ChangeAnim();
-        SwitchState();
     }
     private FsmSystem.ACTION OnIdleState(FsmSystem _fsm)
     {
         Idle();
+        return FsmSystem.ACTION.END;
+    }
+    private FsmSystem.ACTION OnMoveToIdleState(FsmSystem _fsm)
+    {
+        CheckMoveToIdle();
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToHabitatState(FsmSystem _fsm)
@@ -79,6 +92,10 @@ public class Staff : BaseStaff, ICollect
         CheckMoveToCloset();
         return FsmSystem.ACTION.END;
     }
+    private void StartMoveToIdle(FsmSystem _fsm)
+    {
+        MoveToIdle();
+    }
     private void StartMoveToHabitat(FsmSystem _fsm)
     {
         MoveToHabitat();
@@ -95,25 +112,64 @@ public class Staff : BaseStaff, ICollect
     {
 
     }
+    public virtual void MoveToIdle()
+    {
+        navMeshAgent.SetDestination(transIdle);
+        navMeshAgent.stoppingDistance = 0;
+    }
     public virtual void MoveToHabitat()
     {
-
+        navMeshAgent.SetDestination(transHabitat);
+        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void MoveToMachine()
     {
-
+        navMeshAgent.SetDestination(transMachine);
+        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void MoveToCloset()
     {
 
     }
+    public virtual void CheckMoveToIdle()
+    {
+        if (Vector3.Distance(transIdle, this.transform.position) < 0.2f)
+        {
+            this.transform.DORotate(Vector3.zero, 0f);
+            onMission = false;
+            curMachine.isHaveInStaff = false;
+            UpdateState(IDLE_STATE);
+        }
+    }
     public virtual void CheckMoveToHabitat()
     {
-
+        Debug.Log(Vector3.Distance(transHabitat, this.transform.position));
+        if (!onHabitatPos && Vector3.Distance(transHabitat, this.transform.position) < 0.2f)
+        {
+            this.transform.DORotate(Vector3.zero, 0f);
+            this.onHabitatPos = true;
+            //UpdateState(IDLE_STATE);
+        }
+        if(onHabitatPos && objHave >= maxCollectObj)
+        {
+            UpdateState(MOVE_TO_MACHINE_STATE);
+            onHabitatPos = false;
+            curHabitat.isHaveStaff = false;
+        }
     }
     public virtual void CheckMoveToMachine()
     {
-
+        if (!onMachinePos && Vector3.Distance(transMachine, this.transform.position) < 0.2f)
+        {
+            this.transform.DORotate(Vector3.zero, 0f);
+            this.onMachinePos = true;
+            //UpdateState(IDLE_STATE);
+        }
+        if (onMachinePos && (objHave <= 0 || curMachine.ingredients.Count >= curMachine.maxObjInput))
+        {
+            UpdateState(MOVE_TO_IDLE_STATE);
+            onMachinePos = false;
+        }
     }
     public virtual void CheckMoveToCloset()
     {
@@ -125,14 +181,6 @@ public class Staff : BaseStaff, ICollect
         {
             //animator.Play("Running");
         }
-    }
-    public void SwitchState()
-    {
-        if(this.staffType == StaffType.FARMER)
-        {
-            
-        }
-        
     }
     public void Collect()
     {
@@ -287,9 +335,14 @@ public class Staff : BaseStaff, ICollect
     }
     public void ResetStaff()
     {
+        onMission = false;
         objHave = 0;
         transCloset = Vector3.zero;
         transHabitat = Vector3.zero;
+        transMachine = Vector3.zero;
+        onClosetPos = false;
+        onHabitatPos = false;
+        onMachinePos = false;
         foreach (IngredientBase i in allIngredients)
         {
             AllPoolContainer.Instance.Release(i);

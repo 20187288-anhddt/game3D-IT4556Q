@@ -8,15 +8,16 @@ public class IngredientBase : AllPool
     public static float yOffset = 0;
     public IngredientType ingredientType;
     public float ingreScale;
-    public void MoveToICollect(BaseActor baseActor)
+    public void MoveToICollect(ICollect actor)
     {
         float x = Random.Range(-0.05f, 0.05f);
         float z = Random.Range(-0.05f, 0.05f);
-        (baseActor as ICollect).AddIngredient(this);
-        baseActor.ObjHave++;
-        this.transform.parent = baseActor.CarryPos;
+        (actor as ICollect).AddIngredient(this);
+        actor.objHave++;
+        this.transform.parent = actor.carryPos;
         transform.localRotation = Quaternion.identity;
         yOffset += ingreScale;
+
         //transform.DOMove(baseActor.CarryPos.position, 0.1f).OnComplete(() =>
         //{
         this.transform.DOLocalJump(Vector3.up * yOffset + Vector3.right * x + Vector3.forward * z, 0.75f, 1, 0.25f).OnComplete(() =>

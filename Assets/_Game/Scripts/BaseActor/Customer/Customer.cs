@@ -55,12 +55,10 @@ public class Customer : BaseCustomer
     private void StartMoveToBag(FsmSystem _fsm)
     {
         MoveToBag();
-        Debug.Log("a");
     }
     private void StartMoveToCheckOut(FsmSystem _fsm)
     {
         MoveToCheckOut();
-        Debug.Log("b");
     }
     private void StartFollowLeader(FsmSystem _fsm)
     {
@@ -73,31 +71,26 @@ public class Customer : BaseCustomer
     private FsmSystem.ACTION OnIdleState(FsmSystem _fsm)
     {
         Idle();
-        Debug.Log("c");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToClosetState(FsmSystem _fsm)
     {
         CheckMoveToCloset();
-        Debug.Log("d");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToBagState(FsmSystem _fsm)
     {
         CheckMoveToBag();
-        Debug.Log("e");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToCheckOutState(FsmSystem _fsm)
     {
         CheckMoveToCheckOut();
-        Debug.Log("f");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnFollowLeaderState(FsmSystem _fsm)
     {
         CheckFollowLeader();
-        Debug.Log("g");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnExitState(FsmSystem _fsm)
@@ -108,11 +101,11 @@ public class Customer : BaseCustomer
     private FsmSystem.ACTION OnVipState(FsmSystem _fsm)
     {
         VipState();
-        Debug.Log("f");
         return FsmSystem.ACTION.END;
     }
     public virtual void Idle()
     {
+        Debug.Log("Idle");
     }
     public virtual void MoveToCloset()
     { 
@@ -127,7 +120,7 @@ public class Customer : BaseCustomer
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
-        Debug.Log("Run");
+        Debug.Log("Closet");
     }
     public virtual void MoveToBag()
     {
@@ -236,7 +229,7 @@ public class Customer : BaseCustomer
         {
             bagModel[i].SetActive(false);
         }
-        //UpdateState(IDLE_STATE);
+        UpdateState(IDLE_STATE);
     }
     public void ChangeAnim()
     {
