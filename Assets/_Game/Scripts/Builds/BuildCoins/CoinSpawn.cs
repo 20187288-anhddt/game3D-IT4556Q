@@ -30,6 +30,14 @@ public class CoinSpawn : MonoBehaviour
         current += Vector3.up * y * 0.35f + Vector3.right * x + Vector3.forward * z;
         return current;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Player>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Player>();
@@ -42,8 +50,10 @@ public class CoinSpawn : MonoBehaviour
             {
                 checkOut.coins[i].MoveToPlayerSpeed(player);
                 checkOut.coins.Remove(checkOut.coins[i]);
+                DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 1);
                 i--;
             }
+            player.DelayCatch(player.timeDelayCatch);
         }
     }
 

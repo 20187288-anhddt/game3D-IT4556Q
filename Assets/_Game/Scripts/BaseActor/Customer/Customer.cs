@@ -31,7 +31,7 @@ public class Customer : BaseCustomer
     public bool gotBag;
     public Customer leader;
     public GroupCustomer grCus;
-
+    private Vector3 pointTaget = Vector3.zero;
     protected void Awake()
     {
         fsm.init(7);
@@ -42,6 +42,19 @@ public class Customer : BaseCustomer
         fsm.add(new FsmState(FOLLOW_LEADER_STATE, null, OnFollowLeaderState));
         fsm.add(new FsmState(EXIT_STATE, StartExit, null));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
+        
+    }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
+    }
+    public void ReloadSetDestination()
+    {
+        if (STATE_CUSTOMER != IDLE_STATE)
+        {
+            navMeshAgent.SetDestination(pointTaget);
+        }
+
     }
     protected void Update()
     {
@@ -111,6 +124,7 @@ public class Customer : BaseCustomer
     { 
         navMeshAgent.SetDestination(transCloset);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transCloset;
     }
     public virtual void CheckMoveToCloset()
     {
@@ -124,8 +138,10 @@ public class Customer : BaseCustomer
     }
     public virtual void MoveToBag()
     {
+      
         navMeshAgent.SetDestination(transBag);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transBag; 
     }
     public virtual void CheckMoveToBag()
     {
@@ -135,12 +151,13 @@ public class Customer : BaseCustomer
             this.onBagPos = true;
             UpdateState(IDLE_STATE);
         }
-        Debug.Log("B");
+       // Debug.Log("B");
     }
     public virtual void MoveToCheckOut()
     {
         navMeshAgent.SetDestination(transCheckOut);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transCheckOut;
     }
     public virtual void CheckMoveToCheckOut()
     {
@@ -151,7 +168,7 @@ public class Customer : BaseCustomer
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
-        Debug.Log("a");
+        //Debug.Log("a");
     }
     public virtual void FollowLeader()
     {
@@ -159,6 +176,7 @@ public class Customer : BaseCustomer
         {
             navMeshAgent.SetDestination(leader.transform.position);
             navMeshAgent.stoppingDistance = 0;
+            pointTaget = leader.transform.position;
         }
     }
     public virtual void CheckFollowLeader()
@@ -191,6 +209,7 @@ public class Customer : BaseCustomer
     {
         navMeshAgent.SetDestination(transExit);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transExit;
     }
     
     public virtual void Exit()

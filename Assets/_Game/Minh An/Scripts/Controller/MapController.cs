@@ -11,6 +11,9 @@ public class MapController : Singleton<MapController>
     private void Start()
     {
         OpenMap(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent());
+        NavMesh.RemoveAllNavMeshData();
+        string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + /*value*/3;
+        NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
     }
 
     public void OpenMap(int value)
@@ -38,9 +41,9 @@ public class MapController : Singleton<MapController>
         {
             DataManager.Instance.GetDataMap().GetMapCurrent().SetLevelInMapCurrent(value);
         }
-        NavMesh.RemoveAllNavMeshData();
-        string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + value;
-        NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
+        //NavMesh.RemoveAllNavMeshData();
+        //string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + /*value*/3;
+        //NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
     }
     
 }

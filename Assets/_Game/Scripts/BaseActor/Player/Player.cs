@@ -33,6 +33,7 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+    public CharacterController characterController;
    
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class Player : BaseActor,ICollect,IUnlock
         }
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
+        if(characterController == null) { characterController = GetComponent<CharacterController>(); }
     }
     protected void Start()
     {
@@ -74,13 +76,17 @@ public class Player : BaseActor,ICollect,IUnlock
     protected void Update()
     {
         fsm.execute();
-        var rig = GetComponent<Rigidbody>();
-        animSpd = rig.velocity.magnitude;
+        //var rig = GetComponent<Rigidbody>();
+        //animSpd = rig.velocity.magnitude;
         //if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
         //{
         //    UpdateState(RUN_STATE);
         //}
         //else UpdateState(IDLE_STATE);
+        //if (Input.GetMouseButton(0))
+        //{
+        //    UpdateMove(speed);
+        //}
     }
     public Vector2 Config(Vector2 input)
     {
@@ -105,12 +111,10 @@ public class Player : BaseActor,ICollect,IUnlock
         Canvas_Joystick joystick = Canvas_Joystick.Instance;
         Vector3 inputAxist = joystick.Get_Diraction();
         //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
-       
+        //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
+        characterController.Move(inputAxist * speed * Time.deltaTime);
         if (inputAxist.x != 0 || inputAxist.z != 0)
         {
-            var rig = GetComponent<Rigidbody>();
-            //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
-            rig.MovePosition(transform.position + transform.forward.normalized * speed * 0.02f);
             Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
             transform.rotation = Quaternion.LookRotation(moveDir).normalized;
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
@@ -119,8 +123,8 @@ public class Player : BaseActor,ICollect,IUnlock
     }
     public virtual void Idle()
     {
-        var rig = GetComponent<Rigidbody>();
-        rig.velocity = Vector3.zero;
+        //var rig = GetComponent<Rigidbody>();
+        //rig.velocity = Vector3.zero;
     }
     public void Collect()
     {

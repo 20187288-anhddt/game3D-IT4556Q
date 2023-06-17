@@ -22,6 +22,7 @@ public class Staff : BaseStaff, ICollect
     public Habitat curHabitat;
     public MachineBase curMachine;
     public ClosetBase curCloset;
+    
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
     public float timeDelayCatch { get => TimeDelayCatch; set => TimeDelayCatch = value; }
@@ -45,10 +46,9 @@ public class Staff : BaseStaff, ICollect
     public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
-
+    private Vector3 pointTaget = Vector3.zero;
 
     public GameManager gameManager;
-
     protected void Awake()
     {
         fsm.init(5);
@@ -64,8 +64,19 @@ public class Staff : BaseStaff, ICollect
         gameManager = GameManager.Instance;
         ResetStaff();
     }
-   
-    protected void Update()
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
+    }
+    public void ReloadSetDestination()
+    {
+        if(STATE_STAFF != IDLE_STATE)
+        {
+            navMeshAgent.SetDestination(pointTaget);
+        }
+     
+    }
+    void Update()
     {
         fsm.execute();
         ChangeAnim();
@@ -119,25 +130,29 @@ public class Staff : BaseStaff, ICollect
     {
         navMeshAgent.SetDestination(transIdle);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transIdle;
     }
     public virtual void MoveToHabitat()
     {
         navMeshAgent.SetDestination(transHabitat);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transHabitat;
     }
     public virtual void MoveToMachine()
     {
         navMeshAgent.SetDestination(transMachine);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transMachine;
     }
     public virtual void MoveToCloset()
     {
         navMeshAgent.SetDestination(transCloset);
         navMeshAgent.stoppingDistance = 0;
+        pointTaget = transCloset;
     }
     public virtual void CheckMoveToIdle()
     {
-        if (Vector3.Distance(transIdle, this.transform.position) < 0.2f)
+        if (Vector3.Distance(transIdle, this.transform.position) < 0.5f)
         {     
             this.transform.DORotate(Vector3.zero, 0f);
             onMission = false;
@@ -158,7 +173,8 @@ public class Staff : BaseStaff, ICollect
        // Debug.Log(Vector3.Distance(transHabitat, this.transform.position));
         if (!onHabitatPos && Vector3.Distance(transHabitat, this.transform.position) < 0.2f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            //this.transform.DORotate(Vector3.zero, 0f);
+            this.transform.LookAt(curHabitat.transform.position);
             this.onHabitatPos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -171,9 +187,10 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToMachine()
     {
-        if (!onMachinePos && Vector3.Distance(transMachine, this.transform.position) < 0.2f)
+        if (!onMachinePos && Vector3.Distance(transMachine, this.transform.position) < 0.5f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            //this.transform.DORotate(Vector3.zero, 0f);
+            this.transform.LookAt(curMachine.transform.position);
             this.onMachinePos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -191,11 +208,27 @@ public class Staff : BaseStaff, ICollect
                     } 
                     break;
                 case StaffType.WORKER:
-                    if (objHave >= maxCollectObj)
+                    if(curMachine is ClothMachine)
                     {
-                        onMachinePos = false;
-                        curMachine.isHaveOutStaff = false;
-                        UpdateState(MOVE_TO_CLOSET_STATE);            
+                        if (objHave >= maxCollectObj)
+                            //|| ((curMachine as ClothMachine).outCloths.Count <= 0
+                            //&& curMachine.ingredients.Count <= 0))
+                        {
+                            onMachinePos = false;
+                            curMachine.isHaveOutStaff = false;
+                            UpdateState(MOVE_TO_CLOSET_STATE);
+                        }
+                    }     
+                    if(curMachine is BagMachine)
+                    {
+                        if (objHave >= maxCollectObj)
+                            //|| ((curMachine as BagMachine).outCloths.Count <= 0
+                            //&& curMachine.ingredients.Count <= 0))
+                        {
+                            onMachinePos = false;
+                            curMachine.isHaveOutStaff = false;
+                            UpdateState(MOVE_TO_CLOSET_STATE);
+                        }
                     }
                     break;
             } 
@@ -205,7 +238,8 @@ public class Staff : BaseStaff, ICollect
     {
         if (!onClosetPos && Vector3.Distance(transCloset, this.transform.position) < 0.5f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            //this.transform.DORotate(Vector3.zero, 0f);
+            this.transform.LookAt(curCloset.transform.position);
             this.onClosetPos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -213,7 +247,7 @@ public class Staff : BaseStaff, ICollect
         {
             if(curCloset is Closet)
             {
-                if(objHave == 0 || (curCloset as Closet).listOutfits.Count >= (curCloset).maxObj)
+                if(objHave <= 0 || (curCloset as Closet).listOutfits.Count >= (curCloset).maxObj)
                 {
                     onClosetPos = false;
                     UpdateState(MOVE_TO_IDLE_STATE);
@@ -222,7 +256,7 @@ public class Staff : BaseStaff, ICollect
             }  
             if(curCloset is BagCloset)
             {
-                if (objHave == 0 || (curCloset as BagCloset).listBags.Count >= (curCloset).maxObj)
+                if (objHave <= 0 || (curCloset as BagCloset).listBags.Count >= (curCloset).maxObj)
                 {
                     onClosetPos = false;
                     UpdateState(MOVE_TO_IDLE_STATE);
