@@ -23,7 +23,7 @@ public class BuildIngredientController : MonoBehaviour
   
     public DataStatusObject GetDataStatusObject(NameObject_This nameObject_This)
     {
-        foreach(DataStatusObject dataStatusObject in dataStatusObjects)
+        foreach (DataStatusObject dataStatusObject in dataStatusObjects)
         {
             if(dataStatusObject.GetStatus_All_Level_Object().nameObject_This == nameObject_This)
             {

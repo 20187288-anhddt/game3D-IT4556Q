@@ -20,9 +20,11 @@ public class Closet : ClosetBase, ILock
     [SerializeField]
     private CheckPushCloset checkPushCloset;
 
-    public override void UnLock()
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
-        base.UnLock();
+        Player p = Player.Instance;
+       
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
@@ -32,7 +34,7 @@ public class Closet : ClosetBase, ILock
             placeToBuy.gameObject.SetActive(true);
             placeToBuy.StartInGame();
         }
-        Player p = Player.Instance;
+      
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -40,37 +42,97 @@ public class Closet : ClosetBase, ILock
         {
             p.transform.position = checkUnlock.transform.position - Vector3.forward * 4;
         }
-        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
-                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                {
-                    p.isUnlock = false;
-                });
-            }); ;
-        });
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        else
+        {
+            p.isUnlock = false;
+        }
         checkUnlock.gameObject.SetActive(false);
         checkPushCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
         //levelManager.closetManager.listAllActiveClosets.Add(this);
         levelManager.closetManager.listClosets.Add(this);
-        switch (type)
+        switch (ingredientType)
         {
             case IngredientType.BEAR:
                 levelManager.closetManager.listBearClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.BearCloset:
+                            EnventManager.TriggerEvent(EventName.BearCloset_Complete.ToString());
+                            break;
+                        case NameObject_This.BearCloset_1:
+                            EnventManager.TriggerEvent(EventName.BearCloset_1_Complete.ToString());
+                            break;
+                    }
+                }
+              
                 break;
             case IngredientType.COW:
                 levelManager.closetManager.listCowClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.CowCloset:
+                            EnventManager.TriggerEvent(EventName.CowCloset_Complete.ToString());
+                            break;
+                        case NameObject_This.CowCloset_1:
+                            EnventManager.TriggerEvent(EventName.CowCloset_1_Complete.ToString());
+                            break;
+                    }
+                }
+              
                 break;
             case IngredientType.CHICKEN:
                 levelManager.closetManager.listSheepClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.ChickenCloset:
+                            EnventManager.TriggerEvent(EventName.ChickenCloset_Complete.ToString());
+                            break;
+                        case NameObject_This.ChickenCloset_1:
+                            EnventManager.TriggerEvent(EventName.ChickenCloset_1_Complete.ToString());
+                            break;
+                    }
+                }
+            
                 break;
             case IngredientType.SHEEP:
                 levelManager.closetManager.listChickenClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.SheepCloset:
+                            EnventManager.TriggerEvent(EventName.SheepCloset_Complete.ToString());
+                            break;
+                        case NameObject_This.SheepCloset_1:
+                            EnventManager.TriggerEvent(EventName.SheepCloset_1_Complete.ToString());
+                            break;
+                    }
+                }
+             
                 break;
         }
     }
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartInGame(); 
     }
 

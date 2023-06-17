@@ -81,7 +81,7 @@ public class CheckUnlock : MonoBehaviour
                             if (!(unlock as Player).canCatch)
                                 return;
                             (unlock as Player).canCatch = false;
-                            normal.UnLock();
+                            normal.UnLock(true, true);
                             //unlockBuild(unlock.CoinValue);
                             //unlock.UnlockMap(1);
                             //(unlock as Player).DelayCatch(0f);
@@ -90,7 +90,7 @@ public class CheckUnlock : MonoBehaviour
                         {
                             if ((unlock as Player).canCatch)
                             {
-                                normal.UnLock();
+                                normal.UnLock(true, true);
                                 //unlockQuick(unlock);
                             }                             
                             else
@@ -99,7 +99,7 @@ public class CheckUnlock : MonoBehaviour
                     }
                     else
                     {
-                        normal.UnLock();
+                        normal.UnLock(true, true);
                     }
                 }
             }
@@ -161,7 +161,7 @@ public class CheckUnlock : MonoBehaviour
     {
         if (normal.CurrentCoin <= 0 && normal.IsLock)
         {
-            normal.UnLock();
+            normal.UnLock(true, true);
             return;
         }
         if (player.CoinValue > 0 && normal.CurrentCoin > 0)
@@ -183,7 +183,7 @@ public class CheckUnlock : MonoBehaviour
                 normal.CurrentCoin = 0;
                 bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
                 {
-                    normal.UnLock();
+                    normal.UnLock(true, true);
                 });
             }
         }
@@ -192,7 +192,7 @@ public class CheckUnlock : MonoBehaviour
     {
         if (normal.CurrentCoin <= 0 && normal.IsLock)
         {
-            normal.UnLock();
+            normal.UnLock(true, true);
             return;
         }
         if (index > 0 && normal.CurrentCoin > 0)
@@ -205,7 +205,7 @@ public class CheckUnlock : MonoBehaviour
             UpdateUI();
             if (normal.CurrentCoin <= 0)
             {
-                normal.UnLock();
+                normal.UnLock(true, true);
             }
 
         }

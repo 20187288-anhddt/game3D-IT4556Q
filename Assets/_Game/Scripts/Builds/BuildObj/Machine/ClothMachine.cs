@@ -17,14 +17,16 @@ public class ClothMachine : MachineBase
     [SerializeField]
     private CheckCollectCloth checkCollectCloth;
 
-    public override void UnLock()
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
-        base.UnLock();
+        Player p = Player.Instance;
+       
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        Player p = Player.Instance;
+      
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -32,36 +34,86 @@ public class ClothMachine : MachineBase
         {
             p.transform.position = checkUnlock.transform.position - Vector3.left * 4;
         }
-        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
-                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                {
-                    p.isUnlock = false;
-                });
-            }); ;
-        });
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        else
+        {
+            p.isUnlock = false;
+        }
         checkUnlock.gameObject.SetActive(false);
         checkCollectCloth.gameObject.SetActive(true);
         checkPush.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
-        switch (machineType)
+        levelManager.machineManager.allActiveMachine.Add(this);
+        levelManager.machineManager.allActiveClothMachine.Add(this);
+        switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.listBearClothMachineActive.Add(this);
+                levelManager.machineManager.listBearClothMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.BearClothMachine:
+                            EnventManager.TriggerEvent(EventName.BearClothMachine_Complete.ToString());
+                            break;
+                    }
+                }
+               
                 break;
             case IngredientType.COW:
-                levelManager.listCowClothMachineActive.Add(this);
+                levelManager.machineManager.listCowClothMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.CowClothMachine:
+                            EnventManager.TriggerEvent(EventName.CowClothMachine_Complete.ToString());
+                            break;
+                    }
+                }
+             
                 break;
             case IngredientType.CHICKEN:
-                levelManager.listChickenClothMachineActive.Add(this);
+                levelManager.machineManager.listChickenClothMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.ChickenClothMachine:
+                            EnventManager.TriggerEvent(EventName.ChickenClothMachine_Complete.ToString());
+                            break;
+                    }
+                }
+               
                 break;
             case IngredientType.SHEEP:
-                levelManager.listSheepClothMachineActive.Add(this);
+                levelManager.machineManager.listSheepClothMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.SheepClothMachine:
+                            EnventManager.TriggerEvent(EventName.SheepClothMachine_Complete.ToString());
+                            break;
+                    }
+                }
+              
                 break;
         }
     }
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartInGame();
     }
     void Update()

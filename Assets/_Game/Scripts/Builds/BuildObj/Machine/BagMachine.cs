@@ -17,14 +17,16 @@ public class BagMachine : MachineBase
     [SerializeField]
     private CheckCollectBagCloth checkCollectBagCloth;
 
-    public override void UnLock()
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
-        base.UnLock();
+        Player p = Player.Instance;
+        
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        Player p = Player.Instance;
+      
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -32,36 +34,82 @@ public class BagMachine : MachineBase
         {
             p.transform.position = checkUnlock.transform.position - Vector3.left * 4;
         }
-        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
-                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                {
-                    p.isUnlock = false;
-                });
-            }); ;
-        });
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        else
+        {
+            p.isUnlock = false;
+        }
         checkUnlock.gameObject.SetActive(false);
         checkCollectBagCloth.gameObject.SetActive(true);
         checkPushBagMachine.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
-        switch (machineType)
+        levelManager.machineManager.allActiveMachine.Add(this);
+        levelManager.machineManager.allActiveBagMachine.Add(this);
+        switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.listBearBagMachineActive.Add(this);
+                levelManager.machineManager.listBearBagMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.BearBagMachine:
+                            EnventManager.TriggerEvent(EventName.BearBagMachine_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.COW:
-                levelManager.listCowBagMachineActive.Add(this);
+                levelManager.machineManager.listCowBagMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.CowBagMachine:
+                            EnventManager.TriggerEvent(EventName.CowBagMachine_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.CHICKEN:
-                levelManager.listChickenBagMachineActive.Add(this);
+                levelManager.machineManager.listChickenBagMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.ChickenBagMachine:
+                            EnventManager.TriggerEvent(EventName.ChickenBagMachine_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.SHEEP:
-                levelManager.listSheepBagMachineActive.Add(this);
+                levelManager.machineManager.listSheepBagMachineActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.SheepBagMachine:
+                            EnventManager.TriggerEvent(EventName.SheepBagMachine_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
         }
     }
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartInGame();
     }
     void Update()
@@ -164,6 +212,8 @@ public class BagMachine : MachineBase
     public override void StartInGame()
     {
         base.StartInGame();
+        isHaveInStaff = false;
+        isHaveOutStaff = false;
         ingredients = new List<FurBase>();
         outCloths = new List<BagBase>();
         foreach (IngredientBase i in ingredients)

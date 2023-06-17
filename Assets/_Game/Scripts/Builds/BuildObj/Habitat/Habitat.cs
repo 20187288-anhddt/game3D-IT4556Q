@@ -5,7 +5,6 @@ using DG.Tweening;
 
 public class Habitat : BuildObj, ILock
 {
-    public IngredientType habitatType;
     public List<AnimalBase> allAnimals;
     public List<AnimalBase> animalsIsReady;
     public IngredientBase ingredientPrefabs;
@@ -21,14 +20,16 @@ public class Habitat : BuildObj, ILock
     public Transform staffPos;
     public bool isHaveStaff;
 
-    public override void UnLock()
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
-        base.UnLock();
+        Player p = Player.Instance;
+       
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        Player p = Player.Instance;
+       
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -59,38 +60,65 @@ public class Habitat : BuildObj, ILock
         //        }
         //        break;
         //}
-        
-        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
-                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                {
-                    p.isUnlock = false;  
-                    checkCollect.gameObject.SetActive(true);
-                });
-            }); ;
-        });
+
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        else
+        {
+            p.isUnlock = false;
+        }
         checkUnlock.gameObject.SetActive(false);
         levelManager.habitatManager.allActiveHabitats.Add(this);
         //GetComponent<BoxCollider>().enabled = true;
-        switch (habitatType)
+        switch (ingredientType)
         {
             case IngredientType.BEAR:
                 levelManager.habitatManager.listBearHabitatsActive.Add(this);
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.BearHabitat_Complete.ToString());
+                }
+               
                 break;
             case IngredientType.COW:
                 levelManager.habitatManager.listCowHabitatsActive.Add(this);
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.CowHabitat_Complete.ToString());
+                }
+               
                 break;
             case IngredientType.CHICKEN:
                 levelManager.habitatManager.listSheepHabitatsActive.Add(this);
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.ChickenHabitat_Complete.ToString());
+                }
+               
                 break;
             case IngredientType.SHEEP:
                 levelManager.habitatManager.listChickenHabitatsActive.Add(this);
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.ChickenHabitat_Complete.ToString());
+                }
+               
                 break;
         }
     }
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartInGame();
     }
     public override void StartInGame()

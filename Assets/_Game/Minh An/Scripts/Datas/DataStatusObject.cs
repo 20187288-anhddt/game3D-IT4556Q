@@ -6,7 +6,7 @@ using System.IO;
 public class DataStatusObject : DataBase
 {
     public Status_All_Level_Object status_All_Level_Object;
-
+   
     public void Start()
     {
         InItData();
@@ -139,16 +139,19 @@ public class DataStatusObject : DataBase
         }
         foreach (StatusObject statusObject in GetStatus_All_Level_Object().GetStatusObjects())
         {
-            if (statusObject.levelThis == statusObjectCheck.levelThis)
+            if (statusObject.levelThis == statusObjectCheck.levelThis &&
+                statusObject.typeStatus == StatusObject.TypeStatus_IsActive.DeActive
+                && statusObject.typeStatus_IsBought != StatusObject.TypeStatus_IsBought.Buy)
             {
-                statusObject.typeStatus = StatusObject.TypeStatus_IsActive.DeActive;
                 statusObject.typeStatus_IsBought = StatusObject.TypeStatus_IsBought.Buy;
+                SaveData();
+                LoadData();
+                EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
+                return;
             }
         }
      
-        SaveData();
-        LoadData();
-      
+       
     }// chuyen sang trang thai co the mua
     public StatusObject GetStatusObject_Current()
     {
@@ -194,4 +197,3 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
         statusObjectCurrent = statusObjects[0];
     }
 }
-

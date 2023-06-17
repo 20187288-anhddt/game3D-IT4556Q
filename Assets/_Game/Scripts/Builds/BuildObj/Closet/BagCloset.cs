@@ -21,9 +21,10 @@ public class BagCloset : ClosetBase
     private CheckPushBagCloset checkPushBagCloset;
    
 
-    public override void UnLock()
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
-        base.UnLock();
+        Player p = Player.Instance;
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
@@ -33,7 +34,7 @@ public class BagCloset : ClosetBase
             placeToBuyBag.gameObject.SetActive(true);
             placeToBuyBag.StartInGame();
         }
-        Player p = Player.Instance;
+      
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -41,37 +42,82 @@ public class BagCloset : ClosetBase
         {
             p.transform.position = checkUnlock.transform.position - Vector3.forward * 4;
         }
-        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
-                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                {
-                    p.isUnlock = false;
-                });
-            }); ;
-        });
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        else
+        {
+            p.isUnlock = false;
+        }
+     
         checkUnlock.gameObject.SetActive(false);
         checkPushBagCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
        //levelManager.closetManager.listAllActiveClosets.Add(this);
         levelManager.closetManager.listBagClosets.Add(this);
-        switch (type)
+        switch (ingredientType)
         {
             case IngredientType.BEAR:
                 levelManager.closetManager.listBearBagClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.BearBagCloset:
+                            EnventManager.TriggerEvent(EventName.BearBagCloset_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.COW:
                 levelManager.closetManager.listCowBagClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.CowBagCloset:
+                            EnventManager.TriggerEvent(EventName.CowBagCloset_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.CHICKEN:
                 levelManager.closetManager.listSheepBagClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.ChickenBagCloset:
+                            EnventManager.TriggerEvent(EventName.ChickenBagCloset_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
             case IngredientType.SHEEP:
                 levelManager.closetManager.listChickenBagClosetActive.Add(this);
+                if (isPushEvent)
+                {
+                    switch (nameObject_This)
+                    {
+                        case NameObject_This.SheepBagCloset:
+                            EnventManager.TriggerEvent(EventName.SheepBagCloset_Complete.ToString());
+                            break;
+                    }
+                }
                 break;
         }
     }
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartInGame();
     }
     public void SpawnOutfit()
