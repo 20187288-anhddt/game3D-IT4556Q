@@ -23,7 +23,10 @@ public class Habitat : BuildObj, ILock
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
-       
+        if (!IsLock)
+        {
+            return;
+        }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
@@ -77,12 +80,18 @@ public class Habitat : BuildObj, ILock
             p.isUnlock = false;
         }
         checkUnlock.gameObject.SetActive(false);
-        levelManager.habitatManager.allActiveHabitats.Add(this);
+        checkCollect.gameObject.SetActive(true);
+        if (!levelManager.habitatManager.allActiveHabitats.Contains(this))
+        {
+            levelManager.habitatManager.allActiveHabitats.Add(this);
+        }
+         
         //GetComponent<BoxCollider>().enabled = true;
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.habitatManager.listBearHabitatsActive.Add(this);
+                if (!levelManager.habitatManager.listBearHabitatsActive.Contains(this))
+                    levelManager.habitatManager.listBearHabitatsActive.Add(this);
                 if (isPushEvent)
                 {
                     EnventManager.TriggerEvent(EventName.BearHabitat_Complete.ToString());
@@ -90,7 +99,8 @@ public class Habitat : BuildObj, ILock
                
                 break;
             case IngredientType.COW:
-                levelManager.habitatManager.listCowHabitatsActive.Add(this);
+                if (!levelManager.habitatManager.listCowHabitatsActive.Contains(this))
+                    levelManager.habitatManager.listCowHabitatsActive.Add(this);
                 if (isPushEvent)
                 {
                     EnventManager.TriggerEvent(EventName.CowHabitat_Complete.ToString());
@@ -98,7 +108,8 @@ public class Habitat : BuildObj, ILock
                
                 break;
             case IngredientType.CHICKEN:
-                levelManager.habitatManager.listSheepHabitatsActive.Add(this);
+                if (!levelManager.habitatManager.listChickenHabitatsActive.Contains(this))
+                    levelManager.habitatManager.listChickenHabitatsActive.Add(this);
                 if (isPushEvent)
                 {
                     EnventManager.TriggerEvent(EventName.ChickenHabitat_Complete.ToString());
@@ -106,10 +117,11 @@ public class Habitat : BuildObj, ILock
                
                 break;
             case IngredientType.SHEEP:
-                levelManager.habitatManager.listChickenHabitatsActive.Add(this);
+                if (!levelManager.habitatManager.listSheepHabitatsActive.Contains(this))
+                    levelManager.habitatManager.listSheepHabitatsActive.Add(this);
                 if (isPushEvent)
                 {
-                    EnventManager.TriggerEvent(EventName.ChickenHabitat_Complete.ToString());
+                    EnventManager.TriggerEvent(EventName.SheepHabitat_Complete.ToString());
                 }
                
                 break;
@@ -124,6 +136,7 @@ public class Habitat : BuildObj, ILock
     public override void StartInGame()
     {
         base.StartInGame();
+      
         isHaveStaff = false;
         foreach(AnimalBase a in allAnimals)
         {
@@ -136,10 +149,10 @@ public class Habitat : BuildObj, ILock
             checkUnlock.gameObject.SetActive(true);
             checkCollect.gameObject.SetActive(false);
         }
-        if (!isLock)
-        {
-            UnLock();
-        }
+        //if (!isLock)
+        //{
+        //    UnLock();
+        //}
         checkUnlock.UpdateUI();
     }
 }

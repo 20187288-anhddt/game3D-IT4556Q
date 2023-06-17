@@ -39,14 +39,14 @@ public class MachineManager : MonoBehaviour
     public ClothMachine GetClothMachineWithType(IngredientType type)
     {
         ClothMachine curClothMachine = null;
-        if (allActiveMachine.Count <= 0)
+        if (allActiveMachine.Count <= 0 || allActiveClothMachine.Count <=0)
             curClothMachine = null;
         switch (type)
         {
             case IngredientType.SHEEP:
-                for(int i = 0; i < listSheepClothMachineActive.Count; i++)
+                for (int i = 0; i < listSheepClothMachineActive.Count; i++)
                 {
-                    if(listSheepClothMachineActive[i].outCloths.Count > 3)
+                    if (listSheepClothMachineActive[i].outCloths.Count > 3 || !listSheepClothMachineActive[i].isHaveOutStaff)
                     {
                         curClothMachine = listSheepClothMachineActive[i];
                         break;
@@ -56,7 +56,7 @@ public class MachineManager : MonoBehaviour
             case IngredientType.COW:
                 for (int i = 0; i < listCowClothMachineActive.Count; i++)
                 {
-                    if (listCowClothMachineActive[i].outCloths.Count > 3)
+                    if (listCowClothMachineActive[i].outCloths.Count > 3 || !listCowClothMachineActive[i].isHaveOutStaff)
                     {
                         curClothMachine = listCowClothMachineActive[i];
                         break;
@@ -66,7 +66,7 @@ public class MachineManager : MonoBehaviour
             case IngredientType.CHICKEN:
                 for (int i = 0; i < listChickenClothMachineActive.Count; i++)
                 {
-                    if (listChickenClothMachineActive[i].outCloths.Count > 3)
+                    if (listChickenClothMachineActive[i].outCloths.Count > 3 || !listChickenClothMachineActive[i].isHaveOutStaff)
                     {
                         curClothMachine = listChickenClothMachineActive[i];
                         break;
@@ -76,7 +76,7 @@ public class MachineManager : MonoBehaviour
             case IngredientType.BEAR:
                 for (int i = 0; i < listBearClothMachineActive.Count; i++)
                 {
-                    if (listBearClothMachineActive[i].outCloths.Count > 3)
+                    if (listBearClothMachineActive[i].outCloths.Count > 3 || !listBearClothMachineActive[i].isHaveOutStaff)
                     {
                         curClothMachine = listBearClothMachineActive[i];
                         break;
@@ -85,5 +85,55 @@ public class MachineManager : MonoBehaviour
                 break;
         }
         return curClothMachine;
+    }
+    public BagMachine GetBagMachineWithType(IngredientType type)
+    {
+        BagMachine curBagMachine = null;
+        if (allActiveMachine.Count <= 0 || allActiveBagMachine.Count <= 0)
+            curBagMachine = null;
+        switch (type)
+        {
+            case IngredientType.SHEEP:
+                for (int i = 0; i < listSheepBagMachineActive.Count; i++)
+                {
+                    if (listSheepBagMachineActive[i].outCloths.Count > 3 || !listSheepBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listSheepBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.COW:
+                for (int i = 0; i < listCowBagMachineActive.Count; i++)
+                {
+                    if (listCowBagMachineActive[i].outCloths.Count > 3 || !listCowBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listCowBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.CHICKEN:
+                for (int i = 0; i < listChickenBagMachineActive.Count; i++)
+                {
+                    if (listChickenBagMachineActive[i].outCloths.Count > 3 || !listChickenBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listChickenBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.BEAR:
+                for (int i = 0; i < listBearBagMachineActive.Count; i++)
+                {
+                    if (listBearBagMachineActive[i].outCloths.Count > 3 || !listBearBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listBearBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+        }
+        return curBagMachine;
     }
 }

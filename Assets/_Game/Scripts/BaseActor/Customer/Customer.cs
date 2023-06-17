@@ -55,10 +55,12 @@ public class Customer : BaseCustomer
     private void StartMoveToBag(FsmSystem _fsm)
     {
         MoveToBag();
+        Debug.Log("a");
     }
     private void StartMoveToCheckOut(FsmSystem _fsm)
     {
         MoveToCheckOut();
+        Debug.Log("b");
     }
     private void StartFollowLeader(FsmSystem _fsm)
     {
@@ -71,26 +73,31 @@ public class Customer : BaseCustomer
     private FsmSystem.ACTION OnIdleState(FsmSystem _fsm)
     {
         Idle();
+        Debug.Log("c");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToClosetState(FsmSystem _fsm)
     {
         CheckMoveToCloset();
+        Debug.Log("d");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToBagState(FsmSystem _fsm)
     {
         CheckMoveToBag();
+        Debug.Log("e");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnMoveToCheckOutState(FsmSystem _fsm)
     {
         CheckMoveToCheckOut();
+        Debug.Log("f");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnFollowLeaderState(FsmSystem _fsm)
     {
         CheckFollowLeader();
+        Debug.Log("g");
         return FsmSystem.ACTION.END;
     }
     private FsmSystem.ACTION OnExitState(FsmSystem _fsm)
@@ -101,6 +108,7 @@ public class Customer : BaseCustomer
     private FsmSystem.ACTION OnVipState(FsmSystem _fsm)
     {
         VipState();
+        Debug.Log("f");
         return FsmSystem.ACTION.END;
     }
     public virtual void Idle()
@@ -119,6 +127,7 @@ public class Customer : BaseCustomer
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
+        Debug.Log("Run");
     }
     public virtual void MoveToBag()
     {
@@ -133,6 +142,7 @@ public class Customer : BaseCustomer
             this.onBagPos = true;
             UpdateState(IDLE_STATE);
         }
+        Debug.Log("B");
     }
     public virtual void MoveToCheckOut()
     {
@@ -148,6 +158,7 @@ public class Customer : BaseCustomer
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
+        Debug.Log("a");
     }
     public virtual void FollowLeader()
     {
@@ -175,13 +186,13 @@ public class Customer : BaseCustomer
                 UpdateState(MOVE_TO_BAG_STATE);
             }
         }
-        else if (leader.gotOutfit && leader.gotBag && leader.onCheckoutPos)
-        {
-            if(Vector3.Distance(transBag, leader.transform.position) < 3f)
-            {
-                UpdateState(IDLE_STATE);
-            }
-        } 
+        //else if (leader.gotOutfit && leader.gotBag && leader.onCheckoutPos)
+        //{
+        //    if(Vector3.Distance(transCheckout, leader.transform.position) < 3f)
+        //    {
+        //        UpdateState(IDLE_STATE);
+        //    }
+        //} 
     }
     public virtual void MoveToExit()
     {
@@ -225,7 +236,7 @@ public class Customer : BaseCustomer
         {
             bagModel[i].SetActive(false);
         }
-        UpdateState(IDLE_STATE);
+        //UpdateState(IDLE_STATE);
     }
     public void ChangeAnim()
     {

@@ -20,7 +20,10 @@ public class ClothMachine : MachineBase
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
-       
+        if (!IsLock)
+        {
+            return;
+        }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
@@ -53,12 +56,15 @@ public class ClothMachine : MachineBase
         checkCollectCloth.gameObject.SetActive(true);
         checkPush.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
-        levelManager.machineManager.allActiveMachine.Add(this);
-        levelManager.machineManager.allActiveClothMachine.Add(this);
+        if(!levelManager.machineManager.allActiveMachine.Contains(this))
+            levelManager.machineManager.allActiveMachine.Add(this);
+        if (!levelManager.machineManager.allActiveClothMachine.Contains(this))
+            levelManager.machineManager.allActiveClothMachine.Add(this);
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.machineManager.listBearClothMachineActive.Add(this);
+                if(!levelManager.machineManager.listBearClothMachineActive.Contains(this))
+                    levelManager.machineManager.listBearClothMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -71,7 +77,8 @@ public class ClothMachine : MachineBase
                
                 break;
             case IngredientType.COW:
-                levelManager.machineManager.listCowClothMachineActive.Add(this);
+                if (!levelManager.machineManager.listCowClothMachineActive.Contains(this))
+                    levelManager.machineManager.listCowClothMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -84,7 +91,8 @@ public class ClothMachine : MachineBase
              
                 break;
             case IngredientType.CHICKEN:
-                levelManager.machineManager.listChickenClothMachineActive.Add(this);
+                if (!levelManager.machineManager.listChickenClothMachineActive.Contains(this))
+                    levelManager.machineManager.listChickenClothMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -97,7 +105,8 @@ public class ClothMachine : MachineBase
                
                 break;
             case IngredientType.SHEEP:
-                levelManager.machineManager.listSheepClothMachineActive.Add(this);
+                if (!levelManager.machineManager.listSheepClothMachineActive.Contains(this))
+                    levelManager.machineManager.listSheepClothMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -217,6 +226,7 @@ public class ClothMachine : MachineBase
     public override void StartInGame()
     {
         base.StartInGame();
+      
         ingredients = new List<FurBase>();
         outCloths = new List<ClothBase>();
         foreach (IngredientBase i in ingredients)
@@ -233,10 +243,10 @@ public class ClothMachine : MachineBase
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
         }
-        else
-        {
-            UnLock();
-        }
+        //else
+        //{
+        //    UnLock();
+        //}
         checkUnlock.UpdateUI();
     }
 }

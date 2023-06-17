@@ -81,6 +81,23 @@ public class StaffManager : MonoBehaviour
                         }
                     }
                 }
+                else
+                {
+                    BagCloset curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetBagClosetDontHaveBag();
+                    if (curCloset != null)
+                    {
+                        BagMachine curBagMachine = null;
+                        curBagMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.GetBagMachineWithType(curCloset.ingredientType);
+                        if (curBagMachine != null)
+                        {
+                            curStaff.transCloset = curCloset.staffPos.position;
+                            curStaff.transMachine = curBagMachine.outStaffPos.position;
+                            curCloset.isHaveStaff = true;
+                            curBagMachine.isHaveOutStaff = true;
+                            curStaff.UpdateState(BaseStaff.MOVE_TO_MACHINE_STATE);
+                        }
+                    }
+                }
             }
         }
     }

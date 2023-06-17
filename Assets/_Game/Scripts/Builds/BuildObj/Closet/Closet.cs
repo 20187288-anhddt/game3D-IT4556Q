@@ -23,7 +23,10 @@ public class Closet : ClosetBase, ILock
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
-       
+        if (!IsLock)
+        {
+            return;
+        }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
@@ -32,9 +35,9 @@ public class Closet : ClosetBase, ILock
         foreach (PlaceToBuy placeToBuy in listPlaceToBuy)
         {
             placeToBuy.gameObject.SetActive(true);
-            placeToBuy.StartInGame();
+            //placeToBuy.StartInGame();
         }
-      
+
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -44,8 +47,10 @@ public class Closet : ClosetBase, ILock
         }
         if (isPlayAnimUnlock) //anim
         {
-            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() =>
+            {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() =>
+                {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
@@ -61,11 +66,15 @@ public class Closet : ClosetBase, ILock
         checkPushCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
         //levelManager.closetManager.listAllActiveClosets.Add(this);
-        levelManager.closetManager.listClosets.Add(this);
+        if (!levelManager.closetManager.listClosets.Contains(this))
+        {
+            levelManager.closetManager.listClosets.Add(this);
+        }
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.closetManager.listBearClosetActive.Add(this);
+                if(!levelManager.closetManager.listBearClosetActive.Contains(this))  
+                    levelManager.closetManager.listBearClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -81,7 +90,8 @@ public class Closet : ClosetBase, ILock
               
                 break;
             case IngredientType.COW:
-                levelManager.closetManager.listCowClosetActive.Add(this);
+                if (!levelManager.closetManager.listCowClosetActive.Contains(this))
+                    levelManager.closetManager.listCowClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -97,7 +107,8 @@ public class Closet : ClosetBase, ILock
               
                 break;
             case IngredientType.CHICKEN:
-                levelManager.closetManager.listSheepClosetActive.Add(this);
+                if (!levelManager.closetManager.listChickenClosetActive.Contains(this))
+                    levelManager.closetManager.listChickenClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -110,10 +121,11 @@ public class Closet : ClosetBase, ILock
                             break;
                     }
                 }
-            
+
                 break;
             case IngredientType.SHEEP:
-                levelManager.closetManager.listChickenClosetActive.Add(this);
+                if (!levelManager.closetManager.listSheepClosetActive.Contains(this))
+                    levelManager.closetManager.listSheepClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -155,6 +167,7 @@ public class Closet : ClosetBase, ILock
     public override void StartInGame()
     {
         base.StartInGame();
+
         foreach (PlaceToBuy p in listPlaceToBuy)
         {
             p.SetCloset(this);
@@ -171,12 +184,12 @@ public class Closet : ClosetBase, ILock
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
         }
-        else
-        {
-            UnLock();
-        }
+        //else
+        //{
+        //    UnLock();
+        //}
         checkUnlock.UpdateUI();
-
+      
     }
 
     public OutfitBase GetAvailableOutfit()
