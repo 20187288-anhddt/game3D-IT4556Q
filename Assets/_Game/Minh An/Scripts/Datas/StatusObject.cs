@@ -9,6 +9,24 @@ public class StatusObject
     public TypeStatus_IsActive typeStatus;
     public TypeStatus_IsBought typeStatus_IsBought;
     public Level levelThis;
+
+    public int GetLevelThis()
+    {
+        int level = 0;
+        switch (levelThis)
+        {
+            case Level.Level_1:
+                level = 1;
+                break;
+            case Level.Level_2:
+                level = 2;
+                break;
+            case Level.Level_3:
+                level = 3;
+                break;
+        }
+        return level;
+    }
     public enum TypeStatus_IsActive
     {
         Active,

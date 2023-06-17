@@ -39,18 +39,21 @@ public class DataMoneyController : DataBase
         moneyData.AddMoney(typeMoney, value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public void RemoveMoney(Money.TypeMoney typeMoney, int value)
     {
         moneyData.RemoveMoney(typeMoney, value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public void SetMoney(Money.TypeMoney typeMoney, int value)
     {
         moneyData.SetMoney(typeMoney, value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadMoney.ToString());
     }
     public int GetMoney(Money.TypeMoney typeMoney)
     {
@@ -138,7 +141,7 @@ public class Money
     }
     public void ResetData()
     {
-        value = 0;
+        value = 100;
     }
     public enum TypeMoney
     {

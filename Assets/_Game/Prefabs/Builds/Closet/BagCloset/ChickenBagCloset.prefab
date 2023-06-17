@@ -214,6 +214,7 @@ MonoBehaviour:
   levelManager: {fileID: 0}
   dataStatusObject: {fileID: 0}
   ingredientType: 6
+  pirceObject: {fileID: 8893398036717970621}
   listCurCus: []
   maxObj: 5
   isHaveStaff: 0
@@ -1247,6 +1248,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548bc9f60cd503e44afff9b62ca8382c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8893398036717970621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8608965814865496382, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
+  m_PrefabInstance: {fileID: 869901366002265475}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d09530e49046d4d9039dc341f0a1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2150653252104867645

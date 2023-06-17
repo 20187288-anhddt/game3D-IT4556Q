@@ -5,19 +5,41 @@ using System.IO;
 
 public class DataProcessInMapController : DataBase
 {
-    public DataApparatusProcessCurrent dataApparatusProcessCurrent;
-    public ApparatusProcess apparatusProcessCurrent;
+    public DataProcess dataProcess;
     private void Start()
     {
         InItData();
     }
     public void InItData()
     {
-        SetFileName(nameof(DataProcessInMapController) +
-            "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
-        LoadData();
+        SetFileName(nameof(DataProcess));
         AddEvent();
+        LoadData();
+        dataProcess.GetDataApparatusProcess().InItData();
     }
+    public override void SaveData()
+    {
+        base.SaveData();
+        string json = JsonUtility.ToJson(dataProcess);
+        File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
+    }
+    public override void LoadData()
+    {
+        base.LoadData();
+        string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
+        DataProcess dataSave = JsonUtility.FromJson<DataProcess>(json);
+        dataProcess = dataSave;
+    }
+    public void CheckAndLoadRewardMissionComplete()
+    {
+        dataProcess.GetDataApparatusProcess().CheckAndLoadRewardMissionComplete();
+    }
+    public override void ResetData()
+    {
+        base.ResetData();
+        dataProcess.GetDataApparatusProcess().InItData();
+    }
+
     public void AddEvent()
     {
         #region Bear
@@ -53,24 +75,61 @@ public class DataProcessInMapController : DataBase
         EnventManager.AddListener(EventName.ChickenBagCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
         #endregion
     }
+    
+}
+[System.Serializable]
+public class DataProcess
+{
+    public DataApparatusProcess dataApparatusProcess;
+    public DataApparatusProcess GetDataApparatusProcess()
+    {
+        return dataApparatusProcess;
+    }
+}
+[System.Serializable]
+public class DataApparatusProcess
+{
+    public DataApparatusProcessCurrent dataApparatusProcessCurrent;
+    private ApparatusProcess apparatusProcessCurrent;
+    private string fileName = " ";
+    public void InItData()
+    {
+        SetFileName(nameof(DataProcessInMapController) +
+            "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
+        LoadData();
+    }
     public void CheckAndLoadRewardMissionComplete()
     {
-        if(apparatusProcessCurrent == null) { LoadData(); }
+        if (apparatusProcessCurrent == null) { LoadData(); }
         if (apparatusProcessCurrent.missionProcess.isCompleteMission())
         {
             apparatusProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
             NextProcess();
         }
     }
-    public override void SaveData()
+  
+    public void SetFileName(string fileName)
     {
-        base.SaveData();
+        this.fileName = fileName;
+    }
+    public string GetFileName()
+    {
+        return fileName;
+    }
+    public void SaveData()
+    {
         string json = JsonUtility.ToJson(dataApparatusProcessCurrent);
         File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
     }
-    public override void LoadData()
+    public void LoadData()
     {
-        base.LoadData();
+        if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
+        {
+            FileStream file = new FileStream(Application.persistentDataPath + "/" + GetFileName(), FileMode.Create);
+            ResetData();
+            file.Dispose();
+            SaveData();
+        }
         string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
         DataApparatusProcessCurrent dataSave = JsonUtility.FromJson<DataApparatusProcessCurrent>(json);
         dataApparatusProcessCurrent = dataSave;
@@ -86,9 +145,9 @@ public class DataProcessInMapController : DataBase
     public void NextProcess()
     {
         dataApparatusProcessCurrent.NextProcess();
-        if(GetApparatusProcess_Current() == null)
+        if (GetApparatusProcess_Current() == null)
         {
-           
+
             switch (dataApparatusProcessCurrent.ingredientType)
             {
                 case IngredientType.SHEEP:
@@ -116,11 +175,11 @@ public class DataProcessInMapController : DataBase
         SaveData();
         LoadData();
     }
-    public override void ResetData()
+    public void ResetData()
     {
-        base.ResetData();
         dataApparatusProcessCurrent.ResetData();
     }
+
 }
 [System.Serializable]
 public class DataApparatusProcessCurrent

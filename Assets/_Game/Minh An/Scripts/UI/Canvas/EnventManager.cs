@@ -77,6 +77,8 @@ public enum EventName {
 
     CheckOutTable_OnBought,
     CheckOutTable_1_OnBought,
+
+    ReLoadMoney,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
