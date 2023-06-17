@@ -77,11 +77,9 @@ public class MapCurrent //luu data
     }
     public void SetLevelInMapCurrent(int value)
     {
-        Debug.Log(value);
         dataMapCurrent.SetLevelInMapCurrent(value);
         SaveData();
         LoadData();
-        Debug.Log(dataMapCurrent.GetLevelInMapCurrent());
     }
     public DataMapCurrent GetDataMapCurrent()
     {
@@ -109,8 +107,8 @@ public class DataMapCurrent //dong goi de quan li
     }
     public int GetLevelInMapCurrent()
     {
-        if (LevelCurrent < 1) { LevelCurrent = 1; }
-        return LevelCurrent;
+        if (LevelInMapCurrent < 1) { LevelInMapCurrent = 1; }
+        return LevelInMapCurrent;
     }
     public void SetLevelCurrent(int value)
     {

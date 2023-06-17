@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapController : Singleton<MapController>
 {
@@ -37,6 +38,9 @@ public class MapController : Singleton<MapController>
         {
             DataManager.Instance.GetDataMap().GetMapCurrent().SetLevelInMapCurrent(value);
         }
+        NavMesh.RemoveAllNavMeshData();
+        string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + value;
+        NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
     }
     
 }
