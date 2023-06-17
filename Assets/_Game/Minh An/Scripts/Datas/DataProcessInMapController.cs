@@ -16,6 +16,7 @@ public class DataProcessInMapController : DataBase
         AddEvent();
         LoadData();
         dataProcess.GetDataApparatusProcess().InItData();
+        dataProcess.GetDataEventProcess().InItData();
     }
     public override void SaveData()
     {
@@ -33,11 +34,13 @@ public class DataProcessInMapController : DataBase
     public void CheckAndLoadRewardMissionComplete()
     {
         dataProcess.GetDataApparatusProcess().CheckAndLoadRewardMissionComplete();
+        dataProcess.GetDataEventProcess().CheckAndLoadRewardMissionComplete();
     }
     public override void ResetData()
     {
         base.ResetData();
         dataProcess.GetDataApparatusProcess().InItData();
+        dataProcess.GetDataEventProcess().InItData();
     }
 
     public void AddEvent()
@@ -81,9 +84,101 @@ public class DataProcessInMapController : DataBase
 public class DataProcess
 {
     public DataApparatusProcess dataApparatusProcess;
+    public DataEventProcess dataEventProcess;
+    public DataEventProcess GetDataEventProcess()
+    {
+        return dataEventProcess;
+    }
     public DataApparatusProcess GetDataApparatusProcess()
     {
         return dataApparatusProcess;
+    }
+}
+[System.Serializable]
+public class DataEventProcess
+{
+    public DataEventProcessCurrent dataEventProcessCurrent;
+    private EventInMapProcess eventInMapProcessCurrent;
+    private string fileName = " ";
+    public void InItData()
+    {
+        SetFileName(nameof(DataEventProcess) +
+            "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
+        LoadData();
+    }
+    public void CheckAndLoadRewardMissionComplete()
+    {
+        if (eventInMapProcessCurrent == null) { LoadData(); }
+        if (eventInMapProcessCurrent.missionProcess.isCompleteMission())
+        {
+            eventInMapProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
+            NextProcess();
+        }
+    }
+  
+    public void SetFileName(string fileName)
+    {
+        this.fileName = fileName;
+    }
+    public string GetFileName()
+    {
+        return fileName;
+    }
+    public void SaveData()
+    {
+        string json = JsonUtility.ToJson(dataEventProcessCurrent);
+        File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
+    }
+    public void LoadData()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
+        {
+            FileStream file = new FileStream(Application.persistentDataPath + "/" + GetFileName(), FileMode.Create);
+            ResetData();
+            file.Dispose();
+            SaveData();
+        }
+        string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
+        DataEventProcessCurrent dataSave = JsonUtility.FromJson<DataEventProcessCurrent>(json);
+        dataEventProcessCurrent = dataSave;
+        GetEventInMapProcess_Current();
+    }
+    public EventInMapProcess GetEventInMapProcess_Current()
+    {
+        string PathResource = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap +
+            "\\EventInMapProcess\\Mission " + dataEventProcessCurrent.LevelCurrent;
+        eventInMapProcessCurrent = (EventInMapProcess)Resources.Load(PathResource, typeof(EventInMapProcess));
+        return eventInMapProcessCurrent;
+    }
+    public void NextProcess()
+    {
+        dataEventProcessCurrent.LevelCurrent++;
+        if (GetEventInMapProcess_Current() == null)
+        {
+            dataEventProcessCurrent.LevelCurrent--;
+        }
+        SaveData();
+        LoadData();
+    }
+    public void SetDataEventInMapProcessCurrent(int LevelCurrent)
+    {
+        dataEventProcessCurrent.LevelCurrent = LevelCurrent;
+        SaveData();
+        LoadData();
+    }
+    public void ResetData()
+    {
+        dataEventProcessCurrent.ResetData();
+    }
+
+}
+[System.Serializable]
+public class DataEventProcessCurrent
+{
+    public int LevelCurrent;
+    public void ResetData()
+    {
+        LevelCurrent = 1;
     }
 }
 [System.Serializable]

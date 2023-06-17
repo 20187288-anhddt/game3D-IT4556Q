@@ -32,7 +32,7 @@ public class BagCloset : ClosetBase
         foreach (PlaceToBuyBag placeToBuyBag in listPlaceToBuyBag)
         {
             placeToBuyBag.gameObject.SetActive(true);
-            placeToBuyBag.StartInGame();
+            //placeToBuyBag.StartInGame();
         }
       
         p.isUnlock = true;
@@ -62,11 +62,13 @@ public class BagCloset : ClosetBase
         checkPushBagCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
        //levelManager.closetManager.listAllActiveClosets.Add(this);
-        levelManager.closetManager.listBagClosets.Add(this);
+       if(!levelManager.closetManager.listBagClosets.Contains(this))
+            levelManager.closetManager.listBagClosets.Add(this);
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.closetManager.listBearBagClosetActive.Add(this);
+                if (!levelManager.closetManager.listBearBagClosetActive.Contains(this))
+                    levelManager.closetManager.listBearBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -78,7 +80,8 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.COW:
-                levelManager.closetManager.listCowBagClosetActive.Add(this);
+                if (!levelManager.closetManager.listCowBagClosetActive.Contains(this))
+                    levelManager.closetManager.listCowBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -90,7 +93,8 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.CHICKEN:
-                levelManager.closetManager.listSheepBagClosetActive.Add(this);
+                if (!levelManager.closetManager.listChickenBagClosetActive.Contains(this))
+                    levelManager.closetManager.listChickenBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -102,7 +106,8 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.SHEEP:
-                levelManager.closetManager.listChickenBagClosetActive.Add(this);
+                if (!levelManager.closetManager.listSheepBagClosetActive.Contains(this))
+                    levelManager.closetManager.listSheepBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -139,9 +144,10 @@ public class BagCloset : ClosetBase
     {
         base.StartInGame();
         foreach (PlaceToBuyBag p in listPlaceToBuyBag)
-        {
+        {  
             p.SetCloset(this);
             p.StartInGame();
+            p.gameObject.SetActive(false);
         }
         foreach (BagPos o in listBagPos)
         {
@@ -154,10 +160,10 @@ public class BagCloset : ClosetBase
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
         }
-        else
-        {
-            UnLock();
-        }
+        //else
+        //{
+        //    UnLock();
+        //}
         checkUnlock.UpdateUI();
     }
 

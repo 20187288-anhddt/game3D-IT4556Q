@@ -168,36 +168,19 @@ public class CustomerManager : MonoBehaviour
             if (closetManager.listAvailableBagClosets.Count > 0)
             {
                 isCheckBag = true;
-                //int r = Random.Range(0, closetManager.listAvailableBagClosets.Count);
-                BagCloset curBagCloset = /*closetManager.listAvailableBagClosets[r]*/null;
+                int r = Random.Range(0, closetManager.listAvailableBagClosets.Count);
+                BagCloset curBagCloset = closetManager.listAvailableBagClosets[r] ;
                 GroupCustomer curGr = listGroupsHaveOutfit[0];
-                foreach (BagCloset bagCloset in closetManager.listAvailableBagClosets)
-                {
-                    if(bagCloset.ingredientType == curGr.typeOutfit)
-                    {
-                        curBagCloset = bagCloset;
-                    }
-                }
                 PlaceToBuyBag curBagPlace = curBagCloset.listEmtyPlaceToBuyBag[0];
                 if (curBagPlace != null)
                 {
                     closetManager.listAvailableBagClosets.Remove(curBagCloset);
-                    
                     listGroupsHaveOutfit.Remove(curGr);
-                    //Customer leader = curGr.leader;
                     curGr.AddCloset(curBagCloset);
                     curGr.typeBag = curBagCloset.ingredientType;
                     for (int i = 0; i < curGr.listCus.Count; i++)
                     {
                         PlaceToBuyBag nextPlace = curBagCloset.listEmtyPlaceToBuyBag[i];
-                        //foreach (PlaceToBuyBag placeToBuyBag in curBagCloset.listEmtyPlaceToBuyBag)
-                        //{
-                        //    if(placeToBuyBag.type == curGr.typeBag)
-                        //    {
-                        //        nextPlace = placeToBuyBag;
-                        //    }
-                        //}
-                        //Debug.Log(nextPlace.gameObject.name);
                         nextPlace.AddCus(curGr.listCus[i]);
                         curGr.listCus[i].placeToBuy.isHaveCus = false;
                         curGr.listCus[i].placeToBuy.readyGo = false;
@@ -206,7 +189,6 @@ public class CustomerManager : MonoBehaviour
                     //curBagPlace.AddCus(leader);
                     //leader.placeToBuy.isHaveCus = false;
                     //leader.onPlacePos = false;
-                    
                     //closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag.Clear();
                     //closetManager.listAvailableBagClosets.Clear();
                     for (int i = 0; i < curGr.listCus.Count; i++)
@@ -215,7 +197,6 @@ public class CustomerManager : MonoBehaviour
                         curGr.listCus[i].placeToBuy.closet.listCurCus.Remove(curGr.listCus[i]);
                     }
                     //leader.placeToBuy.isHaveCus = false;
-                    
                 }
             }
 
