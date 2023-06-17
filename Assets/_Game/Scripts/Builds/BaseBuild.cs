@@ -59,12 +59,20 @@ public class BaseBuild : MonoBehaviour
                 }
             }
         }));
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> main
     }
     public virtual void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Active(true);
+<<<<<<< HEAD
         //GameManager.Instance.buildUnlock++;
+=======
+        GameManager.Instance.buildUnlock++;
+>>>>>>> main
         dataStatusObject?.OnBought();
         //GameManager.Instance.CheckShowInter();
         //FirebaseManager.ins.unlock_new_build(name, GameManager.Instance.buildUnlock);
@@ -86,7 +94,11 @@ public class BaseBuild : MonoBehaviour
         gameManager = GameManager.Instance;
         levelManager = gameManager.listLevelManagers[0];
     }
+<<<<<<< HEAD
     public IEnumerator IE_DelayAction(float timeDelay, System.Action action)
+=======
+    IEnumerator IE_DelayAction(float timeDelay, System.Action action)
+>>>>>>> main
     {
         yield return new WaitForSeconds(timeDelay);
         action?.Invoke();

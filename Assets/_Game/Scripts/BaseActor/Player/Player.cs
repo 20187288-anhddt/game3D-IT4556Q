@@ -27,6 +27,10 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<ChickenCloth> chickenCloths { get => ChickenCloths; set => ChickenCloths = value; }
     public List<BearFur> bearFurs { get => BearFurs; set => BearFurs = value; }
     public List<BearCloth> bearCloths { get => BearCloths; set => BearCloths = value; }
+    public List<SheepBag> sheepBags { get => SheepBags; set => SheepBags = value; }
+    public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
+    public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
+    public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
     private void Awake()
     {
         if (Instance != null)
@@ -46,17 +50,34 @@ public class Player : BaseActor,ICollect,IUnlock
         fsm.execute();
         if(gun.activeSelf)
             gun.SetActive(false);
+
+        EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
+        EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
     }
+    protected void OnMove()
+    {
+        if (!isUnlock)
+        {
+            UpdateState(RUN_STATE);
+        }
+        else UpdateState(IDLE_STATE);
+    }
+    protected void StopMove()
+    {
+        UpdateState(IDLE_STATE);
+    }
+
+
     protected void Update()
     {
         fsm.execute();
         var rig = GetComponent<Rigidbody>();
         animSpd = rig.velocity.magnitude;
-        if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
-        {
-            UpdateState(RUN_STATE);
-        }
-        else UpdateState(IDLE_STATE);
+        //if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
+        //{
+        //    UpdateState(RUN_STATE);
+        //}
+        //else UpdateState(IDLE_STATE);
     }
     public Vector2 Config(Vector2 input)
     {
@@ -78,20 +99,25 @@ public class Player : BaseActor,ICollect,IUnlock
     }
     public virtual void UpdateMove(float speed)
     {
-        Joystick joystick = GameManager.Instance.joystick;
-        Vector2 inputAxist = joystick.Direction;
+        Canvas_Joystick joystick = Canvas_Joystick.Instance;
+        Vector3 inputAxist = joystick.Get_Diraction();
         //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
-        var rig = GetComponent<Rigidbody>();
-        rig.velocity = new Vector3(joystick.Horizontal * speed, rig.velocity.y, joystick.Vertical * speed);
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+       
+        if (inputAxist.x != 0 || inputAxist.z != 0)
         {
-            Vector3 moveDir = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+            var rig = GetComponent<Rigidbody>();
+            //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
+            rig.MovePosition(transform.position + transform.forward.normalized * speed * 0.02f);
+            Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
             transform.rotation = Quaternion.LookRotation(moveDir).normalized;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+           // transform.Translate(Vector3.forward * speed * 0.02f);
         }
     }
     public virtual void Idle()
     {
-
+        var rig = GetComponent<Rigidbody>();
+        rig.velocity = Vector3.zero;
     }
     public void Collect()
     {
@@ -152,12 +178,32 @@ public class Player : BaseActor,ICollect,IUnlock
                 if (!bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Add(ingredient as BearCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (!sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Add(ingredient as SheepBag);
+                break;
+            case IngredientType.COW_BAG:
+                if (!cowBags.Contains(ingredient as CowBag))
+                    cowBags.Add(ingredient as CowBag);
+                break;
+            case IngredientType.CHICKEN_BAG:
+                if (!chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Add(ingredient as ChickenBag);
+                break;
+            case IngredientType.BEAR_BAG:
+                if (!bearBags.Contains(ingredient as BearBag))
+                    bearBags.Add(ingredient as BearBag);
+                break;
         }
     }
     public void RemoveIngredient(IngredientBase ingredient)
     {
+        int n = allIngredients.IndexOf(ingredient);
         if (allIngredients.Contains(ingredient))
+        {
             allIngredients.Remove(ingredient);
+        }
+            
         switch (ingredient.ingredientType)
         {
             case IngredientType.SHEEP:
@@ -192,7 +238,36 @@ public class Player : BaseActor,ICollect,IUnlock
                 if (bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Remove(ingredient as BearCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Remove(ingredient as SheepBag);
+                break;
+            case IngredientType.COW_BAG:
+                if (cowBags.Contains(ingredient as CowBag))
+                    cowBags.Remove(ingredient as CowBag);
+                break;
+            case IngredientType.CHICKEN_BAG:
+                if (chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Remove(ingredient as ChickenBag);
+                break;
+            case IngredientType.BEAR_BAG:
+                if (bearBags.Contains(ingredient as BearBag))
+                    bearBags.Remove(ingredient as BearBag);
+                break;
         }
+        ShortObj(ingredient, n);
+    }
+    public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
+    {
+        ingredient.ReSetYOffset();
+        for (int i = 0; i < allIngredients.Count; i++)
+        {
+            ingredient.AddYOffset(ingredient.ingreScale);
+            allIngredients[i].transform.localPosition = Vector3.up * allIngredients[i].GetYOffset() + 
+                Vector3.right * allIngredients[i].transform.localPosition.x + 
+                Vector3.forward * allIngredients[i].transform.localPosition.z;
+        }
+      
     }
     public void UnlockMap(float coin)
     {

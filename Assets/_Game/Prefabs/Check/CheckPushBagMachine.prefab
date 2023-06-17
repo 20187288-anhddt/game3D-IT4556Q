@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5605688839874430813}
   - component: {fileID: 257317981772993405}
   - component: {fileID: 7986160446175426957}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: CheckPushBagMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7986160446175426957
 MonoBehaviour:
   m_ObjectHideFlags: 0

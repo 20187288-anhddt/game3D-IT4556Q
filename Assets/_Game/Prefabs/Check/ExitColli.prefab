@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1882355003161100738}
   - component: {fileID: 1882355003161100739}
   - component: {fileID: 5520329701794160104}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: ExitColli
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 10}
+  m_Size: {x: 2, y: 5, z: 10}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5520329701794160104
 MonoBehaviour:
@@ -58,18 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3bd3f3380d9d4449e6696a9128ce8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTransform: {fileID: 0}
-  nameObject_This: 0
-  ingredientType: 0
   isLock: 0
   isKey: 0
   IDUnlock: 0
   unlockAds: 0
   timeDelay: 0
-  coinUnlock: 0
   defaultCoin: 0
   gameManager: {fileID: 0}
   levelManager: {fileID: 0}
-  dataStatusObject: {fileID: 0}
-  pirceObject: {fileID: 0}
-  unlockFx: {fileID: 0}

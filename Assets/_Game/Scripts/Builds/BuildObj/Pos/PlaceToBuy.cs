@@ -5,13 +5,16 @@ using DG.Tweening;
 
 public class PlaceToBuy : PlaceBase
 {
-    public Transform myTransform;
     public OutfitBase curOutfit;
-    private void Awake()
-    {
-        if(myTransform == null) { myTransform = this.transform; }
-    }
 
+    void Start()
+    {
+        isHaveCus = false;
+        cusMoving = false;
+        readyGo = false;
+        haveOutFit = false;
+
+    }
     void Update()
     {
         CheckStatus();
@@ -104,13 +107,18 @@ public class PlaceToBuy : PlaceBase
                         //}
                     } 
                 }
+                //if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))
+                //{
+                //    readyGo = false;
+                //    isHaveCus = false;
+                //}
             }
         }
     }
     public void SetCloset(Closet closet)
     {
         this.closet = closet;
-        this.type = closet.ingredientType;
+        this.type = closet.type;
     }
     public void Buy()
     {
@@ -121,12 +129,5 @@ public class PlaceToBuy : PlaceBase
         curCus.ChangeOutfit(this.type);
         haveOutFit = false;
         readyGo = true;
-    }
-    public void StartInGame()
-    {
-        isHaveCus = false;
-        cusMoving = false;
-        readyGo = false;
-        haveOutFit = false;
     }
 }

@@ -11,7 +11,6 @@ public class PlaceBase : MonoBehaviour
     public bool haveOutFit;
     public Customer curCus;
     public IngredientType type;
-    public bool readyGo;
 
     public virtual void AddCus(Customer customer)
     {

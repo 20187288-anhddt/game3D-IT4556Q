@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+
 public class BagCloset : ClosetBase
 {
     public List<BagBase> listBags;
@@ -14,8 +15,10 @@ public class BagCloset : ClosetBase
     private GameObject unlockModel;
     //[SerializeField]
     //private GameObject lockModel;
-    public CheckUnlock checkUnlock;
-    public CheckPushBagCloset checkPushBagCloset;
+    [SerializeField]
+    private CheckUnlock checkUnlock;
+    [SerializeField]
+    private CheckPushBagCloset checkPushBagCloset;
    
 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
@@ -26,39 +29,26 @@ public class BagCloset : ClosetBase
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-       
-        //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
-        unlockModel.SetActive(true);
-        unlockFx.SetActive(true);
-        //lockModel.SetActive(false);
-        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
+        foreach (PlaceToBuyBag placeToBuyBag in listPlaceToBuyBag)
         {
-            p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
+            placeToBuyBag.gameObject.SetActive(true);
+            placeToBuyBag.StartInGame();
+        }
+      
+        p.isUnlock = true;
+        unlockModel.SetActive(true);
+        //lockModel.SetActive(false);
+        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
+        {
+            p.transform.position = checkUnlock.transform.position - Vector3.forward * 4;
         }
         if (isPlayAnimUnlock) //anim
         {
-            p.PlayerStopMove();
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
-                        unlockFx.SetActive(false);
-                        //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-                        foreach (PlaceToBuyBag place in listPlaceToBuyBag)
-                        {
-                            place.gameObject.SetActive(true);
-
-                        }
-                        //foreach (BagPos o in listBagPos)
-                        //{
-                        //    o.gameObject.SetActive(true);
-                        //    o.StartInGame();
-                        //}
-                        checkPushBagCloset.gameObject.SetActive(true);
-                        if (CameraController.Instance.IsCameraFollowPlayer())
-                        {
-                            p.PlayerContinueMove();
-                        }
+                        p.isUnlock = false;
                     });
                 }); ;
             });
@@ -66,30 +56,17 @@ public class BagCloset : ClosetBase
         else
         {
             p.isUnlock = false;
-            //foreach (PlaceToBuyBag place in listPlaceToBuyBag)
-            //{
-            //    place.gameObject.SetActive(true);
-
-            //}
-            //foreach (BagPos o in listBagPos)
-            //{
-            //    o.gameObject.SetActive(true);
-            //    o.StartInGame();
-            //}
-        //    EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-
-            checkPushBagCloset.gameObject.SetActive(true);
         }
+     
         checkUnlock.gameObject.SetActive(false);
-       
+        checkPushBagCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
        //levelManager.closetManager.listAllActiveClosets.Add(this);
-       
+        levelManager.closetManager.listBagClosets.Add(this);
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                if (!levelManager.closetManager.listBearBagClosetActive.Contains(this))
-                    levelManager.closetManager.listBearBagClosetActive.Add(this);
+                levelManager.closetManager.listBearBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -101,8 +78,7 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.COW:
-                if (!levelManager.closetManager.listCowBagClosetActive.Contains(this))
-                    levelManager.closetManager.listCowBagClosetActive.Add(this);
+                levelManager.closetManager.listCowBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -114,8 +90,7 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.CHICKEN:
-                if (!levelManager.closetManager.listChickenBagClosetActive.Contains(this))
-                    levelManager.closetManager.listChickenBagClosetActive.Add(this);
+                levelManager.closetManager.listSheepBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -127,8 +102,7 @@ public class BagCloset : ClosetBase
                 }
                 break;
             case IngredientType.SHEEP:
-                if (!levelManager.closetManager.listSheepBagClosetActive.Contains(this))
-                    levelManager.closetManager.listSheepBagClosetActive.Add(this);
+                levelManager.closetManager.listChickenBagClosetActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -139,136 +113,52 @@ public class BagCloset : ClosetBase
                     }
                 }
                 break;
-            case IngredientType.LION:
-                if (!levelManager.closetManager.listLionBagClosetActive.Contains(this))
-                    levelManager.closetManager.listLionBagClosetActive.Add(this);
-                if (isPushEvent)
-                {
-                    switch (nameObject_This)
-                    {
-                        case NameObject_This.LionBagCloset:
-                            EnventManager.TriggerEvent(EventName.LionBagCloset_OnComplete.ToString());
-                            break;
-                    }
-                }
-                break;
-            case IngredientType.CROC:
-                if (!levelManager.closetManager.listCrocBagClosetActive.Contains(this))
-                    levelManager.closetManager.listCrocBagClosetActive.Add(this);
-                if (isPushEvent)
-                {
-                    switch (nameObject_This)
-                    {
-                        case NameObject_This.CrocBagCloset:
-                            EnventManager.TriggerEvent(EventName.CrocBagCloset_OnComplete.ToString());
-                            break;
-                    }
-                }
-                break;
-            case IngredientType.ELE:
-                if (!levelManager.closetManager.listEleBagClosetActive.Contains(this))
-                    levelManager.closetManager.listEleBagClosetActive.Add(this);
-                if (isPushEvent)
-                {
-                    switch (nameObject_This)
-                    {
-                        case NameObject_This.EleBagCloset:
-                            EnventManager.TriggerEvent(EventName.EleBagCloset_OnComplete.ToString());
-                            break;
-                    }
-                }
-                break;
-            case IngredientType.ZEBRA:
-                if (!levelManager.closetManager.listZebraBagClosetActive.Contains(this))
-                    levelManager.closetManager.listZebraBagClosetActive.Add(this);
-                if (isPushEvent)
-                {
-                    switch (nameObject_This)
-                    {
-                        case NameObject_This.ZebraBagCloset:
-                            EnventManager.TriggerEvent(EventName.ZebraBagCloset_OnComplete.ToString());
-                            break;
-                    }
-                }
-                break;
         }
-        if (!levelManager.closetManager.listBagClosets.Contains(this))
-            levelManager.closetManager.listBagClosets.Add(this);
     }
     public override void Start()
     {
         base.Start();
         StartInGame();
     }
-    void Update()
-    {
-        if (!IsLock)
-        {
-            uI_InfoBuild.Active(true);
-            uI_InfoBuild.LoadTextProcess(listBags.Count.ToString() + "/" + listBagPos.Count.ToString());
-        }
-        else
-        {
-            uI_InfoBuild.Active(false);
-        }
-    }
     public void SpawnOutfit()
     {
         BagPos o = GetEmtyPos();
-        var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, o.myTransform.position, myTransform.rotation);
+        var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, o.transform.position, transform.rotation);
         (curBag as BagBase).ResetOutfit();
         if (!listBags.Contains(curBag as BagBase))
         {
             o.AddOutfit(curBag as BagBase);
             (curBag as BagBase).AddPos(o);
             listBags.Add(curBag as BagBase);
-            Debug.Log("Spawn");
         }
-        (curBag as BagBase).myTransform.parent = o.myTransform;
-        (curBag as BagBase).myTransform.position = o.myTransform.position;
-        (curBag as BagBase).myTransform.localRotation = Quaternion.identity;
+        curBag.transform.parent = o.transform;
+        curBag.transform.position = o.transform.position;
+        curBag.transform.localRotation = Quaternion.identity;
     }
     public override void StartInGame()
     {
         base.StartInGame();
-        LoadData_IsHaveObj_In_Pos();
-        EnventManager.AddListener(EventName.QuitGame.ToString(), SaveData_IsHaveObj_In_Pos);
-        CurrentCoin = pirceObject.Get_Pirce();
-        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
-           dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         foreach (PlaceToBuyBag p in listPlaceToBuyBag)
-        {  
+        {
             p.SetCloset(this);
             p.StartInGame();
-            //p.gameObject.SetActive(false);
         }
         foreach (BagPos o in listBagPos)
         {
             o.SetCloset(this);
-            //o.gameObject.SetActive(false);
+            o.StartInGame();
         }
         if (isLock)
         {
-            unlockFx.SetActive(false);
-            unlockModel.SetActive(false);
             checkPushBagCloset.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
-            if (CurrentCoin <= 0)
-            {
-                UnLock(true, true);
-            }
         }
-        //else
-        //{
-        //    UnLock();
-        //}
-        checkUnlock.UpdateUI();
-        foreach (BagPos o in listBagPos)
+        else
         {
-            o.gameObject.SetActive(true);
-            o.StartInGame();
+            UnLock();
         }
+        checkUnlock.UpdateUI();
     }
 
     public BagBase GetAvailableOutfit()
@@ -326,21 +216,5 @@ public class BagCloset : ClosetBase
             }
         }
         return n;
-    }
-    private void LoadData_IsHaveObj_In_Pos()
-    {
-        foreach (BagPos bagPos in listBagPos)
-        {
-            bagPos.haveOutfit = (dataStatusObject as DataBagCloset).Get_IsHaveAObj_In_Pos(bagPos.IDPos);
-           // Debug.Log(bagPos.haveOutfit);
-        }
-    }
-    private void SaveData_IsHaveObj_In_Pos()
-    {
-        foreach(BagPos bagPos in listBagPos)
-        {
-           // Debug.Log(bagPos.haveOutfit);
-            (dataStatusObject as DataBagCloset).Set_IsHaveAObj_In_Pos(bagPos.IDPos, bagPos.haveOutfit);
-        }
     }
 }

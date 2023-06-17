@@ -8,7 +8,7 @@ public class PlaceToBuyBag : PlaceBase
     public BagBase curBag;
 
 
-    public void StartInGame()
+    void Start()
     {
         isHaveCus = false;
         cusMoving = false;
@@ -28,7 +28,7 @@ public class PlaceToBuyBag : PlaceBase
         curCus.placeToBuyBag = this;
         curCus.bagType = type;
         curCus.transBag = this.transform.position;
-        //closet.listCurCus.Add(curCus);
+        closet.listCurCus.Add(curCus);
     }
 
     public void AddOutfit(BagBase bag)
@@ -62,14 +62,10 @@ public class PlaceToBuyBag : PlaceBase
                         haveOutFit = true;
                         AddOutfit(o);
                         o.AddPlace(this);
-                        curBag.transform.DOJump(curCus.transform.position + Vector3.up * 1.5f, 2f, 1, 0.5f).OnComplete(() =>
+                        curBag.transform.DOMove(curCus.transform.position, 0.25f).OnComplete(() =>
                         {
                             Buy();
-                        }).SetEase(Ease.OutCirc);
-                        //curBag.transform.DOMove(curCus.transform.position, 0.25f).OnComplete(() =>
-                        //{
-                        //    Buy();
-                        //});
+                        });
                     }
                 }
             }
@@ -82,15 +78,33 @@ public class PlaceToBuyBag : PlaceBase
                         readyGo = false;
                         CustomerManager cusManager = closet.levelManager.customerManager;
                         cusManager.listGroupsHaveBag.Add(curCus.grCus);
+                        //Checkout c = closet.levelManager.checkOutManager.GetEmtyCheckout();
+                        //if (c != null)
+                        //{
+                        //    readyGo = false;             
+                        //    c.AddCus(curCus);
+                        //    closet.levelManager.checkOutManager.listGrCusCheckout.Add(curCus.grCus);
+                        //    for (int i = 0; i < curCus.grCus.listCus.Count; i++)
+                        //    {
+                        //        curCus.grCus.listCus[i].onBagPos = false;
+                        //        closet.listCurCus.Remove(curCus.grCus.listCus[i]);
+                        //    }
+                        //    isHaveCus = false;
+                        //}
                     }
                 }
+                //if (!curCus.isLeader && !closet.listCurCus.Contains(curCus))
+                //{
+                //    readyGo = false;
+                //    isHaveCus = false;
+                //}
             }
         }
     }
     public void SetCloset(BagCloset closet)
     {
         this.closet = closet;
-        this.type = closet.ingredientType;
+        this.type = closet.type;
     }
     public void Buy()
     {

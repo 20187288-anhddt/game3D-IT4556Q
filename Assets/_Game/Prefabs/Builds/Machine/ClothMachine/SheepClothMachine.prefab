@@ -72,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1987933302820293028}
   - component: {fileID: 803832696351896161}
-  - component: {fileID: 1085861957}
   m_Layer: 0
   m_Name: SheepClothMachine
   m_TagString: Untagged
@@ -97,8 +96,6 @@ Transform:
   - {fileID: 7144132251151608929}
   - {fileID: 8538353259605155674}
   - {fileID: 52075242237338848}
-  - {fileID: 102963814637462053}
-  - {fileID: 5942462857849249885}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -114,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb167a6564cbd14fb794aee3b106966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameObject_This: 5
   isLock: 1
   isKey: 1
   IDUnlock: 0
@@ -124,79 +120,20 @@ MonoBehaviour:
   defaultCoin: 0
   gameManager: {fileID: 0}
   levelManager: {fileID: 0}
-  dataStatusObject: {fileID: 0}
-  ingredientType: 0
-  pirceObject: {fileID: 7870477302158169779}
   ingredients: []
-  maxObjInput: 3
-  maxObjOutput: 3
+  machineType: 0
+  maxObjInput: 10
+  maxObjOutput: 10
   inIngredientPos: {fileID: 1465432936970488238}
   cenIngredientPos: {fileID: 6552183797602764572}
   outIngredientPos: {fileID: 6506684948946149928}
   delayInput: 0.5
-  isHaveInStaff: 0
-  isHaveOutStaff: 0
-  inStaffPos: {fileID: 102963814637462053}
-  outStaffPos: {fileID: 5942462857849249885}
   outCloths: []
   clothPrefab: {fileID: 3663721994182296691, guid: 10219594d6e90974f88dc42da6a3edc9, type: 3}
   unlockModel: {fileID: 7973694072921862732}
   checkUnlock: {fileID: 8818765930159244270}
   checkPush: {fileID: 8927234056872503315}
   checkCollectCloth: {fileID: 3734434078832988302}
---- !u!114 &1085861957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2469822087507368055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status_All_Level_Object:
-    statusObjects:
-    - typeStatus: 1
-      typeStatus_IsBought: 2
-      levelThis: 0
-    statusObjectCurrent:
-      typeStatus: 1
-      typeStatus_IsBought: 2
-      levelThis: 0
-    nameObject_This: 5
---- !u!1 &2598486349323258177
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5942462857849249885}
-  m_Layer: 0
-  m_Name: PosOutStaff
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5942462857849249885
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2598486349323258177}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1987933302820293028}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3326304241855063288
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,37 +379,6 @@ Transform:
   m_Father: {fileID: 1987933302820293028}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5438791720719493930
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 102963814637462053}
-  m_Layer: 0
-  m_Name: PosInStaff
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &102963814637462053
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5438791720719493930}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1987933302820293028}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7152001750734160520
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,17 +578,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
---- !u!114 &7870477302158169779 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8608965814865496382, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
-  m_PrefabInstance: {fileID: 1891720354517458829}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d09530e49046d4d9039dc341f0a1f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8538353259605155674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7799934039719395543, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
@@ -770,14 +665,6 @@ PrefabInstance:
       propertyPath: machine
       value: 
       objectReference: {fileID: 803832696351896161}
-    - target: {fileID: 8006900501405735676, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8006900501405735676, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
-      propertyPath: m_Size.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8192349961961484851, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
       propertyPath: machine
       value: 
@@ -807,14 +694,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1987933302820293028}
     m_Modifications:
-    - target: {fileID: 257317981772993405, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 257317981772993405, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
-      propertyPath: m_Size.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1095906710825352080, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
       propertyPath: machine
       value: 
