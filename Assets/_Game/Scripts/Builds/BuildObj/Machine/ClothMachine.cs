@@ -19,6 +19,7 @@ public class ClothMachine : MachineBase
 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
+        Debug.Log("Unlock");
         Player p = Player.Instance;
         if (!IsLock)
         {
@@ -44,6 +45,8 @@ public class ClothMachine : MachineBase
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                        checkCollectCloth.gameObject.SetActive(true);
+                        checkPush.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -51,10 +54,10 @@ public class ClothMachine : MachineBase
         else
         {
             p.isUnlock = false;
+            checkCollectCloth.gameObject.SetActive(true);
+            checkPush.gameObject.SetActive(true);
         }
         checkUnlock.gameObject.SetActive(false);
-        checkCollectCloth.gameObject.SetActive(true);
-        checkPush.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
         if(!levelManager.machineManager.allActiveMachine.Contains(this))
             levelManager.machineManager.allActiveMachine.Add(this);
@@ -161,13 +164,13 @@ public class ClothMachine : MachineBase
     //    curCloth.transform.DOMove(outIngredientPos.position, timeDelay / 2).OnComplete(() =>
     //    {
     //        outCloths.Add(curCloth as ClothBase);
-    //        if(outCloths.Count >= maxObjOutput)
+    //        if (outCloths.Count >= maxObjOutput)
     //        {
     //            return;
     //        }
     //    });
     //}
-    
+
     public void ShortCutOutCloth()
     {
         if (outCloths.Count > 0)

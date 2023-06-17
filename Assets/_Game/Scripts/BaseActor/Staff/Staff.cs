@@ -132,15 +132,24 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void MoveToCloset()
     {
-
+        navMeshAgent.SetDestination(transCloset);
+        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckMoveToIdle()
     {
         if (Vector3.Distance(transIdle, this.transform.position) < 0.2f)
-        {
+        {     
             this.transform.DORotate(Vector3.zero, 0f);
             onMission = false;
-            curMachine.isHaveInStaff = false;
+            switch (staffType)
+            {
+                case StaffType.FARMER:
+                    curMachine.isHaveInStaff = false;
+                    break;
+                case StaffType.WORKER:
+                    curCloset.isHaveStaff = false;
+                    break;
+            }
             UpdateState(IDLE_STATE);
         }
     }
@@ -154,10 +163,10 @@ public class Staff : BaseStaff, ICollect
             //UpdateState(IDLE_STATE);
         }
         if(onHabitatPos && objHave >= maxCollectObj)
-        {
-            UpdateState(MOVE_TO_MACHINE_STATE);
+        { 
             onHabitatPos = false;
             curHabitat.isHaveStaff = false;
+            UpdateState(MOVE_TO_MACHINE_STATE);
         }
     }
     public virtual void CheckMoveToMachine()
@@ -168,15 +177,58 @@ public class Staff : BaseStaff, ICollect
             this.onMachinePos = true;
             //UpdateState(IDLE_STATE);
         }
-        if (onMachinePos && (objHave <= 0 || curMachine.ingredients.Count >= curMachine.maxObjInput))
+        if (onMachinePos)
         {
-            UpdateState(MOVE_TO_IDLE_STATE);
-            onMachinePos = false;
+            switch (staffType)
+            {
+                case StaffType.FARMER:
+                    if(objHave <= 0 || curMachine.ingredients.Count >= curMachine.maxObjInput)
+                    {
+                        ingredientType = IngredientType.NONE;
+                        onMachinePos = false;
+                        UpdateState(MOVE_TO_IDLE_STATE);
+                        
+                    } 
+                    break;
+                case StaffType.WORKER:
+                    if (objHave >= maxCollectObj)
+                    {
+                        onMachinePos = false;
+                        curMachine.isHaveOutStaff = false;
+                        UpdateState(MOVE_TO_CLOSET_STATE);            
+                    }
+                    break;
+            } 
         }
     }
     public virtual void CheckMoveToCloset()
     {
-
+        if (!onClosetPos && Vector3.Distance(transCloset, this.transform.position) < 0.5f)
+        {
+            this.transform.DORotate(Vector3.zero, 0f);
+            this.onClosetPos = true;
+            //UpdateState(IDLE_STATE);
+        }
+        if (onClosetPos)
+        {
+            if(curCloset is Closet)
+            {
+                if(objHave == 0 || (curCloset as Closet).listOutfits.Count >= (curCloset).maxObj)
+                {
+                    onClosetPos = false;
+                    UpdateState(MOVE_TO_IDLE_STATE);
+                   
+                }
+            }  
+            if(curCloset is BagCloset)
+            {
+                if (objHave == 0 || (curCloset as BagCloset).listBags.Count >= (curCloset).maxObj)
+                {
+                    onClosetPos = false;
+                    UpdateState(MOVE_TO_IDLE_STATE);
+                }
+            }
+        }
     }
     public void ChangeAnim()
     {
@@ -334,6 +386,26 @@ public class Staff : BaseStaff, ICollect
                 Vector3.forward * allIngredients[i].transform.localPosition.z;
         }
     }
+
+    public bool CheckHaveIngredient(IngredientBase ingredient)
+    {
+        bool tmp = false;
+        switch (staffType)
+        {
+            case StaffType.FARMER:
+                if (onMission)
+                {
+                    if (onMachinePos)
+                    {
+
+                    }
+                }
+                break;
+            case StaffType.WORKER:
+                break;
+        }
+        return tmp;
+    }
     public void ResetStaff()
     {
         onMission = false;
@@ -344,6 +416,8 @@ public class Staff : BaseStaff, ICollect
         onClosetPos = false;
         onHabitatPos = false;
         onMachinePos = false;
+        ingredientType = IngredientType.NONE;
+        yOffset = 0;
         foreach (IngredientBase i in allIngredients)
         {
             AllPoolContainer.Instance.Release(i);

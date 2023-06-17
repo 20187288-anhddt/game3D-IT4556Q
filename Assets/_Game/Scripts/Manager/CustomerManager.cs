@@ -22,6 +22,8 @@ public class CustomerManager : MonoBehaviour
     private ClosetManager closetManager;
     [SerializeField]
     private CheckOutManager checkoutManager;
+    private GameManager gameManager;
+    private LevelManager levelManager;
 
     //[SerializeField]
     //private PlaceManager placeManager;
@@ -45,10 +47,24 @@ public class CustomerManager : MonoBehaviour
         delayTime = consDelayTime;
         delayCheckBagTime = consDelayCheckBagTime;
         delayCheckoutTime = consDelayCheckoutTime;
+        gameManager = GameManager.Instance;
+        levelManager = gameManager.listLevelManagers[gameManager.curLevel];
     }
     void Update()
     {
-        if(closetManager.listClosets.Count > 0)
+        if (levelManager.closetManager.listClosets.Count < 2)
+        {
+            maxCus = 3;
+        }
+        else if(levelManager.closetManager.listClosets.Count == 2)
+        {
+            maxCus = 7;
+        }
+        else if (levelManager.closetManager.listClosets.Count > 2)
+        {
+            maxCus = 10;
+        }
+        if (closetManager.listClosets.Count > 0)
         {
             CheckCusToOutfit();
         }

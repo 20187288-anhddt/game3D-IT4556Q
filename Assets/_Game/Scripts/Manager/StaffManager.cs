@@ -7,6 +7,7 @@ public class StaffManager : MonoBehaviour
     public List<Staff> listAllActiveStaffs;
     public List<Staff> listFarmers;
     public List<Staff> listWorkers;
+    public List<Staff> listFamersBag;
     public GameManager gameManager;
 
     void Start()
@@ -21,41 +22,32 @@ public class StaffManager : MonoBehaviour
             {
                 CheckFarmerMisson();
             }
-        }       
+        }
+        if (listAllActiveStaffs.Count > 0)
+        {
+            if (listWorkers.Count > 0)
+            {
+                CheckWorkerMission();
+            }
+        }
     }
     public void CheckFarmerMisson()
     {
-        if (listAllActiveStaffs.Count <= 0)
+        if (listAllActiveStaffs.Count <= 0 || listFarmers.Count <= 0)
             return;
         for(int i = 0; i < listFarmers.Count; i++)
         {
             if (!listFarmers[i].onMission)
             { 
                 Staff curStaff = listFarmers[i];
-                MachineBase curMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.CheckMachineInputEmty();
+                MachineBase curMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.CheckMachineInputEmtyWithType();
                 if (curMachine != null)
                 {
-                    Debug.Log(curMachine.ingredientType);
+                    curStaff.ingredientType = curMachine.ingredientType;
                     Habitat curHabitat = null;
                     curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(curMachine.ingredientType);
-                    //switch (curMachine.ingredientType)
-                    //{
-                    //    case IngredientType.SHEEP:
-                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.SHEEP);
-                    //        break;
-                    //    case IngredientType.COW:
-                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.COW);
-                    //        break;
-                    //    case IngredientType.CHICKEN:
-                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.CHICKEN);
-                    //        break;
-                    //    case IngredientType.BEAR:
-                    //        curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(IngredientType.BEAR);
-                    //        break;
-                    //}
                     if (curHabitat != null)
-                    {
-                        
+                    { 
                         curStaff.onMission = true;
                         curStaff.curMachine = curMachine;
                         curStaff.curHabitat = curHabitat;
@@ -71,23 +63,29 @@ public class StaffManager : MonoBehaviour
     }
     public void CheckWorkerMission()
     {
-        if (listAllActiveStaffs.Count <= 0)
+        if (listAllActiveStaffs.Count <= 0 || listWorkers.Count <= 0)
             return;
         for (int i = 0; i < listWorkers.Count; i++)
         {
             if (!listWorkers[i].onMission)
             {
                 Staff curStaff = listWorkers[i];
-                int r = Random.Range(0, 1);
-                if(r < 0.5)
+                int r = Random.Range(0, 2);
+                if(r < 1)
                 {
                     Closet curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetClosetDontHaveOutfit();
                     if(curCloset != null)
                     {
+                        Debug.Log("r1");
+                        curStaff.ResetStaff();
+                        curStaff.ingredientType = curCloset.ingredientType;
                         ClothMachine curClothMachine = null;
                         curClothMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.GetClothMachineWithType(curCloset.ingredientType);
                         if(curClothMachine != null)
                         {
+                            curStaff.onMission = true;
+                            curStaff.curCloset = curCloset;
+                            curStaff.curMachine = curClothMachine;
                             curStaff.transCloset = curCloset.staffPos.position;
                             curStaff.transMachine = curClothMachine.outStaffPos.position;
                             curCloset.isHaveStaff = true;
@@ -98,13 +96,19 @@ public class StaffManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("r2");
                     BagCloset curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetBagClosetDontHaveBag();
                     if (curCloset != null)
                     {
+                        curStaff.ResetStaff();
                         BagMachine curBagMachine = null;
+                        curStaff.ingredientType = curCloset.ingredientType;
                         curBagMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.GetBagMachineWithType(curCloset.ingredientType);
                         if (curBagMachine != null)
                         {
+                            curStaff.onMission = true;
+                            curStaff.curCloset = curCloset;
+                            curStaff.curMachine = curBagMachine;
                             curStaff.transCloset = curCloset.staffPos.position;
                             curStaff.transMachine = curBagMachine.outStaffPos.position;
                             curCloset.isHaveStaff = true;

@@ -1,52 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class MapController : MonoBehaviour
+public class MapController : Singleton<MapController>
 {
-    public NameMap nameMap;
-    [SerializeField] private List<MiniMapController> miniMaps;
-
+    [SerializeField] private GameObject Level1;
+    [SerializeField] private GameObject Level2;
+    [SerializeField] private GameObject Level3;
     private void Start()
     {
         OpenMap(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent());
     }
 
-    public void OpenMap(MiniMapController.TypeLevel typeLevel)
+    public void OpenMap(int value)
     {
-        foreach (MiniMapController miniMapController in miniMaps)
+        switch (value)
         {
-            if(miniMapController.typeLevelThis == typeLevel)
-            {
-                miniMapController.OpenMiniMap();
-            }
-            else
-            {
-                miniMapController.CloseMiniMap();
-            }
+            case 1:
+                Level1.gameObject.SetActive(true);
+                Level2.gameObject.SetActive(false);
+                Level3.gameObject.SetActive(false);
+                break;
+            case 2:
+                Level1.gameObject.SetActive(false);
+                Level2.gameObject.SetActive(true);
+                Level3.gameObject.SetActive(false);
+                break;
+            case 3:
+                Level1.gameObject.SetActive(false);
+                Level2.gameObject.SetActive(false);
+                Level3.gameObject.SetActive(true);
+                break;
         }
         if(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent() !=
-            typeLevel)
+            value)
         {
-            DataManager.Instance.GetDataMap().GetMapCurrent().SetLevelInMapCurrent(typeLevel);
+            DataManager.Instance.GetDataMap().GetMapCurrent().SetLevelInMapCurrent(value);
         }
-        NavMesh.RemoveAllNavMeshData();
-        string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + (int)typeLevel;
-        NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
-        EnventManager.TriggerEvent(EventName.ReLoadNavMesh.ToString());
-        EnventManager.TriggerEvent(EventName.ReLoadDistanceCamera.ToString());
-       
     }
-    public MiniMapController GetMiniMapController(MiniMapController.TypeLevel typeLevel)
-    {
-        foreach (MiniMapController miniMapController in miniMaps)
-        {
-            if (miniMapController.typeLevelThis == typeLevel)
-            {
-                return miniMapController;
-            }
-        }
-        return null;
-    }
+    
 }

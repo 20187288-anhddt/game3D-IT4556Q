@@ -18,7 +18,15 @@ public class CheckPushCloset : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            player.canCatch = true;
+            if (player is Player)
+                player.canCatch = true;
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType == closet.ingredientType)
+                {
+                    player.canCatch = true;
+                };
+            }
         }
     }
     private void OnTriggerStay(Collider other)
@@ -26,9 +34,16 @@ public class CheckPushCloset : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType != closet.ingredientType)
+                {
+                    return;
+                };
+            }
             if (!player.canCatch || closet.listOutfits.Count >= closet.maxObj)
                 return;         
-            switch (closet.type)
+            switch (closet.ingredientType)
             {
                 case IngredientType.SHEEP:
                     v = player.sheepCloths.Count - 1;
@@ -45,7 +60,7 @@ public class CheckPushCloset : MonoBehaviour
             }
             if (v >= 0)
             {
-                switch (closet.type)
+                switch (closet.ingredientType)
                 {
                     case IngredientType.SHEEP:
                         curCloth = player.sheepCloths[v];

@@ -16,7 +16,15 @@ public class CheckPushBagMachine : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            player.canCatch = true;
+            if (player is Player)
+                player.canCatch = true;
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType == machine.ingredientType)
+                {
+                    player.canCatch = true;
+                };
+            }
         }
     }
     private void OnTriggerStay(Collider other)
@@ -24,7 +32,14 @@ public class CheckPushBagMachine : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            switch (machine.machineType)
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType != machine.ingredientType)
+                {
+                    return;
+                };
+            }
+            switch (machine.ingredientType)
             {
                 case IngredientType.SHEEP:
                     v = player.fleeces.Count - 1;
@@ -45,7 +60,7 @@ public class CheckPushBagMachine : MonoBehaviour
                 if (!player.canCatch || machine.ingredients.Count >= machine.maxObjInput)
                     return;
                 player.canCatch = false;
-                switch (machine.machineType)
+                switch (machine.ingredientType)
                 {
                     case IngredientType.SHEEP:
                         curIngredient = player.fleeces[v];

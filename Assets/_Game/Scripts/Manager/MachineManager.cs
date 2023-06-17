@@ -20,20 +20,71 @@ public class MachineManager : MonoBehaviour
     public List<Habitat> listChickenHabitatActive;
     public List<Habitat> listBearHabitatActive;
 
-    public MachineBase CheckMachineInputEmty()
+    public MachineBase CheckMachineInputEmtyWithType()
     {
         MachineBase curMachine = null;
         if (allActiveMachine.Count <= 0)
             curMachine = null;
-        //int r = Random.Range(0, allActiveMachine.Count);
+        //List<MachineBase> listAvailableMachine = new List<MachineBase>();
         for(int i = 0; i < allActiveMachine.Count; i++)
         {
-            if(allActiveMachine[i].ingredients.Count <= allActiveMachine[i].maxObjInput/2 && !allActiveMachine[i].isHaveInStaff)
+            if (!allActiveMachine[i].isHaveInStaff && allActiveMachine[i].ingredients.Count < allActiveMachine[i].maxObjInput/3)
             {
+                //if (!listAvailableMachine.Contains(allActiveMachine[i]))
+                //{
+                //    listAvailableMachine.Add(allActiveMachine[i]);
+                //}
                 curMachine = allActiveMachine[i];
                 break;
             }
         }
+        return curMachine;
+        //int r = Random.Range(0, listAvailableMachine.Count);
+        //curMachine = listAvailableMachine[r];
+        //switch (type)
+        //{
+        //    case IngredientType.BEAR:
+        //        for (int i = 0; i < listBearClothMachineActive.Count; i++)
+        //        {
+        //            if (listBearClothMachineActive[i].ingredients.Count <= listBearClothMachineActive[i].maxObjInput / 2 && !listBearClothMachineActive[i].isHaveInStaff)
+        //            {
+        //                curMachine = listBearClothMachineActive[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //            case IngredientType.COW:
+        //        for (int i = 0; i < listCowClothMachineActive.Count; i++)
+        //        {
+        //            if (listCowClothMachineActive[i].ingredients.Count <= listCowClothMachineActive[i].maxObjInput / 2 && !listCowClothMachineActive[i].isHaveInStaff)
+        //            {
+        //                curMachine = listCowClothMachineActive[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //    case IngredientType.CHICKEN:
+        //        for (int i = 0; i < listChickenClothMachineActive.Count; i++)
+        //        {
+        //            if (listChickenClothMachineActive[i].ingredients.Count <= listChickenClothMachineActive[i].maxObjInput / 2 && !listChickenClothMachineActive[i].isHaveInStaff)
+        //            {
+        //                curMachine = listChickenClothMachineActive[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //    case IngredientType.SHEEP:
+        //        for (int i = 0; i < listSheepClothMachineActive.Count; i++)
+        //        {
+        //            if (listSheepClothMachineActive[i].ingredients.Count <= listSheepClothMachineActive[i].maxObjInput / 2 && !listSheepClothMachineActive[i].isHaveInStaff)
+        //            {
+        //                curMachine = listSheepClothMachineActive[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //}
+  
         return curMachine;
     }
     public ClothMachine GetClothMachineWithType(IngredientType type)

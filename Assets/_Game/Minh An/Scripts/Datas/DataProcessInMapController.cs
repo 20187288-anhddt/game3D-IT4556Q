@@ -3,119 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class DataProcessInMapController : DataBase
+public class DataMapController : DataBase
 {
-    public DataProcess dataProcess;
-    private void Start()
+    public DataMap dataMap;
+    public MapCurrent mapCurrent;
+    private void Awake()
     {
         InItData();
     }
     public void InItData()
     {
-        SetFileName(nameof(DataProcess));
-        AddEvent();
-        LoadData();
-        dataProcess.GetDataApparatusProcess().InItData();
-        dataProcess.GetDataEventProcess().InItData();
+        dataMap.InItData();
+        mapCurrent.InItData();
+        SelectDataMap(mapCurrent.GetDataMapCurrent().GetLevelCurrent());
     }
-    public override void SaveData()
+    public DataMap GetDataMap()
     {
-        base.SaveData();
-        string json = JsonUtility.ToJson(dataProcess);
-        File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
+        return dataMap;
     }
-    public override void LoadData()
+    public MapCurrent GetMapCurrent()
     {
-        base.LoadData();
-        string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
-        DataProcess dataSave = JsonUtility.FromJson<DataProcess>(json);
-        dataProcess = dataSave;
+        return mapCurrent;
     }
-    public void CheckAndLoadRewardMissionComplete()
+    public void SelectDataMap(int levelCurrent)
     {
-        dataProcess.GetDataApparatusProcess().CheckAndLoadRewardMissionComplete();
-        dataProcess.GetDataEventProcess().CheckAndLoadRewardMissionComplete();
-    }
-    public override void ResetData()
-    {
-        base.ResetData();
-        dataProcess.GetDataApparatusProcess().InItData();
-        dataProcess.GetDataEventProcess().InItData();
-    }
-
-    public void AddEvent()
-    {
-        #region Bear
-        EnventManager.AddListener(EventName.BearCloset_1_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.BearClothMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.BearBagMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.BearCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.BearHabitat_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.BearBagCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        #endregion
-        #region Cow
-        EnventManager.AddListener(EventName.CowCloset_1_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.CowCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.CowClothMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.CowBagMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.CowHabitat_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.CowBagCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        #endregion
-        #region Sheep
-        EnventManager.AddListener(EventName.SheepCloset_1_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.SheepCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.SheepClothMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.SheepBagMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.SheepHabitat_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.SheepBagCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        #endregion
-        #region Chicken
-        EnventManager.AddListener(EventName.ChickenCloset_1_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.ChickenCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.ChickenClothMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.ChickenBagMachine_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.ChickenHabitat_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        EnventManager.AddListener(EventName.ChickenBagCloset_Complete.ToString(), CheckAndLoadRewardMissionComplete);
-        #endregion
-    }
-    
-}
-[System.Serializable]
-public class DataProcess
-{
-    public DataApparatusProcess dataApparatusProcess;
-    public DataEventProcess dataEventProcess;
-    public DataEventProcess GetDataEventProcess()
-    {
-        return dataEventProcess;
-    }
-    public DataApparatusProcess GetDataApparatusProcess()
-    {
-        return dataApparatusProcess;
+        mapCurrent.SetLevelCurrent(levelCurrent);
+        dataMap.SelectDataMap(levelCurrent);
     }
 }
 [System.Serializable]
-public class DataEventProcess
+public class MapCurrent //luu data
 {
-    public DataEventProcessCurrent dataEventProcessCurrent;
-    private EventInMapProcess eventInMapProcessCurrent;
+    public DataMapCurrent dataMapCurrent;
     private string fileName = " ";
-    public void InItData()
-    {
-        SetFileName(nameof(DataEventProcess) +
-            "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
-        LoadData();
-    }
-    public void CheckAndLoadRewardMissionComplete()
-    {
-        if (eventInMapProcessCurrent == null) { LoadData(); }
-        if (eventInMapProcessCurrent.missionProcess.isCompleteMission())
-        {
-            eventInMapProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
-            NextProcess();
-        }
-    }
-  
     public void SetFileName(string fileName)
     {
         this.fileName = fileName;
@@ -124,11 +44,18 @@ public class DataEventProcess
     {
         return fileName;
     }
+
+    public void InItData()
+    {
+        SetFileName(nameof(MapCurrent));
+        LoadData();
+    }
     public void SaveData()
     {
-        string json = JsonUtility.ToJson(dataEventProcessCurrent);
+        string json = JsonUtility.ToJson(dataMapCurrent);
         File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
     }
+
     public void LoadData()
     {
         if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
@@ -139,70 +66,66 @@ public class DataEventProcess
             SaveData();
         }
         string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
-        DataEventProcessCurrent dataSave = JsonUtility.FromJson<DataEventProcessCurrent>(json);
-        dataEventProcessCurrent = dataSave;
-        GetEventInMapProcess_Current();
+        DataMapCurrent dataSave = JsonUtility.FromJson<DataMapCurrent>(json);
+        dataMapCurrent = dataSave;
     }
-    public EventInMapProcess GetEventInMapProcess_Current()
+    public void SetLevelCurrent(int value)
     {
-        string PathResource = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap +
-            "\\EventInMapProcess\\Mission " + dataEventProcessCurrent.LevelCurrent;
-        eventInMapProcessCurrent = (EventInMapProcess)Resources.Load(PathResource, typeof(EventInMapProcess));
-        return eventInMapProcessCurrent;
-    }
-    public void NextProcess()
-    {
-        dataEventProcessCurrent.LevelCurrent++;
-        if (GetEventInMapProcess_Current() == null)
-        {
-            dataEventProcessCurrent.LevelCurrent--;
-        }
+        dataMapCurrent.SetLevelCurrent(value);
         SaveData();
         LoadData();
     }
-    public void SetDataEventInMapProcessCurrent(int LevelCurrent)
+    public void SetLevelInMapCurrent(int value)
     {
-        dataEventProcessCurrent.LevelCurrent = LevelCurrent;
+        Debug.Log(value);
+        dataMapCurrent.SetLevelInMapCurrent(value);
         SaveData();
         LoadData();
+        Debug.Log(dataMapCurrent.GetLevelInMapCurrent());
+    }
+    public DataMapCurrent GetDataMapCurrent()
+    {
+        return dataMapCurrent;
     }
     public void ResetData()
     {
-        dataEventProcessCurrent.ResetData();
+        dataMapCurrent.ResetData();
     }
-
 }
 [System.Serializable]
-public class DataEventProcessCurrent
+public class DataMapCurrent //dong goi de quan li
 {
     public int LevelCurrent;
+    public int LevelInMapCurrent;
     public void ResetData()
     {
         LevelCurrent = 1;
+        LevelInMapCurrent = 1;
+    }
+    public int GetLevelCurrent()
+    {
+        if (LevelCurrent < 1) { LevelCurrent = 1; }
+        return LevelCurrent;
+    }
+    public int GetLevelInMapCurrent()
+    {
+        if (LevelCurrent < 1) { LevelCurrent = 1; }
+        return LevelCurrent;
+    }
+    public void SetLevelCurrent(int value)
+    {
+        LevelCurrent = value;
+    }
+    public void SetLevelInMapCurrent(int value)
+    {
+        LevelInMapCurrent = value;
     }
 }
 [System.Serializable]
-public class DataApparatusProcess
+public class DataMap //luu data
 {
-    public DataApparatusProcessCurrent dataApparatusProcessCurrent;
-    private ApparatusProcess apparatusProcessCurrent;
+    public Data_Map data_Map = new Data_Map();
     private string fileName = " ";
-    public void InItData()
-    {
-        SetFileName(nameof(DataProcessInMapController) +
-            "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
-        LoadData();
-    }
-    public void CheckAndLoadRewardMissionComplete()
-    {
-        if (apparatusProcessCurrent == null) { LoadData(); }
-        if (apparatusProcessCurrent.missionProcess.isCompleteMission())
-        {
-            apparatusProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
-            NextProcess();
-        }
-    }
-  
     public void SetFileName(string fileName)
     {
         this.fileName = fileName;
@@ -211,13 +134,21 @@ public class DataApparatusProcess
     {
         return fileName;
     }
+   
+    public void InItData()
+    {
+        SetFileName(nameof(Data_Map) + data_Map.GetLevelMap());
+        LoadData();
+    }
     public void SaveData()
     {
-        string json = JsonUtility.ToJson(dataApparatusProcessCurrent);
+        string json = JsonUtility.ToJson(data_Map);
         File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
     }
+
     public void LoadData()
     {
+
         if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
         {
             FileStream file = new FileStream(Application.persistentDataPath + "/" + GetFileName(), FileMode.Create);
@@ -226,249 +157,85 @@ public class DataApparatusProcess
             SaveData();
         }
         string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
-        DataApparatusProcessCurrent dataSave = JsonUtility.FromJson<DataApparatusProcessCurrent>(json);
-        dataApparatusProcessCurrent = dataSave;
-        GetApparatusProcess_Current();
-    }
-    public ApparatusProcess GetApparatusProcess_Current()
-    {
-        string PathResource = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\ApparatusProcess\\"
-            + dataApparatusProcessCurrent.ingredientType.ToString().ToLower() + "\\Mission " + dataApparatusProcessCurrent.LevelCurrent;
-        apparatusProcessCurrent = (ApparatusProcess)Resources.Load(PathResource, typeof(ApparatusProcess));
-        return apparatusProcessCurrent;
-    }
-    public void NextProcess()
-    {
-        dataApparatusProcessCurrent.NextProcess();
-        if (GetApparatusProcess_Current() == null)
-        {
-
-            switch (dataApparatusProcessCurrent.ingredientType)
-            {
-                case IngredientType.SHEEP:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.COW;
-                    break;
-                case IngredientType.COW:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
-                    break;
-                case IngredientType.BEAR:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
-                    break;
-                case IngredientType.CHICKEN:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.SHEEP;
-                    break;
-            }
-            dataApparatusProcessCurrent.LevelCurrent = 1;
-        }
-        SaveData();
-        LoadData();
-    }
-    public void SetDataApparatusProcessCurrent(IngredientType ingredientType, int LevelCurrent)
-    {
-        dataApparatusProcessCurrent.ingredientType = ingredientType;
-        dataApparatusProcessCurrent.LevelCurrent = LevelCurrent;
-        SaveData();
-        LoadData();
+        Data_Map dataSave = JsonUtility.FromJson<Data_Map>(json);
+        data_Map = dataSave;
     }
     public void ResetData()
     {
-        dataApparatusProcessCurrent.ResetData();
+        data_Map.ResetData();
     }
-
+    public Data_Map GetData_Map()
+    {
+        return data_Map;
+    }
+    public void SelectDataMap(int levelCurrent)
+    {
+        if(data_Map.LevelMap == levelCurrent) { return; }
+        data_Map = new Data_Map();
+        data_Map.LevelMap = levelCurrent;
+        InItData();
+    }
+    #region Boss
+    public void SetLevel_Capacity_Boss(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Capacity(value);
+        SaveData();
+        LoadData();
+    }
+    public void SetLevel_Price_Boss(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Price(value);
+        SaveData();
+        LoadData();
+    }
+    public void SetLevel_Speed_Boss(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Speed(value);
+        SaveData();
+        LoadData();
+    }
+    #endregion
+    #region Staff
+    public void SetLevel_Capacity_Staff(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Capacity(value);
+        SaveData();
+        LoadData();
+    }
+    public void SetLevel_Hire_Staff(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Hire(value);
+        SaveData();
+        LoadData();
+    }
+    public void SetLevel_Speed_Staff(int value)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Speed(value);
+        SaveData();
+        LoadData();
+    }
+    #endregion
 }
 [System.Serializable]
-public class DataApparatusProcessCurrent
+public class Data_Map //dong goi de quan li
 {
-    public IngredientType ingredientType;
-    public int LevelCurrent;
-    public void NextProcess()
-    {
-        LevelCurrent++;
-    }
-    public void ResetData()
-    {
-        LevelCurrent = 1;
-        ingredientType = IngredientType.CHICKEN;
-    }
-}
-[System.Serializable]
-public class MissionProcess
-{
-    public List<EventName> nameMissions;
-    public bool isCompleteMission()
-    {
-        foreach(EventName eventName in nameMissions)
-        {
-            if (!CheckEventComplete(eventName))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    public bool CheckEventComplete(EventName eventName)
-    {
-        switch (eventName)
-        {
-            case EventName.CowHabitat_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowHabitat);
-            case EventName.CowClothMachine_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowClothMachine);
-            case EventName.CowBagMachine_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowBagMachine);
-            case EventName.CowBagCloset_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowBagCloset);
-            case EventName.CowCloset_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowCloset);
-            case EventName.CowCloset_1_Complete:
-                return Is_Complete(IngredientType.COW, NameObject_This.CowCloset_1);
-            case EventName.SheepHabitat_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepHabitat);
-            case EventName.SheepClothMachine_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepClothMachine);
-            case EventName.SheepBagMachine_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepBagMachine);
-            case EventName.SheepBagCloset_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepBagCloset);
-            case EventName.SheepCloset_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepCloset);
-            case EventName.SheepCloset_1_Complete:
-                return Is_Complete(IngredientType.SHEEP, NameObject_This.SheepCloset_1);
-            case EventName.ChickenHabitat_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenHabitat);
-            case EventName.ChickenClothMachine_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine);
-            case EventName.ChickenBagMachine_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenBagMachine);
-            case EventName.ChickenBagCloset_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenBagCloset);
-            case EventName.ChickenCloset_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenCloset);
-            case EventName.ChickenCloset_1_Complete:
-                return Is_Complete(IngredientType.CHICKEN, NameObject_This.ChickenCloset_1);
-            case EventName.BearHabitat_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearHabitat);
-            case EventName.BearClothMachine_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearClothMachine);
-            case EventName.BearBagMachine_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearBagMachine);
-            case EventName.BearBagCloset_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearBagCloset);
-            case EventName.BearCloset_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearCloset);
-            case EventName.BearCloset_1_Complete:
-                return Is_Complete(IngredientType.BEAR, NameObject_This.BearCloset_1);
+    public DataPlayer dataPlayer = new DataPlayer();
+    public int LevelMap;
 
-        }
-        return false;
-    }
-    public bool Is_Complete(IngredientType ingredientType, NameObject_This nameObject_This)
+    public Data_Map ResetData()
     {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsBuild_Complete(nameObject_This);
+        if(LevelMap < 1) { LevelMap = 1; }
+        dataPlayer.ResetData();
+        return this;
     }
-}
-[System.Serializable]
-public class RewardProcessCompleteMission
-{
-    public List<EventName> nameMissions;
-    public void OnLoadReward()
+    public DataPlayer GetDataPlayer()
     {
-        foreach(EventName eventName in nameMissions)
-        {
-            LoadReward(eventName);
-        }
+        return dataPlayer;
     }
-    public void LoadReward(EventName eventName)
+    public int GetLevelMap()
     {
-        switch (eventName)
-        {
-            case EventName.CowHabitat_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowHabitat);
-                break;
-            case EventName.CowClothMachine_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowClothMachine);
-                break;
-            case EventName.CowBagMachine_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowBagMachine);
-                break;
-            case EventName.CowBagCloset_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowBagCloset);
-                break;
-            case EventName.CowCloset_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowCloset);
-                break;
-            case EventName.CowCloset_1_OnBuy:
-                OnBuy(IngredientType.COW, NameObject_This.CowCloset_1);
-                break;
-            case EventName.SheepHabitat_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepHabitat);
-                break;
-            case EventName.SheepClothMachine_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepClothMachine);
-                break;
-            case EventName.SheepBagMachine_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepBagMachine);
-                break;
-            case EventName.SheepBagCloset_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepBagCloset);
-                break;
-            case EventName.SheepCloset_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepCloset);
-                break;
-            case EventName.SheepCloset_1_OnBuy:
-                OnBuy(IngredientType.SHEEP, NameObject_This.SheepCloset_1);
-                break;
-            case EventName.ChickenHabitat_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenHabitat);
-                break;
-            case EventName.ChickenClothMachine_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine);
-                break;
-            case EventName.ChickenBagMachine_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenBagMachine);
-                break;
-            case EventName.ChickenBagCloset_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenBagCloset);
-                break;
-            case EventName.ChickenCloset_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenCloset);
-                break;
-            case EventName.ChickenCloset_1_OnBuy:
-                OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenCloset_1);
-                break;
-            case EventName.BearHabitat_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearHabitat);
-                break;
-            case EventName.BearClothMachine_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearClothMachine);
-                break;
-            case EventName.BearBagMachine_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearBagMachine);
-                break;
-            case EventName.BearBagCloset_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearBagCloset);
-                break;
-            case EventName.BearCloset_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearCloset);
-                break;
-            case EventName.BearCloset_1_OnBuy:
-                OnBuy(IngredientType.BEAR, NameObject_This.BearCloset_1);
-                break;
-            case EventName.CheckOutTable_OnBought:
-                OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable);
-                break;
-            case EventName.CheckOutTable_1_OnBought:
-                OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
-                break;
-        }
+        if (LevelMap < 1) { LevelMap = 1; }
+        return LevelMap;
     }
 
-    public void OnBuy(IngredientType ingredientType, NameObject_This nameObject_This)
-    {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).OnBuy(nameObject_This);
-    }
-    public void OnBought(IngredientType ingredientType, NameObject_This nameObject_This)
-    {
-        BuildController.Instance.GetBuildIngredientController(ingredientType).OnBought(nameObject_This);
-    }
 }
