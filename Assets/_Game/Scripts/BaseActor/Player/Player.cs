@@ -201,10 +201,9 @@ public class Player : BaseActor,ICollect,IUnlock
         int n = allIngredients.IndexOf(ingredient);
         if (allIngredients.Contains(ingredient))
         {
-            ingredient.AddYOffset(-ingredient.ingreScale);
             allIngredients.Remove(ingredient);
         }
-
+            
         switch (ingredient.ingredientType)
         {
             case IngredientType.SHEEP:
@@ -256,32 +255,19 @@ public class Player : BaseActor,ICollect,IUnlock
                     bearBags.Remove(ingredient as BearBag);
                 break;
         }
-
         ShortObj(ingredient, n);
     }
     public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
-        bool isAdd = false;
-        for (int i = allIngredients.Count - 1; i >= 0; i--)
+        ingredient.ReSetYOffset();
+        for (int i = 0; i < allIngredients.Count; i++)
         {
-            if (i >= indexIngredientInList)
-            {
-                if (!isAdd)
-                {
-                    isAdd = true;
-                    ingredient.AddYOffset(+ingredient.ingreScale);
-                }
-                ingredient.AddYOffset(-ingredient.ingreScale);
-                allIngredients[i].transform.localPosition = Vector3.up * ingredient.GetYOffset();
-            }
+            ingredient.AddYOffset(ingredient.ingreScale);
+            allIngredients[i].transform.localPosition = Vector3.up * allIngredients[i].GetYOffset() + 
+                Vector3.right * allIngredients[i].transform.localPosition.x + 
+                Vector3.forward * allIngredients[i].transform.localPosition.z;
         }
-        for (int i = allIngredients.Count - 1; i >= 0; i--)
-        {
-            if (i > indexIngredientInList && isAdd)
-            {
-                ingredient.AddYOffset(ingredient.ingreScale);
-            }
-        }
+      
     }
     public void UnlockMap(float coin)
     {

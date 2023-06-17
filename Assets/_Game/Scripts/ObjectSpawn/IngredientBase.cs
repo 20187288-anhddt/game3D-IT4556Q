@@ -20,11 +20,11 @@ public class IngredientBase : AllPool
         //transform.DOMove(baseActor.CarryPos.position, 0.1f).OnComplete(() =>
         //{
         this.transform.DOLocalJump(Vector3.up * yOffset + Vector3.right * x + Vector3.forward * z, 0.75f, 1, 0.25f).OnComplete(() =>
-            {
-                //baseActor.ShortObj();
-            });
+        {
+            //baseActor.ShortObj();
+        });
         //});
-       
+
         //if (baseActor is Player)
         //{
         //    Vibration.Vibrate(25);
@@ -34,6 +34,10 @@ public class IngredientBase : AllPool
     public float GetYOffset()
     {
         return yOffset;
+    }
+    public void ReSetYOffset()
+    {
+        yOffset = 0;
     }
     public void AddYOffset(float value)
     {
