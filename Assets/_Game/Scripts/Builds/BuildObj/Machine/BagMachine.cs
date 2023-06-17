@@ -8,7 +8,58 @@ public class BagMachine : MachineBase
     public List<BagBase> outCloths;
     [SerializeField]
     private BagBase clothPrefab;
+    [SerializeField]
+    private GameObject unlockModel;
+    [SerializeField]
+    private CheckUnlock checkUnlock;
+    [SerializeField]
+    private CheckPush checkPushBagMachine;
+    [SerializeField]
+    private CheckCollectBagCloth checkCollectBagCloth;
 
+    public override void UnLock()
+    {
+        base.UnLock();
+        //vfx.gameObject.SetActive(true);
+        IsLock = false;
+        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
+        //levelManager.CheckUnlockBuildID(IDUnlock, this);
+        Player p = Player.Instance;
+        p.isUnlock = true;
+        unlockModel.SetActive(true);
+        //lockModel.SetActive(false);
+        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
+        {
+            p.transform.position = checkUnlock.transform.position - Vector3.left * 4;
+        }
+        unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+            unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                {
+                    p.isUnlock = false;
+                });
+            }); ;
+        });
+        checkUnlock.gameObject.SetActive(false);
+        checkCollectBagCloth.gameObject.SetActive(true);
+        checkPushBagMachine.gameObject.SetActive(true);
+        //GetComponent<BoxCollider>().enabled = true;
+        switch (machineType)
+        {
+            case IngredientType.BEAR:
+                levelManager.listBearBagMachineActive.Add(this);
+                break;
+            case IngredientType.COW:
+                levelManager.listCowBagMachineActive.Add(this);
+                break;
+            case IngredientType.CHICKEN:
+                levelManager.listChickenBagMachineActive.Add(this);
+                break;
+            case IngredientType.SHEEP:
+                levelManager.listSheepBagMachineActive.Add(this);
+                break;
+        }
+    }
     void Start()
     {
         StartInGame();
@@ -55,18 +106,6 @@ public class BagMachine : MachineBase
     //        }
     //    });
     //}
-    public void ShortCutIngredients()
-    {
-        if (ingredients.Count > 0)
-        {
-            for (int i = 0; i < ingredients.Count; i++)
-            {
-                ingredients[i].transform.localPosition = new Vector3(ingredients[i].transform.localPosition.x,
-                    (i) * ingredients[i].ingreScale,
-                    ingredients[i].transform.localPosition.z);
-            }
-        }
-    }
     public void ShortCutOutCloth()
     {
         if (outCloths.Count > 0)
@@ -124,6 +163,7 @@ public class BagMachine : MachineBase
     }
     public override void StartInGame()
     {
+        base.StartInGame();
         ingredients = new List<FurBase>();
         outCloths = new List<BagBase>();
         foreach (IngredientBase i in ingredients)
@@ -133,5 +173,17 @@ public class BagMachine : MachineBase
         }
         isReadyInToMid = true;
         isReadyMidToOut = false;
+        if (isLock)
+        {
+            checkCollectBagCloth.gameObject.SetActive(false);
+            checkPushBagMachine.gameObject.SetActive(false);
+            unlockModel.gameObject.SetActive(false);
+            checkUnlock.gameObject.SetActive(true);
+        }
+        else
+        {
+            UnLock();
+        }
+        checkUnlock.UpdateUI();
     }
 }

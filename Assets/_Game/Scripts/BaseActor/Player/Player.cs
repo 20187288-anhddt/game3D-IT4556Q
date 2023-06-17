@@ -200,7 +200,11 @@ public class Player : BaseActor,ICollect,IUnlock
     {
         int n = allIngredients.IndexOf(ingredient);
         if (allIngredients.Contains(ingredient))
+        {
+            ingredient.AddYOffset(-ingredient.ingreScale);
             allIngredients.Remove(ingredient);
+        }
+
         switch (ingredient.ingredientType)
         {
             case IngredientType.SHEEP:
@@ -252,19 +256,32 @@ public class Player : BaseActor,ICollect,IUnlock
                     bearBags.Remove(ingredient as BearBag);
                 break;
         }
+
         ShortObj(ingredient, n);
     }
     public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
-        for(int i = allIngredients.Count - 1; i >= 0; i--)
+        bool isAdd = false;
+        for (int i = allIngredients.Count - 1; i >= 0; i--)
         {
-            if(i + 1 > indexIngredientInList)
+            if (i >= indexIngredientInList)
             {
-                allIngredients[i].transform.localPosition -= Vector3.up * ingredient.ingreScale;
+                if (!isAdd)
+                {
+                    isAdd = true;
+                    ingredient.AddYOffset(+ingredient.ingreScale);
+                }
+                ingredient.AddYOffset(-ingredient.ingreScale);
+                allIngredients[i].transform.localPosition = Vector3.up * ingredient.GetYOffset();
             }
-           
         }
-        
+        for (int i = allIngredients.Count - 1; i >= 0; i--)
+        {
+            if (i > indexIngredientInList && isAdd)
+            {
+                ingredient.AddYOffset(ingredient.ingreScale);
+            }
+        }
     }
     public void UnlockMap(float coin)
     {
