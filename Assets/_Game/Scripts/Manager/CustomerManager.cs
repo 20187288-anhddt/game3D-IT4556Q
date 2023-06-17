@@ -52,8 +52,10 @@ public class CustomerManager : MonoBehaviour
         {
             CheckCusToOutfit();
         }
-        CheckCusToBag();
-        CheckCusCheckOut();
+        if(closetManager.listBagClosets.Count > 0)
+            CheckCusToBag();
+        if(checkoutManager.listCheckout.Count > 0)
+            CheckCusCheckOut();
     }
      
     public void ResetCusOnOpen()

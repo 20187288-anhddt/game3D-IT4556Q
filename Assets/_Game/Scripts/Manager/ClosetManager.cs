@@ -42,7 +42,7 @@ public class ClosetManager : MonoBehaviour
         for (int i = 0; i < listBagClosets.Count; i++)
         {
             listBagClosets[i].GetEmtyPlaceNum(n);
-            if (listBagClosets[i].listEmtyPlaceToBuyBag.Count > 0)
+            if (listBagClosets[i].listEmtyPlaceToBuyBag.Count >= n)
             {
                 if (!listAvailableBagClosets.Contains(listBagClosets[i]))
                 {
