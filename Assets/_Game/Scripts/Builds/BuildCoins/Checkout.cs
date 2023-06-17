@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Checkout : BuildCoins
+public class Checkout : BuildCoins,ILock
 {
     public bool isHaveCus;
     public bool isMoving;
@@ -15,10 +15,54 @@ public class Checkout : BuildCoins
     [SerializeField]
     private float maxMoney;
     public List<Coin> coins = new List<Coin>();
-    void Start()
+    public bool IsLock { get => isLock; set => isLock = value; }
+    public float DefaultCoin { get => defaultCoin; }
+    public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
+    public GameObject unlockModel;
+    public override void Start()
     {
+        base.Start(); 
+    }
+    public override void StartInGame()
+    {
+        base.StartInGame();
         isHaveCus = false;
         isMoving = false;
+    }
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
+    {
+        //Debug.Log("Unlock");
+        //Player p = Player.Instance;
+        if (!IsLock)
+        {
+            return;
+        }
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
+        //vfx.gameObject.SetActive(true);
+        IsLock = false;
+        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
+        //levelManager.CheckUnlockBuildID(IDUnlock, this);
+
+       //p.isUnlock = true;
+        unlockModel.SetActive(true);
+        //lockModel.SetActive(false);
+        if (isPlayAnimUnlock) //anim
+        {
+            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+                    unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
+                    {
+                        //p.isUnlock = false;
+                    });
+                }); ;
+            });
+        }
+        //checkUnlock.gameObject.SetActive(false);
+        coinSpawn.gameObject.SetActive(true);
+        //checkPush.gameObject.SetActive(true);
+        //GetComponent<BoxCollider>().enabled = true;
+        if (!levelManager.checkOutManager.listCheckout.Contains(this))
+            levelManager.checkOutManager.listCheckout.Add(this);
     }
     void Update()
     {

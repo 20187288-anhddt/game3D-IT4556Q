@@ -49,7 +49,7 @@ public class Staff : BaseStaff, ICollect
 
     public GameManager gameManager;
 
-    protected void Start()
+    protected void Awake()
     {
         fsm.init(5);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
@@ -146,7 +146,7 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToHabitat()
     {
-        Debug.Log(Vector3.Distance(transHabitat, this.transform.position));
+       // Debug.Log(Vector3.Distance(transHabitat, this.transform.position));
         if (!onHabitatPos && Vector3.Distance(transHabitat, this.transform.position) < 0.2f)
         {
             this.transform.DORotate(Vector3.zero, 0f);
