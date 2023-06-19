@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - ${{ github.workspace }}
+          - /
         testMode:
           - playmode
           - editmode
@@ -36,11 +36,53 @@ jobs:
       - uses: game-ci/unity-test-runner@v2
         id: tests
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: "<?xml version="1.0" encoding="UTF-8"?><root>
+    <License id="Terms">
+        <MachineBindings>
+            <Binding Key="1" Value="576562626572264761624c65526f7578"/>
+            <Binding Key="2" Value="576562626572264761624c65526f7578"/>
+        </MachineBindings>
+        <MachineID Value="D7nTUnjNAmtsUMcnoyrqkgIbYdM="/>
+        <SerialHash Value="b920e576ef3b64e2ad26a8c396534f51e370cb22"/>
+        <Features>
+            <Feature Value="33"/>
+            <Feature Value="1"/>
+            <Feature Value="12"/>
+            <Feature Value="2"/>
+            <Feature Value="24"/>
+            <Feature Value="3"/>
+            <Feature Value="36"/>
+            <Feature Value="17"/>
+            <Feature Value="19"/>
+            <Feature Value="62"/>
+            <Feature Value="60"/>
+        </Features>
+        <DeveloperData Value="AQAAAEY0LVA2VzQtRjhVVi1TUkpILVc0U0ctTjVNSw=="/>
+        <SerialMasked Value="F4-P6W4-F8UV-SRJH-W4SG-XXXX"/>
+        <StartDate Value="2022-11-06T00:00:00"/>
+        <StopDate Value="2023-06-09T19:26:12"/>
+        <UpdateDate Value="2023-05-11T18:26:10"/>
+        <InitialActivationDate Value="2022-11-06T13:21:05"/>
+        <LicenseVersion Value="6.x"/>
+        <ClientProvidedVersion Value="2019.2.11f1"/>
+        <AlwaysOnline Value="false"/>
+        <Entitlements>
+            <Entitlement Ns="unity_editor" Tag="UnityPro" Type="EDITOR" ValidTo="2023-11-06T13:19:04"/>
+            <Entitlement Ns="unity_editor" Tag="UnityPersonal" Type="EDITOR" ValidTo="9999-12-31T00:00:00"/>
+            <Entitlement Ns="unity_editor" Tag="DarkSkin" Type="EDITOR_FEATURE" ValidTo="9999-12-31T00:00:00"/>
+            <Entitlement Ns="unity_editor" Tag="UnityProStudent" Type="EDITOR_FEATURE" ValidTo="2023-11-06T13:19:04"/>
+        </Entitlements>
+    </License>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>BjG7xh3OEPAC21yKTkfVrBGLhLE=</DigestValue></Reference></SignedInfo><SignatureValue>LPs2hMzkmKnlfVXBHQk17nN2mi9XPTCea6vyI//V/4tJ/ut8N64Tm8LRHdnddBbSFwPUm/6tGVvV&#13;
+p4DEljS4JgFcJTL0yLAMhqnjBMPkCPtrEWSVVRirel2ANlEhj5lwAG3A+1jjifsHXQ6CVR3ofLba&#13;
+vcXrrxST/wQpFx122PPb6q+8t5pXeD0z9LyGKcxZB2/IRirByHpzrwCdXF8TVjT4x/Xh/T5zz5sQ&#13;
+wnsCl7CyFIG4eHEW3nLWeAUhN5R5M+bTOCVRl2LXUwC5Jfow6Fg0qpTruaeMNGV6meLdZuP3lNzM&#13;
+uW/YRT2OAZQEPJCHDLxwhg4HxS3pFxwrfpKhKA==</SignatureValue></Signature></root>"
         with:
           projectPath: ${{ matrix.projectPath }}
           testMode: ${{ matrix.testMode }}
           artifactsPath: ${{ matrix.testMode }}-artifacts
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
       - uses: actions/upload-artifact@v2
