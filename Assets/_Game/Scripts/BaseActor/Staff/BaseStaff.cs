@@ -10,6 +10,7 @@ public class BaseStaff : AllPool
     public static string MOVE_TO_MACHINE_STATE = "move_to_machine_state";
     public static string MOVE_TO_CLOSET_STATE = "move_to_closet_state";
     public static string MOVE_TO_IDLE_STATE = "move_to_idle_state";
+    public static string MOVE_TO_GARBAGE_STATE = "move_to_garbage_state";
 
     [Header("-----Status-----")]
     public string STATE_STAFF;
@@ -44,6 +45,7 @@ public class BaseStaff : AllPool
     public List<BearBag> BearBags;
 
     public StaffType staffType;
+    public IngredientType ingredientType;
 
     public void UpdateState(string state)
     {

@@ -16,12 +16,15 @@ public class Staff : BaseStaff, ICollect
     public Vector3 transHabitat;
     public Vector3 transMachine;
     public Vector3 transCloset;
+    public Vector3 transGarbage;
     public bool onHabitatPos;
     public bool onMachinePos;
     public bool onClosetPos;
+    public bool onGarbagePos;
     public Habitat curHabitat;
     public MachineBase curMachine;
     public ClosetBase curCloset;
+    public TrashCan curGarbage;
     
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
@@ -57,6 +60,7 @@ public class Staff : BaseStaff, ICollect
         fsm.add(new FsmState(MOVE_TO_HABITAT_STATE, StartMoveToHabitat, OnMoveToHabitatState));
         fsm.add(new FsmState(MOVE_TO_MACHINE_STATE, StartMoveToMachine, OnMoveToMachineState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
+        fsm.add(new FsmState(MOVE_TO_GARBAGE_STATE, StartMoveToGarbage, OnMoveToGarbageState));
         UpdateState(IDLE_STATE);
         fsm.execute();
         if (gun.activeSelf)
@@ -106,6 +110,11 @@ public class Staff : BaseStaff, ICollect
         CheckMoveToCloset();
         return FsmSystem.ACTION.END;
     }
+    private FsmSystem.ACTION OnMoveToGarbageState(FsmSystem _fsm)
+    {
+        CheckMoveToGarbage();
+        return FsmSystem.ACTION.END;
+    }
     private void StartMoveToIdle(FsmSystem _fsm)
     {
         MoveToIdle();
@@ -121,6 +130,10 @@ public class Staff : BaseStaff, ICollect
     private void StartMoveToCloset(FsmSystem _fsm)
     {
         MoveToCloset();
+    }
+    private void StartMoveToGarbage(FsmSystem _fsm)
+    {
+        MoveToGarbage();
     }
     public virtual void Idle()
     {
@@ -149,6 +162,12 @@ public class Staff : BaseStaff, ICollect
         navMeshAgent.SetDestination(transCloset);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transCloset;
+    }
+    public virtual void MoveToGarbage()
+    {
+        navMeshAgent.SetDestination(transGarbage);
+        navMeshAgent.stoppingDistance = 0;
+        pointTaget = transGarbage;
     }
     public virtual void CheckMoveToIdle()
     {
@@ -247,20 +266,47 @@ public class Staff : BaseStaff, ICollect
         {
             if(curCloset is Closet)
             {
-                if(objHave <= 0 || (curCloset as Closet).listOutfits.Count >= (curCloset).maxObj)
+                if(objHave <= 0)
                 {
                     onClosetPos = false;
                     UpdateState(MOVE_TO_IDLE_STATE);
-                   
+                }
+                else if((curCloset as Closet).listOutfits.Count >= (curCloset).maxObj)
+                {
+                    onClosetPos = false;
+                    UpdateState(MOVE_TO_GARBAGE_STATE);
                 }
             }  
             if(curCloset is BagCloset)
             {
-                if (objHave <= 0 || (curCloset as BagCloset).listBags.Count >= (curCloset).maxObj)
+                if (objHave <= 0)
                 {
                     onClosetPos = false;
                     UpdateState(MOVE_TO_IDLE_STATE);
                 }
+                else if((curCloset as BagCloset).listBags.Count >= (curCloset).maxObj)
+                {
+                    onClosetPos = false;
+                    UpdateState(MOVE_TO_GARBAGE_STATE);
+                }
+            }
+        }
+    }
+    public virtual void CheckMoveToGarbage()
+    {
+        if (!onGarbagePos && Vector3.Distance(transGarbage, this.transform.position) < 0.5f)
+        {
+            //this.transform.DORotate(Vector3.zero, 0f);
+            this.transform.LookAt(curGarbage.transform.position);
+            this.onGarbagePos = true;
+            //UpdateState(IDLE_STATE);
+        }
+        if (onGarbagePos)
+        {
+            if(objHave <= 0)
+            {
+                onGarbagePos = false;
+                UpdateState(MOVE_TO_IDLE_STATE);
             }
         }
     }
@@ -421,7 +467,7 @@ public class Staff : BaseStaff, ICollect
         }
     }
 
-    public bool CheckHaveIngredient(IngredientBase ingredient)
+    public bool CheckMoveToGarbage(IngredientBase ingredient)
     {
         bool tmp = false;
         switch (staffType)
