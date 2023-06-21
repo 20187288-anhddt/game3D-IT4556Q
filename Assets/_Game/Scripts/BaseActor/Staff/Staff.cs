@@ -52,8 +52,9 @@ public class Staff : BaseStaff, ICollect
     private Vector3 pointTaget = Vector3.zero;
 
     public GameManager gameManager;
-    protected void Awake()
+    public override void Awake()
     {
+        base.Awake();
         fsm.init(5);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_IDLE_STATE, StartMoveToIdle, OnMoveToIdleState));
@@ -171,9 +172,9 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToIdle()
     {
-        if (Vector3.Distance(transIdle, this.transform.position) < 0.5f)
-        {     
-            this.transform.DORotate(Vector3.zero, 0f);
+        if (Vector3.Distance(transIdle, myTransform.position) < 0.5f)
+        {
+            myTransform.DORotate(Vector3.zero, 0f);
             onMission = false;
             switch (staffType)
             {
@@ -190,10 +191,10 @@ public class Staff : BaseStaff, ICollect
     public virtual void CheckMoveToHabitat()
     {
        // Debug.Log(Vector3.Distance(transHabitat, this.transform.position));
-        if (!onHabitatPos && Vector3.Distance(transHabitat, this.transform.position) < 0.2f)
+        if (!onHabitatPos && Vector3.Distance(transHabitat, myTransform.position) < 0.2f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);
-            this.transform.LookAt(curHabitat.transform.position);
+            myTransform.LookAt(curHabitat.myTransform.position);
             this.onHabitatPos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -206,10 +207,10 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToMachine()
     {
-        if (!onMachinePos && Vector3.Distance(transMachine, this.transform.position) < 0.5f)
+        if (!onMachinePos && Vector3.Distance(transMachine, myTransform.position) < 0.5f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);
-            this.transform.LookAt(curMachine.transform.position);
+            myTransform.LookAt(curMachine.myTransform.position);
             this.onMachinePos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -218,20 +219,24 @@ public class Staff : BaseStaff, ICollect
             switch (staffType)
             {
                 case StaffType.FARMER:
-                    if(objHave <= 0 || curMachine.ingredients.Count >= curMachine.maxObjInput)
+                    if(objHave <= 0)
                     {
                         ingredientType = IngredientType.NONE;
                         onMachinePos = false;
                         UpdateState(MOVE_TO_IDLE_STATE);
                         
                     } 
+                    else if(curMachine.ingredients.Count >= curMachine.maxObjInput)
+                    {
+                        ingredientType = IngredientType.NONE;
+                        onMachinePos = false;
+                        UpdateState(MOVE_TO_GARBAGE_STATE);
+                    }
                     break;
                 case StaffType.WORKER:
                     if(curMachine is ClothMachine)
                     {
                         if (objHave >= maxCollectObj)
-                            //|| ((curMachine as ClothMachine).outCloths.Count <= 0
-                            //&& curMachine.ingredients.Count <= 0))
                         {
                             onMachinePos = false;
                             curMachine.isHaveOutStaff = false;
@@ -240,9 +245,7 @@ public class Staff : BaseStaff, ICollect
                     }     
                     if(curMachine is BagMachine)
                     {
-                        if (objHave >= maxCollectObj)
-                            //|| ((curMachine as BagMachine).outCloths.Count <= 0
-                            //&& curMachine.ingredients.Count <= 0))
+                        if (objHave >= maxCollectObj)   
                         {
                             onMachinePos = false;
                             curMachine.isHaveOutStaff = false;
@@ -255,10 +258,10 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToCloset()
     {
-        if (!onClosetPos && Vector3.Distance(transCloset, this.transform.position) < 0.5f)
+        if (!onClosetPos && Vector3.Distance(transCloset, myTransform.position) < 0.5f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);
-            this.transform.LookAt(curCloset.transform.position);
+            myTransform.LookAt(curCloset.myTransform.position);
             this.onClosetPos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -294,10 +297,10 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToGarbage()
     {
-        if (!onGarbagePos && Vector3.Distance(transGarbage, this.transform.position) < 0.5f)
+        if (!onGarbagePos && Vector3.Distance(transGarbage, myTransform.position) < 0.5f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);
-            this.transform.LookAt(curGarbage.transform.position);
+            myTransform.LookAt(curGarbage.myTransform.position);
             this.onGarbagePos = true;
             //UpdateState(IDLE_STATE);
         }
@@ -461,9 +464,9 @@ public class Staff : BaseStaff, ICollect
         for (int i = 0; i < allIngredients.Count; i++)
         {
             yOffset += ingredient.ingreScale;
-            allIngredients[i].transform.localPosition = Vector3.up * yOffset +
-                Vector3.right * allIngredients[i].transform.localPosition.x +
-                Vector3.forward * allIngredients[i].transform.localPosition.z;
+            allIngredients[i].myTransform.localPosition = Vector3.up * yOffset +
+                Vector3.right * allIngredients[i].myTransform.localPosition.x +
+                Vector3.forward * allIngredients[i].myTransform.localPosition.z;
         }
     }
 
