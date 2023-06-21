@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class BaseBuild : MonoBehaviour 
 {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     public Transform myTransform;
     public NameObject_This nameObject_This;
 >>>>>>> Stashed changes
+=======
+    public NameObject_This nameObject_This;
+>>>>>>> main
     public bool isLock;
     public bool isKey = false;
     public int IDUnlock;
     public bool unlockAds;
     public float timeDelay;
+    public float coinUnlock;
     public float defaultCoin;
     public GameManager gameManager;
     public LevelManager levelManager;
-    public virtual void UnLock()
+    public DataStatusObject dataStatusObject;
+    public virtual void Awake()
     {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 
 =======
@@ -57,6 +64,43 @@ public class BaseBuild : MonoBehaviour
                 {
                     Active(true);
 
+=======
+        if(dataStatusObject == null) { dataStatusObject = GetComponent<DataStatusObject>(); }
+      
+    }
+    public virtual void Start()
+    {
+        EnventManager.AddListener(EventName.StatusData_OnLoad.ToString(), () =>
+        {
+            if (dataStatusObject != null)
+            {
+                if (dataStatusObject.isStatus_Bought())
+                {
+                    UnLock();
+                }
+                else if (dataStatusObject.isStaus_OnBuy())
+                {
+                    Active(true);
+                }
+                else
+                {
+                    DontUnLock();
+                }
+            }
+        });
+        StartCoroutine(IE_DelayAction(0.2f, () =>
+        {
+            if (dataStatusObject != null)
+            {
+                if (dataStatusObject.isStatus_Bought())
+                {
+                    UnLock(false, true);
+                }
+                else if (dataStatusObject.isStaus_OnBuy())
+                {
+                    Active(true);
+
+>>>>>>> main
                 }
                 else
                 {
@@ -69,6 +113,7 @@ public class BaseBuild : MonoBehaviour
     {
         Active(true);
         //GameManager.Instance.buildUnlock++;
+<<<<<<< HEAD
         if (!dataStatusObject.isStatus_Bought())
         {
             OnBought();
@@ -80,6 +125,12 @@ public class BaseBuild : MonoBehaviour
     {
         dataStatusObject?.OnBought();
     }
+=======
+        dataStatusObject?.OnBought();
+        //GameManager.Instance.CheckShowInter();
+        //FirebaseManager.ins.unlock_new_build(name, GameManager.Instance.buildUnlock);
+    }
+>>>>>>> main
     public virtual void DontUnLock()
     {
         Active(false);
@@ -87,7 +138,10 @@ public class BaseBuild : MonoBehaviour
     public void Active(bool isActive)
     {
         gameObject.SetActive(isActive);
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
     }
     public virtual void Effect()
     {
@@ -97,5 +151,10 @@ public class BaseBuild : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         levelManager = gameManager.listLevelManagers[0];
+    }
+    public IEnumerator IE_DelayAction(float timeDelay, System.Action action)
+    {
+        yield return new WaitForSeconds(timeDelay);
+        action?.Invoke();
     }
 }

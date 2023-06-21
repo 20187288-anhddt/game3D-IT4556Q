@@ -5,7 +5,6 @@ using UnityEngine;
 public class BaseStaff : AllPool
 {
     public FsmSystem fsm = new FsmSystem();
-    public Transform myTransform;
     public static string IDLE_STATE = "idle_state";
     public static string MOVE_TO_HABITAT_STATE = "move_to_habitat_state";
     public static string MOVE_TO_MACHINE_STATE = "move_to_machine_state";
@@ -29,47 +28,25 @@ public class BaseStaff : AllPool
     public Transform HandPos;
     public Transform BackPos;
     public Transform CarryPos;
-    public Transform GunPos;
 
     [Header("-----ListIngredients-----")]
     public List<IngredientBase> AllIngredients;
-
     public List<Fleece> Fleeces;
     public List<SheepCloth> SheepCloths;
-    public List<SheepBag> SheepBags;
-
     public List<CowFur> CowFurs;
     public List<CowCloth> CowCloths;
-    public List<CowBag> CowBags;
-
     public List<ChickenFur> ChickenFurs;
     public List<ChickenCloth> ChickenCloths;
-    public List<ChickenBag> ChickenBags;
-
     public List<BearFur> BearFurs;
     public List<BearCloth> BearCloths;
+    public List<SheepBag> SheepBags;
+    public List<CowBag> CowBags;
+    public List<ChickenBag> ChickenBags;
     public List<BearBag> BearBags;
-
-    public List<LionFur> LionFurs;
-    public List<LionCloth> LionCloths;
-    public List<LionBag> LionBags;
-
-    public List<CrocFur> CrocFurs;
-    public List<CrocCloth> CrocCloths;
-    public List<CrocBag> CrocBags;
-
-    public List<EleFur> EleFurs;
-    public List<EleCloth> EleCloths;
-    public List<EleBag> EleBags;
-
-    public List<ZebraFur> ZebraFurs;
-    public List<ZebraCloth> ZebraCloths;
-    public List<ZebraBag> ZebraBags;
-
-    public List<Shit> ListShits;
 
     public StaffType staffType;
     public IngredientType ingredientType;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public List<GameObject> ListEmojis;
 =======
@@ -79,6 +56,9 @@ public class BaseStaff : AllPool
     {
         if(myTransform == null) { myTransform = this.transform; }
     }
+=======
+
+>>>>>>> main
     public void UpdateState(string state)
     {
         fsm.setState(state);
@@ -91,7 +71,7 @@ public class BaseStaff : AllPool
         CounterHelper.Instance.QueueAction(time, () =>
         {
             CanCatch = true;
-        },1);
+        });
     }
     public virtual void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
@@ -107,5 +87,4 @@ public enum StaffType
 {
     FARMER,
     WORKER,
-    CHECKOUT,
 }

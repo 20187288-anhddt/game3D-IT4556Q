@@ -7,17 +7,22 @@ public class StaffManager : MonoBehaviour
     public List<Staff> listAllActiveStaffs;
     public List<Staff> listFarmers;
     public List<Staff> listWorkers;
+    public List<Staff> listFamersBag;
     public List<TrashCan> listTrashCan;
     public GameManager gameManager;
     public Transform[] listIdlePos;
-    public bool isChangeIdlePos;
+    public bool changeIdlePos;
 
     void Start()
     {
         gameManager = GameManager.Instance;
+        changeIdlePos = false;
+        ChangeStaffIdlePos();
     }
     void Update()
     {
+        if(!changeIdlePos)
+            ChangeStaffIdlePos();
         if( listAllActiveStaffs.Count > 0)
         {
             if(listFarmers.Count > 0)
@@ -32,70 +37,57 @@ public class StaffManager : MonoBehaviour
                 CheckWorkerMission();
             }
         }
-        //ChangeStaffIdlePos();
     }
-    public void ChangeStaffIdlePos(Staff staff)
+    public void ChangeStaffIdlePos()
     {
-        switch (staff.staffType)
+        for(int i = 0; i< listAllActiveStaffs.Count; i++)
         {
-            case StaffType.FARMER:
-                if(listFarmers.Count == 1)
-                {
-                    staff.curGarbage = listTrashCan[0];
-                    staff.transGarbage = listTrashCan[0].staffPos.position;
-                    staff.transIdle = listIdlePos[0].position;
-                }
-                else if(listFarmers.Count == 2)
-                {
-                    staff.curGarbage = listTrashCan[1];
-                    staff.transGarbage = listTrashCan[1].staffPos.position;
-                    staff.transIdle = listIdlePos[1].position;
-                }
-                break;
-            case StaffType.WORKER:
-                if (listWorkers.Count == 1)
-                {
-                    staff.curGarbage = listTrashCan[2];
-                    staff.transGarbage = listTrashCan[2].staffPos.position;
-                    staff.transIdle = listIdlePos[2].position;
-                }
-                else if(listWorkers.Count == 2)
-                {
-                    staff.curGarbage = listTrashCan[3];
-                    staff.transGarbage = listTrashCan[3].staffPos.position;
-                    staff.transIdle = listIdlePos[3].position;
-                }
-                break;
+            switch (listAllActiveStaffs[i].staffType)
+            {
+                case StaffType.FARMER:
+                    listAllActiveStaffs[i].curGarbage = listTrashCan[0];
+                    if (gameManager.listLevelManagers[gameManager.curLevel].habitatManager.allActiveHabitats.Count < 3)
+                    {
+                        listAllActiveStaffs[i].transIdle = listIdlePos[0].position;
+                    }
+                    else
+                    {
+                        listAllActiveStaffs[i].transIdle = listIdlePos[1].position;
+                        changeIdlePos = true;
+                    }
+                    break;
+                case StaffType.WORKER:
+                    listAllActiveStaffs[i].curGarbage = listTrashCan[1];
+                    if (gameManager.listLevelManagers[gameManager.curLevel].closetManager.listClosets.Count < 3)
+                    {
+                        listAllActiveStaffs[i].transIdle = listIdlePos[2].position;
+                    }
+                    else
+                    {
+                        listAllActiveStaffs[i].transIdle = listIdlePos[3].position;
+                        changeIdlePos = true;
+                    }
+                    break;
+            }
         }
-
+       
     }
     public void CheckFarmerMisson()
     {
         if (listAllActiveStaffs.Count <= 0 || listFarmers.Count <= 0)
             return;
-
-        LevelManager levelManager = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-                break;
-            case 1:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-                break;
-        }
-        for (int i = 0; i < listFarmers.Count; i++)
+        for(int i = 0; i < listFarmers.Count; i++)
         {
             if (!listFarmers[i].onMission)
             { 
                 Staff curStaff = listFarmers[i];
-                MachineBase curMachine = levelManager.machineManager.CheckMachineInputEmtyWithType();
+                MachineBase curMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.CheckMachineInputEmtyWithType();
                 if (curMachine != null)
                 {
                     curStaff.ResetStaff();
                     curStaff.ingredientType = curMachine.ingredientType;
                     Habitat curHabitat = null;
-                    curHabitat = levelManager.habitatManager.GetHabitatWithTypeForStaff(curMachine.ingredientType);
+                    curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(curMachine.ingredientType);
                     if (curHabitat != null)
                     { 
                         curStaff.onMission = true;
@@ -115,16 +107,6 @@ public class StaffManager : MonoBehaviour
     {
         if (listAllActiveStaffs.Count <= 0 || listWorkers.Count <= 0)
             return;
-        LevelManager levelManager = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-                break;
-            case 1:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-                break;
-        }
         for (int i = 0; i < listWorkers.Count; i++)
         {
             if (!listWorkers[i].onMission)
@@ -133,13 +115,14 @@ public class StaffManager : MonoBehaviour
                 int r = Random.Range(0, 2);
                 if(r < 1)
                 {
-                    Closet curCloset = levelManager.closetManager.GetClosetDontHaveOutfit(curStaff.maxCollectObj);
+                    Closet curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetClosetDontHaveOutfit(curStaff.maxCollectObj);
                     if(curCloset != null)
                     {
+                        Debug.Log("r1");
                         curStaff.ResetStaff();
                         curStaff.ingredientType = curCloset.ingredientType;
                         ClothMachine curClothMachine = null;
-                        curClothMachine = levelManager.machineManager.GetClothMachineWithType(curCloset.ingredientType);
+                        curClothMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.GetClothMachineWithType(curCloset.ingredientType);
                         if(curClothMachine != null)
                         {
                             curStaff.onMission = true;
@@ -155,13 +138,14 @@ public class StaffManager : MonoBehaviour
                 }
                 else
                 {
-                    BagCloset curCloset = levelManager.closetManager.GetBagClosetDontHaveBag(curStaff.maxCollectObj);
+                    BagCloset curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetBagClosetDontHaveBag(curStaff.maxCollectObj);
                     if (curCloset != null)
                     {
+                        Debug.Log("r2");
                         curStaff.ResetStaff();
                         BagMachine curBagMachine = null;
                         curStaff.ingredientType = curCloset.ingredientType;
-                        curBagMachine = levelManager.machineManager.GetBagMachineWithType(curCloset.ingredientType);
+                        curBagMachine = gameManager.listLevelManagers[gameManager.curLevel].machineManager.GetBagMachineWithType(curCloset.ingredientType);
                         if (curBagMachine != null)
                         {
                             curStaff.onMission = true;

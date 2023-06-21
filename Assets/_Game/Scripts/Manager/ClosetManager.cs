@@ -8,24 +8,14 @@ public class ClosetManager : MonoBehaviour
     public List<Closet> listAvailableClosets;
     public List<BagCloset> listBagClosets;
     public List<BagCloset> listAvailableBagClosets;
-
     public List<Closet> listBearClosetActive;
     public List<Closet> listCowClosetActive;
     public List<Closet> listSheepClosetActive;
     public List<Closet> listChickenClosetActive;
-    public List<Closet> listLionClosetActive;
-    public List<Closet> listCrocClosetActive;
-    public List<Closet> listEleClosetActive;
-    public List<Closet> listZebraClosetActive;
-
     public List<BagCloset> listBearBagClosetActive;
     public List<BagCloset> listCowBagClosetActive;
     public List<BagCloset> listSheepBagClosetActive;
     public List<BagCloset> listChickenBagClosetActive;
-    public List<BagCloset> listLionBagClosetActive;
-    public List<BagCloset> listCrocBagClosetActive;
-    public List<BagCloset> listEleBagClosetActive;
-    public List<BagCloset> listZebraBagClosetActive;
 
     public void CheckClosetEmpty()
     {
@@ -61,75 +51,35 @@ public class ClosetManager : MonoBehaviour
             }
         }
     }
-    public Closet GetClosetDontHaveOutfit(int n)
+    public Closet GetClosetDontHaveOutfit()
     {
         Closet curCloset = null;
-        if (listClosets.Count <= 0)
-        {
+        if (listClosets.Count == 0)
             curCloset = null;
-        }
-        else
+        for (int i = 0; i < listClosets.Count; i++)
         {
-            int r = Random.Range(0, listClosets.Count);
-            if (listClosets[r].GetListEmptyOutfit() < n)
+            if(listClosets[i].GetListEmptyOutfit() < 3)
             {
-                curCloset = listClosets[r];
+                curCloset = listClosets[i];
             }
+            break;
         }
-        //else
-        //{
-        //    bool tmp = false;
-        //    do
-        //    {
-        //        int r = Random.Range(0, listClosets.Count);
-        //        curCloset = listClosets[r];
-        //        if (listClosets[r].GetListEmptyOutfit() < n)
-        //        {
-        //            tmp = true;
-        //        }
-        //    } while (!tmp); 
-        //}
         return curCloset;
     }
 
-    public BagCloset GetBagClosetDontHaveBag(int n)
+    public BagCloset GetBagClosetDontHaveBag()
     {
-        BagCloset curBagCloset = null;
-        if (listBagClosets.Count <= 0)
+        BagCloset curCloset = null;
+        if (listClosets.Count == 0)
+            curCloset = null;
+        for (int i = 0; i < listBagClosets.Count; i++)
         {
-            curBagCloset = null;
-        }
-        else
-        {
-            int r = Random.Range(0, listBagClosets.Count);
-            if (listBagClosets[r].GetListEmptyBag() < n)
+            if (listBagClosets[i].GetListEmptyBag() < 3)
             {
-                curBagCloset = listBagClosets[r]; ;
+                curCloset = listBagClosets[i];
             }
-            //bool tmp = false;
-            //do
-            //{
-            //    int r = Random.Range(0, listBagClosets.Count);
-            //    curBagCloset = listBagClosets[r];
-            //    if (listBagClosets[r].GetListEmptyBag() < n)
-            //    {
-            //        tmp = true;
-            //    }
-            //} while (!tmp);
+            break;
         }
-        return curBagCloset;
-        //BagCloset curCloset = null;
-        //if (listBagClosets.Count == 0)
-        //    curCloset = null;
-        //for (int i = 0; i < listBagClosets.Count; i++)
-        //{
-        //    if (listBagClosets[i].GetListEmptyBag() < n)
-        //    {
-        //        curCloset = listBagClosets[i];
-        //        break;
-        //    }
-           
-        //}
-        //return curCloset;
+        return curCloset;
     }
 }

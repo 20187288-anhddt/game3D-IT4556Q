@@ -257,7 +257,6 @@ MonoBehaviour:
   levelManager: {fileID: 0}
   dataStatusObject: {fileID: 0}
   ingredientType: 0
-  pirceObject: {fileID: 8116019375042384202}
   listCurCus: []
   maxObj: 5
   isHaveStaff: 0
@@ -271,11 +270,11 @@ MonoBehaviour:
   - {fileID: 2884803253765372605}
   outFitPrefab: {fileID: 7596994975647450806, guid: 0cf6dd0f6d769d842915926285687179, type: 3}
   listPlaceToBuyBag:
-  - {fileID: 1356683870448209413}
-  - {fileID: 8861415024897701985}
-  - {fileID: 2718641037278199477}
-  - {fileID: 7503869502017102537}
   - {fileID: 1228079766107657505}
+  - {fileID: 7503869502017102537}
+  - {fileID: 2718641037278199477}
+  - {fileID: 8861415024897701985}
+  - {fileID: 1356683870448209413}
   listEmtyPlaceToBuyBag: []
   unlockModel: {fileID: 8895479305679897157}
   checkUnlock: {fileID: 7492552808978891799}
@@ -503,7 +502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3390051740853240460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: -1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1250,17 +1249,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7799934039719395543, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
   m_PrefabInstance: {fileID: 565435215327844468}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8116019375042384202 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8608965814865496382, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
-  m_PrefabInstance: {fileID: 565435215327844468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d09530e49046d4d9039dc341f0a1f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2150653252104867645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1489,7 +1477,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1997656006062554160, guid: 0c0b23e94633812458d18edfe241fd31, type: 3}
       propertyPath: m_Size.x
-      value: 14.024965
+      value: 12.024706
       objectReference: {fileID: 0}
     - target: {fileID: 1997656006062554160, guid: 0c0b23e94633812458d18edfe241fd31, type: 3}
       propertyPath: m_Size.y
@@ -1497,7 +1485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997656006062554160, guid: 0c0b23e94633812458d18edfe241fd31, type: 3}
       propertyPath: m_Center.x
-      value: -0.016392708
+      value: -0.0010061264
       objectReference: {fileID: 0}
     - target: {fileID: 1997656006062554160, guid: 0c0b23e94633812458d18edfe241fd31, type: 3}
       propertyPath: m_Center.y

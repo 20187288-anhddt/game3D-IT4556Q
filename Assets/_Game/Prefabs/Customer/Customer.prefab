@@ -111,16 +111,20 @@ MonoBehaviour:
   transExit: {x: 0, y: 0, z: 0}
   transCheckOut: {x: 0, y: 0, z: 0}
   placeToBuy: {fileID: 0}
-  checkOutPos: {fileID: 0}
-  checkPlaceToBuyPos: 0
-  checkCheckOutPos: 0
-  cusType: 0
+  placeToBuyBag: {fileID: 0}
+  checkOut: {fileID: 0}
+  onPlacePos: 0
+  onCheckoutPos: 0
+  outfitType: 8
+  bagType: 8
   mainModel: {fileID: 5002972012400120166}
   outfitModel:
   - {fileID: 5053150264839097639}
   - {fileID: 6592215283283390818}
   - {fileID: 2270617552386925198}
   - {fileID: 9146917999257207897}
+  isLeader: 0
+  leader: {fileID: 0}
 --- !u!1001 &1388150420199120863
 PrefabInstance:
   m_ObjectHideFlags: 0

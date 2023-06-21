@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class GroupCustomer : AllPool
 {
-    public Transform myTransform;
     public IngredientType typeOutfit;
     public IngredientType typeBag;
     public List<Customer> listCus;
     public Customer leader;
     public List<Customer> teammates;
     public ClosetBase closetBase;
-    public Checkout checkout;
     public int grNum;
-    private void Awake()
-    {
-        if(myTransform == null) { myTransform = this.transform; }
-    }
+
     public void AddLeader(Customer cus)
     {
         this.leader = cus;
@@ -36,10 +31,6 @@ public class GroupCustomer : AllPool
     {
         this.closetBase = closet;
     }
-    public void AddCheckout(Checkout checkout)
-    {
-        this.checkout = checkout;
-    }
     public bool CheckGotOutfit()
     {
         for(int i = 0; i < teammates.Count; i++)
@@ -56,17 +47,6 @@ public class GroupCustomer : AllPool
         for (int i = 0; i < teammates.Count; i++)
         {
             if (!teammates[i].gotBag)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    public bool CheckonCheckoutPos()
-    {
-        for(int i = 0; i < listCus.Count; i++)
-        {
-            if (!listCus[i].onCheckoutPos)
             {
                 return false;
             }
@@ -93,7 +73,5 @@ public class GroupCustomer : AllPool
         leader = null;
         teammates.Clear();
         grNum = 0;
-        typeOutfit = IngredientType.NONE;
-        typeBag = IngredientType.NONE;
     }
 }

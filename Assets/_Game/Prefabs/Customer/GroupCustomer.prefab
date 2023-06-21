@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2215109425624587718}
   - component: {fileID: 8136363820904190331}
-  - component: {fileID: 1510937723470894942}
   m_Layer: 0
   m_Name: GroupCustomer
   m_TagString: Untagged
@@ -46,24 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitID: 0
-  myTransform: {fileID: 0}
-  typeOutfit: 0
-  typeBag: 0
+  type: 8
   listCus: []
   leader: {fileID: 0}
   teammates: []
   closetBase: {fileID: 0}
   grNum: 0
---- !u!65 &1510937723470894942
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6786734540143118120}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

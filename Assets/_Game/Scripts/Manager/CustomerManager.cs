@@ -108,7 +108,11 @@ public class CustomerManager : MonoBehaviour
         {
             (curGroup as GroupCustomer).listCus.Add(c);
             (curGroup as GroupCustomer).AddLeader(c);
+<<<<<<< HEAD
             c.myTransform.parent = curGroup.transform;
+=======
+            c.transform.parent = curGroup.transform;
+>>>>>>> main
             c.isLeader = true;
             c.transCloset = closetPos.position;
             for (int i = 1; i < n; i++)
@@ -147,7 +151,11 @@ public class CustomerManager : MonoBehaviour
                 PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
                 if (curPlace != null)
                 {
+<<<<<<< HEAD
                     GroupCustomer curGr = SpawnOneGroup(x, curPlace.myTransform);
+=======
+                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.transform);
+>>>>>>> main
                     curGr.AddCloset(closetManager.listAvailableClosets[r]);
                     curGr.typeOutfit = closetManager.listAvailableClosets[r].ingredientType;
                     if (curGr != null)
@@ -156,7 +164,11 @@ public class CustomerManager : MonoBehaviour
                         for (int i = 0; i < curGr.teammates.Count; i++)
                         {
                             PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
+<<<<<<< HEAD
                             curGr.teammates[i].myTransform.parent = curGr.myTransform;
+=======
+                            curGr.teammates[i].transform.parent = curGr.transform;
+>>>>>>> main
                             nextPlace.AddCus(curGr.teammates[i]);
                         }
                         closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
