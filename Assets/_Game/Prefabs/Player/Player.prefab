@@ -65,13 +65,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitID: 0
+  myTransform: {fileID: 0}
   STATE_ACTOR: 
   speed: 10
   animSpd: 0
   ObjHave: 0
   CanCatch: 0
   Yoffset: 0
-  MaxCollectObj: 3
+  MaxCollectObj: 10
   TimeDelayCatch: 0.5
   HandPos: {fileID: 8683428248071359970}
   BackPos: {fileID: 881397979267701667}
@@ -92,6 +93,7 @@ MonoBehaviour:
   gun: {fileID: 7319075074730332672}
   isUnlock: 0
   coinValue: 0
+  characterController: {fileID: 0}
 --- !u!143 &303888481105284568
 CharacterController:
   m_ObjectHideFlags: 0

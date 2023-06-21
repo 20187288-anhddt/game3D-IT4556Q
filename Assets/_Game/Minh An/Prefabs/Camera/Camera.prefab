@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5472753466279169359}
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 29.481112, y: 109.7667, z: -139.21342}
+  m_LocalPosition: {x: 34.47885, y: 101.106445, z: -103.15381}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,8 +46,8 @@ Camera:
   m_GameObject: {fileID: 5472753466279169359}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4094874, g: 0.8113208, b: 0.41770053, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -62,13 +62,13 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 29.924026
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -87,7 +87,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5472753466279169359}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!114 &5472753466279169355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_UpdateMethod: 1
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 4
-    m_Time: 10
+    m_Style: 1
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -276,17 +276,17 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 1
-  m_XDamping: 0.5
-  m_YDamping: 0.5
-  m_ZDamping: 0.5
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 55
+  m_CameraDistance: 45
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
-  m_UnlimitedSoftZone: 1
+  m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
@@ -313,7 +313,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5472753466826477493}
   - component: {fileID: 5472753466826477490}
-  - component: {fileID: 1797908239}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -329,7 +328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5472753466826477492}
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 29.481112, y: 109.7667, z: -139.21342}
+  m_LocalPosition: {x: 34.47885, y: 101.106445, z: -103.15381}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -375,22 +374,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5472753466747716975}
---- !u!114 &1797908239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5472753466826477492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Width: 30
-  m_Damping: 9.6
-  m_MinFOV: 3
-  m_MaxFOV: 60
 --- !u!1 &5472753467745383273
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +383,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5472753467745383270}
-  - component: {fileID: 534956924}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -425,18 +407,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &534956924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5472753467745383273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3ba9ddfca0e4394cb05b57511326955, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cinemachineVirtual: {fileID: 5472753466826477490}
-  cinemachineFramingTransposer: {fileID: 0}
-  CinemachineFollowZoom: {fileID: 1797908239}
