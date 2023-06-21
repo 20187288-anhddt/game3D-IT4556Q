@@ -83,6 +83,30 @@ public enum EventName {
     OpenLevelMap_1,
     OpenLevelMap_2,
     OpenLevelMap_3,
+
+    ReLoadNavMesh,
+
+    Camera_Follow_CowHabitat,
+    Camera_Follow_CowClothMachine,
+    Camera_Follow_CowCloset,
+    Camera_Follow_CowCloset_1,
+
+    Camera_Follow_SheepHabitat,
+    Camera_Follow_SheepClothMachine,
+    Camera_Follow_SheepCloset,
+    Camera_Follow_SheepCloset_1,
+
+    Camera_Follow_ChickenHabitat,
+    Camera_Follow_ChickenClothMachine,
+    Camera_Follow_ChickenCloset,
+    Camera_Follow_ChickenCloset_1,
+
+    Camera_Follow_BearHabitat,
+    Camera_Follow_BearClothMachine,
+    Camera_Follow_BearCloset,
+    Camera_Follow_BearCloset_1,
+
+
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

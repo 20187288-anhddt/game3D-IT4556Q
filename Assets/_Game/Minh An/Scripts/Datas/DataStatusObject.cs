@@ -73,7 +73,7 @@ public class DataStatusObject : DataBase
         }
         foreach (StatusObject statusObject in GetStatus_All_Level_Object().GetStatusObjects())
         {
-            if (statusObject.typeStatus_IsBought == StatusObject.TypeStatus_IsBought.Buy && statusObject == statusObjectCheck)
+            if (statusObject.typeStatus_IsBought == StatusObject.TypeStatus_IsBought.Buy && statusObject.levelThis == statusObjectCheck.levelThis)
             {
                 return true;
             }
@@ -126,6 +126,7 @@ public class DataStatusObject : DataBase
         }
         SaveData();
         LoadData();
+
     }
     public void OnBuy(StatusObject statusObjectCheck = null)
     {
@@ -197,3 +198,4 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
         statusObjectCurrent = statusObjects[0];
     }
 }
+

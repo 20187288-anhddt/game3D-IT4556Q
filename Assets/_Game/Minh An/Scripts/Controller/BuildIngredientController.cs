@@ -20,7 +20,18 @@ public class BuildIngredientController : MonoBehaviour
         }
         return false;
     }
-  
+    public BaseBuild GetBaseBuild(NameObject_This nameObject_This)
+    {
+        foreach (BaseBuild baseBuild in baseBuilds)
+        {
+            if (baseBuild.nameObject_This == nameObject_This)
+            {
+                return baseBuild;
+            }
+        }
+        return null;
+    }
+
     public DataStatusObject GetDataStatusObject(NameObject_This nameObject_This)
     {
         foreach (DataStatusObject dataStatusObject in dataStatusObjects)
