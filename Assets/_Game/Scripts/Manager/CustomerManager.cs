@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class CustomerManager : MonoBehaviour
 {
-    public Transform exitPos;
-    public Transform startPos;
+    //public Transform[] exitPos;
+    public Transform[] startPos;
     public Transform checkOutPos;
     public List<Customer> customerList;
     public List<Customer> customerOnCloset;
@@ -91,7 +91,7 @@ public class CustomerManager : MonoBehaviour
         if (!customerList.Contains(curCus as Customer))
         {
             customerList.Add(curCus as Customer);
-            (curCus as Customer).transExit = exitPos.position;
+            //(curCus as Customer).transExit = exitPos.position;
             (curCus as Customer).transCheckOut = checkOutPos.position;
         }
         else
@@ -100,20 +100,50 @@ public class CustomerManager : MonoBehaviour
     }
     public GroupCustomer SpawnOneGroup(int n, Transform closetPos)
     {
-        AllPool curGroup = AllPoolContainer.Instance.Spawn(grCusPrefab, startPos.position, Quaternion.identity);
+        Transform curStartpos = null;
+        switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
+        {
+            case 1:
+                curStartpos = startPos[0];
+                break;
+            case 2:
+                int r = Random.Range(0, 2);
+                curStartpos = startPos[r];
+                break;
+            case 3:
+                int m = Random.Range(0, 3);
+                curStartpos = startPos[m];
+                break;
+        }
+        AllPool curGroup = AllPoolContainer.Instance.Spawn(grCusPrefab, curStartpos.position, Quaternion.identity);
         (curGroup as GroupCustomer).ResetGroup();
         (curGroup as GroupCustomer).grNum = n;
-        Customer c = SpawnCus(startPos.position);
+        //if(levelManager.habitatManager.allActiveHabitats)
+        Customer c = SpawnCus(curStartpos.position);
+        //Transform curExitpos = null;
+        //switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
+        //{
+        //    case 1:
+        //    case 2:
+        //        curExitpos = exitPos[0];
+        //        break;
+        //    case 3:
+        //        int x = Random.Range(0,2);
+        //        curExitpos = startPos[x];
+        //        break;
+        //}
+        //c.transExit = curExitpos.position;
         if (!(curGroup as GroupCustomer).listCus.Contains(c))
         {
             (curGroup as GroupCustomer).listCus.Add(c);
             (curGroup as GroupCustomer).AddLeader(c);
-            c.transform.parent = curGroup.transform;
+            c.myTransform.parent = curGroup.transform;
             c.isLeader = true;
             c.transCloset = closetPos.position;
             for (int i = 1; i < n; i++)
             {
-                Customer x = SpawnCus(startPos.position + new Vector3(0f, 0f, i * 2.5f));
+                Customer x = SpawnCus(curStartpos.position + new Vector3(0f, 0f, i * 2.5f));
+                //x.transExit = c.transExit;
                 (curGroup as GroupCustomer).AddTeammate(x);
             }
             if (!listGroups.Contains((curGroup as GroupCustomer)) && (curGroup as GroupCustomer).listCus.Count > 0)
@@ -147,7 +177,7 @@ public class CustomerManager : MonoBehaviour
                 PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
                 if (curPlace != null)
                 {
-                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.transform);
+                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.myTransform);
                     curGr.AddCloset(closetManager.listAvailableClosets[r]);
                     curGr.typeOutfit = closetManager.listAvailableClosets[r].ingredientType;
                     if (curGr != null)
@@ -156,7 +186,7 @@ public class CustomerManager : MonoBehaviour
                         for (int i = 0; i < curGr.teammates.Count; i++)
                         {
                             PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
-                            curGr.teammates[i].transform.parent = curGr.transform;
+                            curGr.teammates[i].myTransform.parent = curGr.myTransform;
                             nextPlace.AddCus(curGr.teammates[i]);
                         }
                         closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
