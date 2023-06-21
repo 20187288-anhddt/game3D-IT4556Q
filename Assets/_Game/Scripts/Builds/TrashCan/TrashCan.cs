@@ -8,7 +8,6 @@ public class TrashCan : MonoBehaviour
     public float timeStay;
     private float t;
     private bool throwFood = false;
-    public Transform staffPos;
     private void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }
@@ -20,20 +19,17 @@ public class TrashCan : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       // var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        player.canCatch = true;
-        //if (player != null)
-        //{
-        //    player.canCatch = true;
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
             if (!throwFood)
             {
                 t -= Time.deltaTime;
@@ -49,7 +45,7 @@ public class TrashCan : MonoBehaviour
                 player.canCatch = false;
                 var cur = player.allIngredients[value];
                 player.RemoveIngredient(cur);
-                cur.MoveToTrash(this,player);
+                cur.MoveToTrash(this);
                 player.DelayCatch(player.timeDelayCatch);
             }
             if (t < 0)
@@ -57,16 +53,14 @@ public class TrashCan : MonoBehaviour
                 throwFood = true;
                 t = timeStay;
             }
-        //}
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        //var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-            //player.canCatch = false;
-        //}
-        t = timeStay;
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = false;
+        }
     }
 }
