@@ -32,8 +32,9 @@ public class Customer : BaseCustomer
     public Customer leader;
     public GroupCustomer grCus;
     private Vector3 pointTaget = Vector3.zero;
-    protected void Awake()
+    public override void Awake()
     {
+        base.Awake();
         fsm.init(7);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
@@ -128,9 +129,9 @@ public class Customer : BaseCustomer
     }
     public virtual void CheckMoveToCloset()
     {
-        if (Vector3.Distance(transCloset,this.transform.position) < 0.1f)
+        if (Vector3.Distance(transCloset, myTransform.position) < 0.1f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            myTransform.DORotate(Vector3.zero, 0f);
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
@@ -145,9 +146,9 @@ public class Customer : BaseCustomer
     }
     public virtual void CheckMoveToBag()
     {
-        if (Vector3.Distance(transBag, this.transform.position) < 0.1f)
+        if (Vector3.Distance(transBag, myTransform.position) < 0.1f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            myTransform.DORotate(Vector3.zero, 0f);
             this.onBagPos = true;
             UpdateState(IDLE_STATE);
         }
@@ -161,9 +162,9 @@ public class Customer : BaseCustomer
     }
     public virtual void CheckMoveToCheckOut()
     {
-        if (Vector3.Distance(transCheckOut, this.transform.position) < 0.1f)
+        if (Vector3.Distance(transCheckOut, myTransform.position) < 0.1f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            myTransform.DORotate(Vector3.zero, 0f);
             //navMeshAgent.transform.LookAt(transCheckOut);
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
@@ -174,36 +175,36 @@ public class Customer : BaseCustomer
     {
         if(!isLeader && leader != null)
         {
-            navMeshAgent.SetDestination(leader.transform.position);
+            navMeshAgent.SetDestination(leader.myTransform.position);
             navMeshAgent.stoppingDistance = 0;
-            pointTaget = leader.transform.position;
+            pointTaget = leader.myTransform.position;
         }
     }
     public virtual void CheckFollowLeader()
     {
-        navMeshAgent.SetDestination(leader.transform.position);
+        navMeshAgent.SetDestination(leader.myTransform.position);
         navMeshAgent.stoppingDistance = 0;
         if (!leader.gotOutfit && !leader.gotBag)
         {
-            if (Vector3.Distance(transCloset, this.transform.position) < 6f || leader.onPlacePos)
+            if (Vector3.Distance(transCloset, myTransform.position) < 6f || leader.onPlacePos)
             {
                 UpdateState(MOVE_TO_CLOSET_STATE);
             }
         }
         else if (leader.gotOutfit && !leader.gotBag)
         {
-            if (Vector3.Distance(transBag, this.transform.position) < 6f || leader.onBagPos)
+            if (Vector3.Distance(transBag, myTransform.position) < 6f || leader.onBagPos)
             {
                 UpdateState(MOVE_TO_BAG_STATE);
             }
         }
-        //else if (leader.gotOutfit && leader.gotBag && leader.onCheckoutPos)
-        //{
-        //    if(Vector3.Distance(transCheckout, leader.transform.position) < 3f)
-        //    {
-        //        UpdateState(IDLE_STATE);
-        //    }
-        //} 
+        else if (leader.gotOutfit && leader.gotBag && !leader.onCheckoutPos)
+        {
+            if (Vector3.Distance(transCheckOut, myTransform.position) < 6f || leader.onCheckoutPos)
+            {
+                UpdateState(MOVE_CHECKOUT_STATE);
+            }
+        }
     }
     public virtual void MoveToExit()
     {
