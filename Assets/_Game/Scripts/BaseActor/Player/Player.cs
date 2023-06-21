@@ -27,8 +27,19 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<ChickenCloth> chickenCloths { get => ChickenCloths; set => ChickenCloths = value; }
     public List<BearFur> bearFurs { get => BearFurs; set => BearFurs = value; }
     public List<BearCloth> bearCloths { get => BearCloths; set => BearCloths = value; }
+<<<<<<< Updated upstream
     private void Awake()
+=======
+    public List<SheepBag> sheepBags { get => SheepBags; set => SheepBags = value; }
+    public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
+    public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
+    public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+    public CharacterController characterController;
+   
+    public override void Awake()
+>>>>>>> Stashed changes
     {
+        base.Awake();
         if (Instance != null)
         {
             Destroy(this.gameObject);
@@ -85,8 +96,15 @@ public class Player : BaseActor,ICollect,IUnlock
         rig.velocity = new Vector3(joystick.Horizontal * speed, rig.velocity.y, joystick.Vertical * speed);
         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
+<<<<<<< Updated upstream
             Vector3 moveDir = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
             transform.rotation = Quaternion.LookRotation(moveDir).normalized;
+=======
+            Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
+            myTransform.rotation = Quaternion.LookRotation(moveDir).normalized;
+            myTransform.eulerAngles = new Vector3(myTransform.eulerAngles.x, myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+           // transform.Translate(Vector3.forward * speed * 0.02f);
+>>>>>>> Stashed changes
         }
     }
     public virtual void Idle()
@@ -193,6 +211,23 @@ public class Player : BaseActor,ICollect,IUnlock
                     bearCloths.Remove(ingredient as BearCloth);
                 break;
         }
+<<<<<<< Updated upstream
+=======
+        ShortObj(ingredient, n);
+    }
+    public override void ShortObj(IngredientBase ingredient, int indexIngredientInList)
+    {
+        yOffset = 0;
+        for (int i = 0; i < allIngredients.Count; i++)
+        {
+            yOffset += ingredient.ingreScale;
+            allIngredients[i].myTransform.localPosition = Vector3.up * yOffset + 
+                Vector3.right * allIngredients[i].myTransform.localPosition.x + 
+                Vector3.forward * allIngredients[i].myTransform.localPosition.z;
+        }
+      
+
+>>>>>>> Stashed changes
     }
     public void UnlockMap(float coin)
     {

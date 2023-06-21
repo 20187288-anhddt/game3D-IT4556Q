@@ -38,6 +38,7 @@ public class BagMachine : MachineBase
         Player p = Player.Instance;
         if (!IsLock)
         {
+<<<<<<< Updated upstream
             if (isBuff)
             {
                 buffFx.SetActive(true);
@@ -46,6 +47,8 @@ public class BagMachine : MachineBase
             {
                 buffFx.SetActive(false);
             }
+=======
+>>>>>>> Stashed changes
             return;
         }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
@@ -61,7 +64,11 @@ public class BagMachine : MachineBase
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
+<<<<<<< Updated upstream
             p.myTransform.position = checkUnlock.myTransform.position + Vector3.left * 7;
+=======
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.left * 4;
+>>>>>>> Stashed changes
         }
         if (isPlayAnimUnlock) //anim
         {
@@ -70,6 +77,7 @@ public class BagMachine : MachineBase
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
+<<<<<<< Updated upstream
                         unlockFx.SetActive(false);
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         checkCollectBagCloth.gameObject.SetActive(true);
@@ -80,6 +88,11 @@ public class BagMachine : MachineBase
                         {
                             p.PlayerContinueMove();
                         }
+=======
+                        p.isUnlock = false;
+                        checkCollectBagCloth.gameObject.SetActive(true);
+                        checkPushBagMachine.gameObject.SetActive(true);
+>>>>>>> Stashed changes
                     });
                 }); ;
             });
@@ -87,6 +100,7 @@ public class BagMachine : MachineBase
         else
         {
             p.isUnlock = false;
+<<<<<<< Updated upstream
            // EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
             checkCollectBagCloth.gameObject.SetActive(true);
             checkPushBagMachine.gameObject.SetActive(true);
@@ -95,6 +109,17 @@ public class BagMachine : MachineBase
         checkUnlock.gameObject.SetActive(false);   
         //GetComponent<BoxCollider>().enabled = true;
        
+=======
+            checkCollectBagCloth.gameObject.SetActive(true);
+            checkPushBagMachine.gameObject.SetActive(true);
+        }
+        checkUnlock.gameObject.SetActive(false);   
+        //GetComponent<BoxCollider>().enabled = true;
+        if (!levelManager.machineManager.allActiveMachine.Contains(this))
+            levelManager.machineManager.allActiveMachine.Add(this);
+        if (!levelManager.machineManager.allActiveBagMachine.Contains(this))
+            levelManager.machineManager.allActiveBagMachine.Add(this);
+>>>>>>> Stashed changes
         switch (ingredientType)
         {
             case IngredientType.BEAR:
@@ -343,11 +368,15 @@ public class BagMachine : MachineBase
     public override void StartInGame()
     {
         base.StartInGame();
+<<<<<<< Updated upstream
         LoadAndSetData();
         EnventManager.AddListener(EventName.QuitGame.ToString(), SaveData_QuitGame);
         CurrentCoin = pirceObject.Get_Pirce();
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
+=======
+       
+>>>>>>> Stashed changes
         isHaveInStaff = false;
         isHaveOutStaff = false;
         ingredients = new List<FurBase>();

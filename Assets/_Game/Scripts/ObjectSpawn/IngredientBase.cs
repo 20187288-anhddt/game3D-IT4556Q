@@ -134,6 +134,7 @@ public enum IngredientType
     COW_BAG,
     CHICKEN_BAG,
     BEAR_BAG,
+<<<<<<< Updated upstream
     CHECKOUT,
     BUILDSTAGE,
     HIRESTAFF,
@@ -153,4 +154,7 @@ public enum IngredientType
     ELE_BAG,
     ZEBRA_BAG,
     NEXTLEVEL
+=======
+    CHECKOUT
+>>>>>>> Stashed changes
 }

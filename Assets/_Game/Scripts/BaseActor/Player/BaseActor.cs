@@ -47,6 +47,7 @@ public class BaseActor : AllPool
     public List<BearCloth> BearCloths;
     public List<BearBag> BearBags;
 
+<<<<<<< Updated upstream
     public List<LionFur> LionFurs;
     public List<LionCloth> LionCloths;
     public List<LionBag> LionBags;
@@ -65,6 +66,8 @@ public class BaseActor : AllPool
 
     public List<Shit> ListShits;
     public List<GameObject> ListEmojis;
+=======
+>>>>>>> Stashed changes
     public virtual void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }

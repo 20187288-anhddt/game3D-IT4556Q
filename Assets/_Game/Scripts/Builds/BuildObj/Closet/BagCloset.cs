@@ -42,6 +42,7 @@ public class BagCloset : ClosetBase
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
+<<<<<<< Updated upstream
                         unlockFx.SetActive(false);
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         foreach (PlaceToBuyBag place in listPlaceToBuyBag)
@@ -59,6 +60,10 @@ public class BagCloset : ClosetBase
                         {
                             p.PlayerContinueMove();
                         }
+=======
+                        p.isUnlock = false;
+                        checkPushBagCloset.gameObject.SetActive(true);
+>>>>>>> Stashed changes
                     });
                 }); ;
             });
@@ -66,6 +71,7 @@ public class BagCloset : ClosetBase
         else
         {
             p.isUnlock = false;
+<<<<<<< Updated upstream
             //foreach (PlaceToBuyBag place in listPlaceToBuyBag)
             //{
             //    place.gameObject.SetActive(true);
@@ -78,6 +84,8 @@ public class BagCloset : ClosetBase
             //}
         //    EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
 
+=======
+>>>>>>> Stashed changes
             checkPushBagCloset.gameObject.SetActive(true);
         }
         checkUnlock.gameObject.SetActive(false);

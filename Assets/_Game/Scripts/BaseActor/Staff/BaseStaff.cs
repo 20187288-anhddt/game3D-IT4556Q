@@ -70,7 +70,11 @@ public class BaseStaff : AllPool
 
     public StaffType staffType;
     public IngredientType ingredientType;
+<<<<<<< Updated upstream
     public List<GameObject> ListEmojis;
+=======
+
+>>>>>>> Stashed changes
     public virtual void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }

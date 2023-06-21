@@ -20,10 +20,25 @@ public class Customer : BaseCustomer
     private GameObject mainModel;
     [SerializeField]
     private GameObject[] outfitModel;
+<<<<<<< Updated upstream
 
     protected void Start()
     {
         fsm.init(5);
+=======
+    [SerializeField]
+    private GameObject[] bagModel;
+    public bool isLeader;
+    public bool gotOutfit;
+    public bool gotBag;
+    public Customer leader;
+    public GroupCustomer grCus;
+    private Vector3 pointTaget = Vector3.zero;
+    public override void Awake()
+    {
+        base.Awake();
+        fsm.init(7);
+>>>>>>> Stashed changes
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_CLOSET_STATE, StartMoveToCloset, OnMoveToClosetState));
         fsm.add(new FsmState(MOVE_CHECKOUT_STATE, StartMoveToCheckOut, OnMoveToCheckOutState));
@@ -81,12 +96,33 @@ public class Customer : BaseCustomer
     }
     public virtual void CheckMoveToCloset()
     {
-        if (Vector3.Distance(transCloset,this.transform.position) < 0.1f)
+        if (Vector3.Distance(transCloset, myTransform.position) < 0.1f)
         {
-            this.transform.DORotate(Vector3.zero, 0f);
+            myTransform.DORotate(Vector3.zero, 0f);
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
+<<<<<<< Updated upstream
+=======
+       // Debug.Log("Closet");
+    }
+    public virtual void MoveToBag()
+    {
+      
+        navMeshAgent.SetDestination(transBag);
+        navMeshAgent.stoppingDistance = 0;
+        pointTaget = transBag; 
+    }
+    public virtual void CheckMoveToBag()
+    {
+        if (Vector3.Distance(transBag, myTransform.position) < 0.1f)
+        {
+            myTransform.DORotate(Vector3.zero, 0f);
+            this.onBagPos = true;
+            UpdateState(IDLE_STATE);
+        }
+       // Debug.Log("B");
+>>>>>>> Stashed changes
     }
     public virtual void MoveToCheckOut()
     {
@@ -95,13 +131,63 @@ public class Customer : BaseCustomer
     }
     public virtual void CheckMoveToCheckOut()
     {
-        if (Vector3.Distance(transCheckOut, this.transform.position) < 0.1f)
+        if (Vector3.Distance(transCheckOut, myTransform.position) < 0.1f)
         {
+<<<<<<< Updated upstream
             this.transform.DORotate(Vector3.zero, 0f);
+=======
+            myTransform.DORotate(Vector3.zero, 0f);
+            //navMeshAgent.transform.LookAt(transCheckOut);
+>>>>>>> Stashed changes
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
     }
+<<<<<<< Updated upstream
+=======
+    public virtual void FollowLeader()
+    {
+        if(!isLeader && leader != null)
+        {
+            navMeshAgent.SetDestination(leader.myTransform.position);
+            navMeshAgent.stoppingDistance = 0;
+            pointTaget = leader.myTransform.position;
+        }
+    }
+    public virtual void CheckFollowLeader()
+    {
+        navMeshAgent.SetDestination(leader.myTransform.position);
+        navMeshAgent.stoppingDistance = 0;
+        if (!leader.gotOutfit && !leader.gotBag)
+        {
+            if (Vector3.Distance(transCloset, myTransform.position) < 6f || leader.onPlacePos)
+            {
+                UpdateState(MOVE_TO_CLOSET_STATE);
+            }
+        }
+        else if (leader.gotOutfit && !leader.gotBag)
+        {
+            if (Vector3.Distance(transBag, myTransform.position) < 6f || leader.onBagPos)
+            {
+                UpdateState(MOVE_TO_BAG_STATE);
+            }
+        }
+        //else if (leader.gotOutfit && leader.gotBag && leader.onCheckoutPos)
+        //{
+        //    if(Vector3.Distance(transCheckout, leader.transform.position) < 3f)
+        //    {
+        //        UpdateState(IDLE_STATE);
+        //    }
+        //} 
+    }
+    public virtual void MoveToExit()
+    {
+        navMeshAgent.SetDestination(transExit);
+        navMeshAgent.stoppingDistance = 0;
+        pointTaget = transExit;
+    }
+    
+>>>>>>> Stashed changes
     public virtual void Exit()
     {
 
