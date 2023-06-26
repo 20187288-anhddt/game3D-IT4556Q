@@ -591,6 +591,14 @@ public class RewardProcessCompleteMission
                 CameraFollowObject(IngredientType.COW, NameObject_This.CowHabitat, true, 0.5f, 5, 5, 5
                     , PlayerStopMove, PlayerContinueMove);
                 break;
+            case EventName.Camera_Follow_Checkout:
+                CameraFollowObject(IngredientType.CHECKOUT, NameObject_This.CheckOutTable, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_Checkout_1:
+                CameraFollowObject(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
             case EventName.CameraFollow_Full_Info_Room_Map_1:
                 Transform point_Follow = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPointFollow_Farm();
                 CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, false, 0.5f, 5, 5, 5

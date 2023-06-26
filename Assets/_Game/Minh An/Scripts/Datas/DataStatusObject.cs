@@ -6,10 +6,18 @@ using System.IO;
 public class DataStatusObject : DataBase
 {
     public Status_All_Level_Object status_All_Level_Object;
+    private bool IsInItData = false;
    
     public void Start()
     {
-        InItData();
+        CheckInItData();
+    }
+    public void CheckInItData()
+    {
+        if (!IsInItData)
+        {
+            InItData();
+        }
     }
     public void InItData()
     {
@@ -156,7 +164,24 @@ public class DataStatusObject : DataBase
     }// chuyen sang trang thai co the mua
     public StatusObject GetStatusObject_Current()
     {
+        CheckInItData();
         return status_All_Level_Object.GetStatusObject_Current();
+    }
+    public void SetAmountPaid(int value)
+    {
+        GetStatusObject_Current().amountPaid = value;
+        SaveData();
+        LoadData();
+    }
+    public void AddAmountPaid(int value)
+    {
+        GetStatusObject_Current().amountPaid += value;
+        SaveData();
+        LoadData();
+    }
+    public int GetAmountPaid()
+    {
+        return GetStatusObject_Current().amountPaid;
     }
     public void SetStatusObject_Current(StatusObject statusObject)
     {

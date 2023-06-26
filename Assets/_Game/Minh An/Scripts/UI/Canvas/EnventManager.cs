@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public enum EventName { 
+public enum EventName {
     PlayJoystick,
     StopJoyStick,
 
@@ -106,7 +106,17 @@ public enum EventName {
     Camera_Follow_BearCloset,
     Camera_Follow_BearCloset_1,
 
+    CameraFollow_Full_Info_Room_Map_1,
+    Camera_Follow_ChickenBagMachine,
+    Camera_Follow_ChickenBagCloset,
 
+    BuildStage_OnBuy,
+    BuildStage_OnComplete,
+    BuildStage_1_OnBuy,
+    BuildStage_1_OnComplete,
+
+    Camera_Follow_Checkout,
+    Camera_Follow_Checkout_1
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

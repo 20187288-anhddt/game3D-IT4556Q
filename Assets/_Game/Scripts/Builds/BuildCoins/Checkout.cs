@@ -72,8 +72,8 @@ public class Checkout : BuildCoins,ILock
         //lockModel.SetActive(false);
         if (isPlayAnimUnlock) //anim
         {
-            unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
-                unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
+            unlockModel.transform.DOMoveY(3, 0f).OnComplete(() => {
+                unlockModel.transform.DOMoveY(1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
@@ -83,7 +83,7 @@ public class Checkout : BuildCoins,ILock
                 }); ;
             });
         }
-        //checkUnlock.gameObject.SetActive(false);
+        checkUnlock.gameObject.SetActive(false);
         coinSpawn.gameObject.SetActive(true);
         //checkPush.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
