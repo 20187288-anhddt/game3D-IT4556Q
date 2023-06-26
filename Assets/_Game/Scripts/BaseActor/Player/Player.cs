@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class Player : BaseActor,ICollect,IUnlock
 {
     public static Player Instance;
@@ -64,7 +64,8 @@ public class Player : BaseActor,ICollect,IUnlock
     }
     protected void OnMove()
     {
-        if (!isUnlock && !isStopMove)
+
+        if (!isUnlock && !isStopMove && EventSystem.current.currentSelectedGameObject == null)
         {
             UpdateState(RUN_STATE);
         }

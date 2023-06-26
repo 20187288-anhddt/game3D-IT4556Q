@@ -1,7 +1,6 @@
 //using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Utilities.Components;
 
 public class UI_Manager : GenerticSingleton<UI_Manager>
 {
@@ -16,27 +15,13 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     {
         CloseUI_FULL();
         OpenUI(NameUI.Canvas_Joystick);
-        OpenUI(NameUI.Canvas_Static);
         OpenUI(NameUI.Canvas_Home);
-        OpenUI(NameUI.Canvas_Bonus);
-      
-    }
-    private void Start()
-    {
-        EnventManager.AddListener(EventName.OpenUIHome.ToString(), () => {
-            OpenUI(NameUI.Canvas_Home); });
-        EnventManager.AddListener(EventName.OpenUIBonus.ToString(), () => {
-            OpenUI(NameUI.Canvas_Bonus); });
-        EnventManager.AddListener(EventName.On_NextMap.ToString(), Close);
-        EnventManager.AddListener(EventName.On_BackMap.ToString(), Close);
-        EnventManager.AddListener(EventName.Complete_NextMap.ToString(), Open);
-        EnventManager.AddListener(EventName.Complete_BackMap.ToString(), Open);
+        OpenUI(NameUI.Canvas_Static);
     }
     private void Update()
     {
         CheckBack();
     }
-   
     private void CheckBack()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -47,20 +32,12 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
 
     public UI_Canvas OpenUI(NameUI nameUI)
     {
-       // Debug.Log("Open");
-        if ((!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome() || isOpenUI(NameUI.Canvas_Order)) && nameUI == NameUI.Canvas_Home)
-        {
-            return null;
-        }
-        if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasBonus() && nameUI == NameUI.Canvas_Bonus)
-        {
-            return null;
-        }
-        foreach (UI_Canvas UI_canvas in canvasUI)
+        foreach(UI_Canvas UI_canvas in canvasUI)
         {
             if(UI_canvas.nameUI == nameUI)
             {
                 UI_canvas.Open();
+                stack_UIOPENs.Push(UI_canvas);
                 return UI_canvas;
             }
         }
@@ -73,20 +50,10 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
             if (UI_canvas.nameUI == nameUI)
             {
                 UI_canvas.Close();
+                stack_UIOPENs.Pop();
                 return;
             }
         }
-    }
-    public UI_Canvas GetUI(NameUI nameUI)
-    {
-        foreach (UI_Canvas UI_canvas in canvasUI)
-        {
-            if (UI_canvas.nameUI == nameUI)
-            {
-                return UI_canvas;
-            }
-        }
-        return null;
     }
     public bool isOpenUI(NameUI nameUI)
     {
@@ -118,67 +85,5 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
             UI_canvas.Close();
         }
     }
-    public void AddUI_To_Stack_UI_Open(UI_Canvas uI_Canvas)
-    {
-        stack_UIOPENs.Push(uI_Canvas);
-    }
-    public void ReMoveUI_To_Stack_UI_Open()
-    {
-        if(stack_UIOPENs.Count > 0)
-        {
-            stack_UIOPENs.Pop();
-        }
-       
-    }
-    public void CloseAll_UI_In_Stack_Open()
-    {
-        if(stack_UIOPENs.Count <= 0)
-        {
-            return;
-        }
-        foreach(UI_Canvas uI_Canvas in stack_UIOPENs)
-        {
-            uI_Canvas.Close();
-            break;
-        }
-        CloseAll_UI_In_Stack_Open();
-    }
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-    public void Open()
-    {
-        gameObject.SetActive(true);
-    }
-    public bool isClose()
-    {
-        return !gameObject.activeSelf;
-    }
-    public bool isOpen()
-    {
-        return gameObject.activeSelf;
-    }
-    public void DeactiveLook_Joystick()
-    {
-        OpenUI(NameUI.Canvas_Joystick).canvasThis.enabled = false;
-    }
-    public void ActiveLook_Joystick()
-    {
-        OpenUI(NameUI.Canvas_Joystick).canvasThis.enabled = true;
-    }
-    public void DeactiveLookAllUI()
-    {
-        foreach(UI_Canvas uI_Canvas in canvasUI)
-        {
-            uI_Canvas.GetComponent<Canvas>().enabled = false;
-        }
-    }
-    public void ActiveLookAllUI()
-    {
-        foreach (UI_Canvas uI_Canvas in canvasUI)
-        {
-            uI_Canvas.GetComponent<Canvas>().enabled = true;
-        }
-    }
+   
 }

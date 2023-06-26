@@ -211,7 +211,6 @@ public class DataApparatusProcess
         {
             apparatusProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
             NextProcess();
-            Debug.Log("A");
         }
     }
   
@@ -245,7 +244,7 @@ public class DataApparatusProcess
     public ApparatusProcess GetApparatusProcess_Current()
     {
         string PathResource = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\ApparatusProcess\\"
-            + dataApparatusProcessCurrent.ingredientType.ToString().ToLower() + "\\Mission " + dataApparatusProcessCurrent.LevelCurrent;
+             + "Mission " + dataApparatusProcessCurrent.LevelCurrent;
         apparatusProcessCurrent = (ApparatusProcess)Resources.Load(PathResource, typeof(ApparatusProcess));
         return apparatusProcessCurrent;
     }
@@ -254,23 +253,22 @@ public class DataApparatusProcess
         dataApparatusProcessCurrent.NextProcess();
         if (GetApparatusProcess_Current() == null)
         {
-
-            switch (dataApparatusProcessCurrent.ingredientType)
-            {
-                //case IngredientType.SHEEP:
-                //    dataApparatusProcessCurrent.ingredientType = IngredientType.COW;
-                //    break;
-                case IngredientType.COW:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
-                    break;
-                case IngredientType.BEAR:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
-                    break;
-                case IngredientType.CHICKEN:
-                    dataApparatusProcessCurrent.ingredientType = IngredientType.COW;
-                    break;
-            }
-            dataApparatusProcessCurrent.LevelCurrent = 1;
+            //switch (dataApparatusProcessCurrent.ingredientType)
+            //{
+            //    //case IngredientType.SHEEP:
+            //    //    dataApparatusProcessCurrent.ingredientType = IngredientType.COW;
+            //    //    break;
+            //    case IngredientType.COW:
+            //        dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
+            //        break;
+            //    case IngredientType.BEAR:
+            //        dataApparatusProcessCurrent.ingredientType = IngredientType.BEAR;
+            //        break;
+            //    case IngredientType.CHICKEN:
+            //        dataApparatusProcessCurrent.ingredientType = IngredientType.COW;
+            //        break;
+            //}
+            dataApparatusProcessCurrent.LevelCurrent -= 1;
         }
         SaveData();
         LoadData();
