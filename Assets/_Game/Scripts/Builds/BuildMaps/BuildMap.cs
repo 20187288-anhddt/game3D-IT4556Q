@@ -66,7 +66,7 @@ public class BuildMap : BaseBuild,  ILock
             case NameObject_This.BuildStage:
                 if (isPushEvent)
                 {
-                    EnventManager.TriggerEvent(EventName.BuildStage_OnBuy.ToString());
+                    EnventManager.TriggerEvent(EventName.BuildStage_OnComplete.ToString());
                 }
                 break;
             case NameObject_This.BuildStage_1:

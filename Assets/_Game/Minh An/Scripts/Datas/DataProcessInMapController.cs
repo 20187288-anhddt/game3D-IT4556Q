@@ -81,6 +81,11 @@ public class DataProcessInMapController : DataBase
         EnventManager.AddListener(EventName.ChickenHabitat_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.ChickenHabitat_Complete); });
         EnventManager.AddListener(EventName.ChickenBagCloset_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.ChickenBagCloset_Complete); });
         #endregion
+        #region Build Stage
+        EnventManager.AddListener(EventName.BuildStage_OnComplete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.BuildStage_OnComplete); });
+        EnventManager.AddListener(EventName.BuildStage_1_OnComplete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.BuildStage_1_OnComplete); });
+        #endregion
+
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
     {
@@ -380,6 +385,10 @@ public class MissionProcess
                 return Is_OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine);
             case EventName.ChickenHabitat_OnBuy:
                 return Is_OnBuy(IngredientType.CHICKEN, NameObject_This.ChickenHabitat);
+            case EventName.BuildStage_OnComplete:
+                return Is_Complete(IngredientType.BUILDSTAGE, NameObject_This.BuildStage);
+            case EventName.BuildStage_1_OnComplete:
+                return Is_Complete(IngredientType.BUILDSTAGE, NameObject_This.BuildStage_1);
 
         }
         return false;
