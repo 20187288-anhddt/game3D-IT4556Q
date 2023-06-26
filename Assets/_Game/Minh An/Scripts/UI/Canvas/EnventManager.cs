@@ -116,7 +116,23 @@ public enum EventName {
     BuildStage_1_OnComplete,
 
     Camera_Follow_Checkout,
-    Camera_Follow_Checkout_1
+    Camera_Follow_Checkout_1,
+
+    HireStaff_OnBuy,
+    HireStaff_1_OnBuy,
+    HireStaff_2_OnBuy,
+    HireStaff_3_OnBuy,
+
+    HireStaff_OnComplete,
+    HireStaff_1_OnComplete,
+    HireStaff_2_OnComplete,
+    HireStaff_3_OnComplete,
+
+    Camera_Follow_HireStaff,
+    Camera_Follow_HireStaff_1,
+    Camera_Follow_HireStaff_2,
+    Camera_Follow_HireStaff_3
+
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

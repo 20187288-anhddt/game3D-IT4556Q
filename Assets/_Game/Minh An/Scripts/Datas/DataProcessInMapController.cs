@@ -397,6 +397,14 @@ public class MissionProcess
                 return Is_Complete(IngredientType.CHECKOUT, NameObject_This.CheckOutTable);
             case EventName.CheckOutTable_1_Complete:
                 return Is_Complete(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
+            case EventName.HireStaff_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff);
+            case EventName.HireStaff_1_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_1);
+            case EventName.HireStaff_2_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_2);
+            case EventName.HireStaff_3_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_3);
 
         }
         return false;
@@ -612,7 +620,7 @@ public class RewardProcessCompleteMission
                       CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, false, 0.5f, 5, 5, 5
                  , () =>
                  {
-                     CameraController.Instance.MoveDistance(45, 5);
+                     CameraController.Instance.MoveDistance(55, 5);
                  },
                  () =>
                  {
@@ -624,7 +632,7 @@ public class RewardProcessCompleteMission
                  },
                  () =>
                  {
-                      CameraController.Instance.MoveDistance(28, 5);
+                      CameraController.Instance.MoveDistance(32, 5);
                  });
                  });
                   });
@@ -635,6 +643,35 @@ public class RewardProcessCompleteMission
             case EventName.BuildStage_OnBuy:
                 OnBuy(IngredientType.BUILDSTAGE, NameObject_This.BuildStage);
                 break;
+            case EventName.HireStaff_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff);
+                break;
+            case EventName.HireStaff_1_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_1);
+                break;
+            case EventName.HireStaff_2_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_2);
+                break;
+            case EventName.HireStaff_3_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_3);
+                break;
+            case EventName.Camera_Follow_HireStaff:
+                CameraFollowObject(IngredientType.HIRESTAFF, NameObject_This.HireStaff, true, 0.5f, 5, 5, 5
+                     , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_HireStaff_1:
+                CameraFollowObject(IngredientType.HIRESTAFF, NameObject_This.HireStaff_1, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_HireStaff_2:
+                CameraFollowObject(IngredientType.HIRESTAFF, NameObject_This.HireStaff_2, true, 0.5f, 5, 5, 5
+                     , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_HireStaff_3:
+                CameraFollowObject(IngredientType.HIRESTAFF, NameObject_This.HireStaff_3, true, 0.5f, 5, 5, 5
+                     , PlayerStopMove, PlayerContinueMove);
+                break;
+
         }
     }
 
