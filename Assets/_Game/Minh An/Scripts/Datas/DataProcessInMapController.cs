@@ -85,6 +85,10 @@ public class DataProcessInMapController : DataBase
         EnventManager.AddListener(EventName.BuildStage_OnComplete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.BuildStage_OnComplete); });
         EnventManager.AddListener(EventName.BuildStage_1_OnComplete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.BuildStage_1_OnComplete); });
         #endregion
+        #region CheckOut
+        EnventManager.AddListener(EventName.CheckOutTable_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.CheckOutTable_Complete); });
+        EnventManager.AddListener(EventName.CheckOutTable_1_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.CheckOutTable_1_Complete); });
+        #endregion
 
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
@@ -389,6 +393,10 @@ public class MissionProcess
                 return Is_Complete(IngredientType.BUILDSTAGE, NameObject_This.BuildStage);
             case EventName.BuildStage_1_OnComplete:
                 return Is_Complete(IngredientType.BUILDSTAGE, NameObject_This.BuildStage_1);
+            case EventName.CheckOutTable_Complete:
+                return Is_Complete(IngredientType.CHECKOUT, NameObject_This.CheckOutTable);
+            case EventName.CheckOutTable_1_Complete:
+                return Is_Complete(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
 
         }
         return false;
@@ -496,6 +504,12 @@ public class RewardProcessCompleteMission
                 break;
             case EventName.CheckOutTable_1_OnBought:
                 OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
+                break;
+            case EventName.CheckOutTable_OnBuy:
+                OnBuy(IngredientType.CHECKOUT, NameObject_This.CheckOutTable);
+                break;
+            case EventName.CheckOutTable_1_OnBuy:
+                OnBuy(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
                 break;
             case EventName.OpenLevelMap_1:
                 OpenLevelMap(MiniMapController.TypeLevel.Level_1);

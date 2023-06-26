@@ -7,9 +7,11 @@ public class DataMapController : DataBase
 {
     public DataMap dataMap;
     public MapCurrent mapCurrent;
+    private bool isInItData = false;
+
     private void Awake()
     {
-        InItData();
+        CheckInItData();
     }
     public void InItData()
     {
@@ -19,11 +21,20 @@ public class DataMapController : DataBase
     }
     public DataMap GetDataMap()
     {
+        CheckInItData();
         return dataMap;
     }
     public MapCurrent GetMapCurrent()
     {
+        CheckInItData();
         return mapCurrent;
+    }
+    public void CheckInItData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
     }
     public void SelectDataMap(int levelCurrent)
     {
@@ -213,18 +224,32 @@ public class DataMap //luu data
         LoadData();
     }
     #endregion
+    #region Checkout
+    public void SetData_ActiveStaff_Checkout(NameObject_This nameObject_This, bool value)
+    {
+        GetData_Map().GetData_InCheckout().SetData_ActiveStaff_Checkout(nameObject_This, value);
+        SaveData();
+        LoadData();
+    }
+    #endregion
 }
 [System.Serializable]
 public class Data_Map //dong goi de quan li
 {
-    public DataPlayer dataPlayer = new DataPlayer();
+    public DataPlayer dataPlayer;
+    public Data_InCheckout data_InCheckout;
     public int LevelMap;
 
     public Data_Map ResetData()
     {
         if(LevelMap < 1) { LevelMap = 1; }
         dataPlayer.ResetData();
+        data_InCheckout.ResetData();
         return this;
+    }
+    public Data_InCheckout GetData_InCheckout()
+    {
+        return data_InCheckout;
     }
     public DataPlayer GetDataPlayer()
     {
@@ -236,4 +261,50 @@ public class Data_Map //dong goi de quan li
         return LevelMap;
     }
 
+}
+[System.Serializable]
+public class Data_InCheckout
+{
+    public List<Data_Checkout> data_Staff_InCheckouts;
+
+    public Data_Checkout GetData_Checkout(NameObject_This nameObject_This)
+    {
+        foreach (Data_Checkout data_Checkout in data_Staff_InCheckouts)
+        {
+            if(data_Checkout.NameObject_This == nameObject_This)
+            {
+                return data_Checkout;
+            }
+        }
+        return null;
+    }
+    public void SetData_ActiveStaff_Checkout(NameObject_This nameObject_This, bool value)
+    {
+        foreach (Data_Checkout data_Checkout in data_Staff_InCheckouts)
+        {
+            if (data_Checkout.NameObject_This == nameObject_This)
+            {
+                data_Checkout.isActiveStaff = value;
+            }
+        }
+    }
+
+    public void ResetData()
+    {
+        foreach(Data_Checkout data_Checkout in data_Staff_InCheckouts)
+        {
+            data_Checkout.ResetData();
+        }
+    }
+}
+[System.Serializable]
+public class Data_Checkout
+{
+    public NameObject_This NameObject_This;
+    public bool isActiveStaff;
+
+    public void ResetData()
+    {
+        isActiveStaff = false;
+    }
 }

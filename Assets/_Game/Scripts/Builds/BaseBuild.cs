@@ -22,6 +22,8 @@ public class BaseBuild : MonoBehaviour
     {
         if(dataStatusObject == null) { dataStatusObject = GetComponent<DataStatusObject>(); }
         if (myTransform == null) { myTransform = this.transform; }
+        if (pirceObject == null) { pirceObject = GetComponentInChildren<PirceObject>(); }
+        Load_LoadPirce_UI();
     }
     public void Load_LoadPirce_UI()
     {
@@ -30,6 +32,7 @@ public class BaseBuild : MonoBehaviour
          ingredientType);
         //Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
     }
+
     public virtual void Start()
     {
         EnventManager.AddListener(EventName.StatusData_OnLoad.ToString(), () =>
@@ -69,8 +72,7 @@ public class BaseBuild : MonoBehaviour
                 }
             }
         }));
-        if (pirceObject == null) { pirceObject = GetComponentInChildren<PirceObject>(); }
-        Load_LoadPirce_UI();
+
     }
     public virtual void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {

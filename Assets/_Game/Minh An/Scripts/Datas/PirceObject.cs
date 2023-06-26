@@ -45,6 +45,7 @@ public class PirceObject : MonoBehaviour
     }
     public int Get_Pirce()
     {
+        ReLoadUI();
         return value_pirce;
     }
 }

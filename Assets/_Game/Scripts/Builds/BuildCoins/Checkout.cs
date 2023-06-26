@@ -24,24 +24,38 @@ public class Checkout : BuildCoins,ILock
     [SerializeField]
     private float delayTime;
     public float consDelayCheckout;
+    [SerializeField]
+    private CheckUnlock checkUnlock;
     public override void Start()
     {
         base.Start();
+        StartInGame();
     }
     public override void StartInGame()
     {
         base.StartInGame();
+        CurrentCoin = pirceObject.Get_Pirce();
+        // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         isHaveStaff = false;
         isCheckout = false;
         delayTime = consDelayCheckout;
         listGrCusCheckout.Clear();
         listCusCheckout.Clear();
-        GetComponent<BoxCollider>().enabled = true;
+        if (isLock)
+        {
+            unlockModel.gameObject.SetActive(false);
+            checkUnlock.gameObject.SetActive(true);
+            coinSpawn.gameObject.SetActive(false);
+            GetComponent<BoxCollider>().enabled = false;
+        }
+        checkUnlock.UpdateUI();
     }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         //Debug.Log("Unlock");
-        //Player p = Player.Instance;
+        Player p = Player.Instance;
         if (!IsLock)
         {
             return;
@@ -49,10 +63,11 @@ public class Checkout : BuildCoins,ILock
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
+        Debug.Log("a");
+      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-
-       //p.isUnlock = true;
+        p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (isPlayAnimUnlock) //anim
@@ -61,7 +76,9 @@ public class Checkout : BuildCoins,ILock
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
-                        //p.isUnlock = false;
+                        p.isUnlock = false;
+                        GetComponent<BoxCollider>().enabled = true;
+                        coinSpawn.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -72,6 +89,22 @@ public class Checkout : BuildCoins,ILock
         //GetComponent<BoxCollider>().enabled = true;
         if (!levelManager.checkOutManager.listCheckout.Contains(this))
             levelManager.checkOutManager.listCheckout.Add(this);
+
+        switch (nameObject_This)
+        {
+            case NameObject_This.CheckOutTable:
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.CheckOutTable_Complete.ToString());
+                }
+                break;
+            case NameObject_This.CheckOutTable_1:
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.CheckOutTable_1_Complete.ToString());
+                }
+                break;
+        }
     }
     void Update()
     {
