@@ -7,18 +7,12 @@ public class HireStaff : BaseBuild, ILock
     public StaffType staffType;
     [SerializeField]
     private CheckUnlock checkUnlock;
-    [SerializeField]
-    private Checkout curCheckout;
     public float DefaultCoin { get => defaultCoin; }
     public bool IsLock { get => isLock; set => isLock = value; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
     public Staff staffPrefabs;
     public bool isUnlock;
-    public override void Awake()
-    {
-        base.Awake();
-       // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
-    }
+
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -34,11 +28,6 @@ public class HireStaff : BaseBuild, ILock
         if (isPlayAnimUnlock) //anim
         {
             p.isUnlock = false;
-            unlockFx.SetActive(true);
-            CounterHelper.Instance.QueueAction(2f, () =>
-            {
-                unlockFx.SetActive(false);
-            });
             //unlockModel.transform.DOMoveY(2, 0f).OnComplete(() =>
             //{
             //    unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() =>
@@ -62,28 +51,19 @@ public class HireStaff : BaseBuild, ILock
         {
             case StaffType.FARMER:
                 var curFarmer = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
-                (curFarmer as Staff).ChangeOutfit(StaffType.FARMER);
                 (curFarmer as Staff).ResetStaff();
                 (curFarmer as Staff).staffType = StaffType.FARMER;
                 levelManager.staffManager.listAllActiveStaffs.Add(curFarmer as Staff);
                 levelManager.staffManager.listFarmers.Add(curFarmer as Staff);
-                levelManager.staffManager.ChangeStaffIdlePos(curFarmer as Staff);
                 break;
             case StaffType.WORKER:
                 var curWorker = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
-                (curWorker as Staff).ChangeOutfit(StaffType.WORKER);
                 (curWorker as Staff).ResetStaff();
                 (curWorker as Staff).staffType = StaffType.WORKER;
                 levelManager.staffManager.listAllActiveStaffs.Add(curWorker as Staff);
                 levelManager.staffManager.listWorkers.Add(curWorker as Staff);
-                levelManager.staffManager.ChangeStaffIdlePos(curWorker as Staff);
-                break;
-            case StaffType.CHECKOUT:
-                //Checkout curCheckout = GetComponentInParent<Checkout>();
-                curCheckout.BuyStaff();
                 break;
         }
-     
     }
     public override void Start()
     {
@@ -99,15 +79,16 @@ public class HireStaff : BaseBuild, ILock
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         if (isLock)
         {
-            unlockFx.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
-            if (CurrentCoin <= 0)
-            {
-                UnLock(true, true);
-            }
         }
         checkUnlock.UpdateUI();
-      
     }
-  
+    void Update()
+    {
+        if (isUnlock)
+        {
+            UnLock();
+            isUnlock = false;          
+        }
+    }
 }

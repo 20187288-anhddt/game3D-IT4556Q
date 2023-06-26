@@ -135,6 +135,7 @@ public class DataMap //luu data
 {
     public Data_Map data_Map = new Data_Map();
     private string fileName = " ";
+    private bool isInItData = false;
     public void SetFileName(string fileName)
     {
         this.fileName = fileName;
@@ -148,6 +149,7 @@ public class DataMap //luu data
     {
         SetFileName(nameof(Data_Map) + data_Map.GetLevelMap());
         LoadData();
+        isInItData = true;
     }
     public void SaveData()
     {
@@ -175,6 +177,10 @@ public class DataMap //luu data
     }
     public Data_Map GetData_Map()
     {
+        if (!isInItData)
+        {
+            InItData();
+        }
         return data_Map;
     }
     public void SelectDataMap(int levelCurrent)

@@ -7,6 +7,7 @@ public class StaffManager : MonoBehaviour
     public List<Staff> listAllActiveStaffs;
     public List<Staff> listFarmers;
     public List<Staff> listWorkers;
+    public List<Staff> listCheckout;
     public List<Staff> listFamersBag;
     public List<TrashCan> listTrashCan;
     public GameManager gameManager;
@@ -46,6 +47,7 @@ public class StaffManager : MonoBehaviour
             {
                 case StaffType.FARMER:
                     listAllActiveStaffs[i].curGarbage = listTrashCan[0];
+                    listAllActiveStaffs[i].transGarbage = listTrashCan[0].staffPos.position;
                     if (gameManager.listLevelManagers[gameManager.curLevel].habitatManager.allActiveHabitats.Count < 3)
                     {
                         listAllActiveStaffs[i].transIdle = listIdlePos[0].position;
@@ -58,6 +60,7 @@ public class StaffManager : MonoBehaviour
                     break;
                 case StaffType.WORKER:
                     listAllActiveStaffs[i].curGarbage = listTrashCan[1];
+                    listAllActiveStaffs[i].transGarbage = listTrashCan[1].staffPos.position;
                     if (gameManager.listLevelManagers[gameManager.curLevel].closetManager.listClosets.Count < 3)
                     {
                         listAllActiveStaffs[i].transIdle = listIdlePos[2].position;

@@ -57,6 +57,11 @@ public enum NameObject_This
     CheckOutTable_1,
 
     BuildStage,
-    BuildStage_1
+    BuildStage_1,
+
+    HireStaff,
+    HireStaff_1,
+    HireStaff_2,
+    HireStaff_3,
 }
 

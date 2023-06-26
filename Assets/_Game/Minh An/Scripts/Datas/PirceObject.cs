@@ -17,7 +17,7 @@ public class PirceObject : MonoBehaviour
         this.level = Level;
         this.ingredientType = ingredientType;
         if (dataStatusObject == null) { dataStatusObject = GetComponentInParent<DataStatusObject>(); }
-      // Debug.Log(DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This, Level, ingredientType) == null);
+        // Debug.Log(DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This, Level, ingredientType) == null);
         value_pirce = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This, Level, ingredientType).infoBuys[0].value
             - dataStatusObject.GetAmountPaid();
         if (value_pirce > 1000)
@@ -40,6 +40,9 @@ public class PirceObject : MonoBehaviour
         if(level == 0)
         {
             level = 1;
+            BaseBuild baseBuild = GetComponentInParent<BaseBuild>();
+            nameObject_This = baseBuild.nameObject_This;
+            ingredientType = baseBuild.ingredientType;
         }
         LoadPirce(nameObject_This, level, ingredientType);
     }

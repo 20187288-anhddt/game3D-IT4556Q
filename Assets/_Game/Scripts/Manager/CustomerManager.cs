@@ -120,6 +120,7 @@ public class CustomerManager : MonoBehaviour
         (curGroup as GroupCustomer).grNum = n;
         //if(levelManager.habitatManager.allActiveHabitats)
         Customer c = SpawnCus(curStartpos.position);
+        //c.ChangeFlag((curGroup as GroupCustomer).typeOutfit);
         //Transform curExitpos = null;
         //switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
         //{
@@ -159,40 +160,44 @@ public class CustomerManager : MonoBehaviour
     {
         if (isReadySpawn && customerList.Count < maxCus)
         {
-
             closetManager.CheckClosetEmpty();
             if (closetManager.listAvailableClosets.Count > 0)
-            {
-                isReadySpawn = false;
+            {           
                 int r = Random.Range(0, closetManager.listAvailableClosets.Count);
-                int x;
-                if (closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count >= 3)
+                Closet curCloset = closetManager.listAvailableClosets[r];
+                if(levelManager.habitatManager.GetHabitatWithType(curCloset.ingredientType) != null)
                 {
-                    x = Random.Range(1, 4);
-                }
-                else
-                {
-                    x = Random.Range(1, closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Count + 1);
-                }
-                PlaceToBuy curPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[0];
-                if (curPlace != null)
-                {
-                    GroupCustomer curGr = SpawnOneGroup(x, curPlace.myTransform);
-                    curGr.AddCloset(closetManager.listAvailableClosets[r]);
-                    curGr.typeOutfit = closetManager.listAvailableClosets[r].ingredientType;
-                    if (curGr != null)
+                    isReadySpawn = false;
+                    int x;
+                    if (curCloset.listEmtyPlaceToBuy.Count >= 3)
                     {
-                        curPlace.AddCus(curGr.leader);
-                        for (int i = 0; i < curGr.teammates.Count; i++)
-                        {
-                            PlaceToBuy nextPlace = closetManager.listAvailableClosets[r].listEmtyPlaceToBuy[i + 1];
-                            curGr.teammates[i].myTransform.parent = curGr.myTransform;
-                            nextPlace.AddCus(curGr.teammates[i]);
-                        }
-                        closetManager.listAvailableClosets[r].listEmtyPlaceToBuy.Clear();
-                        closetManager.listAvailableClosets.Clear();
+                        x = Random.Range(1, 4);
                     }
-                }
+                    else
+                    {
+                        x = Random.Range(1, curCloset.listEmtyPlaceToBuy.Count + 1);
+                    }
+                    PlaceToBuy curPlace = curCloset.listEmtyPlaceToBuy[0];
+                    if (curPlace != null)
+                    {
+                        GroupCustomer curGr = SpawnOneGroup(x, curPlace.myTransform);
+                        curGr.AddCloset(curCloset);
+                        curGr.typeOutfit = curCloset.ingredientType;
+                        curGr.leader.ChangeFlag(curGr.typeOutfit);
+                        if (curGr != null)
+                        {
+                            curPlace.AddCus(curGr.leader);
+                            for (int i = 0; i < curGr.teammates.Count; i++)
+                            {
+                                PlaceToBuy nextPlace = curCloset.listEmtyPlaceToBuy[i + 1];
+                                curGr.teammates[i].myTransform.parent = curGr.myTransform;
+                                nextPlace.AddCus(curGr.teammates[i]);
+                            }
+                            curCloset.listEmtyPlaceToBuy.Clear();
+                            closetManager.listAvailableClosets.Clear();
+                        }
+                    }
+                }               
             }
         }
         if (!isReadySpawn)
