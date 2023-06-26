@@ -14,6 +14,11 @@ public class BuildMap : BaseBuild,  ILock
     //private GameObject lockModel;
     [SerializeField]
     private CheckUnlock checkUnlock;
+    public override void Start()
+    {
+        base.Start();
+        StartInGame();
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -54,7 +59,42 @@ public class BuildMap : BaseBuild,  ILock
             //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
         }
         checkUnlock.gameObject.SetActive(false);
-        //GetComponent<BoxCollider>().enabled = true;
+        //GetComponent<BoxCollider>().enabled = true;s
         //levelManager.closetManager.listAllActiveClosets.Add(this);
+        switch (nameObject_This)
+        {
+            case NameObject_This.BuildStage:
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.BuildStage_OnBuy.ToString());
+                }
+                break;
+            case NameObject_This.BuildStage_1:
+                if (isPushEvent)
+                {
+                    EnventManager.TriggerEvent(EventName.BuildStage_1_OnComplete.ToString());
+                }
+                break;
+        }
+    }
+    public override void StartInGame()
+    {
+        base.StartInGame();
+        CurrentCoin = pirceObject.Get_Pirce();
+       // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
+       
+        if (isLock)
+        {
+            //GetComponent<BoxCollider>().enabled = false;
+            unlockModel.SetActive(false);
+            checkUnlock.gameObject.SetActive(true);
+        }
+        //if (!isLock)
+        //{
+        //    UnLock();
+        //}
+        checkUnlock.UpdateUI();
     }
 }

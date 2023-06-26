@@ -598,6 +598,12 @@ public class RewardProcessCompleteMission
                  });
                   });
                 break;
+            case EventName.BuildStage_1_OnBuy:
+                OnBuy(IngredientType.BUILDSTAGE, NameObject_This.BuildStage_1);
+                break;
+            case EventName.BuildStage_OnBuy:
+                OnBuy(IngredientType.BUILDSTAGE, NameObject_This.BuildStage);
+                break;
         }
     }
 
@@ -625,6 +631,7 @@ public class RewardProcessCompleteMission
     {
         Player.Instance.isStopMove = true;
         Canvas_Joystick.Instance.isStopJoysick = true;
+        EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
     private void PlayerContinueMove()
     {

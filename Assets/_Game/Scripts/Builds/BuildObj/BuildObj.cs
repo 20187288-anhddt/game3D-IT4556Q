@@ -23,7 +23,6 @@ public class BuildObj : BaseBuild
 }
 public enum NameObject_This
 {
-    #region Level_1
     ChickenHabitat,
     ChickenClothMachine,
     ChickenCloset,
@@ -58,57 +57,6 @@ public enum NameObject_This
     CheckOutTable_1,
 
     BuildStage,
-    BuildStage_1,
-
-    HireStaff,
-    HireStaff_1,
-    HireStaff_2,
-    HireStaff_3,
-    Car,
-    HireAnimal_Chicken,
-    HireAnimal_Cow,
-    HireAnimal_Bear,
-    HireStaff_4,
-    HireStaff_5,
-    NextLevel_2,
-    NextLevel_3,
-    #endregion
-    #region Level_2
-    CrocHabitat,
-    EleHabitat,
-    LionHabitat,
-    ZebraHabitat,
-
-    CrocClothMachine,
-    CrocBagMachine,
-
-    EleClothMachine,
-    EleBagMachine,
-
-    LionClothMachine,
-    LionBagMachine,
-
-    ZebraClothMachine,
-    ZebraBagMachine,
-
-    CrocCloset,
-    CrocBagCloset,
-
-    EleCloset,
-    EleBagCloset,
-
-    LionCloset,
-    LionBagCloset,
-
-    ZebraCloset,
-    ZebraBagCloset,
-
-    HireAnimal_Croc,
-    HireAnimal_Ele,
-    HireAnimal_Lion,
-    HireAnimal_Zebra,
-    NextLevel_4,
-    BuildStage_2,
-    #endregion
+    BuildStage_1
 }
 

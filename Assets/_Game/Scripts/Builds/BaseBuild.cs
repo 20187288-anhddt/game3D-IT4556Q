@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BaseBuild : MonoBehaviour 
 {
+    public Transform myTransform;
     public NameObject_This nameObject_This;
+    public IngredientType ingredientType;
     public bool isLock;
     public bool isKey = false;
     public int IDUnlock;
@@ -15,10 +17,18 @@ public class BaseBuild : MonoBehaviour
     public GameManager gameManager;
     public LevelManager levelManager;
     public DataStatusObject dataStatusObject;
+    public PirceObject pirceObject;
     public virtual void Awake()
     {
         if(dataStatusObject == null) { dataStatusObject = GetComponent<DataStatusObject>(); }
-      
+        if (myTransform == null) { myTransform = this.transform; }
+    }
+    public void Load_LoadPirce_UI()
+    {
+        pirceObject?.LoadPirce(dataStatusObject.GetStatus_All_Level_Object().nameObject_This,
+         dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(),
+         ingredientType);
+        //Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
     }
     public virtual void Start()
     {
@@ -59,14 +69,23 @@ public class BaseBuild : MonoBehaviour
                 }
             }
         }));
+        if (pirceObject == null) { pirceObject = GetComponentInChildren<PirceObject>(); }
+        Load_LoadPirce_UI();
     }
     public virtual void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Active(true);
         //GameManager.Instance.buildUnlock++;
-        dataStatusObject?.OnBought();
+        if (!dataStatusObject.isStatus_Bought())
+        {
+            OnBought();
+        }
         //GameManager.Instance.CheckShowInter();
         //FirebaseManager.ins.unlock_new_build(name, GameManager.Instance.buildUnlock);
+    }
+    public virtual void OnBought()
+    {
+        dataStatusObject?.OnBought();
     }
     public virtual void DontUnLock()
     {
