@@ -7,6 +7,7 @@ public class CameraController : GenerticSingleton<CameraController>
 {
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtual;
     [SerializeField] private CinemachineFramingTransposer cinemachineFramingTransposer;
+    [SerializeField] private CinemachineFollowZoom CinemachineFollowZoom;
     public override void Awake()
     {
         base.Awake();
@@ -38,9 +39,28 @@ public class CameraController : GenerticSingleton<CameraController>
         }
         else
         {
-            actionEndFollow?.Invoke();
+            StartCoroutine(IE_DelayAction(() =>
+            {
+                actionEndFollow?.Invoke();
+            }, 5));
+           
         }
        
+    }
+    public void MoveDistance(float value, float speedMove)
+    {
+        StartCoroutine(IE_MoveDistance(value, speedMove));
+    }
+    IEnumerator IE_MoveDistance(float value, float speedMove)
+    {
+        float m_time = 0;
+        float StartDistance = cinemachineFramingTransposer.m_CameraDistance;
+        while (m_time < 1)
+        {
+            CinemachineFollowZoom.m_Width = Mathf.Lerp(StartDistance, value, m_time);
+            m_time += Time.deltaTime * speedMove;
+            yield return null;
+        }
     }
     public void ResetFollowPlayer()
     {

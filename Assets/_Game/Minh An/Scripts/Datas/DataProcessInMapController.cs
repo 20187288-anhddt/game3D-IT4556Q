@@ -491,61 +491,114 @@ public class RewardProcessCompleteMission
                 OnBought(IngredientType.CHECKOUT, NameObject_This.CheckOutTable_1);
                 break;
             case EventName.OpenLevelMap_1:
-                OpenLevelMap(1);
+                OpenLevelMap(MiniMapController.TypeLevel.Level_1);
                 break;
             case EventName.OpenLevelMap_2:
-                OpenLevelMap(2);
+                OpenLevelMap(MiniMapController.TypeLevel.Level_2);
                 break;
             case EventName.OpenLevelMap_3:
-                OpenLevelMap(3);
+                OpenLevelMap(MiniMapController.TypeLevel.Level_3);
                 break;
             case EventName.Camera_Follow_BearCloset:
-                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearCloset, true, 0.5f, 5 , 5, 5);
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearCloset, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_BearCloset_1:
-                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearCloset_1, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearCloset_1, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_BearHabitat:
-                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearHabitat, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearHabitat, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_BearClothMachine:
-                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearClothMachine, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearClothMachine, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_ChickenCloset:
-                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenCloset, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenCloset, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_ChickenBagCloset:
+                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenBagCloset, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.Camera_Follow_ChickenBagMachine:
+                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenBagMachine, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_ChickenCloset_1:
                 CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenCloset_1, true, 0.5f, 5, 5, 5);
                 break;
             case EventName.Camera_Follow_ChickenClothMachine:
-                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenClothMachine, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_ChickenHabitat:
-                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenHabitat, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.CHICKEN, NameObject_This.ChickenHabitat, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_SheepCloset:
-                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepCloset, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepCloset, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_SheepCloset_1:
-                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepCloset_1, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepCloset_1, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_SheepClothMachine:
-                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepClothMachine, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepClothMachine, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_SheepHabitat:
-                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepHabitat, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.SHEEP, NameObject_This.SheepHabitat, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_CowCloset:
-                CameraFollowObject(IngredientType.COW, NameObject_This.CowCloset, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowCloset, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_CowCloset_1:
-                CameraFollowObject(IngredientType.COW, NameObject_This.CowCloset_1, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowCloset_1, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_CowClothMachine:
-                CameraFollowObject(IngredientType.COW, NameObject_This.CowClothMachine, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowClothMachine, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_CowHabitat:
-                CameraFollowObject(IngredientType.COW, NameObject_This.CowHabitat, true, 0.5f, 5, 5, 5);
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowHabitat, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.CameraFollow_Full_Info_Room_Map_1:
+                Transform point_Follow = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPointFollow_Farm();
+                CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, false, 0.5f, 5, 5, 5
+                  , () => 
+                  {
+                      PlayerStopMove();
+                  }, 
+                  () => 
+                  {
+                      point_Follow = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPointFollow_Machine();
+                      CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, false, 0.5f, 5, 5, 5
+                 , () =>
+                 {
+                     CameraController.Instance.MoveDistance(45, 5);
+                 },
+                 () =>
+                 {
+                     point_Follow = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPointFollow_Shop();
+                     CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, true, 0.5f, 5, 5, 5
+                 , () =>
+                 {
+
+                 },
+                 () =>
+                 {
+                      CameraController.Instance.MoveDistance(28, 5);
+                 });
+                 });
+                  });
                 break;
         }
     }
@@ -558,26 +611,26 @@ public class RewardProcessCompleteMission
     {
         BuildController.Instance.GetBuildIngredientController(ingredientType).OnBought(nameObject_This);
     }
-    public void OpenLevelMap(int value)
+    public void OpenLevelMap(MiniMapController.TypeLevel value)
     {
         MapController.Instance.OpenMap(value);
     }
     public void CameraFollowObject(IngredientType ingredientType, NameObject_This nameObject_This, bool isResetFollowPlayer = false, 
-        float timeDelayFollow = 0, float XDamping = 1, float YDamping = 1, float ZDamping = 1)
+        float timeDelayFollow = 0, float XDamping = 1, float YDamping = 1, float ZDamping = 1, 
+        System.Action actionStartFollow = null, System.Action actionEndFollow = null)
     {
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(ingredientType);
         CameraController.Instance.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(nameObject_This).myTransform, buildIngredientController.GetBaseBuild(nameObject_This).myTransform, 
-            isResetFollowPlayer, timeDelayFollow, XDamping, YDamping, ZDamping, 
-            () => 
-            { 
-                Player.Instance.isStopMove = true;
-                Canvas_Joystick.Instance.isStopJoysick = true;
-            }, 
-            () => 
-            { 
-                Player.Instance.isStopMove = false;
-                Canvas_Joystick.Instance.isStopJoysick = false;
-            });
+            isResetFollowPlayer, timeDelayFollow, XDamping, YDamping, ZDamping, actionStartFollow, actionEndFollow);
     }
-   
+    private void PlayerStopMove()
+    {
+        Player.Instance.isStopMove = true;
+        Canvas_Joystick.Instance.isStopJoysick = true;
+    }
+    private void PlayerContinueMove()
+    {
+        Player.Instance.isStopMove = false;
+        Canvas_Joystick.Instance.isStopJoysick = false;
+    }
 }

@@ -75,7 +75,7 @@ public class MapCurrent //luu data
         SaveData();
         LoadData();
     }
-    public void SetLevelInMapCurrent(int value)
+    public void SetLevelInMapCurrent(MiniMapController.TypeLevel value)
     {
         dataMapCurrent.SetLevelInMapCurrent(value);
         SaveData();
@@ -94,27 +94,27 @@ public class MapCurrent //luu data
 public class DataMapCurrent //dong goi de quan li
 {
     public int LevelCurrent;
-    public int LevelInMapCurrent;
+    public MiniMapController.TypeLevel LevelInMapCurrent;
     public void ResetData()
     {
         LevelCurrent = 1;
-        LevelInMapCurrent = 1;
+        LevelInMapCurrent = MiniMapController.TypeLevel.Level_1;
     }
     public int GetLevelCurrent()
     {
         if (LevelCurrent < 1) { LevelCurrent = 1; }
         return LevelCurrent;
     }
-    public int GetLevelInMapCurrent()
+    public MiniMapController.TypeLevel GetLevelInMapCurrent()
     {
-        if (LevelInMapCurrent < 1) { LevelInMapCurrent = 1; }
+        if ((int)LevelInMapCurrent < 1) { LevelInMapCurrent = MiniMapController.TypeLevel.Level_1; }
         return LevelInMapCurrent;
     }
     public void SetLevelCurrent(int value)
     {
         LevelCurrent = value;
     }
-    public void SetLevelInMapCurrent(int value)
+    public void SetLevelInMapCurrent(MiniMapController.TypeLevel value)
     {
         LevelInMapCurrent = value;
     }

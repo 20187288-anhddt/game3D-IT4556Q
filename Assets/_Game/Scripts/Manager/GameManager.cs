@@ -5,6 +5,8 @@ using UnityEngine.UI.Extensions;
 
 public class GameManager : MenuManager
 {
+    [HideInInspector]
+    public int buildUnlock;
     public Joystick joystick;
     public List<LevelManager> listLevelManagers;
     public int curLevel;
@@ -12,6 +14,9 @@ public class GameManager : MenuManager
     public void Start()
     {
         LoadLevelInGame(0);
+        Vector3 point_SpawnPlayer = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPoint_SpwanPlayer();
+        point_SpawnPlayer.y = Player.Instance.myTransform.position.y;
+        Player.Instance.myTransform.position = point_SpawnPlayer;
     }
 
     public void LoadLevelInGame(int levelNum)

@@ -103,14 +103,14 @@ public class CustomerManager : MonoBehaviour
         Transform curStartpos = null;
         switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
         {
-            case 1:
+            case MiniMapController.TypeLevel.Level_1:
                 curStartpos = startPos[0];
                 break;
-            case 2:
+            case MiniMapController.TypeLevel.Level_2:
                 int r = Random.Range(0, 2);
                 curStartpos = startPos[r];
                 break;
-            case 3:
+            case MiniMapController.TypeLevel.Level_3:
                 int m = Random.Range(0, 3);
                 curStartpos = startPos[m];
                 break;
@@ -267,7 +267,7 @@ public class CustomerManager : MonoBehaviour
                 isCheckout = true;
                 GroupCustomer curGr = listGroupsHaveBag[0];
                 listGroupsHaveBag.Remove(listGroupsHaveBag[0]);
-                c.AddCus(curGr.leader);
+                c.AddGrCus(curGr);
                 //curGr.leader.placeToBuyBag.isHaveCus = false;
                 checkoutManager.listGrCusCheckout.Add(curGr);
                 for (int i = 0; i < curGr.listCus.Count; i++)
