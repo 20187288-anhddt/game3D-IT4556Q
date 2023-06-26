@@ -7,6 +7,8 @@ public class HireStaff : BaseBuild, ILock
     public StaffType staffType;
     [SerializeField]
     private CheckUnlock checkUnlock;
+    [SerializeField]
+    private Checkout curCheckout;
     public float DefaultCoin { get => defaultCoin; }
     public bool IsLock { get => isLock; set => isLock = value; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
@@ -63,6 +65,10 @@ public class HireStaff : BaseBuild, ILock
                 levelManager.staffManager.listAllActiveStaffs.Add(curWorker as Staff);
                 levelManager.staffManager.listWorkers.Add(curWorker as Staff);
                 break;
+            case StaffType.CHECKOUT:
+                //Checkout curCheckout = GetComponentInParent<Checkout>();
+                curCheckout.BuyStaff();
+                break;
         }
     }
     public override void Start()
@@ -82,13 +88,5 @@ public class HireStaff : BaseBuild, ILock
             checkUnlock.gameObject.SetActive(true);
         }
         checkUnlock.UpdateUI();
-    }
-    void Update()
-    {
-        if (isUnlock)
-        {
-            UnLock();
-            isUnlock = false;          
-        }
     }
 }

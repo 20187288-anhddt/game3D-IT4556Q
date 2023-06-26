@@ -25,6 +25,6 @@ public class InfoThis
     public enum TypeBuff
     {
         Speed,
-        Time_Complete
+        Stack
     }
 }
