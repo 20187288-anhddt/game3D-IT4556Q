@@ -8,6 +8,7 @@ public class Player : BaseActor,ICollect,IUnlock
     public GameObject gun;
     [Header("-----Status-----")]
     public bool isUnlock;
+    public bool isStopMove;
     public float coinValue;
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
@@ -35,8 +36,9 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
     public CharacterController characterController;
    
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (Instance != null)
         {
             Destroy(this.gameObject);
@@ -45,6 +47,7 @@ public class Player : BaseActor,ICollect,IUnlock
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
         if(characterController == null) { characterController = GetComponent<CharacterController>(); }
+        isStopMove = false;
     }
     protected void Start()
     {
@@ -61,7 +64,7 @@ public class Player : BaseActor,ICollect,IUnlock
     }
     protected void OnMove()
     {
-        if (!isUnlock)
+        if (!isUnlock && !isStopMove)
         {
             UpdateState(RUN_STATE);
         }
@@ -116,8 +119,8 @@ public class Player : BaseActor,ICollect,IUnlock
         if (inputAxist.x != 0 || inputAxist.z != 0)
         {
             Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
-            transform.rotation = Quaternion.LookRotation(moveDir).normalized;
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+            myTransform.rotation = Quaternion.LookRotation(moveDir).normalized;
+            myTransform.eulerAngles = new Vector3(myTransform.eulerAngles.x, myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
            // transform.Translate(Vector3.forward * speed * 0.02f);
         }
     }
@@ -270,9 +273,9 @@ public class Player : BaseActor,ICollect,IUnlock
         for (int i = 0; i < allIngredients.Count; i++)
         {
             yOffset += ingredient.ingreScale;
-            allIngredients[i].transform.localPosition = Vector3.up * yOffset + 
-                Vector3.right * allIngredients[i].transform.localPosition.x + 
-                Vector3.forward * allIngredients[i].transform.localPosition.z;
+            allIngredients[i].myTransform.localPosition = Vector3.up * yOffset + 
+                Vector3.right * allIngredients[i].myTransform.localPosition.x + 
+                Vector3.forward * allIngredients[i].myTransform.localPosition.z;
         }
       
 

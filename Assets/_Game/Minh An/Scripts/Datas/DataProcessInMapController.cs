@@ -211,6 +211,7 @@ public class DataApparatusProcess
         {
             apparatusProcessCurrent.rewardProcessCompleteMission.OnLoadReward();
             NextProcess();
+            Debug.Log("A");
         }
     }
   
@@ -387,11 +388,12 @@ public class MissionProcess
     }
     public bool Is_Complete(IngredientType ingredientType, NameObject_This nameObject_This)
     {
-        return BuildController.Instance.GetBuildIngredientController(ingredientType).IsBuild_Complete(nameObject_This);
+
+        return BuildController.Instance.GetBuildIngredientController(ingredientType).GetDataStatusObject(nameObject_This).isStatus_Bought();
     }
     public bool Is_OnBuy(IngredientType ingredientType, NameObject_This nameObject_This)
     {
-        Debug.Log(ingredientType + " " + nameObject_This + BuildController.Instance.GetBuildIngredientController(ingredientType).GetDataStatusObject(nameObject_This).isStaus_OnBuy());
+       
         return BuildController.Instance.GetBuildIngredientController(ingredientType).GetDataStatusObject(nameObject_This).isStaus_OnBuy();
     }
 }
@@ -565,7 +567,17 @@ public class RewardProcessCompleteMission
     {
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(ingredientType);
         CameraController.Instance.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(nameObject_This).myTransform, buildIngredientController.GetBaseBuild(nameObject_This).myTransform, 
-            isResetFollowPlayer, timeDelayFollow, XDamping, YDamping, ZDamping);
+            isResetFollowPlayer, timeDelayFollow, XDamping, YDamping, ZDamping, 
+            () => 
+            { 
+                Player.Instance.isStopMove = true;
+                Canvas_Joystick.Instance.isStopJoysick = true;
+            }, 
+            () => 
+            { 
+                Player.Instance.isStopMove = false;
+                Canvas_Joystick.Instance.isStopJoysick = false;
+            });
     }
    
 }
