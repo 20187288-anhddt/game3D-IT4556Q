@@ -20,7 +20,10 @@ public class BagMachine : MachineBase
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
-        
+        if (!IsLock)
+        {
+            return;
+        }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
@@ -28,11 +31,12 @@ public class BagMachine : MachineBase
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
       
         p.isUnlock = true;
+      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
-            p.transform.position = checkUnlock.transform.position - Vector3.left * 4;
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.left * 4;
         }
         if (isPlayAnimUnlock) //anim
         {
@@ -41,6 +45,10 @@ public class BagMachine : MachineBase
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                     //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                        checkCollectBagCloth.gameObject.SetActive(true);
+                        checkPushBagMachine.gameObject.SetActive(true);
+                        uI_InfoBuild.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -48,17 +56,22 @@ public class BagMachine : MachineBase
         else
         {
             p.isUnlock = false;
+           // EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+            checkCollectBagCloth.gameObject.SetActive(true);
+            checkPushBagMachine.gameObject.SetActive(true);
+            uI_InfoBuild.gameObject.SetActive(true);
         }
-        checkUnlock.gameObject.SetActive(false);
-        checkCollectBagCloth.gameObject.SetActive(true);
-        checkPushBagMachine.gameObject.SetActive(true);
+        checkUnlock.gameObject.SetActive(false);   
         //GetComponent<BoxCollider>().enabled = true;
-        levelManager.machineManager.allActiveMachine.Add(this);
-        levelManager.machineManager.allActiveBagMachine.Add(this);
+        if (!levelManager.machineManager.allActiveMachine.Contains(this))
+            levelManager.machineManager.allActiveMachine.Add(this);
+        if (!levelManager.machineManager.allActiveBagMachine.Contains(this))
+            levelManager.machineManager.allActiveBagMachine.Add(this);
         switch (ingredientType)
         {
             case IngredientType.BEAR:
-                levelManager.machineManager.listBearBagMachineActive.Add(this);
+                if (!levelManager.machineManager.listBearBagMachineActive.Contains(this))
+                    levelManager.machineManager.listBearBagMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -70,7 +83,8 @@ public class BagMachine : MachineBase
                 }
                 break;
             case IngredientType.COW:
-                levelManager.machineManager.listCowBagMachineActive.Add(this);
+                if (!levelManager.machineManager.listCowBagMachineActive.Contains(this))
+                    levelManager.machineManager.listCowBagMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -82,7 +96,8 @@ public class BagMachine : MachineBase
                 }
                 break;
             case IngredientType.CHICKEN:
-                levelManager.machineManager.listChickenBagMachineActive.Add(this);
+                if (!levelManager.machineManager.listChickenBagMachineActive.Contains(this))
+                    levelManager.machineManager.listChickenBagMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -94,7 +109,8 @@ public class BagMachine : MachineBase
                 }
                 break;
             case IngredientType.SHEEP:
-                levelManager.machineManager.listSheepBagMachineActive.Add(this);
+                if (!levelManager.machineManager.listSheepBagMachineActive.Contains(this))
+                    levelManager.machineManager.listSheepBagMachineActive.Add(this);
                 if (isPushEvent)
                 {
                     switch (nameObject_This)
@@ -141,6 +157,15 @@ public class BagMachine : MachineBase
                 OutputMoveToEnd();
             }
         }
+        if (!IsLock)
+        {
+            uI_InfoBuild.Active(true);
+            uI_InfoBuild.LoadTextProcess(ingredients.Count.ToString() + "/" + maxObjOutput.ToString());
+        }
+        else
+        {
+            uI_InfoBuild.Active(false);
+        }
     }
     //private void SpawnObject()
     //{
@@ -160,9 +185,9 @@ public class BagMachine : MachineBase
         {
             for (int i = 0; i < outCloths.Count; i++)
             {
-                outCloths[i].transform.localPosition = new Vector3(outCloths[i].transform.localPosition.x,
+                outCloths[i].myTransform.localPosition = new Vector3(outCloths[i].myTransform.localPosition.x,
                     (i) * outCloths[i].ingreScale,
-                    outCloths[i].transform.localPosition.z);
+                    outCloths[i].myTransform.localPosition.z);
             }
         }
     }
@@ -174,7 +199,7 @@ public class BagMachine : MachineBase
         }
         else
         {
-            curClothPos = outCloths[0].transform.position;
+            curClothPos = outCloths[0].myTransform.position;
         }
         curClothPos += Vector3.up * value * clothPrefab.ingreScale;
         return curClothPos;
@@ -184,7 +209,7 @@ public class BagMachine : MachineBase
         var curIngredient = ingredients[0];
         ingredients.Remove(curIngredient);
         ShortCutIngredients();
-        curIngredient.transform.DOMove(cenIngredientPos.position, timeDelay / 2).OnComplete(() =>
+        curIngredient.myTransform.DOMove(cenIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
             AllPoolContainer.Instance.Release(curIngredient);
             isReadyMidToOut = true;
@@ -194,7 +219,7 @@ public class BagMachine : MachineBase
     private void OutputMoveToEnd()
     {
         GetClothPos(outCloths.Count);
-        var curCloth = AllPoolContainer.Instance.Spawn(clothPrefab, cenIngredientPos.transform.position, transform.rotation);
+        var curCloth = AllPoolContainer.Instance.Spawn(clothPrefab, cenIngredientPos.position, myTransform.rotation);
         curCloth.transform.parent = outIngredientPos;
         curCloth.transform.DOMove(outIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
@@ -212,13 +237,16 @@ public class BagMachine : MachineBase
     public override void StartInGame()
     {
         base.StartInGame();
+        CurrentCoin = pirceObject.Get_Pirce();
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+           dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         isHaveInStaff = false;
         isHaveOutStaff = false;
         ingredients = new List<FurBase>();
         outCloths = new List<BagBase>();
         foreach (IngredientBase i in ingredients)
         {
-            i.transform.parent = null;
+            i.myTransform.parent = null;
             AllPoolContainer.Instance.Release(i);
         }
         isReadyInToMid = true;
@@ -229,6 +257,7 @@ public class BagMachine : MachineBase
             checkPushBagMachine.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
+            uI_InfoBuild.gameObject.SetActive(false);
         }
         else
         {

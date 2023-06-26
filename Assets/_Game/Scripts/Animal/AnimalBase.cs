@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public abstract class AnimalBase : AllPool
+public abstract class AnimalBase : MonoBehaviour
 {
     public Transform myTransform;
     public FsmSystem fsm = new FsmSystem();
@@ -12,319 +12,70 @@ public abstract class AnimalBase : AllPool
     public static string EAT_STATE = "eat_state";
     public static string RUN_STATE = "run_state";
     public static string FINISH_COLLECT_STATE = "finish_collect_state";
-    public static string HAVE_FUN_STATE = "have_fun_state";
+
     public string STATE_ANIMAL;
+
     [SerializeField]
     private NavMeshAgent navMeshAgent;
-    public bool isInside;
     public bool isNaked;
     public bool isReadyReset;
-    public bool isReadyHaveFun;
     public bool onIdlePos;
-    public bool isReadyCountDown;
     public float timeDelayFur;
     public float timeDelayCollect;
     public int maxFurNum;
     public int curFurNum;
-    //public GameObject clothes;
-    public Habitat habitat;
+    public GameObject clothes;
+    [SerializeField]
+    private Habitat habitat;
+    public Vector3 curPos;
     [SerializeField]
     private float timeLive;
-    [SerializeField]
-    private float consTimeLive;
-    [SerializeField]
-    private float consTimeDelayHaveFun;
-    public Vector3 nextDes;
-    [SerializeField]
-    private HabitatManager habitatManager;
-    [SerializeField]
-    private LayerMask layer;
-    private Animator anim;
-    public GameObject mainModel;
-    public GameObject nakedModel;
+    public float consTimeLive;
 
     public virtual void Awake()
     {
         if (myTransform == null) { myTransform = this.transform; }
-        fsm.init(2);
-        fsm.add(new FsmState(IDLE_STATE, StartIdleState, OnIdleState));
+        fsm.init(4);
+        fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
+        fsm.add(new FsmState(EAT_STATE, null, OnEatState));
         fsm.add(new FsmState(RUN_STATE, StartRunState, OnRunState));
-        fsm.execute();
+        fsm.add(new FsmState(FINISH_COLLECT_STATE, null, OnFinishCollectState));
         UpdateState(IDLE_STATE);
+        fsm.execute();
+      
     }
-    public void StartInGame()
+    void Start()
     {
         ResetAnimal();
-        LevelManager levelManager = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-                break;
-            case 1:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-                break;
-        }
-        habitatManager = levelManager.habitatManager;
-        mainModel.SetActive(true);
-        nakedModel.SetActive(false);
     }
     void Update()
     {
         fsm.execute();
-        if (habitat != null && isNaked && isReadyReset)
+        if(isNaked && isReadyReset)
         {
             isReadyReset = false;
-            CounterHelper.Instance.QueueAction(timeDelayFur, () => { 
-                ResetWool(); },1);
+            CounterHelper.Instance.QueueAction(timeDelayFur, () => { ResetWool(); });
         }
-        if (habitat != null && !habitat.isLock)
+        if (!habitat.isLock)
         {
-            if (isInside)
+            if (onIdlePos && STATE_ANIMAL != RUN_STATE)
             {
-                if(onIdlePos)
+                onIdlePos = false;
+                float r = Random.Range(0f, 1f);
+                if(r<0.5f)
                 {
-                    onIdlePos = false;
-                    RandomMoveInSide();
-                    //switch (habitatManager.allActiveHabitats.Count)
-                    //{
-                    //    case 1:
-                    //        RandomMoveInSide();
-                    //        break;
-                    //    case 2:
-                    //    case 3:
-                    //        RandomMoveOutSide();
-                    //        break;
-                    //}
-                }
-                else //if(isReadyCountDown)
-                {
-                    timeLive -= Time.deltaTime;
-                   
-                }
-                if (timeLive < 0)
-                {
-                    //isReadyCountDown = false;
-                    timeLive = consTimeLive;
-                    onIdlePos = true;
-                }
+                    UpdateState(RUN_STATE);
+                } 
             }
-        }
-    }
-    private static string ANIM_BEAR_IDLE = "bearIsIdle";
-    private static string ANIM_COW_IDLE = "cowIsIdle";
-    private static string ANIM_CHICKEN_IDLE = "chickenIsIdle";
-    private static string ANIM_LION_IDLE = "lionIsIdle";
-    private static string ANIM_CROC_IDLE = "crocIsIdle";
-    private static string ANIM_ELE_IDLE = "eleIsIdle";
-    private static string ANIM_ZEBRA_IDLE = "zebraIsIdle";
-
-    private static string ANIM_BEAR_RUN = "bearIsRun";
-    private static string ANIM_COW_RUN = "cowIsRun";
-    private static string ANIM_CHICKEN_RUN = "chickenIsRun";
-    private static string ANIM_LION_RUN = "lionIsRun";
-    private static string ANIM_CROC_RUN = "crocIsRun";
-    private static string ANIM_ELE_RUN = "eleIsRun";
-    private static string ANIM_ZEBRA_RUN = "zebraIsRun";
-
-    private static string ANIM_SUPRISE = "Suprise";
-
-    private static string ANIM_IDLE_JUMP = "IdleJump";
-    private static string ANIM_IDLE_DANCE = "IdleDance";
-    private static string ANIM_IDLE_EAT = "IdleEat";
-    private static string ANIM_IDLE_SLEEP = "IdleSleep";
-
-    private static string ANIM_WALK = "Walk";
-    public void ChangeAnim(bool isSuprise)
-    {
-        //if (STATE_ANIMAL == IDLE_STATE)
-        //{
-        //    switch (habitat.ingredientType)
-        //    {
-        //        case IngredientType.BEAR:
-        //            anim.SetTrigger("bearIsIdle");
-        //            break;
-        //        case IngredientType.COW:
-        //            anim.SetTrigger("cowIsIdle");
-        //            break;
-        //        case IngredientType.CHICKEN:
-        //            anim.SetTrigger("chickenIsIdle");
-        //            break;
-        //    }
-        //}
-        //else if (STATE_ANIMAL == RUN_STATE)
-        //{
-        //    switch (habitat.ingredientType)
-        //    {
-        //        case IngredientType.BEAR:
-        //            anim.SetTrigger("bearIsRun");
-        //            break;
-        //        case IngredientType.COW:
-        //            anim.SetTrigger("cowIsRun");
-        //            break;
-        //        case IngredientType.CHICKEN:
-        //            anim.SetTrigger("chickenIsRun");
-        //            break;
-        //    }
-        //}
-
-        if (isSuprise)
-        {
-            if (STATE_ANIMAL == IDLE_STATE)
+            if (!onIdlePos)
             {
-                switch (habitat.ingredientType)
-                {
-                    case IngredientType.BEAR:
-                        anim.SetTrigger(ANIM_BEAR_IDLE);
-                        break;
-                    case IngredientType.COW:
-                        anim.SetTrigger(ANIM_COW_IDLE);
-                        break;
-                    case IngredientType.CHICKEN:
-                        anim.SetTrigger(ANIM_CHICKEN_IDLE);
-                        break;
-                    case IngredientType.LION:
-                        anim.SetTrigger(ANIM_LION_IDLE);
-                        break;
-                    case IngredientType.CROC:
-                        anim.SetTrigger(ANIM_CROC_IDLE);
-                        break;
-                    case IngredientType.ELE:
-                        anim.SetTrigger(ANIM_ELE_IDLE);
-                        break;
-                    case IngredientType.ZEBRA:
-                        anim.SetTrigger(ANIM_ZEBRA_IDLE);
-                        break;
-                }
+                timeLive -= Time.deltaTime;
             }
-            else if (STATE_ANIMAL == RUN_STATE)
+            if(timeLive < 0)
             {
-                switch (habitat.ingredientType)
-                {
-                    case IngredientType.BEAR:
-                        anim.SetTrigger(ANIM_BEAR_RUN);
-                        break;
-                    case IngredientType.COW:
-                        anim.SetTrigger(ANIM_COW_RUN);
-                        break;
-                    case IngredientType.CHICKEN:
-                        anim.SetTrigger(ANIM_CHICKEN_RUN);
-                        break;
-                    case IngredientType.LION:
-                        anim.SetTrigger(ANIM_LION_RUN);
-                        break;
-                    case IngredientType.CROC:
-                        anim.SetTrigger(ANIM_CROC_RUN);
-                        break;
-                    case IngredientType.ELE:
-                        anim.SetTrigger(ANIM_ELE_RUN);
-                        break;
-                    case IngredientType.ZEBRA:
-                        anim.SetTrigger(ANIM_ZEBRA_RUN);
-                        break;
-                }
+                onIdlePos = true;
+                timeLive = consTimeLive;
             }
-            anim.Play(ANIM_SUPRISE);
-        }
-        else
-        {
-            if (!isNaked)
-            {
-                //anim = mainModel.GetComponent<Animator>();
-                if (STATE_ANIMAL == IDLE_STATE)
-                {
-                    int r = Random.Range(1, 5);
-                    switch (r)
-                    {
-                        case 1:
-                            anim.Play(ANIM_IDLE_JUMP);
-                            break;
-                        case 2:
-                            anim.Play(ANIM_IDLE_DANCE);
-                            break;
-                        case 3:
-                            anim.Play(ANIM_IDLE_EAT);
-                            break;
-                        case 4:
-                            anim.Play(ANIM_IDLE_SLEEP);
-                            break;
-                    }
-                }
-                else if (STATE_ANIMAL == RUN_STATE)
-                {
-                    anim.Play(ANIM_WALK);
-                }
-            }
-            else
-            {
-                //anim = nakedModel.GetComponent<Animator>();
-                if (STATE_ANIMAL == IDLE_STATE)
-                {
-                    int r = Random.Range(1, 5);
-                    switch (r)
-                    {
-                        case 1:
-                            anim.Play(ANIM_IDLE_JUMP);
-                            break;
-                        case 2:
-                            anim.Play(ANIM_IDLE_DANCE);
-                            break;
-                        case 3:
-                            anim.Play(ANIM_IDLE_EAT);
-                            break;
-                        case 4:
-                            anim.Play(ANIM_IDLE_SLEEP);
-                            break;
-                    }
-                }
-                else if (STATE_ANIMAL == RUN_STATE)
-                {
-                    anim.Play(ANIM_WALK);
-                }
-            }
-        }
-    }
-    public void RandomMoveInSide()
-    {
-        //isReadyCountDown = true;
-        int r = Random.Range(1, 10);
-        if (r < 8)
-        {
-            if (RandomPosition(true))
-            {
-                UpdateState(RUN_STATE);
-            }
-            else
-            {
-                //CounterHelper.Instance.QueueAction(consTimeLive, () => {
-                //    onIdlePos = true;
-                //},1);
-                UpdateState(IDLE_STATE);
-            }
-        }
-    }
-    public void RandomMoveOutSide()
-    {
-        int r = Random.Range(1, 10);
-        if (r < 0 && isReadyHaveFun)
-        {
-            if (RandomPosition(false))
-            {
-                isReadyHaveFun = false;
-                isInside = false;
-                UpdateState(HAVE_FUN_STATE);
-            }
-            else
-            {
-                CounterHelper.Instance.QueueAction(consTimeLive, () => {
-                    onIdlePos = true;
-                },1);
-                UpdateState(IDLE_STATE);
-            }
-        }
-        else
-        {
-            RandomMoveInSide();
         }
     }
     public void UpdateState(string state)
@@ -332,17 +83,9 @@ public abstract class AnimalBase : AllPool
         fsm.setState(state);
         STATE_ANIMAL = state;
     }
-    private void StartIdleState(FsmSystem _fsm)
-    {
-        StartIdle();
-    }
     private void StartRunState(FsmSystem _fsm)
     {
-        Run(true);
-    }
-    private void StartHaveFunState(FsmSystem _fsm)
-    {
-        Run(false);
+        Run();
     }
     private FsmSystem.ACTION OnEatState(FsmSystem _fsm)
     {
@@ -364,59 +107,24 @@ public abstract class AnimalBase : AllPool
         FinishCollect();
         return FsmSystem.ACTION.END;
     }
-    private FsmSystem.ACTION OnHaveFunState(FsmSystem _fsm)
+    public virtual void Run()
     {
-        CheckRunToPos();
-        return FsmSystem.ACTION.END;
-    }
-    public virtual void Run(bool isInside)
-    {
-        ChangeAnim(false);
-        navMeshAgent.isStopped = false;
-        //if (isInside == false)
-        //{
-        //    CounterHelper.Instance.QueueAction(3f, () => { GetComponent<CapsuleCollider>().enabled = true; });
-        //}
-        navMeshAgent.SetDestination(nextDes);
+        curPos = RandomPosition();
+        navMeshAgent.SetDestination(curPos);
         navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckRunToPos()
     {
-       
-        if (Vector3.Distance(nextDes, myTransform.position) < 0.5f)
+        if (Vector3.Distance(curPos, myTransform.position) < 1f)
         {
             //myTransform.DORotate(Vector3.zero, 0f);
             //myTransform.LookAt(placeToBuy.closet.myTransform.position);
             UpdateState(IDLE_STATE);
         }
-        //if (isInside)
-        //{
-        //    if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
-        //    {
-        //        //myTransform.DORotate(Vector3.zero, 0f);
-        //        //myTransform.LookAt(placeToBuy.closet.myTransform.position);
-        //        UpdateState(IDLE_STATE);
-        //    }
-        //}
-        //else
-        //{
-        //    if (Vector3.Distance(nextDes, myTransform.position) < 3f)
-        //    {
-        //        GetComponent<CapsuleCollider>().enabled = true;
-        //        //myTransform.DORotate(Vector3.zero, 0f);
-        //        //myTransform.LookAt(placeToBuy.closet.myTransform.position);
-        //        UpdateState(IDLE_STATE);
-        //    }
-        //}
-       
-    }
-    public virtual void StartIdle()
-    {
-        ChangeAnim(false);
     }
     public virtual void Idle()
     {
-        //navMeshAgent.isStopped = true;
+
     }
 
     public virtual void Eat()
@@ -433,180 +141,58 @@ public abstract class AnimalBase : AllPool
     {
         isNaked = true;
         isReadyReset = true;
-        //clothes.SetActive(false);
-        mainModel.SetActive(false);
-        nakedModel.SetActive(true);
-        anim = nakedModel.GetComponent<Animator>();
-        ChangeAnim(true);
+        clothes.SetActive(false);
         if (habitat.animalsIsReady.Contains(this))
             habitat.animalsIsReady.Remove(this);
     }
     public void ResetWool()
     {
         isNaked = false;
-        //clothes.SetActive(true);
-        mainModel.SetActive(true);
-        nakedModel.SetActive(false);
-        anim = mainModel.GetComponent<Animator>();
-        CounterHelper.Instance.QueueAction(timeDelayCollect, () =>
+        clothes.SetActive(true);
+        CounterHelper.Instance.QueueAction(timeDelayCollect, () => 
         {
             if (!habitat.animalsIsReady.Contains(this))
                 habitat.animalsIsReady.Add(this);
-        },1); 
+        });
+        
     }
 
     public void SetHabitat(Habitat habitat)
     {
         this.habitat = habitat;
-        anim = mainModel.GetComponent<Animator>();
-        UpdateState(IDLE_STATE);
     }
 
-    public bool RandomPosition(bool tmp)
+    public Vector3 RandomPosition()
     {
-        bool checkIf = false;
-        nextDes = Vector3.zero;
         float radius = 0;
-        switch (this.habitat.ingredientType)
+        switch (habitat.ingredientType)
         {
             case IngredientType.CHICKEN:
-                radius = 4.5f;
+                radius = 5f;
                 break;
             case IngredientType.COW:
-                radius = 7f;
+                radius = 7.5f;
                 break;
             case IngredientType.BEAR:
-                radius = 8.5f;
-                break;
-            case IngredientType.LION:
-                radius = 7.5f;
-                break;
-            case IngredientType.ELE:
-                radius = 8.5f;
-                break;
-            case IngredientType.ZEBRA:
-                radius = 7f;
-                break;
-            case IngredientType.CROC:
-                radius = 7.5f;
+                radius = 9f;
                 break;
 
         }
-        if (tmp == true)
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += this.habitat.transform.position;
+        UnityEngine.AI.NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-            randomDirection += this.habitat.transform.position;
-            UnityEngine.AI.NavMeshHit hit;
-            if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
-            {
-                nextDes = new Vector3(hit.position.x, myTransform.position.y, hit.position.z);
-                checkIf = true;
-            }
+            finalPosition = hit.position;
         }
-        else
-        {
-            Habitat curHabitat = null;
-            switch (habitat.ingredientType)
-            {
-                case IngredientType.CHICKEN:
-                    int r1 = UnityEngine.Random.Range(0, 2);
-                    if (r1 == 0)
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.COW);
-                    }
-                    else
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.BEAR);
-                    }
-                    break;
-                case IngredientType.COW:
-                    int r2 = UnityEngine.Random.Range(0, 2);
-                    if (r2 == 0)
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.CHICKEN);
-                    }
-                    else
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.BEAR);
-                    }
-                    break;
-                case IngredientType.BEAR:
-                    int r3 = UnityEngine.Random.Range(0, 2);
-                    if (r3 == 0)
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.COW);
-                    }
-                    else
-                    {
-                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.CHICKEN);
-                    }
-                    break;
-            }
-            if(curHabitat == null)
-            {
-                isInside = true;
-                checkIf = false;
-            }
-            else
-            {
-                Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-                randomDirection += curHabitat.transform.position;
-                UnityEngine.AI.NavMeshHit hit;
-                if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
-                {
-                    nextDes = new Vector3(hit.position.x, myTransform.position.y, hit.position.z);
-                    if (habitat.animalsIsReady.Contains(this))
-                    {
-                        habitat.animalsIsReady.Remove(this);
-                    }
-                    if (habitat.allAnimals.Contains(this))
-                    {
-                        habitat.allAnimals.Remove(this);
-                    }
-                    checkIf =  true;
-                }
-                else
-                {
-                    isInside = true;
-                    checkIf = false;
-                }
-            }
-        }
-        return checkIf;
+        return new Vector3(finalPosition.x,0,finalPosition.z);
     }
     public void ResetAnimal()
     {
         ResetWool();
-        //GetComponent<CapsuleCollider>().enabled = false;
-        isInside = true;
-        //CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; },1);
-        nextDes = Vector3.zero;
+        curPos = Vector3.zero;
         timeLive = consTimeLive;
-        isReadyCountDown = false;
         onIdlePos = true;
-        UpdateState(IDLE_STATE);
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    var player = other.GetComponent<Player>();
-    //    if (player != null)
-    //    {
-    //        GetComponent<CapsuleCollider>().enabled = false;
-    //        myTransform.DORotate(new Vector3(0f,180f,0f), 0f);
-    //        timeLive = consTimeLive;
-    //        if (!habitat.allAnimals.Contains(this))
-    //        {
-    //            habitat.allAnimals.Add(this);
-    //            Vector3 tmpPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)].position;
-    //            this.transform.DOMove(tmpPos, 0f);
-    //        }
-    //        isInside = true;
-    //        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { 
-    //            isReadyHaveFun = true;
-    //            onIdlePos = true;
-    //        });
-    //        nextDes = Vector3.zero;
-    //        UpdateState(IDLE_STATE);
-    //    }
-    //}
 }

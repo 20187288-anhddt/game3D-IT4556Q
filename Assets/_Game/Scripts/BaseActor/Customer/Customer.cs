@@ -24,11 +24,14 @@ public class Customer : BaseCustomer
     private GameObject mainModel;
     [SerializeField]
     private GameObject[] outfitModel;
+    //[SerializeField]
+    public GameObject[] flag;
     [SerializeField]
     private GameObject[] bagModel;
     public bool isLeader;
     public bool gotOutfit;
     public bool gotBag;
+    public bool isExit;
     public Customer leader;
     public GroupCustomer grCus;
     private Vector3 pointTaget = Vector3.zero;
@@ -43,11 +46,10 @@ public class Customer : BaseCustomer
         fsm.add(new FsmState(FOLLOW_LEADER_STATE, null, OnFollowLeaderState));
         fsm.add(new FsmState(EXIT_STATE, StartExit, null));
         fsm.add(new FsmState(VIP_STATE, null, OnVipState));
-        
     }
     private void Start()
     {
-        EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
+        EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);  
     }
     public void ReloadSetDestination()
     {
@@ -132,6 +134,7 @@ public class Customer : BaseCustomer
         if (Vector3.Distance(transCloset, myTransform.position) < 0.1f)
         {
             myTransform.DORotate(Vector3.zero, 0f);
+            //myTransform.LookAt(placeToBuy.closet.myTransform.position);
             this.onPlacePos = true;
             UpdateState(IDLE_STATE);
         }
@@ -148,7 +151,8 @@ public class Customer : BaseCustomer
     {
         if (Vector3.Distance(transBag, myTransform.position) < 0.1f)
         {
-            myTransform.DORotate(Vector3.zero, 0f);
+            //myTransform.DORotate(Vector3.zero, 0f);
+            myTransform.LookAt(placeToBuyBag.closet.myTransform.position);
             this.onBagPos = true;
             UpdateState(IDLE_STATE);
         }
@@ -184,26 +188,30 @@ public class Customer : BaseCustomer
     {
         navMeshAgent.SetDestination(leader.myTransform.position);
         navMeshAgent.stoppingDistance = 0;
-        if (!leader.gotOutfit && !leader.gotBag)
+        if (!leader.gotOutfit && !leader.gotBag && !leader.isExit)
         {
             if (Vector3.Distance(transCloset, myTransform.position) < 6f || leader.onPlacePos)
             {
                 UpdateState(MOVE_TO_CLOSET_STATE);
             }
         }
-        else if (leader.gotOutfit && !leader.gotBag)
+        else if (leader.gotOutfit && !leader.gotBag && !leader.isExit)
         {
             if (Vector3.Distance(transBag, myTransform.position) < 6f || leader.onBagPos)
             {
                 UpdateState(MOVE_TO_BAG_STATE);
             }
         }
-        else if (leader.gotOutfit && leader.gotBag && !leader.onCheckoutPos)
+        else if (leader.gotOutfit && leader.gotBag && !leader.isExit)
         {
             if (Vector3.Distance(transCheckOut, myTransform.position) < 6f || leader.onCheckoutPos)
             {
                 UpdateState(MOVE_CHECKOUT_STATE);
             }
+        }
+        else if( leader.gotOutfit && leader.gotBag && leader.isExit)
+        {
+
         }
     }
     public virtual void MoveToExit()
@@ -238,6 +246,7 @@ public class Customer : BaseCustomer
         grCus = null;
         leader = null;
         isLeader = false;
+        isExit = false;
         mainModel.SetActive(true);
         outfitType = IngredientType.NONE;
         bagType = IngredientType.NONE;
@@ -248,6 +257,10 @@ public class Customer : BaseCustomer
         for (int i = 0; i < bagModel.Length; i++)
         {
             bagModel[i].SetActive(false);
+        }
+        for (int i = 0; i < flag.Length; i++)
+        {
+            flag[i].SetActive(false);
         }
         UpdateState(IDLE_STATE);
     }
@@ -292,6 +305,24 @@ public class Customer : BaseCustomer
                 break;
             case IngredientType.BEAR:
                 bagModel[3].SetActive(true);
+                break;
+        }
+    }
+    public void ChangeFlag(IngredientType type)
+    {
+        switch (type)
+        {
+            case IngredientType.COW:
+                flag[0].SetActive(true);
+                break;
+            case IngredientType.SHEEP:
+                flag[1].SetActive(true);
+                break;
+            case IngredientType.CHICKEN:
+                flag[2].SetActive(true);
+                break;
+            case IngredientType.BEAR:
+                flag[3].SetActive(true);
                 break;
         }
     }
