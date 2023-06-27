@@ -5,8 +5,13 @@ using DG.Tweening;
 
 public class IngredientBase : AllPool
 {
+    public Transform myTransform;
     public IngredientType ingredientType;
     public float ingreScale;
+    private void Awake()
+    {
+        if(myTransform == null) { myTransform = this.transform; }
+    }
     public void MoveToICollect(ICollect actor)
     {
         float x = Random.Range(-0.05f, 0.05f);
@@ -24,7 +29,6 @@ public class IngredientBase : AllPool
             //baseActor.ShortObj();
         });
         //});
-
         //if (baseActor is Player)
         //{
         //    Vibration.Vibrate(25);
@@ -50,6 +54,10 @@ public class IngredientBase : AllPool
             });
         }).SetEase(Ease.Linear);
     }
+    public void MoveToCar(CarMission car)
+    {
+
+    }
 }
 
 public enum IngredientType
@@ -66,5 +74,8 @@ public enum IngredientType
     SHEEP_BAG,
     COW_BAG,
     CHICKEN_BAG,
-    BEAR_BAG
+    BEAR_BAG,
+    CHECKOUT,
+    BUILDSTAGE,
+    HIRESTAFF,
 }

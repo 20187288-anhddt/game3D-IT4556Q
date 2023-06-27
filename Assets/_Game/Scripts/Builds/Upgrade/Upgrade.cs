@@ -10,16 +10,16 @@ public class Upgrade : MonoBehaviour
         if (actor != null)
         {
             //TODO
-            //Show pop-up
+            UI_Manager.Instance?.OpenUI(NameUI.Canvas_Upgrades);
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        var actor = other.GetComponent<Player>();
-        if (actor != null)
-        {
-            //TODO
-            //Hide pop-up
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    var actor = other.GetComponent<Player>();
+    //    if (actor != null)
+    //    {
+    //        //TODO
+    //        UI_Manager.Instance?.CloseUI(NameUI.Canvas_Upgrades);
+    //    }
+    //}
 }
