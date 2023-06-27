@@ -100,11 +100,37 @@ public class Checkout : BuildCoins,ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
-                        GetComponent<BoxCollider>().enabled = true;
+                        if (isHired)
+                        {
+                            GetComponent<BoxCollider>().enabled = false;
+                            staffModel.SetActive(true);
+                            isHaveStaff = true;
+                        }
+                        else
+                        {
+                            GetComponent<BoxCollider>().enabled = true;
+                            staffModel.SetActive(false);
+                        }
+                        //GetComponent<BoxCollider>().enabled = true;
                         coinSpawn.gameObject.SetActive(true);
                     });
                 }); ;
             });
+        }
+        else
+        {
+            p.isUnlock = false;
+            if (isHired)
+            {
+                GetComponent<BoxCollider>().enabled = false;
+                staffModel.SetActive(true);
+                isHaveStaff = true;
+            }
+            else
+            {
+                GetComponent<BoxCollider>().enabled = true;
+                staffModel.SetActive(false);
+            }
         }
         checkUnlock.gameObject.SetActive(false);
         coinSpawn.gameObject.SetActive(true);

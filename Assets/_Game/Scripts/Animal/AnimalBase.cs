@@ -115,7 +115,7 @@ public abstract class AnimalBase : MonoBehaviour
     }
     public virtual void CheckRunToPos()
     {
-        if (Vector3.Distance(curPos, myTransform.position) < 1f)
+        if (Vector3.Distance(curPos, myTransform.position) < 0.1f)
         {
             //myTransform.DORotate(Vector3.zero, 0f);
             //myTransform.LookAt(placeToBuy.closet.myTransform.position);
@@ -186,7 +186,7 @@ public abstract class AnimalBase : MonoBehaviour
         {
             finalPosition = hit.position;
         }
-        return new Vector3(finalPosition.x,0,finalPosition.z);
+        return new Vector3(finalPosition.x,myTransform.position.y,finalPosition.z);
     }
     public void ResetAnimal()
     {

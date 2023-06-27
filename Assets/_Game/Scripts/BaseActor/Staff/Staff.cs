@@ -142,30 +142,35 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     public virtual void MoveToIdle()
     {
+        transIdle.y = myTransform.position.y;
         navMeshAgent.SetDestination(transIdle);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transIdle;
     }
     public virtual void MoveToHabitat()
     {
+        transHabitat.y = myTransform.position.y;
         navMeshAgent.SetDestination(transHabitat);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transHabitat;
     }
     public virtual void MoveToMachine()
     {
+        transMachine.y = myTransform.position.y;
         navMeshAgent.SetDestination(transMachine);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transMachine;
     }
     public virtual void MoveToCloset()
     {
+        transCloset.y = myTransform.position.y;
         navMeshAgent.SetDestination(transCloset);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transCloset;
     }
     public virtual void MoveToGarbage()
     {
+        transGarbage.y = myTransform.position.y;
         navMeshAgent.SetDestination(transGarbage);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transGarbage;

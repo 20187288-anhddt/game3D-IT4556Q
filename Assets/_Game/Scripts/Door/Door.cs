@@ -27,8 +27,8 @@ public class Door : MonoBehaviour
             }
             if(actorInDoor.Count == 1)
             {
-                leftDoor.transform.DOLocalMoveX(-4f, 0.5f);
-                rightDoor.transform.DOLocalMoveX(+4f, 0.5f);
+                leftDoor.transform.DOLocalMoveZ(-4f, 0.5f);
+                rightDoor.transform.DOLocalMoveZ(+4f, 0.5f);
             }
         }
     }
@@ -43,8 +43,8 @@ public class Door : MonoBehaviour
             }
             if (actorInDoor.Count == 0)
             {
-                leftDoor.transform.DOLocalMoveX(+4f, 0.5f);
-                rightDoor.transform.DOLocalMoveX(-4f, 0.5f);
+                leftDoor.transform.DOLocalMoveZ(-1.318865f, 0.5f);
+                rightDoor.transform.DOLocalMoveZ(1.318865f, 0.5f);
             }
         }
     }

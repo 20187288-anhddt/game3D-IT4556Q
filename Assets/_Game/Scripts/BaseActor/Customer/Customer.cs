@@ -124,7 +124,8 @@ public class Customer : BaseCustomer,IAct
       //  Debug.Log("Idle");
     }
     public virtual void MoveToCloset()
-    { 
+    {
+        transCloset.y = myTransform.position.y;
         navMeshAgent.SetDestination(transCloset);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transCloset;
@@ -142,7 +143,7 @@ public class Customer : BaseCustomer,IAct
     }
     public virtual void MoveToBag()
     {
-      
+        transBag.y = myTransform.position.y;
         navMeshAgent.SetDestination(transBag);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transBag; 
@@ -160,6 +161,7 @@ public class Customer : BaseCustomer,IAct
     }
     public virtual void MoveToCheckOut()
     {
+        transCheckOut.y = myTransform.position.y;
         navMeshAgent.SetDestination(transCheckOut);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transCheckOut;
@@ -216,6 +218,7 @@ public class Customer : BaseCustomer,IAct
     }
     public virtual void MoveToExit()
     {
+        transExit.y = myTransform.position.y;
         navMeshAgent.SetDestination(transExit);
         navMeshAgent.stoppingDistance = 0;
         pointTaget = transExit;
