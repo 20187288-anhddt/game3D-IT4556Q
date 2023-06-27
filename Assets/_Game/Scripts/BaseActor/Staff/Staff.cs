@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public class Staff : BaseStaff, ICollect
+public class Staff : BaseStaff, ICollect,IAct
 {
     [SerializeField]
     private NavMeshAgent navMeshAgent;
@@ -55,7 +55,7 @@ public class Staff : BaseStaff, ICollect
     public override void Awake()
     {
         base.Awake();
-        fsm.init(5);
+        fsm.init(6);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(MOVE_TO_IDLE_STATE, StartMoveToIdle, OnMoveToIdleState));
         fsm.add(new FsmState(MOVE_TO_HABITAT_STATE, StartMoveToHabitat, OnMoveToHabitatState));
@@ -297,6 +297,7 @@ public class Staff : BaseStaff, ICollect
     }
     public virtual void CheckMoveToGarbage()
     {
+        
         if (!onGarbagePos && Vector3.Distance(transGarbage, myTransform.position) < 0.5f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);

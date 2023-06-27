@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public class Customer : BaseCustomer
+public class Customer : BaseCustomer,IAct
 {
     [SerializeField]
     private NavMeshAgent navMeshAgent;

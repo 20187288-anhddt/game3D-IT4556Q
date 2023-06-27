@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class Player : BaseActor,ICollect,IUnlock
+public class Player : BaseActor,ICollect,IUnlock,IAct
 {
     public static Player Instance;
     public GameObject gun;
@@ -35,7 +35,9 @@ public class Player : BaseActor,ICollect,IUnlock
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
     public CharacterController characterController;
-   
+    public UI_ProcessPlayer uI_ProcessPlayer_Prefabs;
+    private UI_ProcessPlayer uI_ProcessPlayer;
+
     public override void Awake()
     {
         base.Awake();
@@ -58,13 +60,12 @@ public class Player : BaseActor,ICollect,IUnlock
         fsm.execute();
         if(gun.activeSelf)
             gun.SetActive(false);
-
+        coinValue = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
         EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
         EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
     }
     protected void OnMove()
     {
-
         if (!isUnlock && !isStopMove && EventSystem.current.currentSelectedGameObject == null)
         {
             UpdateState(RUN_STATE);
@@ -91,6 +92,32 @@ public class Player : BaseActor,ICollect,IUnlock
         //{
         //    UpdateMove(speed);
         //}
+        #region checkUI_Max
+        if (uI_ProcessPlayer != null)
+        {
+            if (!uI_ProcessPlayer.isActive())
+            {
+                if (objHave >= maxCollectObj)
+                {
+
+                    uI_ProcessPlayer.SetLocalPosition((yOffset + 2) * Vector3.up);
+                    uI_ProcessPlayer.Active(true);
+                }
+            }
+            else
+            {
+                if (objHave < maxCollectObj)
+                {
+                    uI_ProcessPlayer.Active(false);
+                }
+            }
+        }
+        else
+        {
+            uI_ProcessPlayer = Instantiate(uI_ProcessPlayer_Prefabs);
+            uI_ProcessPlayer.myTranform.SetParent(carryPos);
+        }
+        #endregion
     }
     public Vector2 Config(Vector2 input)
     {

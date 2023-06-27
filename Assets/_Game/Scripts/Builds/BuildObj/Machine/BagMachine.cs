@@ -36,7 +36,7 @@ public class BagMachine : MachineBase
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
-            p.myTransform.position = checkUnlock.myTransform.position + Vector3.left * 6;
+            p.myTransform.position = checkUnlock.myTransform.position + Vector3.left * 7;
         }
         if (isPlayAnimUnlock) //anim
         {

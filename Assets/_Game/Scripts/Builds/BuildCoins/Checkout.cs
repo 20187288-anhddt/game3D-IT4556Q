@@ -20,6 +20,7 @@ public class Checkout : BuildCoins,ILock
     public GameObject unlockModel;
     public Transform transExit;
     public bool isHaveStaff;
+    public bool isHired;
     public bool isCheckout;
     [SerializeField]
     private float delayTime;
@@ -52,6 +53,20 @@ public class Checkout : BuildCoins,ILock
             coinSpawn.gameObject.SetActive(false);
             staffModel.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
+        }
+        else
+        {
+            if (isHired)
+            {
+                GetComponent<BoxCollider>().enabled = false;
+                staffModel.SetActive(true);
+                isHaveStaff = true;
+            }
+            else
+            {
+                GetComponent<BoxCollider>().enabled = true;
+                staffModel.SetActive(false);
+            }
         }
         checkUnlock.UpdateUI();
     }
@@ -283,6 +298,7 @@ public class Checkout : BuildCoins,ILock
     }
     public void BuyStaff()
     {
+        isHired = true;
         GetComponent<BoxCollider>().enabled = false;
         staffModel.SetActive(true);
         isHaveStaff = true;

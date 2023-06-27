@@ -18,7 +18,7 @@ public class CoinSpawn : MonoBehaviour
 
     public Vector3 SpawnObjectOnComplete(int value)
     {
-        if(value > 27)
+        if(value > 54)
         {
             value = 0;
         }
@@ -50,7 +50,7 @@ public class CoinSpawn : MonoBehaviour
             {
                 checkOut.coins[i].MoveToPlayerSpeed(player);
                 checkOut.coins.Remove(checkOut.coins[i]);
-                DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 1);
+                DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
                 i--;
             }
             player.DelayCatch(player.timeDelayCatch);
