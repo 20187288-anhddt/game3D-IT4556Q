@@ -50,6 +50,7 @@ public class Staff : BaseStaff, ICollect,IAct
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
     private Vector3 pointTaget = Vector3.zero;
+    public GameObject[] model;
 
     public GameManager gameManager;
     public override void Awake()
@@ -66,6 +67,10 @@ public class Staff : BaseStaff, ICollect,IAct
         fsm.execute();
         if (gun.activeSelf)
             gun.SetActive(false);
+        for (int i = 0; i < model.Length; i++)
+        {
+            model[i].SetActive(false);
+        }
         gameManager = GameManager.Instance;
         ResetStaff();
     }
@@ -520,5 +525,20 @@ public class Staff : BaseStaff, ICollect,IAct
         cowCloths.Clear();
         chickenCloths.Clear();
         bearCloths.Clear();
+    }
+    public void ChangeOutfit(StaffType type)
+    {
+        switch (type)
+        {
+            case StaffType.FARMER:
+                Debug.Log("hj");
+                model[0].SetActive(true);
+                model[1].SetActive(false);
+                break;
+            case StaffType.WORKER:
+                model[0].SetActive(false);
+                model[1].SetActive(true);
+                break;
+        }
     }
 }

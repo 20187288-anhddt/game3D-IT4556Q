@@ -14,7 +14,11 @@ public class HireStaff : BaseBuild, ILock
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
     public Staff staffPrefabs;
     public bool isUnlock;
-
+    public override void Awake()
+    {
+        base.Awake();
+        Debug.Log(dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -55,6 +59,7 @@ public class HireStaff : BaseBuild, ILock
                 var curFarmer = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
                 (curFarmer as Staff).ResetStaff();
                 (curFarmer as Staff).staffType = StaffType.FARMER;
+                (curFarmer as Staff).ChangeOutfit(StaffType.FARMER);
                 levelManager.staffManager.listAllActiveStaffs.Add(curFarmer as Staff);
                 levelManager.staffManager.listFarmers.Add(curFarmer as Staff);
                 break;
@@ -62,6 +67,7 @@ public class HireStaff : BaseBuild, ILock
                 var curWorker = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
                 (curWorker as Staff).ResetStaff();
                 (curWorker as Staff).staffType = StaffType.WORKER;
+                (curWorker as Staff).ChangeOutfit(StaffType.WORKER);
                 levelManager.staffManager.listAllActiveStaffs.Add(curWorker as Staff);
                 levelManager.staffManager.listWorkers.Add(curWorker as Staff);
                 break;
