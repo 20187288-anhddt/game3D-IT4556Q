@@ -46,6 +46,7 @@ public class Checkout : BuildCoins,ILock
         delayTime = consDelayCheckout;
         listGrCusCheckout.Clear();
         listCusCheckout.Clear();
+        isHired = (dataStatusObject as DataCheckOutTable).GetData_IsHireStaff();
         if (isLock)
         {
             unlockModel.gameObject.SetActive(false);
@@ -302,5 +303,6 @@ public class Checkout : BuildCoins,ILock
         GetComponent<BoxCollider>().enabled = false;
         staffModel.SetActive(true);
         isHaveStaff = true;
+        (dataStatusObject as DataCheckOutTable).SetData_IsHireStaff(isHired);
     }
 }
