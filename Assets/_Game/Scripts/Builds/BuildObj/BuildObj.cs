@@ -63,5 +63,6 @@ public enum NameObject_This
     HireStaff_1,
     HireStaff_2,
     HireStaff_3,
+    Car
 }
 

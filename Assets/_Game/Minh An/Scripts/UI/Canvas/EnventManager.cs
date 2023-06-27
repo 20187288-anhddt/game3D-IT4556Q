@@ -131,7 +131,8 @@ public enum EventName {
     Camera_Follow_HireStaff,
     Camera_Follow_HireStaff_1,
     Camera_Follow_HireStaff_2,
-    Camera_Follow_HireStaff_3
+    Camera_Follow_HireStaff_3,
+    Car_OnBought,
 
 }
 public class EnventManager : GenerticSingleton<EnventManager>

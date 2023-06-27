@@ -671,6 +671,9 @@ public class RewardProcessCompleteMission
                 CameraFollowObject(IngredientType.HIRESTAFF, NameObject_This.HireStaff_3, true, 0.5f, 5, 5, 5
                      , PlayerStopMove, PlayerContinueMove);
                 break;
+            case EventName.Car_OnBought:
+                OnBought(IngredientType.CAR, NameObject_This.Car);
+                break;
 
         }
     }
