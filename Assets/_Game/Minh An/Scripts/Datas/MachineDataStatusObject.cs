@@ -6,59 +6,39 @@ public class MachineDataStatusObject : DataStatusObject
 {
     public static string nameLevel_Speed = "Level Speed";
     public static string nameLevel_Stack = "Level Stack";
-    public static string nameCountItemInput = "CountItemInput";
-    public static string nameCountItemOutput = "CountItemOutput";
     public static string PathGetData;
     private int Level_Speed = 1;
     private int Level_Stack = 1;
-    private int countItemInput = 0;
-    private int countItemOutput = 0;
     private BaseBuild baseBuild;
     private void Awake()
     {
         if(baseBuild == null) { baseBuild = GetComponent<BaseBuild>(); }
-       
     }
     public override void LoadData()
     {
-     //   Debug.Log(GetFileName());
         base.LoadData();
-        Level_Speed = PlayerPrefs.GetInt(nameLevel_Speed + GetFileName());
-        Level_Stack = PlayerPrefs.GetInt(nameLevel_Stack + GetFileName());
-        countItemInput = PlayerPrefs.GetInt(nameCountItemInput + GetFileName());
-        countItemOutput = PlayerPrefs.GetInt(nameCountItemOutput + GetFileName());
+        Level_Speed = PlayerPrefs.GetInt(nameLevel_Speed);
+        Level_Stack = PlayerPrefs.GetInt(nameLevel_Stack);
         //Debug.Log(Level_Speed);
         //Debug.Log(Level_Stack);
     }
     public override void SaveData()
     {
         base.SaveData();
-        PlayerPrefs.SetInt(nameLevel_Speed + GetFileName(), Level_Speed);
-        PlayerPrefs.SetInt(nameLevel_Stack + GetFileName(), Level_Stack);
-        PlayerPrefs.SetInt(nameCountItemInput + GetFileName(), countItemInput);
-        PlayerPrefs.SetInt(nameCountItemOutput + GetFileName(), countItemOutput);
+        PlayerPrefs.SetInt(nameLevel_Speed, Level_Speed);
+        PlayerPrefs.SetInt(nameLevel_Stack, Level_Stack);
     }
     public override void ResetData()
     {
         base.ResetData();
         Level_Speed = 1;
         Level_Stack = 1;
-        countItemInput = 0;
-        countItemOutput = 0;
     }
     public void SetLevel_Speed(int value)
     {
         Level_Speed = value;
         SaveData();
         LoadData();
-    }
-    public void NextLevel_Speed()
-    {
-        Level_Speed++;
-      //  Debug.Log(Level_Speed);
-        SaveData();
-        LoadData();
-        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public int GetLevel_Speed()
     {
@@ -70,14 +50,6 @@ public class MachineDataStatusObject : DataStatusObject
         Level_Stack = value;
         SaveData();
         LoadData();
-    }
-    public void NextLevel_Stack()
-    {
-        Level_Stack++;
-       // Debug.Log(Level_Stack);
-        SaveData();
-        LoadData();
-        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public int GetLevel_Stack()
     {
@@ -110,7 +82,6 @@ public class MachineDataStatusObject : DataStatusObject
     }
     public InfoPirceObject GetInfoPirceObject_Speed(int Level)
     {
-      //  Debug.Log(Level);
         InfoPirceObject infoPirceObject_Speed = GetPirceObject_InfoChild(GetStatus_All_Level_Object().nameObject_This, Level,
             baseBuild.ingredientType, nameLevel_Speed);
         return infoPirceObject_Speed;
@@ -123,11 +94,11 @@ public class MachineDataStatusObject : DataStatusObject
     }
     public bool isMaxLevelStack()
     {
-        return GetInfoPirceObject_Stack(GetLevel_Stack() + 1) == null;
+        return GetInfoPirceObject_Stack(GetLevel_Stack()) == null;
     }
     public bool isMaxLevelSpeed()
     {
-        return GetInfoPirceObject_Speed(GetLevel_Speed() + 1) == null;
+        return GetInfoPirceObject_Speed(GetLevel_Speed()) == null;
     }
     public InfoPirceObject GetPirceObject_InfoChild(NameObject_This nameObject_This, int Level, IngredientType ingredientType, string nameChild)
     {
@@ -138,29 +109,5 @@ public class MachineDataStatusObject : DataStatusObject
         infoPirceObjectResource = (InfoPirceObject)Resources.Load(PathGetData, typeof(InfoPirceObject));
         // Debug.Log((infoPirceObjectResource == null) +  " "+ PathGetData);
         return infoPirceObjectResource;
-    }
-    public BaseBuild GetBaseBuild()
-    {
-        return baseBuild;
-    }
-    public void Set_CountItemInput(int value)
-    {
-        countItemInput = value;
-        SaveData();
-      //  LoadData();
-    }
-    public void Set_CountItemOutput(int value)
-    {
-        countItemOutput = value;
-        SaveData();
-      //  LoadData();
-    }
-    public int Get_CountItemInput()
-    {
-        return countItemInput;
-    }
-    public int Get_CountItemOutput()
-    {
-        return countItemOutput;
     }
 }

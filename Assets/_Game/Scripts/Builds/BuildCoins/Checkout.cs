@@ -82,7 +82,7 @@ public class Checkout : BuildCoins,ILock
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
-        Debug.Log("a");
+     //   Debug.Log("a");
       //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
@@ -230,25 +230,25 @@ public class Checkout : BuildCoins,ILock
         switch (typeOutfit)
         {
             case IngredientType.CHICKEN:
-                a = n;
+                a = n * GameManager.Instance.dataPrice.Data.chickenOutfit;
                 break;
             case IngredientType.COW:
-                a = n*2;
+                a = n * GameManager.Instance.dataPrice.Data.cowOutfit;
                 break;
             case IngredientType.BEAR:
-                a = n*3;
+                a = n * GameManager.Instance.dataPrice.Data.bearOutfit;
                 break;
         }
         switch (typeBag)
         {
             case IngredientType.CHICKEN:
-                b = n;
+                b = n * GameManager.Instance.dataPrice.Data.chickenBag;
                 break;
             case IngredientType.COW:
-                b = n * 2;
+                b = n * GameManager.Instance.dataPrice.Data.cowBag; ;
                 break;
             case IngredientType.BEAR:
-                b = n * 3;
+                b = n * GameManager.Instance.dataPrice.Data.bearBag; ;
                 break;
         }
         indexMoney += (a+b);

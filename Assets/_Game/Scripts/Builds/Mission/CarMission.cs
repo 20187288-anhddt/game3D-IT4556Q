@@ -6,6 +6,7 @@ using System;
 
 public class CarMission : BaseBuild
 {
+    public bool IsLock { get => isLock; set => isLock = value; }
     public Transform startPos;
     public Transform idlePos;
     public GameObject[] carModel;
@@ -44,6 +45,16 @@ public class CarMission : BaseBuild
         isOnMission = false;
         isDoneMission = false;
         carWaiting = consCarWaiting;     
+    }
+    public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
+    {
+        Player p = Player.Instance;
+        base.UnLock(isPushEvent, isPlayAnimUnlock);
+        //vfx.gameObject.SetActive(true);
+        IsLock = false;
+        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
+        //levelManager.CheckUnlockBuildID(IDUnlock, this); 
+        //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
     void Update()
     {
