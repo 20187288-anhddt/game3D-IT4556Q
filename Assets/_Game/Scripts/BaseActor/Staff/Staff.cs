@@ -481,25 +481,6 @@ public class Staff : BaseStaff, ICollect,IAct
         }
     }
 
-    public bool CheckMoveToGarbage(IngredientBase ingredient)
-    {
-        bool tmp = false;
-        switch (staffType)
-        {
-            case StaffType.FARMER:
-                if (onMission)
-                {
-                    if (onMachinePos)
-                    {
-
-                    }
-                }
-                break;
-            case StaffType.WORKER:
-                break;
-        }
-        return tmp;
-    }
     public void ResetStaff()
     {
         onMission = false;

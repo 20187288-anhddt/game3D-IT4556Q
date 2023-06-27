@@ -10,7 +10,7 @@ public class Upgrade : MonoBehaviour
         if (actor != null)
         {
             //TODO
-            UI_Manager.Instance?.OpenUI(NameUI.Canvas_Upgrades);
+            //Show pop-up
         }
     }
     private void OnTriggerExit(Collider other)
@@ -19,7 +19,7 @@ public class Upgrade : MonoBehaviour
         if (actor != null)
         {
             //TODO
-            UI_Manager.Instance?.CloseUI(NameUI.Canvas_Upgrades);
+            //Hide pop-up
         }
     }
 }

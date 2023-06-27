@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3237369740573205672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1108903500852687320}
+  m_Layer: 0
+  m_Name: StaffPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1108903500852687320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237369740573205672}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8208703317744014642}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8123100846086207613
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,6 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8208703317744014642}
   - component: {fileID: 8208703317744014641}
+  - component: {fileID: 546453595}
   m_Layer: 0
   m_Name: ChickenHabitat
   m_TagString: Untagged
@@ -68,6 +100,7 @@ Transform:
   - {fileID: 1730138751178638049}
   - {fileID: 5892422928489395747}
   - {fileID: 7805580066829934135}
+  - {fileID: 1108903500852687320}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3680d41646ece47b20956ab88197c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myTransform: {fileID: 0}
+  nameObject_This: 0
+  ingredientType: 6
   isLock: 1
   isKey: 1
   IDUnlock: 0
@@ -92,7 +128,8 @@ MonoBehaviour:
   defaultCoin: 0
   gameManager: {fileID: 0}
   levelManager: {fileID: 0}
-  habitatType: 6
+  dataStatusObject: {fileID: 0}
+  pirceObject: {fileID: 5368793276336046026}
   allAnimals:
   - {fileID: 3694931782455758544}
   - {fileID: 2978222315729057134}
@@ -102,6 +139,32 @@ MonoBehaviour:
   unlockModel: {fileID: 8123100846086207613}
   checkUnlock: {fileID: 6762938250905512599}
   checkCollect: {fileID: 7061089004391237293}
+  staffPos: {fileID: 1108903500852687320}
+  isHaveStaff: 0
+--- !u!114 &546453595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208703317744014643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status_All_Level_Object:
+    statusObjects:
+    - typeStatus: 0
+      typeStatus_IsBought: 0
+      levelThis: 0
+      amountPaid: 0
+    statusObjectCurrent:
+      typeStatus: 0
+      typeStatus_IsBought: 1
+      levelThis: 0
+      amountPaid: 0
+    nameObject_This: 0
 --- !u!1001 &1431363414255706129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,6 +523,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
+--- !u!114 &5368793276336046026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8608965814865496382, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
+  m_PrefabInstance: {fileID: 4465593641922590452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d09530e49046d4d9039dc341f0a1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5892422928489395747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7799934039719395543, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
