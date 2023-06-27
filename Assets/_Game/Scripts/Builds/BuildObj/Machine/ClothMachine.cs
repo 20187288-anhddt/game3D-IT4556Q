@@ -36,7 +36,7 @@ public class ClothMachine : MachineBase
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
-            p.myTransform.position = checkUnlock.myTransform.position - Vector3.left * 4;
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.left * 6;
         }
         if (isPlayAnimUnlock) //anim
         {
@@ -244,6 +244,7 @@ public class ClothMachine : MachineBase
     {
         base.StartInGame();
         CurrentCoin = pirceObject.Get_Pirce();
+        Debug.Log(CurrentCoin);
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         ingredients = new List<FurBase>();

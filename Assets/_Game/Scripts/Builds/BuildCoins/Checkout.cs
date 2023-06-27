@@ -25,6 +25,8 @@ public class Checkout : BuildCoins,ILock
     private float delayTime;
     public float consDelayCheckout;
     [SerializeField]
+    private GameObject staffModel;
+    [SerializeField]
     private CheckUnlock checkUnlock;
     public override void Start()
     {
@@ -48,6 +50,7 @@ public class Checkout : BuildCoins,ILock
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             coinSpawn.gameObject.SetActive(false);
+            staffModel.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
         }
         checkUnlock.UpdateUI();
@@ -70,6 +73,10 @@ public class Checkout : BuildCoins,ILock
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
+        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
+        {
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
+        }
         if (isPlayAnimUnlock) //anim
         {
             unlockModel.transform.DOMoveY(3, 0f).OnComplete(() => {
@@ -277,6 +284,7 @@ public class Checkout : BuildCoins,ILock
     public void BuyStaff()
     {
         GetComponent<BoxCollider>().enabled = false;
+        staffModel.SetActive(true);
         isHaveStaff = true;
     }
 }
