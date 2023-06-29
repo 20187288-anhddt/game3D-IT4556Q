@@ -8,8 +8,9 @@ public class Habitat : BuildObj, ILock
 {
     public List<AnimalBase> allAnimals;
     public List<AnimalBase> animalsIsReady;
-    public List<AnimalBase> listAnimalOutSide;
+    public List<Shit> listShit;
     public IngredientBase ingredientPrefabs;
+    public Shit shitPrefabs;
     [SerializeField]
     private GameObject unlockModel;
     [SerializeField]
@@ -23,6 +24,14 @@ public class Habitat : BuildObj, ILock
     public Transform staffPos;
     public Transform animalPos;
     public bool isHaveStaff;
+    public bool isReadyShit;
+    [SerializeField]
+    private float delayShit;
+    [SerializeField]
+    private float consDelayShit;
+    [SerializeField]
+    private int maxShit;
+    private Vector3 randomShitPos;
 
     // Start is called before the first frame update
     public override void Start()
@@ -84,6 +93,10 @@ public class Habitat : BuildObj, ILock
                         p.isUnlock = false;
                       //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         checkCollect.gameObject.SetActive(true);
+                        CounterHelper.Instance.QueueAction(consDelayShit, () =>
+                        {
+                            isReadyShit = true;
+                        });
                     });
                 }); ;
             });
@@ -93,8 +106,12 @@ public class Habitat : BuildObj, ILock
             p.isUnlock = false;
           //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
             checkCollect.gameObject.SetActive(true);
+            CounterHelper.Instance.QueueAction(consDelayShit, () =>
+            {
+                isReadyShit = true;
+            });
         }
-
+       
         checkUnlock.gameObject.SetActive(false);
         if (!levelManager.habitatManager.allActiveHabitats.Contains(this))
         {
@@ -150,6 +167,9 @@ public class Habitat : BuildObj, ILock
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
             dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         isHaveStaff = false;
+        isReadyShit = false;
+        delayShit = consDelayShit;
+        randomShitPos = Vector3.zero;
         for(int i = 0; i < allAnimals.Count; i++)
         {
             allAnimals[i].SetHabitat(this);
@@ -169,6 +189,87 @@ public class Habitat : BuildObj, ILock
         //    UnLock();
         //}
         checkUnlock.UpdateUI();
+    }
+    void Update()
+    {
+        if (!isLock)
+        {
+            RandomTakeAShit();
+        }  
+    }
+    public void RandomTakeAShit()
+    {
+        if (levelManager.habitatManager.allActiveHabitats.Count > 1 && listShit.Count < maxShit)
+        {
+            if (isReadyShit)
+            {
+                isReadyShit = false;
+                if (CheckTakeAShit())
+                {
+                    TakeAShit();
+                }
+            }
+            if (!isReadyShit)
+            {
+                delayShit -= Time.deltaTime;
+            }
+            if (delayShit < 0)
+            {
+                randomShitPos = Vector3.zero;
+                delayShit = consDelayShit;
+                isReadyShit = true;
+            }
+        } 
+    }
+    public bool CheckTakeAShit()
+    {
+        bool isTakeAShit = false;
+        randomShitPos = RandomPosition();
+        if(randomShitPos != Vector3.zero)
+        {
+            isTakeAShit = true;
+        }
+        else
+        {
+            isTakeAShit = false;
+        }
+        return isTakeAShit;
+    }
+    public void TakeAShit()
+    {
+        int r = Random.Range(0, allAnimals.Count);
+        AnimalBase animal = allAnimals[r];
+        var curShit = AllPoolContainer.Instance.Spawn(shitPrefabs, animal.myTransform.position, myTransform.rotation);
+        curShit.transform.DOJump(randomShitPos, 2.5f, 1, 0.5f).OnComplete(()=> 
+        {
+            listShit.Add(curShit as Shit);
+        }); 
+    }
+    public Vector3 RandomPosition()
+    {
+        Vector3 randomPos = Vector3.zero;
+        float radius = 0;
+        switch (this.ingredientType)
+        {
+            case IngredientType.CHICKEN:
+                radius = 5f;
+                break;
+            case IngredientType.COW:
+                radius = 7.5f;
+                break;
+            case IngredientType.BEAR:
+                radius = 9f;
+                break;
+
+        }
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += this.transform.position;
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            randomPos = new Vector3(hit.position.x, myTransform.position.y, hit.position.z);
+        }
+        return randomPos;
     }
 }
 

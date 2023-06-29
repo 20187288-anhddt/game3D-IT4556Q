@@ -46,14 +46,18 @@ public class CoinSpawn : MonoBehaviour
             if (!player.canCatch || checkOut.coins.Count <= 0)
                 return;
             player.canCatch = false;
-            for (int i = 0; i < checkOut.coins.Count; i++)
-            {
-                checkOut.coins[i].MoveToPlayerSpeed(player);
-                checkOut.coins.Remove(checkOut.coins[i]);
-                DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
-                i--;
-            }
-            player.DelayCatch(player.timeDelayCatch);
+            checkOut.coins[0].MoveToPlayerSpeed(player);
+            checkOut.coins.Remove(checkOut.coins[0]);
+            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
+            //for (int i = 0; i < checkOut.coins.Count; i++)
+            //{
+            //    checkOut.coins[i].MoveToPlayerSpeed(player);
+            //    checkOut.coins.Remove(checkOut.coins[i]);
+            //    DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
+            //    i--;
+            //    break;
+            //}
+            player.DelayCatch(0.1f);
         }
     }
 

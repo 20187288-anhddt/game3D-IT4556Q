@@ -24,7 +24,7 @@ public class Coin : AllPool
         float distance = Vector3.Distance(player.transform.position + Vector3.up * 0.5f, this.transform.position);
         float time = (float)distance / moveSpeed;
         transform.rotation = Quaternion.identity;
-        transform.DOJump(player.transform.position, 2.5f, 1, 0.4f).OnComplete(() => {
+        transform.DOJump(player.transform.position, 2.5f, 1, 0.1f).OnComplete(() => {
             AllPoolContainer.Instance.Release(this);
             //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
             //Vibration.Vibrate(25);
@@ -46,13 +46,14 @@ public class Coin : AllPool
     //{
 
     //}
-    //public void MoveToBuildLock(Vector3 trans, float time)
-    //{
-    //    this.transform.DOMove(trans, time).OnComplete(() => {
-    //        AllPoolContainer.Instance.Release(this);
-    //        Vibration.Vibrate(20);
-    //    }).SetEase(Ease.Linear);
-    //}
+    public void MoveToBuildLock(Vector3 trans, float time)
+    {
+        this.transform.DOMove(trans, time).OnComplete(() =>
+        {
+            AllPoolContainer.Instance.Release(this);
+            //Vibration.Vibrate(20);
+        }).SetEase(Ease.Linear);
+    }
     //public void MoveToPlayer(Player player, float time)
     //{
     //    transform.DOMove(player.transform.position + Vector3.up, time).OnComplete(() => {

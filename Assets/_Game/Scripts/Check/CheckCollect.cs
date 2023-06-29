@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Utilities.Components;
 
 public class CheckCollect : MonoBehaviour
 {
@@ -12,10 +11,9 @@ public class CheckCollect : MonoBehaviour
     {
         if (habitat.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
             if(player is Player)
             {
                 player.canCatch = true;
@@ -29,15 +27,14 @@ public class CheckCollect : MonoBehaviour
                     player.Collect();
                 } ;
             }
-        //}
+        }
     }
     private void OnTriggerStay(Collider other)
     {
         if (habitat.isLock)
             return;
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        if (/*player != null && */player.objHave < player.maxCollectObj)
+        var player = other.GetComponent<ICollect>();
+        if (player != null && player.objHave < player.maxCollectObj)
         {
             if (player is Staff)
             {
@@ -57,7 +54,6 @@ public class CheckCollect : MonoBehaviour
                 var curShit = habitat.listShit[value];
                 (curShit as IngredientBase).MoveToICollect(player);
                 habitat.listShit.Remove(curShit as Shit);
-                habitat.numShitSave--;
                 player.DelayCatch(player.timeDelayCatch);
             }
             else
@@ -69,36 +65,9 @@ public class CheckCollect : MonoBehaviour
                         return;
                     player.canCatch = false;
                     var curAnimal = habitat.animalsIsReady[value];
-                    curAnimal.CollectWool();
-                    if(player is Player)
-                    {
-                        switch (habitat.ingredientType)
-                        {
-                            case IngredientType.COW:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
-                                break;
-                            case IngredientType.BEAR:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[0], 1, false);
-                                break;
-                            case IngredientType.CHICKEN:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                                break;
-                            case IngredientType.LION:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                                break;
-                            case IngredientType.CROC:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                                break;
-                            case IngredientType.ELE:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                                break;
-                            case IngredientType.ZEBRA:
-                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                                break;
-                        }
-                    }
                     var curIngredient = AllPoolContainer.Instance.Spawn(habitat.ingredientPrefabs, curAnimal.transform);
                     (curIngredient as IngredientBase).MoveToICollect(player);
+                    curAnimal.CollectWool();
                     player.DelayCatch(player.timeDelayCatch);
                 }
             }
@@ -106,12 +75,11 @@ public class CheckCollect : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-        player.canCatch = false;
-        player.CollectDone();
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = false;
+            player.CollectDone();
+        }
     }
 }

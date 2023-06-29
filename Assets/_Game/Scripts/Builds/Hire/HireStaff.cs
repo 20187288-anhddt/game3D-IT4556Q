@@ -17,7 +17,7 @@ public class HireStaff : BaseBuild, ILock
     public override void Awake()
     {
         base.Awake();
-        Debug.Log(dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+       // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
     }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -76,6 +76,7 @@ public class HireStaff : BaseBuild, ILock
                 curCheckout.BuyStaff();
                 break;
         }
+        levelManager.staffManager.ChangeStaffIdlePos();
     }
     public override void Start()
     {

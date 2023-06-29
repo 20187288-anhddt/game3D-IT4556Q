@@ -7,23 +7,16 @@ public class StaffManager : Singleton<StaffManager>
     public List<Staff> listAllActiveStaffs;
     public List<Staff> listFarmers;
     public List<Staff> listWorkers;
-    public List<Staff> listCheckout;
-    public List<Staff> listFamersBag;
     public List<TrashCan> listTrashCan;
     public GameManager gameManager;
     public Transform[] listIdlePos;
-    public bool changeIdlePos;
 
     void Start()
     {
         gameManager = GameManager.Instance;
-        changeIdlePos = false;
-        ChangeStaffIdlePos();
     }
     void Update()
     {
-        if(!changeIdlePos)
-            ChangeStaffIdlePos();
         if( listAllActiveStaffs.Count > 0)
         {
             if(listFarmers.Count > 0)
@@ -55,7 +48,6 @@ public class StaffManager : Singleton<StaffManager>
                     else
                     {
                         listAllActiveStaffs[i].transIdle = listIdlePos[1].position;
-                        changeIdlePos = true;
                     }
                     break;
                 case StaffType.WORKER:
@@ -68,7 +60,6 @@ public class StaffManager : Singleton<StaffManager>
                     else
                     {
                         listAllActiveStaffs[i].transIdle = listIdlePos[3].position;
-                        changeIdlePos = true;
                     }
                     break;
             }
