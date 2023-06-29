@@ -13,20 +13,22 @@ public class MachineDataStatusObject : DataStatusObject
     private void Awake()
     {
         if(baseBuild == null) { baseBuild = GetComponent<BaseBuild>(); }
+       
     }
     public override void LoadData()
     {
+     //   Debug.Log(GetFileName());
         base.LoadData();
-        Level_Speed = PlayerPrefs.GetInt(nameLevel_Speed);
-        Level_Stack = PlayerPrefs.GetInt(nameLevel_Stack);
+        Level_Speed = PlayerPrefs.GetInt(nameLevel_Speed + GetFileName());
+        Level_Stack = PlayerPrefs.GetInt(nameLevel_Stack + GetFileName());
         //Debug.Log(Level_Speed);
         //Debug.Log(Level_Stack);
     }
     public override void SaveData()
     {
         base.SaveData();
-        PlayerPrefs.SetInt(nameLevel_Speed, Level_Speed);
-        PlayerPrefs.SetInt(nameLevel_Stack, Level_Stack);
+        PlayerPrefs.SetInt(nameLevel_Speed + GetFileName(), Level_Speed);
+        PlayerPrefs.SetInt(nameLevel_Stack + GetFileName(), Level_Stack);
     }
     public override void ResetData()
     {
@@ -40,6 +42,13 @@ public class MachineDataStatusObject : DataStatusObject
         SaveData();
         LoadData();
     }
+    public void NextLevel_Speed()
+    {
+        Level_Speed++;
+        Debug.Log(Level_Speed);
+        SaveData();
+        LoadData();
+    }
     public int GetLevel_Speed()
     {
         LoadData();
@@ -48,6 +57,13 @@ public class MachineDataStatusObject : DataStatusObject
     public void SetLevel_Stack(int value)
     {
         Level_Stack = value;
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Stack()
+    {
+        Level_Stack++;
+        Debug.Log(Level_Stack);
         SaveData();
         LoadData();
     }

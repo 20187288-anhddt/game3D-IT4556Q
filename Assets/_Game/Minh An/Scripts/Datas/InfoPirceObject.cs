@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data\\Object\\Pirce")]
 public class InfoPirceObject : ScriptableObject
 {
+    public string nameString;
     public StatusObject.Level level;
     public List<InfoThis> infoThese;
     public NameObject_This nameObject_This;

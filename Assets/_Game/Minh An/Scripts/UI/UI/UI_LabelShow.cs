@@ -31,7 +31,7 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate.Close();
         }
     }
-    public void LoadUI(InfoPirceObject infoPirceObject)
+    public void LoadUI(InfoPirceObject infoPirceObject, DataStatusObject dataStatusObject)
     {
         Group_InfoUpdate group_InfoUpdate_ = null; 
         foreach (Group_InfoUpdate group_InfoUpdate in group_InfoUpdates)
@@ -49,9 +49,9 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate_.myTransform.SetParent(transParent);
             group_InfoUpdates.Add(group_InfoUpdate_);
         }
-        txt_Name.text = infoPirceObject.nameObject_This.ToString();
+        txt_Name.text = infoPirceObject.nameString;
         group_InfoUpdate_.myTransform.localScale = Vector3.one;
-        group_InfoUpdate_.InItData((int)infoPirceObject.level + 1, infoPirceObject.infoBuys[0].value, infoPirceObject.infoBuys[0].typeCost, infoPirceObject.infoThese[0].typeBuff);
+        group_InfoUpdate_.InItData(dataStatusObject, infoPirceObject);
         UpdateSizeLabel();
     }
     private void UpdateSizeLabel()
