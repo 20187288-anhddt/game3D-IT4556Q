@@ -181,6 +181,7 @@ public class DataMap //luu data
         {
             InItData();
         }
+        LoadData();
         return data_Map;
     }
     public void SelectDataMap(int levelCurrent)
@@ -209,35 +210,71 @@ public class DataMap //luu data
         SaveData();
         LoadData();
     }
+    public void NextLevel_Capacity_Boss()
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Capacity();
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Price_Boss()
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Price();
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Speed_Boss()
+    {
+        GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Speed();
+        SaveData();
+        LoadData();
+    }
     #endregion
     #region Staff
-    public void SetLevel_Capacity_Staff(int value)
+    public void SetLevel_Capacity_Staff(int value, StaffType staffType)
     {
-        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Capacity(value);
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Capacity(value);
         SaveData();
         LoadData();
     }
-    public void SetLevel_Hire_Staff(int value)
+    public void SetLevel_Hire_Staff(int value, StaffType staffType)
     {
-        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Hire(value);
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Hire(value);
         SaveData();
         LoadData();
     }
-    public void SetLevel_Speed_Staff(int value)
+    public void SetLevel_Speed_Staff(int value, StaffType staffType)
     {
-        GetData_Map().GetDataPlayer().GetDataStaff().SetLevel_Speed(value);
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Speed(value);
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Capacity_Staff( StaffType staffType)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Capacity();
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Hire_Staff(StaffType staffType)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Hire();
+        SaveData();
+        LoadData();
+    }
+    public void NextLevel_Speed_Staff(StaffType staffType)
+    {
+        GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Speed();
         SaveData();
         LoadData();
     }
     #endregion
-    #region Checkout
-    public void SetData_ActiveStaff_Checkout(NameObject_This nameObject_This, bool value)
-    {
-        GetData_Map().GetData_InCheckout().SetData_ActiveStaff_Checkout(nameObject_This, value);
-        SaveData();
-        LoadData();
-    }
-    #endregion
+    //#region Checkout
+    //public void SetData_ActiveStaff_Checkout(NameObject_This nameObject_This, bool value)
+    //{
+    //    GetData_Map().GetData_InCheckout().SetData_ActiveStaff_Checkout(nameObject_This, value);
+    //    SaveData();
+    //    LoadData();
+    //}
+    //#endregion
 }
 [System.Serializable]
 public class Data_Map //dong goi de quan li

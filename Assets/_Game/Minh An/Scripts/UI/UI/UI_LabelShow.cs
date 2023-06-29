@@ -9,6 +9,7 @@ public class UI_LabelShow : UI_Child
     public RectTransform myRectTransform;
     public static float HeightSize_OneLength = 663;
     public static float HeightSize_TwoLength = 783;
+    public static float HeightSize_ThreeLength = 1080;
     [SerializeField] private Text txt_Name;
     [SerializeField] private Transform transParent;
     [SerializeField] private Group_InfoUpdate group_InfoUpdate_Prefab;
@@ -54,6 +55,29 @@ public class UI_LabelShow : UI_Child
         group_InfoUpdate_.InItData(dataStatusObject, infoPirceObject);
         UpdateSizeLabel();
     }
+    public void LoadUI(ScriptableObject scriptableObject, string name, int Level, StaffType staffType = StaffType.CHECKOUT)
+    {
+        Group_InfoUpdate group_InfoUpdate_ = null;
+        foreach (Group_InfoUpdate group_InfoUpdate in group_InfoUpdates)
+        {
+            if (group_InfoUpdate.IsClosed())
+            {
+                group_InfoUpdate_ = group_InfoUpdate;
+                group_InfoUpdate_.Open();
+                break;
+            }
+        }
+        if (group_InfoUpdate_ == null)
+        {
+            group_InfoUpdate_ = Instantiate(group_InfoUpdate_Prefab);
+            group_InfoUpdate_.myTransform.SetParent(transParent);
+            group_InfoUpdates.Add(group_InfoUpdate_);
+        }
+        txt_Name.text = name;
+        group_InfoUpdate_.myTransform.localScale = Vector3.one;
+        group_InfoUpdate_.InItData(scriptableObject, Level, staffType);
+        UpdateSizeLabel();
+    }
     private void UpdateSizeLabel()
     {
         int count_ = 0;
@@ -64,13 +88,17 @@ public class UI_LabelShow : UI_Child
                 count_++;
             }
         }
-        if (count_ < 2)
+        if (count_ == 1)
         {
             myRectTransform.sizeDelta = Vector2.right * myRectTransform.rect.width + Vector2.up * HeightSize_OneLength;
         }
-        else
+        else if(count_ == 2)
         {
             myRectTransform.sizeDelta = Vector2.right * myRectTransform.rect.width + Vector2.up * HeightSize_TwoLength;
+        }
+        else
+        {
+            myRectTransform.sizeDelta = Vector2.right * myRectTransform.rect.width + Vector2.up * HeightSize_ThreeLength;
         }
     }
     public void CloseAll_GroupUI()

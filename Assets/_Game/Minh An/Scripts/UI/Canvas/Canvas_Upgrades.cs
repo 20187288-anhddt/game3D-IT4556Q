@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities.Components;
+
 public class Canvas_Upgrades : UI_Canvas
 {
     [SerializeField] private Button btn_Close;
@@ -25,8 +25,6 @@ public class Canvas_Upgrades : UI_Canvas
     [SerializeField] private Color color_On;
     [SerializeField] private Color color_Off;
 
-    private System.Action actionClose;
-
     private void Awake()
     {
         OnInIt();
@@ -34,31 +32,24 @@ public class Canvas_Upgrades : UI_Canvas
     public override void OnInIt()
     {
         base.OnInIt();
-        btn_Close.onClick.AddListener(() => {
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
-            UI_Manager.Instance.CloseUI(nameUI); });
+        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
         btn_Worker.onClick.AddListener(ClickBtn_Worker);
         btn_Machine.onClick.AddListener(ClickBtn_Machine);
     }
-  
     private void OnEnable()
     {
         ClickBtn_Machine();
     }
-   
     private void ClickBtn_Worker()
     {
-        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
         OpenBtn(img_BG_Worker, img_BG_Machine, txt_Worker, txt_Machine);
         OpenUpdateWorkers();
     }
     private void ClickBtn_Machine()
     {
-        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
         OpenBtn(img_BG_Machine, img_BG_Worker, txt_Machine, txt_Worker);
         OpenUpdateMachine();
     }
-  
     private void OpenBtn(Image imageOP, Image imageCl, Text textOP, Text textCl)
     {
         imageOP.sprite = spr_BG_On;
@@ -72,18 +63,7 @@ public class Canvas_Upgrades : UI_Canvas
         CloseAllUI();
         UI_LabelShow uI_LabelShow = null;
         #region Load UI Level chua max
-        LevelManager levelManager = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-                break;
-            case 1:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-                break;
-        }
-        foreach (MachineBase machineBase in
-           levelManager.machineManager.allActiveMachine)
+        foreach (MachineBase machineBase in MachineManager.Instance.allActiveMachine)
         {
             uI_LabelShow = null;
             if (!(machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -95,6 +75,7 @@ public class Canvas_Upgrades : UI_Canvas
                     {
                         uI_LabelShow = uI_LabelShow1;
                         uI_LabelShow.Open();
+                        Debug.Log("a");
                         break;
                     }
                 }
@@ -111,19 +92,9 @@ public class Canvas_Upgrades : UI_Canvas
             }
         }
         #endregion
-
+      
         #region Load UI level max
-       // LevelManager levelManager = null;
-        //switch (GameManager.Instance.curLevel)
-        //{
-        //    case 0:
-        //        levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-        //        break;
-        //    case 1:
-        //        levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-        //        break;
-        //}
-        foreach (MachineBase machineBase in levelManager.machineManager.allActiveMachine)
+        foreach (MachineBase machineBase in MachineManager.Instance.allActiveMachine)
         {
             uI_LabelShow = null;
             if ((machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -154,16 +125,6 @@ public class Canvas_Upgrades : UI_Canvas
 
     private void OpenUpdateWorkers()
     {
-        LevelManager levelManager = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
-                break;
-            case 1:
-                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
-                break;
-        }
         CloseAllUI();
         UI_LabelShow uI_LabelShow = null;
         #region Load Data Player
@@ -184,24 +145,15 @@ public class Canvas_Upgrades : UI_Canvas
         }
         //  Debug.Log((machineBase.dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed() == null);
         uI_LabelShow.myTransform.localScale = Vector3.one;
-        //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget(), "Player"
-        //     , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Speed());
+        uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget(), "Player"
+             , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Speed());
         uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoCapacityTaget(), "Player"
              , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Capacity());
-        //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoPriceTaget(), "Player"
-        //     , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Price());
+        uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoPriceTaget(), "Player"
+             , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Price());
         #endregion
         #region Load Data Staff
-        Dictionary<StaffType, BaseStaff> dict_Staff = new Dictionary<StaffType, BaseStaff>();
-
-        foreach (BaseStaff baseStaff in levelManager.staffManager.listAllActiveStaffs)
-        {
-            if (!dict_Staff.ContainsKey(baseStaff.staffType))
-            {
-                dict_Staff.Add(baseStaff.staffType, baseStaff);
-            }
-        }
-        foreach (BaseStaff baseStaff in dict_Staff.Values)
+        foreach(BaseStaff baseStaff in StaffManager.Instance.listAllActiveStaffs)
         {
             uI_LabelShow = null;
             foreach (UI_LabelShow uI_LabelShow1 in uI_LabelShows)
@@ -225,8 +177,8 @@ public class Canvas_Upgrades : UI_Canvas
                , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Speed(), baseStaff.staffType);
             uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoCapacityTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
                 , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Capacity(), baseStaff.staffType);
-            //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoHireTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
-            //    , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Hire(), baseStaff.staffType);
+            uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoHireTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
+                , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Hire(), baseStaff.staffType);
         }
         #endregion
     }
@@ -237,23 +189,5 @@ public class Canvas_Upgrades : UI_Canvas
             uI_LabelShow.CloseAll_GroupUI();
             uI_LabelShow.Close();
         }
-    }
-    public override void Open()
-    {
-        base.Open();
-        Close();
-        base.Open();
-       // UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
-    }
-    public override void Close()
-    {
-        base.Close();
-        // UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
-        actionClose?.Invoke();
-        actionClose = null;
-    }
-    public void SetActionClose(System.Action action)
-    {
-        actionClose = action;
     }
 }

@@ -57,7 +57,6 @@ public class DataBoss
     public infoCapacity GetInfoCapacityTaget()
     {
         pathLoadData_Capacity = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Boss\\Capacitys\\Level ";
-        Debug.Log(pathLoadData_Capacity);
         infoCapacity infoCapacity_ = (infoCapacity)Resources.Load(pathLoadData_Capacity + level_Capacity_Taget, typeof(infoCapacity));
         if(infoCapacity_ == null)
         {
@@ -89,8 +88,6 @@ public class DataBoss
     {
         pathLoadData_Capacity = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Boss\\Capacitys\\Level ";
         infoCapacity infoCapacity_ = (infoCapacity)Resources.Load(pathLoadData_Capacity + Level, typeof(infoCapacity));
-        //Debug.Log(infoCapacity_ == null);
-        //Debug.Log(Level);
         return infoCapacity_;
     }
     public infoPrice GetInfoPriceTaget(int Level)
@@ -126,12 +123,6 @@ public class DataBoss
     public void SetLevel_Speed(int value)
     {
         level_Speed_Taget = value;
-    }
-    public int GetAllLevel()
-    {
-        int level = 0;
-        level = GetLevel_Speed() + GetLevel_Capacity() + GetLevel_Price() - 3;
-        return level;
     }
     public void NextLevel_Capacity()
     {
@@ -250,12 +241,6 @@ public class DataStaff
         level_Speed_Taget = 1;
        // InItData();
         return this;
-    }
-    public int GetAllLevel()
-    {
-        int level = 0;
-        level = GetLevel_Speed() + GetLevel_Capacity() + GetLevel_Hire() - 3;
-        return level;
     }
     public void NextLevel_Capacity()
     {
