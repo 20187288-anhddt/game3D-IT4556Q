@@ -7,7 +7,7 @@ public class DataCustomizeController : MonoBehaviour
 {
     [SerializeField] private List<InfoSkinPlayer> infoSkinPlayers_Head;
     private DataCustomize_Head dataCustomize_Head = new DataCustomize_Head();
-
+    private bool isInItData = false;
     private void Awake()
     {
         InItData();
@@ -15,12 +15,25 @@ public class DataCustomizeController : MonoBehaviour
     private void InItData()
     {
         dataCustomize_Head.InItData();
+        isInItData = true;
+    }
+    public DataCustomize_Head GetDataCustomize_Head()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
+        return dataCustomize_Head;
+    }
+    public List<InfoSkinPlayer> GetInfoSkinPlayers()
+    {
+        return infoSkinPlayers_Head;
     }
 }
 [System.Serializable]
 public class DataCustomize_Head : DataBase
 {
-    public Data_Head data_Head;
+    public Data_Head data_Head = new Data_Head();
     public void InItData()
     {
         SetFileName(nameof(DataCustomize_Head));

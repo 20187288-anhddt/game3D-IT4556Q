@@ -75,7 +75,6 @@ public class Canvas_Upgrades : UI_Canvas
                     {
                         uI_LabelShow = uI_LabelShow1;
                         uI_LabelShow.Open();
-                        Debug.Log("a");
                         break;
                     }
                 }
@@ -145,12 +144,12 @@ public class Canvas_Upgrades : UI_Canvas
         }
         //  Debug.Log((machineBase.dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed() == null);
         uI_LabelShow.myTransform.localScale = Vector3.one;
-        uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget(), "Player"
-             , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Speed());
+        //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget(), "Player"
+        //     , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Speed());
         uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoCapacityTaget(), "Player"
              , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Capacity());
-        uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoPriceTaget(), "Player"
-             , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Price());
+        //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoPriceTaget(), "Player"
+        //     , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Price());
         #endregion
         #region Load Data Staff
         foreach(BaseStaff baseStaff in StaffManager.Instance.listAllActiveStaffs)
@@ -177,8 +176,8 @@ public class Canvas_Upgrades : UI_Canvas
                , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Speed(), baseStaff.staffType);
             uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoCapacityTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
                 , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Capacity(), baseStaff.staffType);
-            uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoHireTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
-                , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Hire(), baseStaff.staffType);
+            //uI_LabelShow.LoadUI(DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetInfoHireTaget(baseStaff.staffType), baseStaff.staffType.ToString().ToLower()
+            //    , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(baseStaff.staffType).GetLevel_Hire(), baseStaff.staffType);
         }
         #endregion
     }

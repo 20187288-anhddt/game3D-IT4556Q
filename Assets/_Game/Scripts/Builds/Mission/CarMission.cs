@@ -299,6 +299,7 @@ public class CarMission : BaseBuild
             {
                 (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
             }
+            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             StartCountDown();
         });
     }

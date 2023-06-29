@@ -49,6 +49,7 @@ public class Staff : BaseStaff, ICollect,IAct
     public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+    public List<Shit> listShits { get => ListShits; set => ListShits = value; }
     private Vector3 pointTaget = Vector3.zero;
     public GameObject[] model;
 
@@ -73,6 +74,14 @@ public class Staff : BaseStaff, ICollect,IAct
         }
         gameManager = GameManager.Instance;
         ResetStaff();
+        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+        LoadAndSetData();
+    }
+    private void LoadAndSetData()
+    {
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
+        maxCollectObj = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoCapacityTaget(staffType).Capacity;
+        navMeshAgent.speed = speed;
     }
     private void Start()
     {
@@ -212,7 +221,15 @@ public class Staff : BaseStaff, ICollect,IAct
         { 
             onHabitatPos = false;
             curHabitat.isHaveStaff = false;
-            UpdateState(MOVE_TO_MACHINE_STATE);
+            if (CheckFarmerHaveShit())
+            {
+                //curMachine.isHaveInStaff = false;
+                UpdateState(MOVE_TO_GARBAGE_STATE);
+            }
+            else
+            {
+                UpdateState(MOVE_TO_MACHINE_STATE);
+            }     
         }
     }
     public virtual void CheckMoveToMachine()
@@ -236,7 +253,7 @@ public class Staff : BaseStaff, ICollect,IAct
                         UpdateState(MOVE_TO_IDLE_STATE);
                         
                     } 
-                    else if(curMachine.ingredients.Count >= curMachine.maxObjInput)
+                    else if(curMachine.ingredients.Count >= curMachine.maxObjInput || CheckFarmerHaveShit())
                     {
                         ingredientType = IngredientType.NONE;
                         onMachinePos = false;
@@ -406,6 +423,10 @@ public class Staff : BaseStaff, ICollect,IAct
                 if (!bearBags.Contains(ingredient as BearBag))
                     bearBags.Add(ingredient as BearBag);
                 break;
+            case IngredientType.SHIT:
+                if (!listShits.Contains(ingredient as Shit))
+                    listShits.Add(ingredient as Shit);
+                break;
         }
     }
     public void RemoveIngredient(IngredientBase ingredient)
@@ -466,6 +487,10 @@ public class Staff : BaseStaff, ICollect,IAct
                 if (bearBags.Contains(ingredient as BearBag))
                     bearBags.Remove(ingredient as BearBag);
                 break;
+            case IngredientType.SHIT:
+                if (listShits.Contains(ingredient as Shit))
+                    listShits.Remove(ingredient as Shit);
+                break;
         }
         ShortObj(ingredient, n);
     }
@@ -520,5 +545,22 @@ public class Staff : BaseStaff, ICollect,IAct
                 model[1].SetActive(true);
                 break;
         }
+    }
+    public bool CheckFarmerHaveShit()
+    {
+        bool onlyHaveShit = true;
+        for(int i = 0; i < allIngredients.Count; i++)
+        {
+            if (allIngredients[i] is Shit)
+            {
+                continue;
+            }
+            else
+            {
+                onlyHaveShit = false;
+                break;
+            }  
+        }
+        return onlyHaveShit;
     }
 }
