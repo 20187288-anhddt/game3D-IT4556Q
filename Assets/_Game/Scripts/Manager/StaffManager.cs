@@ -121,7 +121,6 @@ public class StaffManager : MonoBehaviour
                     Closet curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetClosetDontHaveOutfit(curStaff.maxCollectObj);
                     if(curCloset != null)
                     {
-                        Debug.Log("r1");
                         curStaff.ResetStaff();
                         curStaff.ingredientType = curCloset.ingredientType;
                         ClothMachine curClothMachine = null;
@@ -144,7 +143,6 @@ public class StaffManager : MonoBehaviour
                     BagCloset curCloset = gameManager.listLevelManagers[gameManager.curLevel].closetManager.GetBagClosetDontHaveBag(curStaff.maxCollectObj);
                     if (curCloset != null)
                     {
-                        Debug.Log("r2");
                         curStaff.ResetStaff();
                         BagMachine curBagMachine = null;
                         curStaff.ingredientType = curCloset.ingredientType;

@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CheckPushCarMission : MonoBehaviour
 {
-    private int v;
     private IngredientBase curIngredient;
     [SerializeField]
     private CarMission carMission;
@@ -24,27 +24,34 @@ public class CheckPushCarMission : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            foreach (IngredientType key in carMission.listMission.Keys)
+            int v = -1;
+            for(int i = 0;i<carMission.listMission.Keys.Count;i++)
             {
-                switch (key)
+                switch (carMission.listMission.ElementAt(i).Key)
                 {
                     case IngredientType.COW_CLOTH:
-                        v = player.cowCloths.Count - 1;
+                        if (carMission.listMission[IngredientType.COW_CLOTH] > 0)
+                            v = player.cowCloths.Count - 1;
                         break;
                     case IngredientType.CHICKEN_CLOTH:
-                        v = player.chickenCloths.Count - 1;
+                        if (carMission.listMission[IngredientType.CHICKEN_CLOTH] > 0)
+                            v = player.chickenCloths.Count - 1;
                         break;
                     case IngredientType.BEAR_CLOTH:
-                        v = player.bearCloths.Count - 1;
+                        if (carMission.listMission[IngredientType.BEAR_CLOTH] > 0)
+                            v = player.bearCloths.Count - 1;
                         break;
                     case IngredientType.COW_BAG:
-                        v = player.cowBags.Count - 1;
+                        if (carMission.listMission[IngredientType.COW_BAG] > 0)
+                            v = player.cowBags.Count - 1;
                         break;
                     case IngredientType.CHICKEN_BAG:
-                        v = player.chickenBags.Count - 1;
+                        if (carMission.listMission[IngredientType.CHICKEN_BAG] > 0)
+                            v = player.chickenBags.Count - 1;
                         break;
                     case IngredientType.BEAR_BAG:
-                        v = player.bearBags.Count - 1;
+                        if (carMission.listMission[IngredientType.BEAR_BAG] > 0)
+                            v = player.bearBags.Count - 1;
                         break;
                 }
                 if (v >= 0)
@@ -52,7 +59,7 @@ public class CheckPushCarMission : MonoBehaviour
                     if (!player.canCatch || carMission.listMission.Count <= 0)
                         return;
                     player.canCatch = false;
-                    switch (key)
+                    switch (carMission.listMission.ElementAt(i).Key)
                     {
 
                         case IngredientType.COW_CLOTH:
@@ -79,12 +86,17 @@ public class CheckPushCarMission : MonoBehaviour
                     }
                     if (curIngredient != null)
                     {
-                        (curIngredient as IngredientBase).MoveToCar(carMission);
-                        carMission.ReduceType(key);
+                        (curIngredient as IngredientBase).MoveToCar(carMission.car);
+                        carMission.ReduceType(carMission.listMission.ElementAt(i).Key);
                         player.RemoveIngredient(curIngredient);
                         player.objHave--;
                         //(player as BaseActor).ShortObj();
                         player.DelayCatch(player.timeDelayCatch);
+                        //foreach (IngredientType key in carMission.listMission.Keys)
+                        //{
+                        //    int value = carMission.listMission[key];
+                        //    Debug.Log((key, value));
+                        //}
                     }
                 }
             }

@@ -512,7 +512,6 @@ public class Staff : BaseStaff, ICollect,IAct
         switch (type)
         {
             case StaffType.FARMER:
-                Debug.Log("hj");
                 model[0].SetActive(true);
                 model[1].SetActive(false);
                 break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Linq;
 
 public class CarMission : BaseBuild
 {
@@ -13,7 +14,6 @@ public class CarMission : BaseBuild
     public GameObject car;
     public bool isReadyMission;
     public bool isOnMission;
-    public bool isDoneMission;
     [SerializeField]
     private float carWaiting;
     [SerializeField]
@@ -39,8 +39,12 @@ public class CarMission : BaseBuild
         listCurBagMachine = new List<BagMachine>();
         isReadyMission = true;
         isOnMission = false;
-        isDoneMission = false;
         carWaiting = consCarWaiting;
+        checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
+        for (int i = 0; i < carModel.Length; i++)
+        {
+            carModel[i].SetActive(false);
+        }
         if (!isLock)
         {
             checkPushCarMission.gameObject.SetActive(false);
@@ -70,7 +74,7 @@ public class CarMission : BaseBuild
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
                     RandomCar();
-                    car.transform.DOMove(idlePos.position, 1f).OnComplete(() =>
+                    car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
                         isOnMission = true;
@@ -88,14 +92,14 @@ public class CarMission : BaseBuild
     {
         if (carWaiting > 0)
         {
-            if (listMission.Count == 0)
+            if (CheckListMission())
             {
                 MissionEnd(true);
             }
         }
         else
         {
-            if (listMission.Count > 0)
+            if (!CheckListMission())
             {
                 MissionEnd(false);
             }
@@ -125,7 +129,6 @@ public class CarMission : BaseBuild
             case 4:
             case 5:       
                 int r1 = UnityEngine.Random.Range(0, 2);
-                Debug.Log(r1);
                 if (r1 ==0)
                 {
                     GetRandomType(2);
@@ -214,18 +217,36 @@ public class CarMission : BaseBuild
             listMission.Add(listCurBagMachine[i].clothPrefab.ingredientType, ranNumBag);
         }
     }
+    public bool CheckListMission()
+    {
+        bool isWin = true;
+        for (int i = 0; i < listMission.Keys.Count; i++)
+        {
+            if(listMission.ElementAt(i).Value > 0)
+            {
+                isWin = false;
+                break;
+            }
+        }
+        return isWin;
+    }
     public void MissionEnd(bool isWin)
     {
         isOnMission = false;
         StopCoroutine(CountDownCarWait());
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
-        car.transform.DOMove(startPos.position, 1f).OnComplete(() =>
+        car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
             ClearMission();
             if (isWin)
             {
+                Debug.Log("Win");
                 EnableReward();
-            }    
+            }
+            else
+            {
+                Debug.Log("Fail");
+            }
         });
     }
     public void EnableReward()
@@ -235,6 +256,10 @@ public class CarMission : BaseBuild
     public void ClearMission()
     {
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
+        for (int i = 0; i < carModel.Length; i++)
+        {
+            carModel[i].SetActive(false);
+        }
         listMission.Clear();
         listCurClothMachine.Clear();
         listCurBagMachine.Clear();
@@ -272,86 +297,80 @@ public class CarMission : BaseBuild
         switch (type)
         {
             case IngredientType.COW_CLOTH:
-                int numCowCloth;
-                if (listMission.TryGetValue(IngredientType.COW_CLOTH, out numCowCloth))
+                if (listMission.ContainsKey(IngredientType.COW_CLOTH))
                 {
                     if (listMission[IngredientType.COW_CLOTH] > 0)
                     {
                         listMission[IngredientType.COW_CLOTH]--;
-                        if (listMission[IngredientType.COW_CLOTH] == 0)
-                        {
-                            listMission.Remove(IngredientType.COW_CLOTH);
-                        }
+                        //if (listMission[IngredientType.COW_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.COW_CLOTH);
+                        //}
                     }
                 }
                 break;
             case IngredientType.CHICKEN_CLOTH:
-                int numChickenCloth;
-                if (listMission.TryGetValue(IngredientType.CHICKEN_CLOTH, out numChickenCloth))
+                if (listMission.ContainsKey(IngredientType.CHICKEN_CLOTH))
                 {
                     if (listMission[IngredientType.CHICKEN_CLOTH] > 0)
                     {
                         listMission[IngredientType.CHICKEN_CLOTH]--;
-                        if(listMission[IngredientType.CHICKEN_CLOTH] == 0)
-                        {
-                            listMission.Remove(IngredientType.CHICKEN_CLOTH);
-                        }
+                        //if(listMission[IngredientType.CHICKEN_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.CHICKEN_CLOTH);
+                        //}
                     }
                 }
                 break;
             case IngredientType.BEAR_CLOTH:
-                int numBearCloth;
-                if (listMission.TryGetValue(IngredientType.BEAR_CLOTH, out numBearCloth))
+                if (listMission.ContainsKey(IngredientType.BEAR_CLOTH))
                 {
                     if (listMission[IngredientType.BEAR_CLOTH] > 0)
                     {
                         listMission[IngredientType.BEAR_CLOTH]--;
-                        if (listMission[IngredientType.BEAR_CLOTH] == 0)
-                        {
-                            listMission.Remove(IngredientType.BEAR_CLOTH);
-                        }
+                        //if (listMission[IngredientType.BEAR_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_CLOTH);
+                        //}
                     }
                 }
                 break;
             case IngredientType.COW_BAG:
-                int numCowBag;
-                if (listMission.TryGetValue(IngredientType.COW_BAG, out numCowBag))
+                if (listMission.ContainsKey(IngredientType.COW_BAG))
                 {
                     if (listMission[IngredientType.COW_BAG] > 0)
                     {
                         listMission[IngredientType.COW_BAG]--;
-                        if (listMission[IngredientType.COW_BAG] == 0)
-                        {
-                            listMission.Remove(IngredientType.COW_BAG);
-                        }
+                        //if (listMission[IngredientType.COW_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.COW_BAG);
+                        //}
                     }
                 }
                 break;
             case IngredientType.CHICKEN_BAG:
-                int numChickenBag;
-                if (listMission.TryGetValue(IngredientType.CHICKEN_BAG, out numChickenBag))
+                if (listMission.ContainsKey(IngredientType.CHICKEN_BAG))
                 {
                     if (listMission[IngredientType.CHICKEN_BAG] > 0)
                     {
                         listMission[IngredientType.CHICKEN_BAG]--;
-                        if (listMission[IngredientType.CHICKEN_BAG] == 0)
-                        {
-                            listMission.Remove(IngredientType.CHICKEN_BAG);
-                        }
+                        //if (listMission[IngredientType.CHICKEN_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.CHICKEN_BAG);
+                        //}
                     }
                 }
                 break;
             case IngredientType.BEAR_BAG:
-                int numBearBag;
-                if (listMission.TryGetValue(IngredientType.BEAR_BAG, out numBearBag))
+                if (listMission.ContainsKey(IngredientType.BEAR_BAG))
                 {
                     if (listMission[IngredientType.BEAR_BAG] > 0)
                     {
                         listMission[IngredientType.BEAR_BAG]--;
-                        if (listMission[IngredientType.BEAR_BAG] == 0)
-                        {
-                            listMission.Remove(IngredientType.BEAR_BAG);
-                        }
+                        //if (listMission[IngredientType.BEAR_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_BAG);
+                        //}
                     }
                 }
                 break;

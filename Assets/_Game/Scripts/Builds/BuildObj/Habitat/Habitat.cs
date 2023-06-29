@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Habitat : BuildObj, ILock
 {
     public List<AnimalBase> allAnimals;
     public List<AnimalBase> animalsIsReady;
+    public List<AnimalBase> listAnimalOutSide;
     public IngredientBase ingredientPrefabs;
     [SerializeField]
     private GameObject unlockModel;
@@ -14,12 +16,20 @@ public class Habitat : BuildObj, ILock
     private CheckUnlock checkUnlock;
     [SerializeField]
     private CheckCollect checkCollect;
+    public Transform[] defaultAnimalPos;
     public bool IsLock { get => isLock; set => isLock = value; }
     public float DefaultCoin { get => defaultCoin; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
     public Transform staffPos;
+    public Transform animalPos;
     public bool isHaveStaff;
 
+    // Start is called before the first frame update
+    public override void Start()
+    {
+        base.Start();
+        StartInGame();
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -34,6 +44,7 @@ public class Habitat : BuildObj, ILock
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
        
         p.isUnlock = true;
+      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         //switch (habitatType)
@@ -71,6 +82,8 @@ public class Habitat : BuildObj, ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                      //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                        checkCollect.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -78,9 +91,11 @@ public class Habitat : BuildObj, ILock
         else
         {
             p.isUnlock = false;
+          //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+            checkCollect.gameObject.SetActive(true);
         }
+
         checkUnlock.gameObject.SetActive(false);
-        checkCollect.gameObject.SetActive(true);
         if (!levelManager.habitatManager.allActiveHabitats.Contains(this))
         {
             levelManager.habitatManager.allActiveHabitats.Add(this);
@@ -127,20 +142,20 @@ public class Habitat : BuildObj, ILock
                 break;
         }
     }
-    // Start is called before the first frame update
-    public override void Start()
-    {
-        base.Start();
-        StartInGame();
-    }
+ 
     public override void StartInGame()
     {
         base.StartInGame();
-      
+        CurrentCoin = pirceObject.Get_Pirce();
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         isHaveStaff = false;
-        foreach(AnimalBase a in allAnimals)
+        for(int i = 0; i < allAnimals.Count; i++)
         {
-            a.SetHabitat(this);
+            allAnimals[i].SetHabitat(this);
+            allAnimals[i].transform.position = new Vector3(defaultAnimalPos[i].transform.position.x,
+                allAnimals[i].transform.position.y, defaultAnimalPos[i].transform.position.z);
+            allAnimals[i].StartInGame();
         }
         if (isLock)
         {

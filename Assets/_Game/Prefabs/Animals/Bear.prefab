@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6618513166347118322}
+  - component: {fileID: 8704502797240714420}
   - component: {fileID: 8446133351511268957}
+  - component: {fileID: 8761353809389015757}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Untagged
@@ -33,6 +35,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &8704502797240714420
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6618513166347118333}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.56
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 3.72
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8446133351511268957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,15 +69,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf05634bc5e474438f51996f22b90a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myTransform: {fileID: 0}
   STATE_ANIMAL: 
+  navMeshAgent: {fileID: 8704502797240714420}
+  isInside: 0
   isNaked: 0
   isReadyReset: 0
-  timeDelayFur: 3
+  onIdlePos: 0
+  timeDelayFur: 8
   timeDelayCollect: 1
   maxFurNum: 0
   curFurNum: 0
   clothes: {fileID: 1170410609039186057}
   habitat: {fileID: 0}
+  timeLive: 0
+  consTimeLive: 15
+  nextDes: {x: 0, y: 0, z: 0}
+  habitatManager: {fileID: 0}
+--- !u!136 &8761353809389015757
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6618513166347118333}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.557893
+  m_Height: 6.8400645
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.85992455, z: -0.0061864853}
 --- !u!1001 &1684467653873422915
 PrefabInstance:
   m_ObjectHideFlags: 0
