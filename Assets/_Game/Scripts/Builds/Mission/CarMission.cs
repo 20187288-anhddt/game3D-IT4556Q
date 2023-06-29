@@ -73,6 +73,7 @@ public class CarMission : BaseBuild
                 RandomMission();
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
+                    Debug.Log("he");
                     RandomCar();
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
@@ -101,11 +102,15 @@ public class CarMission : BaseBuild
     }
     public void CheckMission()
     {
-        if (carWaiting < 0)
+        if (carWaiting <= 0)
         {
             if (!CheckListMission())
             {
                 MissionEnd(false);
+            }
+            else
+            {
+                MissionEnd(true);
             }
         }
     }
@@ -247,15 +252,17 @@ public class CarMission : BaseBuild
             if (isWin)
             {
                 Debug.Log("Win");
-                EnableReward();
+                AddReward();
+                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             }
             else
             {
                 Debug.Log("Fail");
+                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             }
         });
     }
-    public void EnableReward()
+    public void AddReward()
     {
 
     }
@@ -299,7 +306,6 @@ public class CarMission : BaseBuild
             {
                 (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
             }
-            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             StartCountDown();
         });
     }

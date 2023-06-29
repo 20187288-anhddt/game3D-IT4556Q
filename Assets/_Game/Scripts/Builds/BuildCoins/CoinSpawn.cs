@@ -18,7 +18,7 @@ public class CoinSpawn : MonoBehaviour
 
     public Vector3 SpawnObjectOnComplete(int value)
     {
-        if(value > 54)
+        if(value > 90)
         {
             value = 0;
         }
@@ -46,7 +46,14 @@ public class CoinSpawn : MonoBehaviour
             if (!player.canCatch || checkOut.coins.Count <= 0)
                 return;
             player.canCatch = false;
-            checkOut.coins[0].MoveToPlayerSpeed(player);
+            //if(checkOut.coins.Count < 25)
+            //{
+            //    checkOut.coins[0].MoveToPlayerSpeed(player,0.1f);
+            //}
+            //else
+            //{
+                checkOut.coins[0].MoveToPlayerSpeed(player);
+            //}
             checkOut.coins.Remove(checkOut.coins[0]);
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
             //for (int i = 0; i < checkOut.coins.Count; i++)
@@ -57,7 +64,7 @@ public class CoinSpawn : MonoBehaviour
             //    i--;
             //    break;
             //}
-            player.DelayCatch(0.1f);
+            player.DelayCatch(0.01f);
         }
     }
 
