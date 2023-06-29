@@ -13,9 +13,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public static string RUN_STATE = "run_state";
     public static string FINISH_COLLECT_STATE = "finish_collect_state";
     public static string HAVE_FUN_STATE = "have_fun_state";
-
     public string STATE_ANIMAL;
-
     [SerializeField]
     private NavMeshAgent navMeshAgent;
     public bool isInside;
@@ -23,21 +21,23 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public bool isReadyReset;
     public bool isReadyHaveFun;
     public bool onIdlePos;
+    public bool isReadyCountDown;
     public float timeDelayFur;
     public float timeDelayCollect;
     public int maxFurNum;
     public int curFurNum;
     public GameObject clothes;
-    [SerializeField]
-    private Habitat habitat;
+    public Habitat habitat;
     [SerializeField]
     private float timeLive;
-    public float consTimeLive;
-    public float consTimeDelayHaveFun;
-    public Vector3 nextDes;
+    [SerializeField]
+    private float consTimeLive;
+    [SerializeField]
+    private float consTimeDelayHaveFun;
+    [SerializeField]
+    private Vector3 nextDes;
     [SerializeField]
     private HabitatManager habitatManager;
-    public Transform defaultPos;
 
     public virtual void Awake()
     {
@@ -70,6 +70,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             {
                 if(onIdlePos)
                 {
+                    onIdlePos = false;
                     switch (habitatManager.allActiveHabitats.Count)
                     {
                         case 1:
@@ -81,12 +82,13 @@ public abstract class AnimalBase : MonoBehaviour,IAct
                             break;
                     }
                 }
-                else
+                else if(isReadyCountDown)
                 {
                     timeLive -= Time.deltaTime;
                     if (timeLive < 0)
                     {
                         onIdlePos = true;
+                        isReadyCountDown = false;
                         timeLive = consTimeLive;
                     }
                 }
@@ -95,22 +97,35 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public void RandomMoveInSide()
     {
+        isReadyCountDown = true;
         int r = Random.Range(1, 10);
         if (r < 5)
         {
-            onIdlePos = false;
-            UpdateState(RUN_STATE);
+            if (RandomPosition(true))
+            {
+                UpdateState(RUN_STATE);
+            }
+            else
+            {
+                UpdateState(IDLE_STATE);
+            }
         }
     }
     public void RandomMoveOutSide()
     {
         int r = Random.Range(1, 10);
-        if (r < 5 && isReadyHaveFun)
+        if (r < 0 && isReadyHaveFun)
         {
-            isInside = false;
-            onIdlePos = false;
-            isReadyHaveFun = false;
-            UpdateState(HAVE_FUN_STATE);
+            if (RandomPosition(false))
+            {
+                isReadyHaveFun = false;
+                isInside = false;
+                UpdateState(HAVE_FUN_STATE);
+            }
+            else
+            {
+                UpdateState(IDLE_STATE);
+            }
         }
         else
         {
@@ -157,15 +172,16 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void Run(bool isInside)
     {
-        if (RandomPosition(isInside))
+        if (!isInside)
         {
-            navMeshAgent.SetDestination(nextDes);
-            navMeshAgent.stoppingDistance = 0;
+            CounterHelper.Instance.QueueAction(3f, () => { GetComponent<CapsuleCollider>().enabled = true; });
         }
+        navMeshAgent.SetDestination(nextDes);
+        navMeshAgent.stoppingDistance = 0;
     }
     public virtual void CheckRunToPos()
     {
-        if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
+        if (Vector3.Distance(nextDes, myTransform.position) < 0.5f)
         {
             //myTransform.DORotate(Vector3.zero, 0f);
             //myTransform.LookAt(placeToBuy.closet.myTransform.position);
@@ -194,7 +210,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void Idle()
     {
-        onIdlePos = true;
+        
     }
 
     public virtual void Eat()
@@ -233,6 +249,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
 
     public bool RandomPosition(bool tmp)
     {
+        bool checkIf = false;
         float radius = 0;
         nextDes = Vector3.zero;
         if (tmp)
@@ -256,7 +273,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
             {
                 nextDes = new Vector3(hit.position.x, myTransform.position.y, hit.position.z);
-                return true;
+                checkIf = true;
             }
         }
         else
@@ -301,8 +318,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             if(curHabitat == null)
             {
                 isInside = true;
-                UpdateState(IDLE_STATE);
-                return false;
+                checkIf = false;
             }
             else
             {
@@ -333,16 +349,16 @@ public abstract class AnimalBase : MonoBehaviour,IAct
                     {
                         habitat.allAnimals.Remove(this);
                     }
-                    return true;
+                    checkIf =  true;
                 }
                 else
                 {
                     isInside = true;
-                    UpdateState(IDLE_STATE);
+                    checkIf = false;
                 }
             }
         }
-        return false;
+        return checkIf;
     }
     public void ResetAnimal()
     {
@@ -352,7 +368,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
         nextDes = Vector3.zero;
         timeLive = consTimeLive;
-        defaultPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)];
+        isReadyCountDown = false;
         onIdlePos = true;
     }
     private void OnTriggerEnter(Collider other)
@@ -360,28 +376,25 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         var player = other.GetComponent<Player>();
         if (player != null)
         {
-            this.transform.position = new Vector3(defaultPos.position.x, myTransform.position.y, defaultPos.position.z);
-            nextDes = Vector3.zero;
+            GetComponent<CapsuleCollider>().enabled = false;
+            navMeshAgent.isStopped = true;
+            myTransform.DORotate(new Vector3(0f,180f,0f), 0f);
             timeLive = consTimeLive;
-            UpdateState(IDLE_STATE);
-            //ResetAnimal();
             if (!habitat.allAnimals.Contains(this))
             {
                 habitat.allAnimals.Add(this);
+                Vector3 tmpPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)].position;
+                this.transform.DOMove(tmpPos, 0f);
             }
             ResetWool();
-            GetComponent<CapsuleCollider>().enabled = false;
             isInside = true;
-            onIdlePos = true;
-            CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        var habitat = other.GetComponent<Habitat>();
-        if ((habitat as Habitat).ingredientType == habitat.ingredientType)
-        {
-            GetComponent<CapsuleCollider>().enabled = true;
+            CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { 
+                isReadyHaveFun = true;
+                onIdlePos = true;
+                navMeshAgent.isStopped = false;
+            });
+            nextDes = Vector3.zero;
+            UpdateState(IDLE_STATE);
         }
     }
 }
