@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class CheckPushCarMission : MonoBehaviour
+public class  : MonoBehaviour
 {
     private IngredientBase curIngredient;
     [SerializeField]

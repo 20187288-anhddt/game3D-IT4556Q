@@ -674,6 +674,10 @@ public class RewardProcessCompleteMission
             case EventName.Car_OnBought:
                 OnBought(IngredientType.CAR, NameObject_This.Car);
                 break;
+            case EventName.Camera_Follow_PosCar:
+                CameraFollowObject(IngredientType.CAR, NameObject_This.Car, true, 0.5f, 5, 5, 5
+                    , PlayerStopMove, PlayerContinueMove);
+                break;
 
         }
     }

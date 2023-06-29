@@ -9,12 +9,12 @@ public class DataCheckOutTable : DataStatusObject
     public override void LoadData()
     {
         base.LoadData();
-        isHireStaff = PlayerPrefs.GetInt(nameof(isHireStaff));
+        isHireStaff = PlayerPrefs.GetInt(nameof(isHireStaff) + GetStatus_All_Level_Object().nameObject_This.ToString());
     }
     public override void SaveData()
     {
         base.SaveData();
-        PlayerPrefs.SetInt(nameof(isHireStaff), isHireStaff);
+        PlayerPrefs.SetInt(nameof(isHireStaff) + GetStatus_All_Level_Object().nameObject_This.ToString(), isHireStaff);
     }
     public override void ResetData()
     {

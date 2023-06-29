@@ -77,7 +77,17 @@ public class CarMission : BaseBuild
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder();
+                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder(() => 
+                        {
+                            if (!checkPushCarMission.GetisInItDataUI())
+                            {
+                                InItDataMissionCurrent();
+                                checkPushCarMission.SetisInItDataUI(true);
+                                checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
+                            }
+
+                        });
+                      
                         isOnMission = true;
                         StartCountDown();        
                     });
@@ -300,6 +310,7 @@ public class CarMission : BaseBuild
             {
                 int value = listMission[key];
                 (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).ShowItem(key, value);
+               // Debug.Log(key + "---" + value);
             }
            (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetCompleteAllMission(CheckCompleteAll());
         }
