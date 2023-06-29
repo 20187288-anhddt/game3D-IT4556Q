@@ -50,7 +50,7 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate_.myTransform.SetParent(transParent);
             group_InfoUpdates.Add(group_InfoUpdate_);
         }
-        txt_Name.text = infoPirceObject.nameString;
+        txt_Name.text = infoPirceObject.nameString.Replace(' ', '\n');
         group_InfoUpdate_.myTransform.localScale = Vector3.one;
         group_InfoUpdate_.InItData(dataStatusObject, infoPirceObject);
         UpdateSizeLabel();
@@ -73,8 +73,11 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate_.myTransform.SetParent(transParent);
             group_InfoUpdates.Add(group_InfoUpdate_);
         }
+        name = name.Replace(' ', '\n');
         txt_Name.text = name;
         group_InfoUpdate_.myTransform.localScale = Vector3.one;
+        Debug.Log(staffType.ToString());
+        Debug.Log(scriptableObject == null);
         group_InfoUpdate_.InItData(scriptableObject, Level, staffType);
         UpdateSizeLabel();
     }
