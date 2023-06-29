@@ -57,6 +57,7 @@ public class Group_InfoUpdate : UI_Child
         this.typeBuff = infoPirceObject.infoThese[0].typeBuff;
         this.dataStatusObject = dataStatusObject;
         this.infoPirceObject = infoPirceObject;
+      
         switch (typeCost)
         {
             case TypeCost.WatchVideo:
@@ -88,7 +89,7 @@ public class Group_InfoUpdate : UI_Child
                 break;
         }
 
-        LoadUI(typeBuff.ToString() + " -Lvl." + Level_Current, Value_MoneyCurent);
+        LoadUI(typeBuff.ToString() + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy();
     }
     public void InItData(ScriptableObject scriptableObject, int Level, StaffType staffType = StaffType.CHECKOUT)
@@ -153,7 +154,7 @@ public class Group_InfoUpdate : UI_Child
                 break;
         }
 
-        LoadUI(nameInfo + " -Lvl." + Level_Current, Value_MoneyCurent);
+        LoadUI(nameInfo + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy(scriptableObject_Staff_Boss);
     }
     private void LoadUI(string str_Info, int value)
