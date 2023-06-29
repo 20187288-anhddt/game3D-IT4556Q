@@ -165,25 +165,31 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void CheckRunToPos()
     {
-        if (isInside)
+        if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
         {
-            if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
-            {
-                //myTransform.DORotate(Vector3.zero, 0f);
-                //myTransform.LookAt(placeToBuy.closet.myTransform.position);
-                UpdateState(IDLE_STATE);
-            }
+            //myTransform.DORotate(Vector3.zero, 0f);
+            //myTransform.LookAt(placeToBuy.closet.myTransform.position);
+            UpdateState(IDLE_STATE);
         }
-        else
-        {
-            if (Vector3.Distance(nextDes, myTransform.position) < 3f)
-            {
-                GetComponent<CapsuleCollider>().enabled = true;
-                //myTransform.DORotate(Vector3.zero, 0f);
-                //myTransform.LookAt(placeToBuy.closet.myTransform.position);
-                UpdateState(IDLE_STATE);
-            }
-        }
+        //if (isInside)
+        //{
+        //    if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
+        //    {
+        //        //myTransform.DORotate(Vector3.zero, 0f);
+        //        //myTransform.LookAt(placeToBuy.closet.myTransform.position);
+        //        UpdateState(IDLE_STATE);
+        //    }
+        //}
+        //else
+        //{
+        //    if (Vector3.Distance(nextDes, myTransform.position) < 3f)
+        //    {
+        //        GetComponent<CapsuleCollider>().enabled = true;
+        //        //myTransform.DORotate(Vector3.zero, 0f);
+        //        //myTransform.LookAt(placeToBuy.closet.myTransform.position);
+        //        UpdateState(IDLE_STATE);
+        //    }
+        //}
        
     }
     public virtual void Idle()
@@ -368,6 +374,14 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             isInside = true;
             onIdlePos = true;
             CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        var habitat = other.GetComponent<Habitat>();
+        if ((habitat as Habitat).ingredientType == habitat.ingredientType)
+        {
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 }
