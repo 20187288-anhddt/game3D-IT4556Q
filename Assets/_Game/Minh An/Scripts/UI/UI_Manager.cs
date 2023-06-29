@@ -37,7 +37,7 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
             if(UI_canvas.nameUI == nameUI)
             {
                 UI_canvas.Open();
-                stack_UIOPENs.Push(UI_canvas);
+                //stack_UIOPENs.Push(UI_canvas);
                 return UI_canvas;
             }
         }
@@ -50,7 +50,7 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
             if (UI_canvas.nameUI == nameUI)
             {
                 UI_canvas.Close();
-                stack_UIOPENs.Pop();
+               // stack_UIOPENs.Pop();
                 return;
             }
         }

@@ -7,8 +7,8 @@ public class UI_LabelShow : UI_Child
 {
     public Transform myTransform;
     public RectTransform myRectTransform;
-    public static float HeightSize_OneLength = 663;
-    public static float HeightSize_TwoLength = 783;
+    public static float HeightSize_OneLength = 859;
+    public static float HeightSize_TwoLength = 859;
     public static float HeightSize_ThreeLength = 1120;
     [SerializeField] private Text txt_Name;
     [SerializeField] private Transform transParent;
