@@ -24,20 +24,50 @@ public class MachineManager : Singleton<MachineManager>
     {
         MachineBase curMachine = null;
         if (allActiveMachine.Count <= 0)
-            curMachine = null;
-        //List<MachineBase> listAvailableMachine = new List<MachineBase>();
-        for(int i = 0; i < allActiveMachine.Count; i++)
         {
-            if (!allActiveMachine[i].isHaveInStaff && allActiveMachine[i].ingredients.Count < allActiveMachine[i].maxObjInput/3)
-            {
-                //if (!listAvailableMachine.Contains(allActiveMachine[i]))
-                //{
-                //    listAvailableMachine.Add(allActiveMachine[i]);
-                //}
-                curMachine = allActiveMachine[i];
-                break;
-            }
+            curMachine = null;
         }
+        else
+        {
+            int r = Random.Range(0, allActiveMachine.Count);
+            if (!allActiveMachine[r].isHaveInStaff && allActiveMachine[r].ingredients.Count < allActiveMachine[r].maxObjInput / 3)
+                curMachine = allActiveMachine[r];
+        }
+        
+        //else
+        //{
+        //    bool tmp = false;
+        //    //List<MachineBase> listAvailableMachine = new List<MachineBase>();
+        //    do
+        //    {
+        //        int r = Random.Range(0, allActiveMachine.Count);
+        //        curMachine = allActiveMachine[r];
+        //        if (!allActiveMachine[r].isHaveInStaff && allActiveMachine[r].ingredients.Count < allActiveMachine[r].maxObjInput / 3)
+        //        {
+        //            tmp = true;
+        //        }
+        //    } while (!tmp);
+        //}
+        //while(curMachine = null)
+        //{
+        //    int r = Random.Range(0, allActiveMachine.Count);
+        //    if(!allActiveMachine[r].isHaveInStaff && allActiveMachine[r].ingredients.Count < allActiveMachine[r].maxObjInput / 3)
+        //    {
+        //        curMachine = allActiveMachine[r];
+        //    }
+        //}
+        //for (int i = 0; i < allActiveMachine.Count; i++)
+        //{
+        //    if (!allActiveMachine[i].isHaveInStaff && allActiveMachine[i].ingredients.Count < allActiveMachine[i].maxObjInput / 3)
+        //    {
+        //        //if (!listAvailableMachine.Contains(allActiveMachine[i]))
+        //        //{
+        //        //    listAvailableMachine.Add(allActiveMachine[i]);
+        //        //}
+        //        curMachine = allActiveMachine[i];
+        //        break;
+        //    }
+        //}
         return curMachine;
         //int r = Random.Range(0, listAvailableMachine.Count);
         //curMachine = listAvailableMachine[r];

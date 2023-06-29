@@ -7,7 +7,7 @@ public class BagMachine : MachineBase
 {
     public List<BagBase> outCloths;
     [SerializeField]
-    private BagBase clothPrefab;
+    public BagBase clothPrefab;
     [SerializeField]
     private GameObject unlockModel;
     [SerializeField]
@@ -16,7 +16,11 @@ public class BagMachine : MachineBase
     private CheckPush checkPushBagMachine;
     [SerializeField]
     private CheckCollectBagCloth checkCollectBagCloth;
-
+    private void LoadAndSetData()
+    {
+        maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
+        timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -134,6 +138,15 @@ public class BagMachine : MachineBase
     }
     public override void Effect()
     {
+        if (!IsLock)
+        {
+            uI_InfoBuild.Active(true);
+            uI_InfoBuild.LoadTextProcess(ingredients.Count.ToString() + "/" + maxObjOutput.ToString());
+        }
+        else
+        {
+            uI_InfoBuild.Active(false);
+        }
         if (outCloths.Count >= maxObjOutput)
         {
             return;
@@ -156,15 +169,6 @@ public class BagMachine : MachineBase
                 isReadyMidToOut = false;
                 OutputMoveToEnd();
             }
-        }
-        if (!IsLock)
-        {
-            uI_InfoBuild.Active(true);
-            uI_InfoBuild.LoadTextProcess(ingredients.Count.ToString() + "/" + maxObjOutput.ToString());
-        }
-        else
-        {
-            uI_InfoBuild.Active(false);
         }
     }
     //private void SpawnObject()
@@ -264,5 +268,7 @@ public class BagMachine : MachineBase
             UnLock();
         }
         checkUnlock.UpdateUI();
+        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+        LoadAndSetData();
     }
 }

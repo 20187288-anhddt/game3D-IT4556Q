@@ -24,11 +24,11 @@ public class Coin : AllPool
         float distance = Vector3.Distance(player.transform.position + Vector3.up * 0.5f, this.transform.position);
         float time = (float)distance / moveSpeed;
         transform.rotation = Quaternion.identity;
-        transform.DOJump(player.transform.position, 2.5f, 1, 0.1f).OnComplete(() => {
+        transform.DOJump(player.transform.position+ Vector3.up*1.5f, 5f, 1, 0.25f).OnComplete(() => {
             AllPoolContainer.Instance.Release(this);
             //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
             //Vibration.Vibrate(25);
-        }).SetEase(Ease.Linear);
+        }).SetEase(Ease.OutCirc);
     }
     //public void MoveToThief(Thief thief)
     //{

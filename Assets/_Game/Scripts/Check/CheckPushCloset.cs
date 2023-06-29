@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 
 public class CheckPushCloset : MonoBehaviour
 {
@@ -83,16 +83,11 @@ public class CheckPushCloset : MonoBehaviour
                     player.canCatch = false;
                     player.RemoveIngredient(curCloth);  
                     player.objHave--;
-                    //curCloth.transform.DOMoveY(curCloth.transform.position.y + 0.5f, 0.125f).OnComplete(() =>
+                    //curCloth.transform.DOJump(closet.transform.position, 3f, 1, 0.5f).OnComplete(() =>
                     //{
-                    //    curCloth.transform.DOJump(closet.transform.position, 0.75f, 1, 0.125f).OnComplete(() =>
-                    //    {
-                    //        //transform.DOLocalMove(Vector3.up, 0.125f).OnComplete(() =>
-                    //        //{
-                            
-                    //        //});
-                    //    }).SetEase(Ease.Linear);
-                    //});
+                    //    closet.SpawnOutfit();
+                    //    AllPoolContainer.Instance.Release(curCloth);
+                    //}).SetEase(Ease.OutCirc);
                     AllPoolContainer.Instance.Release(curCloth);
                     closet.SpawnOutfit();
                     player.DelayCatch(player.timeDelayCatch);

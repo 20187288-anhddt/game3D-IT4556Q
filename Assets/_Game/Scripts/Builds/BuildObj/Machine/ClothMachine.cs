@@ -7,7 +7,7 @@ public class ClothMachine : MachineBase
 {
     public List<ClothBase> outCloths;
     [SerializeField]
-    private ClothBase clothPrefab;
+    public ClothBase clothPrefab;
     [SerializeField]
     private GameObject unlockModel;
     [SerializeField]
@@ -16,7 +16,12 @@ public class ClothMachine : MachineBase
     private CheckPush checkPush;
     [SerializeField]
     private CheckCollectCloth checkCollectCloth;
-
+   
+    private void LoadAndSetData()
+    {
+        maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
+        timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
@@ -138,7 +143,16 @@ public class ClothMachine : MachineBase
     }
     public override void Effect()
     {
-        if(outCloths.Count >= maxObjOutput)
+        if (!IsLock)
+        {
+            uI_InfoBuild.Active(true);
+            uI_InfoBuild.LoadTextProcess(ingredients.Count.ToString() + "/" + maxObjOutput.ToString());
+        }
+        else
+        {
+            uI_InfoBuild.Active(false);
+        }
+        if (outCloths.Count >= maxObjOutput)
         {
             return;
         }
@@ -161,16 +175,6 @@ public class ClothMachine : MachineBase
                 OutputMoveToEnd();
             }
         }
-        if (!IsLock)
-        {
-            uI_InfoBuild.Active(true);
-            uI_InfoBuild.LoadTextProcess(ingredients.Count.ToString() + "/" + maxObjOutput.ToString());
-        }
-        else
-        {
-            uI_InfoBuild.Active(false);
-        }
-      
     }
     //private void SpawnObject()
     //{
@@ -244,7 +248,6 @@ public class ClothMachine : MachineBase
     {
         base.StartInGame();
         CurrentCoin = pirceObject.Get_Pirce();
-        Debug.Log(CurrentCoin);
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         ingredients = new List<FurBase>();
@@ -269,5 +272,7 @@ public class ClothMachine : MachineBase
         //    UnLock();
         //}
         checkUnlock.UpdateUI();
+        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+        LoadAndSetData();
     }
 }

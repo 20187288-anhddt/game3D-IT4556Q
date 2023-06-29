@@ -24,10 +24,10 @@ public class IngredientBase : AllPool
         actor.yOffset += ingreScale;
         //transform.DOMove(baseActor.CarryPos.position, 0.1f).OnComplete(() =>
         //{
-        this.transform.DOLocalJump(Vector3.up * actor.yOffset + Vector3.right * x + Vector3.forward * z, 0.75f, 1, 0.25f).OnComplete(() =>
+        this.transform.DOLocalJump(Vector3.up * actor.yOffset+ Vector3.right * x + Vector3.forward * z, 5f, 1, 0.5f).OnComplete(() =>
         {
             //baseActor.ShortObj();
-        });
+        }).SetEase(Ease.OutCirc);
         //});
         //if (baseActor is Player)
         //{
@@ -40,9 +40,9 @@ public class IngredientBase : AllPool
     {
         float x = Random.Range(-0.05f, 0.05f);
         float z = Random.Range(-0.05f, 0.05f);
-        this.transform.DOMoveY(this.transform.position.y + 0.5f, 0.125f).OnComplete(() =>
+        this.transform.DOMoveY(this.transform.position.y + 2f, 0.25f).OnComplete(() =>
         {
-            transform.DOMove(gar.transform.position, 0.125f).OnComplete(() =>
+            transform.DOMove(gar.transform.position, 0.25f).OnComplete(() =>
             {
                 this.transform.parent = null;
                 AllPoolContainer.Instance.Release(this);
@@ -51,8 +51,8 @@ public class IngredientBase : AllPool
                 //    Vibration.Vibrate(25);
                 //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
                 //}
-            });
-        }).SetEase(Ease.Linear);
+            }).SetEase(Ease.OutCirc);
+        }).SetEase(Ease.OutCirc);
     }
     public void MoveToCar(GameObject car)
     {
@@ -91,5 +91,6 @@ public enum IngredientType
     CHECKOUT,
     BUILDSTAGE,
     HIRESTAFF,
-    CAR
+    CAR,
+    SHIT
 }
