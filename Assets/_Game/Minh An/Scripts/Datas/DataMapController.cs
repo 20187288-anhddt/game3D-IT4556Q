@@ -47,6 +47,7 @@ public class MapCurrent //luu data
 {
     public DataMapCurrent dataMapCurrent;
     private string fileName = " ";
+    private bool isInItData = false;
     public void SetFileName(string fileName)
     {
         this.fileName = fileName;
@@ -60,6 +61,7 @@ public class MapCurrent //luu data
     {
         SetFileName(nameof(MapCurrent));
         LoadData();
+        isInItData = true;
     }
     public void SaveData()
     {
@@ -94,6 +96,10 @@ public class MapCurrent //luu data
     }
     public DataMapCurrent GetDataMapCurrent()
     {
+        if (!isInItData)
+        {
+            InItData();
+        }
         return dataMapCurrent;
     }
     public void ResetData()

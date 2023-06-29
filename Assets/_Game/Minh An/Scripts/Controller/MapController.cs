@@ -34,6 +34,7 @@ public class MapController : Singleton<MapController>
         string pathNavMesh = "Data_NavMeshAI\\" + "Map" + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Level " + (int)typeLevel;
         NavMesh.AddNavMeshData((NavMeshData)Resources.Load(pathNavMesh, typeof(NavMeshData)));
         EnventManager.TriggerEvent(EventName.ReLoadNavMesh.ToString());
+        EnventManager.TriggerEvent(EventName.ReLoadDistanceCamera.ToString());
     }
     public MiniMapController GetMiniMapController(MiniMapController.TypeLevel typeLevel)
     {

@@ -620,7 +620,20 @@ public class RewardProcessCompleteMission
                       CameraController.Instance.SetFollowAndLookAt(point_Follow, point_Follow, false, 0.5f, 5, 5, 5
                  , () =>
                  {
-                     CameraController.Instance.MoveDistance(55, 5);
+                     //int levelMap = 0;
+                     //switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
+                     //{
+                     //    case MiniMapController.TypeLevel.Level_1:
+                     //        levelMap = 1;
+                     //        break;
+                     //    case MiniMapController.TypeLevel.Level_2:
+                     //        levelMap = 2;
+                     //        break;
+                     //    case MiniMapController.TypeLevel.Level_3:
+                     //        levelMap = 3;
+                     //        break;
+                     //}
+                     //CameraController.Instance.MoveDistance(30 + levelMap * 5, 5);
                  },
                  () =>
                  {
@@ -632,7 +645,20 @@ public class RewardProcessCompleteMission
                  },
                  () =>
                  {
-                      CameraController.Instance.MoveDistance(32, 5);
+                     //int levelMap = 0;
+                     //switch (DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent())
+                     //{
+                     //    case MiniMapController.TypeLevel.Level_1:
+                     //        levelMap = 1;
+                     //        break;
+                     //    case MiniMapController.TypeLevel.Level_2:
+                     //        levelMap = 2;
+                     //        break;
+                     //    case MiniMapController.TypeLevel.Level_3:
+                     //        levelMap = 3;
+                     //        break;
+                     //}
+                     //CameraController.Instance.MoveDistance(30 + levelMap * 5, 5);
                  });
                  });
                   });
