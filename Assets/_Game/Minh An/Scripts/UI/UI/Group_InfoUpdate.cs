@@ -84,6 +84,13 @@ public class Group_InfoUpdate : UI_Child
                     Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
+                    btn_Money.gameObject.SetActive(false);
+                    btn_Ads.gameObject.SetActive(true);
+                    btn_Ads.onClick.RemoveAllListeners();
+                    btn_Ads.onClick.AddListener(Buying);
+                    imageIcon_Ads.gameObject.SetActive(true);
+                    imageBG_Ads.sprite = spr_BG_Hong;
+                    txt_Ads.text = "FREE";
                 }
 
                 break;
@@ -149,6 +156,13 @@ public class Group_InfoUpdate : UI_Child
                     Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
+                    btn_Money.gameObject.SetActive(false);
+                    btn_Ads.gameObject.SetActive(true);
+                    btn_Ads.onClick.RemoveAllListeners();
+                    btn_Ads.onClick.AddListener(Buying_2);
+                    imageIcon_Ads.gameObject.SetActive(true);
+                    imageBG_Ads.sprite = spr_BG_Hong;
+                    txt_Ads.text = "FREE";
                 }
 
                 break;
