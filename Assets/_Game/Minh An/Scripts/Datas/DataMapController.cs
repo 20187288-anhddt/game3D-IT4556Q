@@ -203,36 +203,42 @@ public class DataMap //luu data
         GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Capacity(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void SetLevel_Price_Boss(int value)
     {
         GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Price(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void SetLevel_Speed_Boss(int value)
     {
         GetData_Map().GetDataPlayer().GetDataBoss().SetLevel_Speed(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Capacity_Boss()
     {
         GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Capacity();
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Price_Boss()
     {
         GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Price();
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Speed_Boss()
     {
         GetData_Map().GetDataPlayer().GetDataBoss().NextLevel_Speed();
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     #endregion
     #region Staff
@@ -241,36 +247,43 @@ public class DataMap //luu data
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Capacity(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void SetLevel_Hire_Staff(int value, StaffType staffType)
     {
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Hire(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void SetLevel_Speed_Staff(int value, StaffType staffType)
     {
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).SetLevel_Speed(value);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Capacity_Staff( StaffType staffType)
     {
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Capacity();
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Hire_Staff(StaffType staffType)
     {
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Hire();
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public void NextLevel_Speed_Staff(StaffType staffType)
     {
         GetData_Map().GetDataPlayer().GetDataStaff(staffType).NextLevel_Speed();
+
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     #endregion
     //#region Checkout

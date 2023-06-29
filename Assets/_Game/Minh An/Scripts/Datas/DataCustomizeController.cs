@@ -6,7 +6,7 @@ using System.IO;
 public class DataCustomizeController : MonoBehaviour
 {
     [SerializeField] private List<InfoSkinPlayer> infoSkinPlayers_Head;
-    private DataCustomize_Head dataCustomize_Head;
+    private DataCustomize_Head dataCustomize_Head = new DataCustomize_Head();
 
     private void Awake()
     {
@@ -57,11 +57,16 @@ public class DataCustomize_Head : DataBase
     {
         return GetData_Head().GetID();
     }
+    public List<int> GetID_Onboughts()
+    {
+        return GetData_Head().GetID_Onboughts();
+    }
 }
 [System.Serializable] 
 public class Data_Head
 {
     public int ID;
+    public List<int> ID_OnBought;
     public void SetID(int value)
     {
         ID = value;
@@ -70,8 +75,13 @@ public class Data_Head
     {
         return ID;
     }
+    public List<int> GetID_Onboughts()
+    {
+        return ID_OnBought;
+    }
     public void ResetData()
     {
         ID = 0;
+        ID_OnBought = new List<int>();
     }
 }

@@ -419,13 +419,13 @@ public class Group_InfoUpdate : UI_Child
             switch (staffType)
             {
                 case StaffType.FARMER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Capacity(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Capacity(staffType, Level_Current + 1);
                  break;
                 case StaffType.WORKER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Capacity(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Capacity(staffType, Level_Current + 1);
                     break;
                 default:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Capacity(Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Capacity(Level_Current + 1);
                     break;
             }
         }
@@ -434,10 +434,10 @@ public class Group_InfoUpdate : UI_Child
             switch (staffType)
             {
                 case StaffType.FARMER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Hire(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Hire(staffType, Level_Current + 1);
                     break;
                 case StaffType.WORKER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Hire(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Hire(staffType, Level_Current + 1);
                     break;
                 default:
                     break;
@@ -448,13 +448,13 @@ public class Group_InfoUpdate : UI_Child
             switch (staffType)
             {
                 case StaffType.FARMER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Speed(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Speed(staffType, Level_Current + 1);
                     break;
                 case StaffType.WORKER:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Speed(staffType, Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).IsMaxLevel_Speed(staffType, Level_Current + 1);
                     break;
                 default:
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Speed(Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Speed(Level_Current + 1);
                     break;
             }
         }
@@ -470,7 +470,7 @@ public class Group_InfoUpdate : UI_Child
                     break;
                 default:
                    // Debug.Log("a");
-                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Price(Level_Current);
+                    isMax = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().IsMaxLevel_Price(Level_Current + 1);
                     break;
             }
         }

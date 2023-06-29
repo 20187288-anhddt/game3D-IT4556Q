@@ -48,6 +48,7 @@ public class MachineDataStatusObject : DataStatusObject
         Debug.Log(Level_Speed);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public int GetLevel_Speed()
     {
@@ -66,6 +67,7 @@ public class MachineDataStatusObject : DataStatusObject
         Debug.Log(Level_Stack);
         SaveData();
         LoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     public int GetLevel_Stack()
     {
@@ -110,11 +112,11 @@ public class MachineDataStatusObject : DataStatusObject
     }
     public bool isMaxLevelStack()
     {
-        return GetInfoPirceObject_Stack(GetLevel_Stack()) == null;
+        return GetInfoPirceObject_Stack(GetLevel_Stack() + 1) == null;
     }
     public bool isMaxLevelSpeed()
     {
-        return GetInfoPirceObject_Speed(GetLevel_Speed()) == null;
+        return GetInfoPirceObject_Speed(GetLevel_Speed() + 1) == null;
     }
     public InfoPirceObject GetPirceObject_InfoChild(NameObject_This nameObject_This, int Level, IngredientType ingredientType, string nameChild)
     {
@@ -125,5 +127,9 @@ public class MachineDataStatusObject : DataStatusObject
         infoPirceObjectResource = (InfoPirceObject)Resources.Load(PathGetData, typeof(InfoPirceObject));
         // Debug.Log((infoPirceObjectResource == null) +  " "+ PathGetData);
         return infoPirceObjectResource;
+    }
+    public BaseBuild GetBaseBuild()
+    {
+        return baseBuild;
     }
 }
