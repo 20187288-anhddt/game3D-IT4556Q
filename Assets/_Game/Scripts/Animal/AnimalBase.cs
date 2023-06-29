@@ -105,7 +105,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public void RandomMoveOutSide()
     {
         int r = Random.Range(1, 10);
-        if (r < 1 && isReadyHaveFun)
+        if (r < 5 && isReadyHaveFun)
         {
             isInside = false;
             onIdlePos = false;
@@ -165,20 +165,26 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void CheckRunToPos()
     {
-        if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
+        if (isInside)
         {
-            if (isInside)
+            if (Vector3.Distance(nextDes, myTransform.position) < 0.1f)
             {
-                GetComponent<CapsuleCollider>().enabled = false;
+                //myTransform.DORotate(Vector3.zero, 0f);
+                //myTransform.LookAt(placeToBuy.closet.myTransform.position);
+                UpdateState(IDLE_STATE);
             }
-            else
+        }
+        else
+        {
+            if (Vector3.Distance(nextDes, myTransform.position) < 3f)
             {
                 GetComponent<CapsuleCollider>().enabled = true;
+                //myTransform.DORotate(Vector3.zero, 0f);
+                //myTransform.LookAt(placeToBuy.closet.myTransform.position);
+                UpdateState(IDLE_STATE);
             }
-            //myTransform.DORotate(Vector3.zero, 0f);
-            //myTransform.LookAt(placeToBuy.closet.myTransform.position);
-            UpdateState(IDLE_STATE);
         }
+       
     }
     public virtual void Idle()
     {
@@ -340,7 +346,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
         nextDes = Vector3.zero;
         timeLive = consTimeLive;
-        defaultPos = habitat.animalPos;
+        defaultPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)];
         onIdlePos = true;
     }
     private void OnTriggerEnter(Collider other)
