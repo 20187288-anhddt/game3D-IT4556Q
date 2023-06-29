@@ -77,6 +77,7 @@ public class CarMission : BaseBuild
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
+                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder();
                         isOnMission = true;
                         StartCountDown();        
                     });
@@ -228,6 +229,7 @@ public class CarMission : BaseBuild
     {
         isOnMission = false;
         //StopCoroutine(CountDownCarWait());
+        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).NotShow_Btn_Oder();
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
