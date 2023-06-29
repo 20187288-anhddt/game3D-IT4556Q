@@ -21,6 +21,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public bool isInside;
     public bool isNaked;
     public bool isReadyReset;
+    public bool isReadyHaveFun;
     public bool onIdlePos;
     public float timeDelayFur;
     public float timeDelayCollect;
@@ -32,6 +33,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     [SerializeField]
     private float timeLive;
     public float consTimeLive;
+    public float consTimeDelayHaveFun;
     public Vector3 nextDes;
     [SerializeField]
     private HabitatManager habitatManager;
@@ -62,60 +64,57 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             isReadyReset = false;
             CounterHelper.Instance.QueueAction(timeDelayFur, () => { ResetWool(); });
         }
-        if (isInside)
+        if (!habitat.isLock)
         {
-            if (!habitat.isLock)
+            if (isInside)
             {
-                if (onIdlePos && STATE_ANIMAL != RUN_STATE)
+                if(onIdlePos)
                 {
-                    onIdlePos = false;
-                    if (habitatManager.allActiveHabitats.Count > 1)
+                    switch (habitatManager.allActiveHabitats.Count)
                     {
-                        int r = Random.Range(1, 10);
-                        if (r == 11)
-                        {
-                            isInside = false;
-                            UpdateState(HAVE_FUN_STATE);
-                        }
-                        else
-                        {
-                            float r1 = Random.Range(0f, 1f);
-                            if (r1 < 0.5f)
-                            {
-                                UpdateState(RUN_STATE);
-                            }
-                        }
+                        case 1:
+                            RandomMoveInSide();
+                            break;
+                        case 2:
+                        case 3:
+                            RandomMoveOutSide();
+                            break;
                     }
-                    else
-                    {
-                        float r = Random.Range(0f, 1f);
-                        if (r < 0.5f)
-                        {
-                            UpdateState(RUN_STATE);
-                        }
-                    }    
                 }
-                if (!onIdlePos && isInside)
+                else
                 {
                     timeLive -= Time.deltaTime;
-                }
-                if (timeLive < 0)
-                {
-                    onIdlePos = true;
-                    timeLive = consTimeLive;
+                    if (timeLive < 0)
+                    {
+                        onIdlePos = true;
+                        timeLive = consTimeLive;
+                    }
                 }
             }
         }
+    }
+    public void RandomMoveInSide()
+    {
+        int r = Random.Range(1, 10);
+        if (r < 5)
+        {
+            onIdlePos = false;
+            UpdateState(RUN_STATE);
+        }
+    }
+    public void RandomMoveOutSide()
+    {
+        int r = Random.Range(1, 10);
+        if (r < 1 && isReadyHaveFun)
+        {
+            isInside = false;
+            onIdlePos = false;
+            isReadyHaveFun = false;
+            UpdateState(HAVE_FUN_STATE);
+        }
         else
         {
-            //if (onIdlePos && STATE_ANIMAL != HAVE_FUN_STATE)
-            //{
-            //    float r1 = Random.Range(0f, 1f);
-            //    if (r1 < 0.5f)
-            //    {
-            //        UpdateState(HAVE_FUN_STATE);
-            //    }
-            //}   
+            RandomMoveInSide();
         }
     }
     public void UpdateState(string state)
@@ -183,7 +182,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void Idle()
     {
-
+        onIdlePos = true;
     }
 
     public virtual void Eat()
@@ -338,6 +337,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         ResetWool();
         GetComponent<CapsuleCollider>().enabled = false;
         isInside = true;
+        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
         nextDes = Vector3.zero;
         timeLive = consTimeLive;
         defaultPos = habitat.animalPos;
@@ -361,6 +361,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             GetComponent<CapsuleCollider>().enabled = false;
             isInside = true;
             onIdlePos = true;
+            CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
         }
     }
 }

@@ -75,6 +75,7 @@ MonoBehaviour:
   isInside: 0
   isNaked: 0
   isReadyReset: 0
+  isReadyHaveFun: 0
   onIdlePos: 0
   timeDelayFur: 8
   timeDelayCollect: 1
@@ -84,8 +85,10 @@ MonoBehaviour:
   habitat: {fileID: 0}
   timeLive: 0
   consTimeLive: 15
+  consTimeDelayHaveFun: 30
   nextDes: {x: 0, y: 0, z: 0}
   habitatManager: {fileID: 0}
+  defaultPos: {fileID: 0}
 --- !u!136 &8761353809389015757
 CapsuleCollider:
   m_ObjectHideFlags: 0
