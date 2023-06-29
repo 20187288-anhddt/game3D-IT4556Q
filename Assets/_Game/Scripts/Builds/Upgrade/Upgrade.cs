@@ -13,13 +13,13 @@ public class Upgrade : MonoBehaviour
             UI_Manager.Instance?.OpenUI(NameUI.Canvas_Upgrades);
         }
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    var actor = other.GetComponent<Player>();
-    //    if (actor != null)
-    //    {
-    //        //TODO
-    //        UI_Manager.Instance?.CloseUI(NameUI.Canvas_Upgrades);
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        var actor = other.GetComponent<Player>();
+        if (actor != null)
+        {
+            //TODO
+            UI_Manager.Instance?.CloseUI(NameUI.Canvas_Upgrades);
+        }
+    }
 }

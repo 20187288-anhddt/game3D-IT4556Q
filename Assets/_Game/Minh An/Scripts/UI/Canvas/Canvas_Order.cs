@@ -23,6 +23,7 @@ public class Canvas_Order : UI_Canvas
     [SerializeField] private Button btn_WatchVideo_CollectX3;
     private bool isCompleteAllMission = false;
     private int MoneyCurrent = 0;
+    private System.Action actionCollect;
     private void Awake()
     {
         InItData();
@@ -50,13 +51,13 @@ public class Canvas_Order : UI_Canvas
             img_BG_Btn_Collect_WatchVideo.sprite = spr_BG_CollectWatchVideo_On;
         }
     }
-    public void ShowItem(IngredientType ingredientType, int valueCurrent, Sprite Icon = null)
+    public void ShowItem(IngredientType ingredientType, int valueCurrent)
     {
         foreach (Process_Item process_Item in process_Items)
         {
             if (process_Item.GetIngredientType() == ingredientType)
             {
-                process_Item.LoadProcess(valueCurrent, Icon);
+                process_Item.LoadProcess(valueCurrent);
             }
         }
     }
@@ -98,6 +99,8 @@ public class Canvas_Order : UI_Canvas
             Debug.Log("Collect");
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent);
             isCompleteAllMission = false;
+            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
+            actionCollect?.Invoke();
         }
     }
     public void WatchVideo_CollectX3()
@@ -107,7 +110,13 @@ public class Canvas_Order : UI_Canvas
             Debug.Log("Collect WatchVideo");
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent * 3);
             isCompleteAllMission = false;
+            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
+            actionCollect?.Invoke();
         }
+    }
+    public void SetActionCollect(System.Action action)
+    {
+        actionCollect = action;
     }
     public void LoadTextMoneyCurrent()
     {
