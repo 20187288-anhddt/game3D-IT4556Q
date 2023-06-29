@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineManager : MonoBehaviour
+public class MachineManager : Singleton<MachineManager>
 {
     public List<MachineBase> allActiveMachine;
     public List<ClothMachine> allActiveClothMachine;
@@ -84,8 +84,6 @@ public class MachineManager : MonoBehaviour
         //        }
         //        break;
         //}
-  
-        return curMachine;
     }
     public ClothMachine GetClothMachineWithType(IngredientType type)
     {
@@ -186,5 +184,19 @@ public class MachineManager : MonoBehaviour
                 break;
         }
         return curBagMachine;
+    }
+    public ClothMachine GetRandomTypeClothMachine()
+    {
+        ClothMachine curMachine = null ;
+        int r = Random.Range(0, allActiveClothMachine.Count);
+        curMachine = allActiveClothMachine[r];
+        return curMachine;
+    }
+    public BagMachine GetRandomTypeBagMachine()
+    {
+        BagMachine curMachine = null;
+        int r = Random.Range(0, allActiveBagMachine.Count);
+        curMachine = allActiveBagMachine[r];
+        return curMachine;
     }
 }

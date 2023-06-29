@@ -23,28 +23,29 @@ public class CarMission : BaseBuild
     [SerializeField]
     private CheckPushCarMission checkPushCarMission;
     public Dictionary<IngredientType, int> listMission;
-    public List<IngredientType> listCurClothType;
-    public List<IngredientType> listCurBagType;
-    public int ranNumCloth;
-    public int ranNumBag;
-    public GameManager gameManager;
-    public MachineManager machineManager;
+    public List<ClothMachine> listCurClothMachine;
+    public List<BagMachine> listCurBagMachine;
 
     public override void Start()
     {
         base.Start();
-        machineManager = gameManager.listLevelManagers[gameManager.curLevel].machineManager;
+        StartInGame();
     }
     public override void StartInGame()
     {
         base.StartInGame();
         listMission = new Dictionary<IngredientType, int>();
-        listCurClothType = new List<IngredientType>();
-        listCurBagType = new List<IngredientType>();
+        listCurClothMachine = new List<ClothMachine>();
+        listCurBagMachine = new List<BagMachine>();
         isReadyMission = true;
         isOnMission = false;
         isDoneMission = false;
-        carWaiting = consCarWaiting;     
+        carWaiting = consCarWaiting;
+        if (!isLock)
+        {
+            checkPushCarMission.gameObject.SetActive(false);
+            car.SetActive(false);
+        }
     }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -52,54 +53,49 @@ public class CarMission : BaseBuild
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
+        checkPushCarMission.gameObject.SetActive(true);
+        car.SetActive(true);
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this); 
         //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
     void Update()
     {
-        if (isReadyMission && !isOnMission && !isDoneMission)
+        if (!isLock)
         {
-            isReadyMission = false;
-            CounterHelper.Instance.QueueAction(consDelayMission, () =>
+            if (isReadyMission && !isOnMission)
             {
-                RandomCar();
-                car.transform.DOMove(idlePos.position, 1f).OnComplete(() =>
+                isReadyMission = false;
+                RandomMission();
+                CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
-                    isOnMission = true;
-                    RandomMission();
-                    checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                    StartCoroutine(CountDownCarWait());
+                    RandomCar();
+                    car.transform.DOMove(idlePos.position, 1f).OnComplete(() =>
+                    {       
+                        checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
+                        isOnMission = true;
+                        StartCountDown();        
+                    });
                 });
-            });
-            //StartCoroutine(DelayMission(consDelayMission, () =>
-            //{
-            //    RandomCar();
-            //    car.transform.DOMove(idlePos.position, 1f).OnComplete(() =>
-            //    {
-            //        isOnMission = true;
-            //        RandomMission();
-            //        GetComponent<BoxCollider>().enabled = true;
-            //    });
-            //}));  
-        }
-        if (!isReadyMission && isOnMission && !isDoneMission)
-        {
-            CheckMission();
+            }
+            if (!isReadyMission && isOnMission)
+            {
+                CheckMission();
+            }
         }
     }
     public void CheckMission()
     {
-        if(carWaiting > 0)
+        if (carWaiting > 0)
         {
-            if(listMission.Count == 0)
+            if (listMission.Count == 0)
             {
                 MissionEnd(true);
             }
         }
         else
         {
-            if(listMission.Count > 0)
+            if (listMission.Count > 0)
             {
                 MissionEnd(false);
             }
@@ -124,12 +120,13 @@ public class CarMission : BaseBuild
     }
     public void RandomMission()
     {
-        switch (machineManager.allActiveMachine.Count)
+        switch (levelManager.machineManager.allActiveMachine.Count)
         {
-            case 5:
             case 4:
-                float r1 = UnityEngine.Random.Range(0, 1);
-                if (r1 < 0.5f)
+            case 5:       
+                int r1 = UnityEngine.Random.Range(0, 2);
+                Debug.Log(r1);
+                if (r1 ==0)
                 {
                     GetRandomType(2);
                     AddMission(2);
@@ -141,13 +138,13 @@ public class CarMission : BaseBuild
                 }
                 break;
             case 6:
-                float r2 = UnityEngine.Random.Range(0, 1);
-                if (r2 < 0.3f)
+                int r2 = UnityEngine.Random.Range(0, 3);
+                if (r2 == 0)
                 {
                     GetRandomType(2);
                     AddMission(2);
                 }
-                else if(0.3f < r2 && r2 < 0.6f)
+                else if(r2 == 1)
                 {
                     GetRandomType(4);
                     AddMission(4);
@@ -159,23 +156,50 @@ public class CarMission : BaseBuild
                 }
                 break;
         }
+        foreach(IngredientType key in listMission.Keys)
+        {
+            int value = listMission[key];
+            Debug.Log((key, value));
+        }
     }
     public void GetRandomType(int n)
     {
         for(int i = 0; i < n / 2; i++)
         {
-            listCurClothType[i] = machineManager.GetRandomTypeClothMachine();
-            while( i>0 && listCurClothType[i] == listCurClothType[i - 1])
+            ClothMachine curClothMachine = levelManager.machineManager.GetRandomTypeClothMachine();
+            if (!listCurClothMachine.Contains(curClothMachine))
             {
-                listCurClothType[i] = machineManager.GetRandomTypeClothMachine();
+                listCurClothMachine.Add(curClothMachine);
+            }
+            else
+            {
+                while (curClothMachine.clothPrefab.ingredientType == listCurClothMachine[i-1].clothPrefab.ingredientType)
+                {
+                    curClothMachine = levelManager.machineManager.GetRandomTypeClothMachine();
+                    if (!listCurClothMachine.Contains(curClothMachine))
+                    {
+                        listCurClothMachine.Add(curClothMachine);
+                    }
+                }
             }
         }
-        for (int j = 0; j < n / 2; j++)
+        for (int i = 0; i < n / 2; i++)
         {
-            listCurBagType[j] = machineManager.GetRandomTypeBagMachine();
-            while (j > 0 && listCurBagType[j] == listCurBagType[j - 1])
+            BagMachine curBagMachine = levelManager.machineManager.GetRandomTypeBagMachine();
+            if (!listCurBagMachine.Contains(curBagMachine))
             {
-                listCurBagType[j] = machineManager.GetRandomTypeBagMachine();
+                listCurBagMachine.Add(curBagMachine);
+            }
+            else
+            {
+                while (curBagMachine.clothPrefab.ingredientType == listCurBagMachine[i-1].clothPrefab.ingredientType)
+                {
+                    curBagMachine = levelManager.machineManager.GetRandomTypeBagMachine();
+                    if (!listCurBagMachine.Contains(curBagMachine))
+                    {
+                        listCurBagMachine.Add(curBagMachine);
+                    }
+                }
             }
         }
     }
@@ -184,16 +208,15 @@ public class CarMission : BaseBuild
     {
         for(int i = 0; i < n / 2; i++)
         {
-            int ranNumCloth = UnityEngine.Random.Range(1, 5);
-            int ranNumBag = UnityEngine.Random.Range(1, 5);
-            listMission.Add(listCurClothType[i], ranNumCloth);
-            listMission.Add(listCurBagType[i], ranNumBag);
+            int ranNumCloth = UnityEngine.Random.Range(1, 6);
+            int ranNumBag = UnityEngine.Random.Range(1, 6);
+            listMission.Add(listCurClothMachine[i].clothPrefab.ingredientType, ranNumCloth);
+            listMission.Add(listCurBagMachine[i].clothPrefab.ingredientType, ranNumBag);
         }
     }
     public void MissionEnd(bool isWin)
     {
         isOnMission = false;
-        isDoneMission = true;
         StopCoroutine(CountDownCarWait());
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         car.transform.DOMove(startPos.position, 1f).OnComplete(() =>
@@ -211,13 +234,12 @@ public class CarMission : BaseBuild
     }
     public void ClearMission()
     {
-        GetComponent<BoxCollider>().enabled = false;
+        checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         listMission.Clear();
-        listCurClothType.Clear();
-        listCurBagType.Clear();
+        listCurClothMachine.Clear();
+        listCurBagMachine.Clear();
         carWaiting = consCarWaiting;
         isReadyMission = true;
-        isDoneMission = false;
     }
     IEnumerator DelayMission(float time,Action spawnMission)
     {
@@ -226,8 +248,24 @@ public class CarMission : BaseBuild
     }
     IEnumerator CountDownCarWait()
     {
-        yield return new WaitForSeconds(1);
-        carWaiting--;
+        while (carWaiting > 0)
+        {
+            yield return new WaitForSeconds(1);
+            carWaiting--;
+        }
+       
+    }
+    public void StartCountDown()
+    {
+        if(carWaiting <= 0 || !isOnMission)
+        {
+            return;
+        }
+        CounterHelper.Instance.QueueAction(1, () =>
+        {
+            carWaiting--;
+            StartCountDown();
+        });
     }
     public void ReduceType(IngredientType type)
     {
@@ -237,7 +275,7 @@ public class CarMission : BaseBuild
                 int numCowCloth;
                 if (listMission.TryGetValue(IngredientType.COW_CLOTH, out numCowCloth))
                 {
-                    if (numCowCloth > 0)
+                    if (listMission[IngredientType.COW_CLOTH] > 0)
                     {
                         listMission[IngredientType.COW_CLOTH]--;
                         if (listMission[IngredientType.COW_CLOTH] == 0)
@@ -251,7 +289,7 @@ public class CarMission : BaseBuild
                 int numChickenCloth;
                 if (listMission.TryGetValue(IngredientType.CHICKEN_CLOTH, out numChickenCloth))
                 {
-                    if (numChickenCloth > 0)
+                    if (listMission[IngredientType.CHICKEN_CLOTH] > 0)
                     {
                         listMission[IngredientType.CHICKEN_CLOTH]--;
                         if(listMission[IngredientType.CHICKEN_CLOTH] == 0)
@@ -265,7 +303,7 @@ public class CarMission : BaseBuild
                 int numBearCloth;
                 if (listMission.TryGetValue(IngredientType.BEAR_CLOTH, out numBearCloth))
                 {
-                    if (numBearCloth > 0)
+                    if (listMission[IngredientType.BEAR_CLOTH] > 0)
                     {
                         listMission[IngredientType.BEAR_CLOTH]--;
                         if (listMission[IngredientType.BEAR_CLOTH] == 0)
@@ -279,7 +317,7 @@ public class CarMission : BaseBuild
                 int numCowBag;
                 if (listMission.TryGetValue(IngredientType.COW_BAG, out numCowBag))
                 {
-                    if (numCowBag > 0)
+                    if (listMission[IngredientType.COW_BAG] > 0)
                     {
                         listMission[IngredientType.COW_BAG]--;
                         if (listMission[IngredientType.COW_BAG] == 0)
@@ -293,7 +331,7 @@ public class CarMission : BaseBuild
                 int numChickenBag;
                 if (listMission.TryGetValue(IngredientType.CHICKEN_BAG, out numChickenBag))
                 {
-                    if (numChickenBag > 0)
+                    if (listMission[IngredientType.CHICKEN_BAG] > 0)
                     {
                         listMission[IngredientType.CHICKEN_BAG]--;
                         if (listMission[IngredientType.CHICKEN_BAG] == 0)
@@ -307,7 +345,7 @@ public class CarMission : BaseBuild
                 int numBearBag;
                 if (listMission.TryGetValue(IngredientType.BEAR_BAG, out numBearBag))
                 {
-                    if (numBearBag > 0)
+                    if (listMission[IngredientType.BEAR_BAG] > 0)
                     {
                         listMission[IngredientType.BEAR_BAG]--;
                         if (listMission[IngredientType.BEAR_BAG] == 0)
