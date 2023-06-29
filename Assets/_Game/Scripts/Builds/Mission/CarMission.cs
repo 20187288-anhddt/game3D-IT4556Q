@@ -164,6 +164,7 @@ public class CarMission : BaseBuild
             int value = listMission[key];
             Debug.Log((key, value));
         }
+        checkPushCarMission.SetisInItDataUI(false);
     }
     public void GetRandomType(int n)
     {
@@ -289,8 +290,92 @@ public class CarMission : BaseBuild
         CounterHelper.Instance.QueueAction(1, () =>
         {
             carWaiting--;
+            if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+            {
+                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
+            }
             StartCountDown();
         });
+    }
+    public void UpdateMission()
+    {
+        if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+        {
+            foreach (IngredientType key in listMission.Keys)
+            {
+                int value = listMission[key];
+                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).ShowItem(key, value);
+            }
+           (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetCompleteAllMission(CheckCompleteAll());
+        }
+      
+    }
+    private bool CheckCompleteAll()
+    {
+        bool isComplete = true;
+        int value = 0;
+        foreach (IngredientType key in listMission.Keys)
+        {
+            value = listMission[key];
+            if(value != 0)
+            {
+                return isComplete = false;
+            }
+        }
+        return isComplete;
+    }
+    public int GetRewardMoneyAllMission()
+    {
+        int value = 0;
+        int nhanvoi = 2;
+        foreach (IngredientType key in listMission.Keys)
+        {
+            switch (key)
+            {
+                //case IngredientType.SHEEP_CLOTH:
+                //    value += GameManager.Instance.dataPrice.Data.
+                //    break;
+                //case IngredientType.COW_BAG:
+                //    value += GameManager.Instance.dataPrice.Data.cowBag
+                //    break;
+                case IngredientType.BEAR_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
+                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * nhanvoi;
+                    break;
+                case IngredientType.CHICKEN_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
+                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.CHICKEN_CLOTH)) * nhanvoi;
+                    break;
+                case IngredientType.COW_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.cowOutfit *
+                   (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.COW_CLOTH)) * nhanvoi;
+                    break;
+                case IngredientType.CHICKEN_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.chickenBag *
+                       (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.CHICKEN_BAG)) * nhanvoi;
+                    break;
+                case IngredientType.COW_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.cowBag *
+                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.COW_BAG)) * nhanvoi;
+                    break;
+                case IngredientType.BEAR_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.bearBag *
+                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.BEAR_BAG)) * nhanvoi;
+                    break;
+            }
+        }
+        return value;
+    }
+    public void InItDataMissionCurrent()
+    {
+        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).CloseAllItem();
+        foreach (IngredientType key in listMission.Keys)
+        {
+            int value = listMission[key];
+            (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).InItData(value, key);
+        }
+         (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
+        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetMoneyCurrent(GetRewardMoneyAllMission());
     }
     public void ReduceType(IngredientType type)
     {
@@ -375,5 +460,6 @@ public class CarMission : BaseBuild
                 }
                 break;
         }
+        UpdateMission();
     }
 }

@@ -2,22 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities.Components;
+
 public class Canvas_Order : UI_Canvas
 {
-    private static Canvas_Order instane;
-    public static Canvas_Order Instane
-    {
-        get
-        {
-            if(instane == null)
-            {
-                instane = FindObjectOfType<Canvas_Order>();
-            }
-            return instane;
-        }
-    }
-
     [SerializeField] private List<Process_Item> process_Items;
     [SerializeField] private Process_Item process_Item_Prefab;
     [SerializeField] private Transform transformParent_Process_Item;
@@ -32,29 +19,20 @@ public class Canvas_Order : UI_Canvas
     [SerializeField] private Sprite spr_BG_Off;
     [Header("Button")]
     [SerializeField] private Button btn_Close;
-    [SerializeField] private Button btn_CloseAll;
     [SerializeField] private Button btn_Collect;
     [SerializeField] private Button btn_WatchVideo_CollectX3;
     private bool isCompleteAllMission = false;
     private int MoneyCurrent = 0;
-    private System.Action actionCollect;
     private void Awake()
     {
         InItData();
     }
     private void InItData()
     {
-        if(instane == null) { instane = this; }
-        btn_Close.onClick.AddListener(() => {
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
-            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
-        btn_CloseAll.onClick.AddListener(() => {
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
-            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
+        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_Collect.onClick.AddListener(Collect);
         btn_WatchVideo_CollectX3.onClick.AddListener(WatchVideo_CollectX3);
     }
-  
     //private void OnDisable()
     //{
     //    CloseAllItem();
@@ -71,23 +49,14 @@ public class Canvas_Order : UI_Canvas
             img_BG_Btn_Collect.sprite = spr_BG_Collect_On;
             img_BG_Btn_Collect_WatchVideo.sprite = spr_BG_CollectWatchVideo_On;
         }
-        if (Canvas_Bonus.Instance != null)
-        {
-            if (Canvas_Bonus.Instance.gameObject.activeInHierarchy)
-            {
-                Canvas_Bonus.Instance?.gameObject.SetActive(false);
-            }
-         
-        }
-        
     }
-    public void ShowItem(IngredientType ingredientType, int valueCurrent)
+    public void ShowItem(IngredientType ingredientType, int valueCurrent, Sprite Icon = null)
     {
         foreach (Process_Item process_Item in process_Items)
         {
             if (process_Item.GetIngredientType() == ingredientType)
             {
-                process_Item.LoadProcess(valueCurrent);
+                process_Item.LoadProcess(valueCurrent, Icon);
             }
         }
     }
@@ -100,7 +69,6 @@ public class Canvas_Order : UI_Canvas
         Process_Item process_Item_ = null;
         foreach (Process_Item process_Item in process_Items)
         {
-          // Debug.Log(process_Item);
             if (process_Item.IsClosed())
             {
                 process_Item.Open();
@@ -127,53 +95,26 @@ public class Canvas_Order : UI_Canvas
     {
         if (isCompleteAllMission)
         {
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
-            // Debug.Log("Collect");
-            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
-                 DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent);
+            Debug.Log("Collect");
+            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent);
             isCompleteAllMission = false;
-            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
-            actionCollect?.Invoke();
-
-            Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
-            parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
-            parameters[1] = new Firebase.Analytics.Parameter("value", MoneyCurrent);
-            parameters[2] = new Firebase.Analytics.Parameter("source", "Collect_Normal_In_Car");
-            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
         }
     }
     public void WatchVideo_CollectX3()
     {
         if (isCompleteAllMission)
         {
-            //  Debug.Log("Collect WatchVideo");
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
-            SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>
-            {
-                DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
-                DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent * 3);
-                isCompleteAllMission = false;
-                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
-                actionCollect?.Invoke();
-
-                Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
-                parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
-                parameters[1] = new Firebase.Analytics.Parameter("value", MoneyCurrent * 3);
-                parameters[2] = new Firebase.Analytics.Parameter("source", "Collect_WatchVideo_In_Car");
-                SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
-            });
+            Debug.Log("Collect WatchVideo");
+            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent * 3);
+            isCompleteAllMission = false;
         }
-    }
-    public void SetActionCollect(System.Action action)
-    {
-        actionCollect = action;
     }
     public void LoadTextMoneyCurrent()
     {
-        if (MoneyCurrent >= 1000)
+        if (MoneyCurrent > 1000)
         {
             float x = MoneyCurrent / 1000;
-            txt_Money.text = (x + ((MoneyCurrent - 1000 * x) / 1000)).ToString() + "K";
+            txt_Money.text = (x + ((MoneyCurrent - 1000 * x) / 1000)).ToString("F2") + "K";
             txt_Money.text = txt_Money.text.Replace(",", ".");
         }
         else if (MoneyCurrent > 100)
@@ -203,48 +144,5 @@ public class Canvas_Order : UI_Canvas
             }
         }
         return 0;
-    }
-    public override void Close()
-    {
-        // UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
-        Canvas_Home.Instance?.gameObject.SetActive(true);
-        Canvas_Bonus.Instance?.gameObject.SetActive(true);
-        base.Close();
-        UI_Manager.Instance?.ReMoveUI_To_Stack_UI_Open();
-        CameraController.Instance?.ResetFollowPlayer(false);
-    }
-    public override void Open()
-    {
-        base.Open();
-       // Close();
-       // base.Open();
-       // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
-        UI_Manager.Instance?.AddUI_To_Stack_UI_Open(this);
-        Canvas_Home.Instance?.gameObject.SetActive(false);
-        BuildController buildController = null;
-        switch (GameManager.Instance.curLevel)
-        {
-            case 0:
-                buildController = GameManager.Instance.GetBuildController(NameMap.Map_1);
-                break;
-            case 1:
-                buildController = GameManager.Instance.GetBuildController(NameMap.Map_2);
-                break;
-        }
-       
-        BuildIngredientController buildIngredientController = buildController.GetBuildIngredientController(IngredientType.CAR);
-        CameraController.Instance?.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
-        0, 2.5f, 2.5f, 2.5f);
-        //CloseDelay();
-        Invoke(nameof(CloseDelay), 0.05f);
-        Invoke(nameof(OpenDelay), 0.051f);
-    }
-    private void CloseDelay()
-    {
-        gameObject.SetActive(false);
-    }
-    private void OpenDelay()
-    {
-        gameObject.SetActive(true);
     }
 }

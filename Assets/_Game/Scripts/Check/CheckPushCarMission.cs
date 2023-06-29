@@ -8,6 +8,8 @@ public class CheckPushCarMission : MonoBehaviour
     private IngredientBase curIngredient;
     [SerializeField]
     private CarMission carMission;
+    private bool isInItDataUI = false;
+
     private void OnTriggerEnter(Collider other)
     {
         //if (carMission.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
@@ -17,6 +19,23 @@ public class CheckPushCarMission : MonoBehaviour
         {
             if (player is Player)
                 player.canCatch = true;
+            if (!isInItDataUI)
+            {
+                isInItDataUI = true;
+                carMission.InItDataMissionCurrent();
+            }
+            else
+            {
+                UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
         }
     }
     private void OnTriggerStay(Collider other)
@@ -24,6 +43,7 @@ public class CheckPushCarMission : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
+
             int v = -1;
             for(int i = 0;i<carMission.listMission.Keys.Count;i++)
             {
@@ -100,6 +120,11 @@ public class CheckPushCarMission : MonoBehaviour
                     }
                 }
             }
+            carMission.UpdateMission();
         }
+    }
+    public void SetisInItDataUI(bool isValue)
+    {
+        isInItDataUI = isValue;
     }
 }
