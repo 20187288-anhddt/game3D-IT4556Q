@@ -62,7 +62,8 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         if (isNaked && isReadyReset)
         {
             isReadyReset = false;
-            CounterHelper.Instance.QueueAction(timeDelayFur, () => { ResetWool(); });
+            CounterHelper.Instance.QueueAction(timeDelayFur, () => { 
+                ResetWool(); });
         }
         if (!habitat.isLock)
         {
@@ -87,9 +88,9 @@ public abstract class AnimalBase : MonoBehaviour,IAct
                     timeLive -= Time.deltaTime;
                     if (timeLive < 0)
                     {
-                        onIdlePos = true;
                         isReadyCountDown = false;
                         timeLive = consTimeLive;
+                        onIdlePos = true;
                     }
                 }
             }
@@ -107,6 +108,9 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             }
             else
             {
+                CounterHelper.Instance.QueueAction(consTimeLive, () => {
+                    onIdlePos = true;
+                });
                 UpdateState(IDLE_STATE);
             }
         }
@@ -114,16 +118,20 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public void RandomMoveOutSide()
     {
         int r = Random.Range(1, 10);
-        if (r < 0 && isReadyHaveFun)
+        if (r < 10 && isReadyHaveFun)
         {
             if (RandomPosition(false))
             {
+                Debug.Log("je");
                 isReadyHaveFun = false;
                 isInside = false;
                 UpdateState(HAVE_FUN_STATE);
             }
             else
             {
+                CounterHelper.Instance.QueueAction(consTimeLive, () => {
+                    onIdlePos = true;
+                });
                 UpdateState(IDLE_STATE);
             }
         }
@@ -172,7 +180,8 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void Run(bool isInside)
     {
-        if (!isInside)
+        navMeshAgent.isStopped = false;
+        if (isInside == false)
         {
             CounterHelper.Instance.QueueAction(3f, () => { GetComponent<CapsuleCollider>().enabled = true; });
         }
@@ -210,7 +219,7 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     }
     public virtual void Idle()
     {
-        
+        navMeshAgent.isStopped = true;
     }
 
     public virtual void Eat()
@@ -250,23 +259,23 @@ public abstract class AnimalBase : MonoBehaviour,IAct
     public bool RandomPosition(bool tmp)
     {
         bool checkIf = false;
-        float radius = 0;
         nextDes = Vector3.zero;
-        if (tmp)
+        float radius = 0;
+        switch (this.habitat.ingredientType)
         {
-            switch (habitat.ingredientType)
-            {
-                case IngredientType.CHICKEN:
-                    radius = 5f;
-                    break;
-                case IngredientType.COW:
-                    radius = 7.5f;
-                    break;
-                case IngredientType.BEAR:
-                    radius = 9f;
-                    break;
+            case IngredientType.CHICKEN:
+                radius = 5f;
+                break;
+            case IngredientType.COW:
+                radius = 7.5f;
+                break;
+            case IngredientType.BEAR:
+                radius = 9f;
+                break;
 
-            }
+        }
+        if (tmp == true)
+        {
             Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
             randomDirection += this.habitat.transform.position;
             UnityEngine.AI.NavMeshHit hit;
@@ -285,33 +294,33 @@ public abstract class AnimalBase : MonoBehaviour,IAct
                     int r1 = UnityEngine.Random.Range(0, 2);
                     if (r1 == 0)
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.COW);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.COW);
                     }
                     else
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.BEAR);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.BEAR);
                     }
                     break;
                 case IngredientType.COW:
                     int r2 = UnityEngine.Random.Range(0, 2);
                     if (r2 == 0)
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.CHICKEN);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.CHICKEN);
                     }
                     else
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.BEAR);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.BEAR);
                     }
                     break;
                 case IngredientType.BEAR:
                     int r3 = UnityEngine.Random.Range(0, 2);
                     if (r3 == 0)
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.COW);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.COW);
                     }
                     else
                     {
-                        curHabitat = habitatManager.GetHabitatWithType(IngredientType.CHICKEN);
+                        curHabitat = habitatManager.GetHabitatWithTypeForAnimal(IngredientType.CHICKEN);
                     }
                     break;
             }
@@ -322,19 +331,6 @@ public abstract class AnimalBase : MonoBehaviour,IAct
             }
             else
             {
-                switch (habitat.ingredientType)
-                {
-                    case IngredientType.CHICKEN:
-                        radius = 5f;
-                        break;
-                    case IngredientType.COW:
-                        radius = 7.5f;
-                        break;
-                    case IngredientType.BEAR:
-                        radius = 9f;
-                        break;
-
-                }
                 Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
                 randomDirection += curHabitat.transform.position;
                 UnityEngine.AI.NavMeshHit hit;
@@ -377,7 +373,6 @@ public abstract class AnimalBase : MonoBehaviour,IAct
         if (player != null)
         {
             GetComponent<CapsuleCollider>().enabled = false;
-            navMeshAgent.isStopped = true;
             myTransform.DORotate(new Vector3(0f,180f,0f), 0f);
             timeLive = consTimeLive;
             if (!habitat.allAnimals.Contains(this))
@@ -386,12 +381,10 @@ public abstract class AnimalBase : MonoBehaviour,IAct
                 Vector3 tmpPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)].position;
                 this.transform.DOMove(tmpPos, 0f);
             }
-            ResetWool();
             isInside = true;
             CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { 
                 isReadyHaveFun = true;
                 onIdlePos = true;
-                navMeshAgent.isStopped = false;
             });
             nextDes = Vector3.zero;
             UpdateState(IDLE_STATE);

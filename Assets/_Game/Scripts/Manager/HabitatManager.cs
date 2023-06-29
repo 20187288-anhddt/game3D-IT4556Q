@@ -58,4 +58,24 @@ public class HabitatManager : MonoBehaviour
         }
         return curHabitat;
     }
+    public Habitat GetHabitatWithTypeForAnimal(IngredientType type)
+    {
+        Habitat curHabitat = null;
+        switch (type)
+        {
+            case IngredientType.SHEEP:
+                curHabitat = listSheepHabitatsActive[0];
+                break;
+            case IngredientType.COW:
+                curHabitat = listCowHabitatsActive[0];
+                break;
+            case IngredientType.CHICKEN:
+                curHabitat = listChickenHabitatsActive[0];
+                break;
+            case IngredientType.BEAR:
+                curHabitat = listBearHabitatsActive[0];
+                break;
+        }
+        return curHabitat;
+    }
 }
