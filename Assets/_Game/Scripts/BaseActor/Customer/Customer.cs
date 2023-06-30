@@ -50,7 +50,7 @@ public class Customer : BaseCustomer,IAct
     }
     private void Start()
     {
-        //anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);  
     }
     public void ReloadSetDestination()
@@ -271,51 +271,51 @@ public class Customer : BaseCustomer,IAct
     }
     public void ChangeAnim()
     {
-        //anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
-        //if (navMeshAgent.velocity.magnitude < 0.1f)
-        //{
-        //    if (!gotOutfit)
-        //    {
-        //        anim.Play("IdleNormal");
-        //    }
-        //    else
-        //    {
-        //        switch (this.outfitType)
-        //        {
-        //            case IngredientType.COW:
-        //                anim.Play("IdleCow");
-        //                break;
-        //            case IngredientType.CHICKEN:
-        //                anim.Play("IdleChicken");
-        //                break;
-        //            case IngredientType.BEAR:
-        //                anim.Play("IdleBear");
-        //                break;
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    if (!gotOutfit)
-        //    {
-        //        anim.Play("Walk");
-        //    }
-        //    else
-        //    {
-        //        switch (this.outfitType)
-        //        {
-        //            case IngredientType.COW:
-        //                anim.Play("CowWalk");
-        //                break;
-        //            case IngredientType.CHICKEN:
-        //                anim.Play("ChickenWalk");
-        //                break;
-        //            case IngredientType.BEAR:
-        //                anim.Play("BearWalk");
-        //                break;
-        //        }
-        //    }
-        //}
+        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        if (navMeshAgent.velocity.magnitude < 0.1f)
+        {
+            if (!gotOutfit)
+            {
+                anim.Play("IdleNormal");
+            }
+            else
+            {
+                switch (this.outfitType)
+                {
+                    case IngredientType.COW:
+                        anim.Play("IdleCow");
+                        break;
+                    case IngredientType.CHICKEN:
+                        anim.Play("IdleChicken");
+                        break;
+                    case IngredientType.BEAR:
+                        anim.Play("IdleBear");
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if (!gotOutfit)
+            {
+                anim.Play("Walk");
+            }
+            else
+            {
+                switch (this.outfitType)
+                {
+                    case IngredientType.COW:
+                        anim.Play("CowWalk");
+                        break;
+                    case IngredientType.CHICKEN:
+                        anim.Play("ChickenWalk");
+                        break;
+                    case IngredientType.BEAR:
+                        anim.Play("BearWalk");
+                        break;
+                }
+            }
+        }
     }
     public void ChangeOutfit(IngredientType type)
     {
@@ -357,20 +357,20 @@ public class Customer : BaseCustomer,IAct
     }
     public void ChangeFlag(IngredientType type)
     {
-        switch (type)
-        {
-            case IngredientType.COW:
-                flag[0].SetActive(true);
-                break;
-            case IngredientType.SHEEP:
-                flag[1].SetActive(true);
-                break;
-            case IngredientType.CHICKEN:
-                flag[2].SetActive(true);
-                break;
-            case IngredientType.BEAR:
-                flag[3].SetActive(true);
-                break;
-        }
+        //switch (type)
+        //{
+        //    case IngredientType.COW:
+        //        flag[0].SetActive(true);
+        //        break;
+        //    case IngredientType.SHEEP:
+        //        flag[1].SetActive(true);
+        //        break;
+        //    case IngredientType.CHICKEN:
+        //        flag[2].SetActive(true);
+        //        break;
+        //    case IngredientType.BEAR:
+        //        flag[3].SetActive(true);
+        //        break;
+        //}
     }
 }
