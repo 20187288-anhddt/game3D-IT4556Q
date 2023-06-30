@@ -115,11 +115,10 @@ public class Checkout : BuildCoins,ILock
                             GetComponent<BoxCollider>().enabled = true;
                             staffModel.SetActive(false);
                         }
-                        //coinSpawn.gameObject.SetActive(true);
-                        //if(coinSave > 0)
-                        //{
-                        //    SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE,this.transform);
-                        //}
+                        if (coinSave > 0)
+                        {
+                            SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
+                        }
                     });
                 }); ;
             });
@@ -141,10 +140,7 @@ public class Checkout : BuildCoins,ILock
         }
         checkUnlock.gameObject.SetActive(false);
         coinSpawn.gameObject.SetActive(true);
-        if (coinSave > 0)
-        {
-            SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
-        }
+      
         //checkPush.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
 

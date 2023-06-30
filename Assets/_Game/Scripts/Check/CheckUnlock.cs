@@ -90,30 +90,24 @@ public class CheckUnlock : MonoBehaviour
                 {
                     if (normal.CurrentCoin > 0)
                     {
-                        unlockBuild(unlock.CoinValue);
-                        // (unlock as Player).DelayCatch(30);
-                        //unlock.UnlockMap(1);
-                        //(unlock as Player).DelayCatch(0f);
-                        //if (t < 1.5f)
-                        //{
-                        //    if (!(unlock as Player).canCatch)
-                        //        return;
-                        //    (unlock as Player).canCatch = false;
-                        //   // normal.UnLock(true, true);
-                        //    unlockBuild(unlock.CoinValue);
-                        //    //unlock.UnlockMap(1);
-                        //    //(unlock as Player).DelayCatch(0f);
-                        //}
-                        //else
-                        //{
-                        //    if ((unlock as Player).canCatch)
-                        //    {
-                        //        //normal.UnLock(true, true);
-                        //        unlockQuick(unlock);
-                        //    }                             
-                        //    else
-                        //        (unlock as Player).DelayCatch(1);
-                        //}
+                        if (t < 1.5f)
+                        {
+                            if (!(unlock as Player).canCatch)
+                                return;
+                            (unlock as Player).canCatch = false;
+                            unlockBuild(unlock.CoinValue);
+                            //unlock.UnlockMap(1);
+                            (unlock as Player).DelayCatch(0f);
+                        }
+                        else
+                        {
+                            if ((unlock as Player).canCatch)
+                            {
+                                unlockQuick(unlock);
+                            }
+                            else
+                                (unlock as Player).DelayCatch(1);
+                        }
                     }
                     else
                     {
@@ -141,7 +135,6 @@ public class CheckUnlock : MonoBehaviour
                     bound[1].DOFillAmount(1, 1.5f).OnComplete(() => { bound[1].fillAmount = 0; });
                     if (tmp < 0)
                     {
-                        //normal.UnLock();
                         //if (!MaxManager.Ins.isStartWaitting_Reward)
                         //{
                         //    MaxManager.Ins.ShowRewardedAd("unlock_build", () => { normal.UnLock(); });

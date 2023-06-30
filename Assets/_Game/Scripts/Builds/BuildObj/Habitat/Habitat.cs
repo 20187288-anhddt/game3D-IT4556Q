@@ -32,6 +32,7 @@ public class Habitat : BuildObj, ILock
     [SerializeField]
     private int maxShit;
     private Vector3 randomShitPos;
+    public int numShitSave;
 
     // Start is called before the first frame update
     public override void Start()
@@ -97,6 +98,10 @@ public class Habitat : BuildObj, ILock
                         {
                             isReadyShit = true;
                         });
+                        if(numShitSave > 0)
+                        {
+                            TakeAShitOnStart(numShitSave);
+                        }
                     });
                 }); ;
             });
@@ -270,6 +275,17 @@ public class Habitat : BuildObj, ILock
             randomPos = new Vector3(hit.position.x, myTransform.position.y, hit.position.z);
         }
         return randomPos;
+    }
+    public void TakeAShitOnStart(int n)
+    {
+        while (n > 0)
+        {
+            if (CheckTakeAShit())
+            {
+                TakeAShit();
+                n--;
+            }
+        }
     }
 }
 
