@@ -29,18 +29,13 @@ public class BagCloset : ClosetBase
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        foreach (PlaceToBuyBag placeToBuyBag in listPlaceToBuyBag)
-        {
-            placeToBuyBag.gameObject.SetActive(true);
-            //placeToBuyBag.StartInGame();
-        }
-      
         p.isUnlock = true;
+      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
-        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
+        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
         {
-            p.transform.position = checkUnlock.transform.position - Vector3.forward * 4;
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
         }
         if (isPlayAnimUnlock) //anim
         {
@@ -49,6 +44,18 @@ public class BagCloset : ClosetBase
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                        //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                        foreach (PlaceToBuyBag place in listPlaceToBuyBag)
+                        {
+                            place.gameObject.SetActive(true);
+
+                        }
+                        foreach (BagPos o in listBagPos)
+                        {
+                            o.gameObject.SetActive(true);
+                            o.StartInGame(); 
+                        }
+                        checkPushBagCloset.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -56,14 +63,25 @@ public class BagCloset : ClosetBase
         else
         {
             p.isUnlock = false;
+            foreach (PlaceToBuyBag place in listPlaceToBuyBag)
+            {
+                place.gameObject.SetActive(true);
+
+            }
+            foreach (BagPos o in listBagPos)
+            {
+                o.gameObject.SetActive(true);
+                o.StartInGame();
+            }
+        //    EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+
+            checkPushBagCloset.gameObject.SetActive(true);
         }
-     
         checkUnlock.gameObject.SetActive(false);
-        checkPushBagCloset.gameObject.SetActive(true);
+       
         //GetComponent<BoxCollider>().enabled = true;
        //levelManager.closetManager.listAllActiveClosets.Add(this);
-       if(!levelManager.closetManager.listBagClosets.Contains(this))
-            levelManager.closetManager.listBagClosets.Add(this);
+       
         switch (ingredientType)
         {
             case IngredientType.BEAR:
@@ -119,6 +137,8 @@ public class BagCloset : ClosetBase
                 }
                 break;
         }
+        if (!levelManager.closetManager.listBagClosets.Contains(this))
+            levelManager.closetManager.listBagClosets.Add(this);
     }
     public override void Start()
     {
@@ -128,7 +148,7 @@ public class BagCloset : ClosetBase
     public void SpawnOutfit()
     {
         BagPos o = GetEmtyPos();
-        var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, o.transform.position, transform.rotation);
+        var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, o.myTransform.position, myTransform.rotation);
         (curBag as BagBase).ResetOutfit();
         if (!listBags.Contains(curBag as BagBase))
         {
@@ -136,23 +156,26 @@ public class BagCloset : ClosetBase
             (curBag as BagBase).AddPos(o);
             listBags.Add(curBag as BagBase);
         }
-        curBag.transform.parent = o.transform;
-        curBag.transform.position = o.transform.position;
-        curBag.transform.localRotation = Quaternion.identity;
+        (curBag as BagBase).myTransform.parent = o.myTransform;
+        (curBag as BagBase).myTransform.position = o.myTransform.position;
+        (curBag as BagBase).myTransform.localRotation = Quaternion.identity;
     }
     public override void StartInGame()
     {
         base.StartInGame();
+        CurrentCoin = pirceObject.Get_Pirce();
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+           dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         foreach (PlaceToBuyBag p in listPlaceToBuyBag)
         {  
             p.SetCloset(this);
             p.StartInGame();
-            p.gameObject.SetActive(false);
+            //p.gameObject.SetActive(false);
         }
         foreach (BagPos o in listBagPos)
         {
             o.SetCloset(this);
-            o.StartInGame();
+            //o.gameObject.SetActive(false);
         }
         if (isLock)
         {

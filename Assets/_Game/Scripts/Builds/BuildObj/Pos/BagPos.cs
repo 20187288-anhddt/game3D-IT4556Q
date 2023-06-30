@@ -8,14 +8,13 @@ public class BagPos : PosBase
     public BagBase curOutfit;
     [SerializeField]
     private BagBase outFitPrefab;
-    public int IDPos;
     public void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }
     }
     public override void StartInGame()
     {
-       // haveOutfit = true;
+        haveOutfit = true;
         if (!closet.isLock)
         {
             if (haveOutfit)
@@ -35,7 +34,6 @@ public class BagPos : PosBase
     }
     public override void SpawnOnStart()
     {
-        haveOutfit = true;
         var curBag = AllPoolContainer.Instance.Spawn(outFitPrefab, myTransform.position, myTransform.rotation);
         (curBag as BagBase).ResetOutfit();
         if (!(closet as BagCloset).listBags.Contains(curBag as BagBase))
@@ -43,7 +41,6 @@ public class BagPos : PosBase
             AddOutfit(curBag as BagBase);
             (curBag as BagBase).AddPos(this);
             (closet as BagCloset).listBags.Add(curBag as BagBase);
-          //  Debug.Log("Spawn");
         }
         (curBag as BagBase).myTransform.parent = myTransform;
         (curBag as BagBase).myTransform.position = myTransform.position;

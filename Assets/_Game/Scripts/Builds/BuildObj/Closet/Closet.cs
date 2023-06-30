@@ -32,18 +32,13 @@ public class Closet : ClosetBase, ILock
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        foreach (PlaceToBuy placeToBuy in listPlaceToBuy)
-        {
-            placeToBuy.gameObject.SetActive(true);
-            //placeToBuy.StartInGame();
-        }
-
         p.isUnlock = true;
+      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
-            p.transform.position = checkUnlock.transform.position - Vector3.forward * 4;
+            p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
         }
         if (isPlayAnimUnlock) //anim
         {
@@ -54,6 +49,17 @@ public class Closet : ClosetBase, ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                        //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                        foreach (PlaceToBuy place in listPlaceToBuy)
+                        {
+                            place.gameObject.SetActive(true);
+                        }
+                        foreach (OutfitPos o in listOutfitPos)
+                        {
+                            o.gameObject.SetActive(true);
+                            o.StartInGame();
+                        }
+                        checkPushCloset.gameObject.SetActive(true);
                     });
                 }); ;
             });
@@ -61,15 +67,22 @@ public class Closet : ClosetBase, ILock
         else
         {
             p.isUnlock = false;
+            //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+            foreach (PlaceToBuy place in listPlaceToBuy)
+            {
+                place.gameObject.SetActive(true);
+            }
+            foreach (OutfitPos o in listOutfitPos)
+            {
+                o.gameObject.SetActive(true);
+                o.StartInGame();
+            }
+            checkPushCloset.gameObject.SetActive(true);
         }
         checkUnlock.gameObject.SetActive(false);
-        checkPushCloset.gameObject.SetActive(true);
         //GetComponent<BoxCollider>().enabled = true;
         //levelManager.closetManager.listAllActiveClosets.Add(this);
-        if (!levelManager.closetManager.listClosets.Contains(this))
-        {
-            levelManager.closetManager.listClosets.Add(this);
-        }
+        
         switch (ingredientType)
         {
             case IngredientType.BEAR:
@@ -141,6 +154,10 @@ public class Closet : ClosetBase, ILock
              
                 break;
         }
+        if (!levelManager.closetManager.listClosets.Contains(this))
+        {
+            levelManager.closetManager.listClosets.Add(this);
+        }
     }
     public override void Start()
     {
@@ -151,7 +168,7 @@ public class Closet : ClosetBase, ILock
     public void SpawnOutfit()
     {
         OutfitPos o = GetEmtyPos();
-        var curOutfit = AllPoolContainer.Instance.Spawn(outFitPrefab, o.transform.position, transform.rotation);
+        var curOutfit = AllPoolContainer.Instance.Spawn(outFitPrefab, o.myTransform.position, myTransform.rotation);
         (curOutfit as OutfitBase).ResetOutfit();
         if (!listOutfits.Contains(curOutfit as OutfitBase))
         {
@@ -159,24 +176,27 @@ public class Closet : ClosetBase, ILock
             (curOutfit as OutfitBase).AddPos(o);
             listOutfits.Add(curOutfit as OutfitBase);     
         }
-        curOutfit.transform.parent = o.transform;
-        curOutfit.transform.position = o.transform.position;
-        curOutfit.transform.localRotation = Quaternion.identity;
+        (curOutfit as OutfitBase).myTransform.parent = o.myTransform;
+        (curOutfit as OutfitBase).myTransform.position = o.myTransform.position;
+        (curOutfit as OutfitBase).myTransform.localRotation = Quaternion.identity;
 
     }
     public override void StartInGame()
     {
         base.StartInGame();
-
+        CurrentCoin = pirceObject.Get_Pirce();
+        defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
+           dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         foreach (PlaceToBuy p in listPlaceToBuy)
         {
             p.SetCloset(this);
             p.StartInGame();
+            //p.gameObject.SetActive(false);
         }
         foreach (OutfitPos o in listOutfitPos)
         {
             o.SetCloset(this);
-            o.StartInGame();
+            //o.gameObject.SetActive(false);
         }
         if (isLock)
         {
