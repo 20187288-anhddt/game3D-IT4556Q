@@ -103,7 +103,7 @@ public class EventBounsController : Singleton<EventBounsController>
         }
         infoBonus.uI_Bonus.Active(true);
         infoBonus.uI_Bonus.InItTimeSecond(infoBonus.timeEnd_Show_Bonus);
-       
+        infoBonus.uI_Bonus.SetTimeBuff(infoBonus.timeEnd_Bonus);
     }
     IEnumerator IE_DelayAction(float m_timeDelay, System.Action action)
     {

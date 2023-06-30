@@ -11,6 +11,7 @@ public class UI_Bonus : UI_Child
     protected float timeSecond = 0;
     protected bool isInItTime = false;
     [SerializeField] protected bool On_Bonus = false;
+    protected float timeBuff;
     public void InItTimeSecond(float time)
     {
         timeSecond = time;
@@ -46,6 +47,10 @@ public class UI_Bonus : UI_Child
     public virtual void StopReward()
     {
 
+    }
+    public void SetTimeBuff(float value)
+    {
+        timeBuff = value;
     }
 }
 public enum TypeBonus
