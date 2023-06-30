@@ -57,14 +57,14 @@ public class CameraController : GenerticSingleton<CameraController>
             {
                 ResetFollowPlayer();
                 actionEndFollow?.Invoke();
-            }, 5));
+            }, 2.5f));
         }
         else
         {
             StartCoroutine(IE_DelayAction(() =>
             {
                 actionEndFollow?.Invoke();
-            }, 5));
+            }, 3.5f));
 
         }
 
