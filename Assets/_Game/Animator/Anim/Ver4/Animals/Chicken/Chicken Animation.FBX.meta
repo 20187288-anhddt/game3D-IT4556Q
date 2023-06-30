@@ -1,0 +1,393 @@
+fileFormatVersion: 2
+guid: 05af559d3889ca149beecaa59cf0149e
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Chicken_walk
+  - first:
+      74: 6903112609225889588
+    second: Chicken_idle_dance
+  - first:
+      74: 6674674018012329021
+    second: Chicken_idle_eat
+  - first:
+      74: 2387124405078017325
+    second: Chicken_idle_sleep
+  - first:
+      74: -8507947397121237094
+    second: Chicken_jump
+  - first:
+      74: -8985547343830528488
+    second: Chicken_suprise
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: <Root Transform>
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Chicken_walk
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 5
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Chicken_idle_dance
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 35
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Chicken_idle_eat
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 95
+      lastFrame: 105
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Chicken_idle_sleep
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 110
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Chicken_jump
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 275
+      lastFrame: 290
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Chicken_suprise
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 295
+      lastFrame: 325
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Chicken Animation(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Chicken
+      parentName: Chicken Animation(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.01, y: 0.01, z: 0.01}
+    - name: hennude
+      parentName: Chicken
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 1.7763568e-15, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ALL
+      parentName: Chicken Animation(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -2.1648906e-17, y: 0.7071067, z: 2.1648903e-17, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IK Chain001
+      parentName: ALL
+      position: {x: 0.03607447, y: 0.02193005, z: 0.26421046}
+      rotation: {x: -0.50000006, y: -0.49999997, z: -0.49999997, w: 0.50000006}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BD
+      parentName: ALL
+      position: {x: -0.000000026411067, y: 0.6042148, z: 0}
+      rotation: {x: 0.000000021855687, y: -0, z: -0.00000002185569, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 0.9999999}
+    - name: Bone001
+      parentName: BD
+      position: {x: 0.043041214, y: -0.13994795, z: 0.2642105}
+      rotation: {x: -0.0000012516975, y: -0.0000011622906, z: 0.7015176, w: 0.7126522}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Bone002
+      parentName: Bone001
+      position: {x: -0.44239166, y: 0.00000070780516, z: 0}
+      rotation: {x: 0.0000014295439, y: 0.0000012760903, z: -0.6816487, w: 0.73167974}
+      scale: {x: 0.99999994, y: 0.9999998, z: 1}
+    - name: Bone003
+      parentName: BD
+      position: {x: 0.04304129, y: -0.13994795, z: -0.26615912}
+      rotation: {x: -0.0000012516975, y: -0.0000011622906, z: 0.7015176, w: 0.7126522}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Bone004
+      parentName: Bone003
+      position: {x: -0.44239166, y: 0.00000070780516, z: 0}
+      rotation: {x: 0.0000014295439, y: 0.0000012760903, z: -0.6816487, w: 0.73167974}
+      scale: {x: 0.99999994, y: 0.9999998, z: 1}
+    - name: Bone012
+      parentName: BD
+      position: {x: 0.4889412, y: 0.24245486, z: 0.000000059604645}
+      rotation: {x: 0.00000009252445, y: 0.0000000141816265, z: 0.9897747, w: -0.14263952}
+      scale: {x: 0.9999998, y: 0.9999999, z: 0.99999994}
+    - name: Bone005
+      parentName: BD
+      position: {x: -0.00059777807, y: 0.0102595985, z: 0}
+      rotation: {x: -0.000000018770026, y: 0.00000007821067, z: -0.51228344, w: 0.85881644}
+      scale: {x: 0.9999999, y: 0.9999999, z: 1}
+    - name: Bone013
+      parentName: Bone005
+      position: {x: -0.41081762, y: -0.2733204, z: 0.43979514}
+      rotation: {x: -0.038595308, y: -0.018619906, z: 0.8998354, w: -0.43411985}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Bone015
+      parentName: Bone005
+      position: {x: -0.4108175, y: -0.2733204, z: -0.44000012}
+      rotation: {x: 0.03874593, y: 0.018693024, z: 0.8998288, w: -0.43411696}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+    - name: Bone006
+      parentName: Bone005
+      position: {x: -0.6403133, y: 0.00000011920929, z: -0.00000004213901}
+      rotation: {x: 0.0000000015999203, y: 0.000000005286474, z: -0.159409, w: 0.98721266}
+      scale: {x: 0.9999997, y: 0.99999994, z: 1}
+    - name: Bone007
+      parentName: Bone006
+      position: {x: -0.23750949, y: 0.0000002682209, z: -7.1054274e-15}
+      rotation: {x: -0.0000000040429873, y: 0.000000027857201, z: 0.13730735, w: -0.9905285}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1}
+    - name: Bone010
+      parentName: Bone007
+      position: {x: -0.03571579, y: -0.25182778, z: -0.00000011920929}
+      rotation: {x: 0.000000093553425, y: 0.00000022964224, z: -0.8793591, w: -0.47615927}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000002}
+    - name: Bone008
+      parentName: Bone007
+      position: {x: -0.408185, y: -0.0000040233135, z: -5.5067062e-14}
+      rotation: {x: -0.00000004035987, y: -0.000000031325772, z: -0.10370667, w: 0.994608}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000001}
+    - name: IK Chain002
+      parentName: Chicken Animation(Clone)
+      position: {x: -0.26615912, y: 0.021930039, z: -0.0360745}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
