@@ -21,6 +21,7 @@ public class Canvas_Home : UI_Canvas
     [SerializeField] private Button btn_Customize;
     [SerializeField] private Button btn_Iap;
     [SerializeField] private Button btn_Oder;
+    [SerializeField] private Button btn_Upgrade;
     [SerializeField] private Text txt_Time_Order;
     private System.Action actionClickShowOder;
 
@@ -35,6 +36,7 @@ public class Canvas_Home : UI_Canvas
         btn_Customize.onClick.AddListener(Open_Customize);
         btn_Iap.onClick.AddListener(Open_Iap);
         btn_Oder.onClick.AddListener(Open_UI_Oder);
+        btn_Upgrade.onClick.AddListener(Open_UI_Upgrade);
         NotShow_Btn_Oder();
     }
     public void Open_Settings()
@@ -53,6 +55,10 @@ public class Canvas_Home : UI_Canvas
     {
         UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
         actionClickShowOder?.Invoke();
+    }
+    public void Open_UI_Upgrade()
+    {
+        UI_Manager.Instance.OpenUI(NameUI.Canvas_Upgrades);
     }
     public void Show_Btn_Oder(System.Action actionOpen_Oder)
     {
