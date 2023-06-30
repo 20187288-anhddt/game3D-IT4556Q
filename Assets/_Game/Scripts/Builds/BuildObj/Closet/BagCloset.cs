@@ -51,11 +51,11 @@ public class BagCloset : ClosetBase
                             place.gameObject.SetActive(true);
 
                         }
-                        foreach (BagPos o in listBagPos)
-                        {
-                            o.gameObject.SetActive(true);
-                            o.StartInGame(); 
-                        }
+                        //foreach (BagPos o in listBagPos)
+                        //{
+                        //    o.gameObject.SetActive(true);
+                        //    o.StartInGame();
+                        //}
                         checkPushBagCloset.gameObject.SetActive(true);
                         if (CameraController.Instance.IsCameraFollowPlayer())
                         {
@@ -160,6 +160,7 @@ public class BagCloset : ClosetBase
             o.AddOutfit(curBag as BagBase);
             (curBag as BagBase).AddPos(o);
             listBags.Add(curBag as BagBase);
+            Debug.Log("Spawn");
         }
         (curBag as BagBase).myTransform.parent = o.myTransform;
         (curBag as BagBase).myTransform.position = o.myTransform.position;
@@ -199,6 +200,11 @@ public class BagCloset : ClosetBase
         //    UnLock();
         //}
         checkUnlock.UpdateUI();
+        foreach (BagPos o in listBagPos)
+        {
+            o.gameObject.SetActive(true);
+            o.StartInGame();
+        }
     }
 
     public BagBase GetAvailableOutfit()
