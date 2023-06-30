@@ -17,11 +17,14 @@ public class MachineBase : BuildObj, ILock
     public bool IsLock { get => isLock; set => isLock = value; }
     public float DefaultCoin { get => defaultCoin; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
+    public int numInputSave;
+    public int numOutputSave;
     public bool isHaveInStaff;
     public bool isHaveOutStaff;
     public Transform inStaffPos;
     public Transform outStaffPos;
     public UI_InfoBuild uI_InfoBuild;
+    public FurBase furPrefabs;
 
     public void ShortCutIngredients()
     {
@@ -35,5 +38,33 @@ public class MachineBase : BuildObj, ILock
             }
         }
     }
+    public void SpawnOnStart(int numInput, int numOutput)
+    {
+        SpawnInputOnStart(numInput);
+        SpawnOutputOnStart(numOutput);
+    }
+    public void SpawnInputOnStart(int n)
+    {
+        if (n <= 0)
+        {
+            return;
+        }
+        else
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                var curIngre = AllPoolContainer.Instance.Spawn(furPrefabs, this.inIngredientPos.position, Quaternion.identity);
+                curIngre.transform.parent = inIngredientPos;
+                curIngre.transform.localRotation = Quaternion.identity;
+                if (!ingredients.Contains(curIngre as FurBase))
+                    ingredients.Add(curIngre as FurBase);
+                curIngre.transform.position = Vector3.up * this.ingredients.Count * (curIngre as FurBase).ingreScale + inIngredientPos.position;
+                ShortCutIngredients();
+            }
+        }
+    }
+    public virtual void SpawnOutputOnStart(int m)
+    {
 
+    }
 }

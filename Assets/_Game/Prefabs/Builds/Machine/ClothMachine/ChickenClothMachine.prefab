@@ -245,11 +245,14 @@ MonoBehaviour:
   cenIngredientPos: {fileID: 6552183797602764572}
   outIngredientPos: {fileID: 6506684948946149928}
   delayInput: 0.5
+  numInputSave: 0
+  numOutputSave: 0
   isHaveInStaff: 0
   isHaveOutStaff: 0
   inStaffPos: {fileID: 3020050890968963790}
   outStaffPos: {fileID: 8599238465264377116}
   uI_InfoBuild: {fileID: 3359839169483774652}
+  furPrefabs: {fileID: 3182847803859577379, guid: 5b3ac4a6787480b46a945dc2a2816ab5, type: 3}
   outCloths: []
   clothPrefab: {fileID: 5381042090951296771, guid: 2beb07c64b41cef48a922266bcb36834, type: 3}
   unlockModel: {fileID: 482000883887733116}

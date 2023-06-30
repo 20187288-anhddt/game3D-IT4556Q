@@ -291,7 +291,7 @@ public class Habitat : BuildObj, ILock
             }
         }
     }
-    public void SpawnAnimal(bool isHire)
+    public void SpawnAnimal(bool isHired)
     {
         Vector3 randomPos = Vector3.zero;
         while(Vector3.Distance(randomPos,Vector3.zero) == 0)
@@ -303,7 +303,7 @@ public class Habitat : BuildObj, ILock
                 allAnimals.Add(curAnimal as AnimalBase);
                 (curAnimal as AnimalBase).SetHabitat(this);
                 (curAnimal as AnimalBase).StartInGame();
-                if (isHire == true)
+                if (isHired == true)
                 {
                     numAnimalSave++;
                 }

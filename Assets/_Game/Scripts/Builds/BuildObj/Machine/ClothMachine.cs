@@ -54,6 +54,7 @@ public class ClothMachine : MachineBase
                         checkCollectCloth.gameObject.SetActive(true);
                         checkPush.gameObject.SetActive(true);
                         uI_InfoBuild.gameObject.SetActive(true);
+                        SpawnOnStart(numInputSave, numOutputSave);
                     });
                 }); ;
             });
@@ -164,7 +165,7 @@ public class ClothMachine : MachineBase
                 CounterHelper.Instance.QueueAction(delayInput, () => 
                 {
                     InputMoveToCenter();
-                });        
+                },1);        
             }        
         }
         if (!isReadyInToMid)
@@ -267,6 +268,8 @@ public class ClothMachine : MachineBase
             checkUnlock.gameObject.SetActive(true);
             uI_InfoBuild.gameObject.SetActive(false);
         }
+        numInputSave = 5;
+        numOutputSave = 5;
         //else
         //{
         //    UnLock();
@@ -274,5 +277,43 @@ public class ClothMachine : MachineBase
         checkUnlock.UpdateUI();
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
         LoadAndSetData();
+    }
+    //public override void SpawnInputOnStart(int n)
+    //{
+    //    if (n <= 0)
+    //    {
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        for (int i = 1; i <= n; i++)
+    //        {
+    //            var curIngre = AllPoolContainer.Instance.Spawn(furPrefabs, this.inIngredientPos.position, Quaternion.identity);
+    //            curIngre.transform.parent = inIngredientPos;
+    //            curIngre.transform.localRotation = Quaternion.identity;
+    //            if (!ingredients.Contains(curIngre as FurBase))
+    //                ingredients.Add(curIngre as FurBase);
+    //            curIngre.transform.position = Vector3.up * this.ingredients.Count * (curIngre as FurBase).ingreScale + inIngredientPos.position;
+    //            ShortCutIngredients();
+    //        }
+    //    }
+    //}
+    public override void SpawnOutputOnStart(int m)
+    {
+        if (m <= 0)
+        {
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < m; i++)
+            {
+                GetClothPos(outCloths.Count);
+                var curCloth = AllPoolContainer.Instance.Spawn(clothPrefab, curClothPos, Quaternion.identity);
+                outCloths.Add(curCloth as ClothBase);
+                curCloth.transform.parent = outIngredientPos;
+                ShortCutOutCloth();
+            }
+        }
     }
 }
