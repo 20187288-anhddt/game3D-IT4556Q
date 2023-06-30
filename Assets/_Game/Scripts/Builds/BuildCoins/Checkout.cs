@@ -289,7 +289,10 @@ public class Checkout : BuildCoins,ILock
                 var g = AllPoolContainer.Instance.Spawn(coinPrefab, cusPos.position, Quaternion.identity);
                 Vector3 cur = coinSpawn.SpawnObjectOnComplete(coins.Count);
                 coins.Add(g as Coin);
-                coinSave++;
+                if (typeBag != IngredientType.NONE && typeOutfit != IngredientType.NONE)
+                {
+                    coinSave++;
+                }
                 g.transform.DOLocalJump(cur, 5f, 1, 0.5f).OnComplete(() =>
                 {
                     //float r = UnityEngine.Random.Range(-5, 5);
