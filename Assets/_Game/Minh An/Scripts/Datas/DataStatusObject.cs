@@ -24,8 +24,9 @@ public class DataStatusObject : DataBase
         SetFileName(nameof(Status_All_Level_Object) + status_All_Level_Object.nameObject_This +
             "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
         LoadData();
+        IsInItData = true;
         // OnBuy();
-       // OnBought();
+        // OnBought();
     }
     public override void SaveData()
     {
@@ -48,7 +49,7 @@ public class DataStatusObject : DataBase
     }
     public Status_All_Level_Object GetStatus_All_Level_Object()
     {
-       // CheckInItData();
+        //CheckInItData();
         return status_All_Level_Object;
     }
     public bool isStatusActive(StatusObject statusObjectCheck = null)

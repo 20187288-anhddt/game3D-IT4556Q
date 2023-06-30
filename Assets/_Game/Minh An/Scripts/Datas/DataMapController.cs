@@ -18,6 +18,7 @@ public class DataMapController : DataBase
         dataMap.InItData();
         mapCurrent.InItData();
         SelectDataMap(mapCurrent.GetDataMapCurrent().GetLevelCurrent());
+        isInItData = true;
     }
     public DataMap GetDataMap()
     {

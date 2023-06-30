@@ -44,11 +44,13 @@ public class DataCheckOutTable : DataStatusObject
     }
     public bool GetData_IsHireStaff()
     {
+        CheckInItData();
         LoadData();
         return (isHireStaff == -1) ? false : true;
     }
     public int GetCount_Money_Not_Collect()
     {
+        CheckInItData();
         LoadData();
         return countMoney_NotCollect;
     }
