@@ -61,8 +61,7 @@ public class Group_InfoUpdate : UI_Child
         switch (typeCost)
         {
             case TypeCost.WatchVideo:
-                btn_Money.gameObject.SetActive(false);
-                btn_Ads.gameObject.SetActive(true);
+                Open_Btn_Ads();
                 btn_Ads.onClick.RemoveAllListeners();
                 btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
                 imageIcon_Ads.gameObject.SetActive(true);
@@ -70,8 +69,9 @@ public class Group_InfoUpdate : UI_Child
                 txt_Ads.text = "FREE";
                 break;
             case TypeCost.Money:
-                btn_Money.gameObject.SetActive(true);
-                btn_Ads.gameObject.SetActive(false);
+                Open_Btn_Money();
+                Invoke(nameof(Open_Btn_Money), 0.1f);
+                Close_Btn_Ads();
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
@@ -84,8 +84,7 @@ public class Group_InfoUpdate : UI_Child
                     Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
-                    btn_Money.gameObject.SetActive(false);
-                    btn_Ads.gameObject.SetActive(true);
+                    Open_Btn_Ads();
                     btn_Ads.onClick.RemoveAllListeners();
                     btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
                     imageIcon_Ads.gameObject.SetActive(true);
@@ -98,6 +97,25 @@ public class Group_InfoUpdate : UI_Child
 
         LoadUI(typeBuff.ToString() + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy();
+    }
+    public void Open_Btn_Money()
+    {
+        btn_Money.gameObject.SetActive(true);
+        btn_Money.gameObject.SetActive(false);
+        btn_Money.gameObject.SetActive(true);
+    }
+    public void Open_Btn_Ads()
+    {
+        btn_Money.gameObject.SetActive(false);
+        btn_Ads.gameObject.SetActive(true);
+    }
+    public void Close_Btn_Money()
+    {
+        btn_Money.gameObject.SetActive(false);
+    }
+    public void Close_Btn_Ads()
+    {
+        btn_Ads.gameObject.SetActive(false);
     }
     public void InItData(ScriptableObject scriptableObject, int Level, StaffType staffType = StaffType.CHECKOUT)
     {
@@ -133,8 +151,8 @@ public class Group_InfoUpdate : UI_Child
         switch (typeCost)
         {
             case TypeCost.WatchVideo:
-                btn_Money.gameObject.SetActive(false);
-                btn_Ads.gameObject.SetActive(true);
+                Close_Btn_Money();
+                Open_Btn_Ads();
                 btn_Ads.onClick.RemoveAllListeners();
                 btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
                 imageIcon_Ads.gameObject.SetActive(true);
@@ -142,8 +160,9 @@ public class Group_InfoUpdate : UI_Child
                 txt_Ads.text = "FREE";
                 break;
             case TypeCost.Money:
-                btn_Money.gameObject.SetActive(true);
-                btn_Ads.gameObject.SetActive(false);
+                Open_Btn_Money();
+                Invoke(nameof(Open_Btn_Money), 0.1f);
+                Close_Btn_Ads();
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
@@ -156,8 +175,8 @@ public class Group_InfoUpdate : UI_Child
                     Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
-                    btn_Money.gameObject.SetActive(false);
-                    btn_Ads.gameObject.SetActive(true);
+                    Close_Btn_Money();
+                    Open_Btn_Ads();
                     btn_Ads.onClick.RemoveAllListeners();
                     btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
                     imageIcon_Ads.gameObject.SetActive(true);
@@ -584,4 +603,5 @@ public class Group_InfoUpdate : UI_Child
         }
         InItData(scriptableObject_Staff_Boss, Level_Current, staffType);
     }
+   
 }
