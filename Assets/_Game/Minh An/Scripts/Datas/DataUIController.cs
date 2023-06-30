@@ -8,17 +8,28 @@ public class DataUIController : DataBase
     private static string name_IsOpen_UIUpgrade = "Is_Open_UIUpgrade";
     private bool isOpenCanvasHome = false;
     private bool isOpen_UI_Upgrade = false;
+    private bool isInItData = false;
+
     private void Awake()
     {
-        InItData();
+        CheckInItData();
     }
     private void InItData()
     {
         SetFileName(nameof(DataUIController));
         LoadData();
+        isInItData = true;
+    }
+    public void CheckInItData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
     }
     public override void LoadData()
     {
+        Debug.Log("Load Data");
         base.LoadData();
         isOpenCanvasHome = (PlayerPrefs.GetInt(name_IsOpen_CanvasHome) == -1) ? false : true;
         isOpen_UI_Upgrade = (PlayerPrefs.GetInt(name_IsOpen_UIUpgrade) == -1) ? false : true;
@@ -37,7 +48,8 @@ public class DataUIController : DataBase
     }
     public bool Get_IsOpenCanvasHome()
     {
-        LoadData();
+        // LoadData();
+        CheckInItData();
         return isOpenCanvasHome;
     }
     public void Set_IsOpenCanvasHome(bool value)
@@ -52,7 +64,7 @@ public class DataUIController : DataBase
     }
     public bool Get_IsOpenUIUpgrade()
     {
-        LoadData();
+        CheckInItData();
         return isOpen_UI_Upgrade;
     }
     public void Set_IsOpenUIUpgrade(bool value)

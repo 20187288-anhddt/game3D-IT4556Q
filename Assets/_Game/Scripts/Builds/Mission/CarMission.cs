@@ -75,17 +75,18 @@ public class CarMission : BaseBuild
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
                     RandomCar();
-                    if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
-                    {
-                        EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
-                        (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
-                    }
+                    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
+                    //if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
+                    //{
+                    //    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
+                    //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
+                    //}
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
                         isOnMission = true;
                         StartCountDown();
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder(() =>
+                        Canvas_Home.Instance.Show_Btn_Oder(() =>
                         {
                             if (!checkPushCarMission.GetisInItDataUI())
                             {
@@ -266,6 +267,7 @@ public class CarMission : BaseBuild
     }
     public void MissionEnd(bool isWin)
     {
+        Debug.Log("End");
         isOnMission = false;
         //StopCoroutine(CountDownCarWait());
         (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).NotShow_Btn_Oder();
@@ -327,7 +329,7 @@ public class CarMission : BaseBuild
             carWaiting--;
             if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
             {
-                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
+                Canvas_Order.Instane.LoadTime((int)carWaiting);
             }
             Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
         }
@@ -381,27 +383,27 @@ public class CarMission : BaseBuild
                 //    break;
                 case IngredientType.BEAR_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
-                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * SpeedUpMoney * count;
+                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.CHICKEN_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
-                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.CHICKEN_CLOTH)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_CLOTH)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.COW_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.cowOutfit *
-                   (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.COW_CLOTH)) * SpeedUpMoney * count;
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_CLOTH)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.CHICKEN_BAG:
                     value += (GameManager.Instance.dataPrice.Data.chickenBag *
-                       (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.CHICKEN_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_BAG)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.COW_BAG:
                     value += (GameManager.Instance.dataPrice.Data.cowBag *
-                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.COW_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_BAG)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.BEAR_BAG:
                     value += (GameManager.Instance.dataPrice.Data.bearBag *
-                     (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).GetValueMax_Mission(IngredientType.BEAR_BAG)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_BAG)) * SpeedUpMoney * count;
                     break;
             }
         }
@@ -409,15 +411,17 @@ public class CarMission : BaseBuild
     }
     public void InItDataMissionCurrent()
     {
-        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).CloseAllItem();
+        Debug.Log("InItCar");
+        UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
+        Canvas_Order.Instane.CloseAllItem();
         foreach (IngredientType key in listMission.Keys)
         {
             int value = listMission[key];
-            (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).InItData(value, key);
+            Canvas_Order.Instane.InItData(value, key);
         }
-         (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
-        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetMoneyCurrent(GetRewardMoneyAllMission());
-        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetActionCollect(() => { MissionEnd(true); });
+        Canvas_Order.Instane.LoadTime((int)carWaiting);
+        Canvas_Order.Instane.SetMoneyCurrent(GetRewardMoneyAllMission());
+        Canvas_Order.Instane.SetActionCollect(() => { MissionEnd(true); });
     }
     public void ReduceType(IngredientType type)
     {

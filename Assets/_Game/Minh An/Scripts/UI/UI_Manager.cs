@@ -36,6 +36,7 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
 
     public UI_Canvas OpenUI(NameUI nameUI)
     {
+        Debug.Log("Open");
         if(nameUI == NameUI.Canvas_Home)
         {
             if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome())
