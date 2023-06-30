@@ -171,8 +171,8 @@ public class Customer : BaseCustomer,IAct
     {
         if (Vector3.Distance(transCheckOut, myTransform.position) < 0.1f)
         {
-            myTransform.DORotate(Vector3.zero, 0f);
-            //navMeshAgent.transform.LookAt(transCheckOut);
+            //myTransform.DORotate(Vector3.zero, 0f);
+            navMeshAgent.transform.LookAt(checkOut.transform.position);
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public abstract class AnimalBase : MonoBehaviour,IAct
+publ: MonoBehaviour,IAct
 {
     public Transform myTransform;
     public FsmSystem fsm = new FsmSystem();

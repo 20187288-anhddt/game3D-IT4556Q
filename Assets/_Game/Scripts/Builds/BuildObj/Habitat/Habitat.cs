@@ -33,6 +33,9 @@ public class Habitat : BuildObj, ILock
     private int maxShit;
     private Vector3 randomShitPos;
     public int numShitSave;
+    [SerializeField]
+    private AnimalBase animalPrefabs;
+    private int numAnimalSave;
 
     // Start is called before the first frame update
     public override void Start()
@@ -84,7 +87,7 @@ public class Habitat : BuildObj, ILock
         //        }
         //        break;
         //}
-
+        numAnimalSave = 3;
         if (isPlayAnimUnlock) //anim
         {
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
@@ -98,10 +101,11 @@ public class Habitat : BuildObj, ILock
                         {
                             isReadyShit = true;
                         });
-                        if(numShitSave > 0)
+                        if (numShitSave > 0)
                         {
                             TakeAShitOnStart(numShitSave);
                         }
+                        SpawnAnimalOnStart(numAnimalSave);
                     });
                 }); ;
             });
@@ -175,13 +179,13 @@ public class Habitat : BuildObj, ILock
         isReadyShit = false;
         delayShit = consDelayShit;
         randomShitPos = Vector3.zero;
-        for(int i = 0; i < allAnimals.Count; i++)
-        {
-            allAnimals[i].SetHabitat(this);
-            allAnimals[i].transform.position = new Vector3(defaultAnimalPos[i].transform.position.x,
-                allAnimals[i].transform.position.y, defaultAnimalPos[i].transform.position.z);
-            allAnimals[i].StartInGame();
-        }
+        //for(int i = 0; i < allAnimals.Count; i++)
+        //{
+        //    allAnimals[i].SetHabitat(this);
+        //    allAnimals[i].transform.position = new Vector3(defaultAnimalPos[i].transform.position.x,
+        //        allAnimals[i].transform.position.y, defaultAnimalPos[i].transform.position.z);
+        //    allAnimals[i].StartInGame();
+        //}
         if (isLock)
         {
             //GetComponent<BoxCollider>().enabled = false;
@@ -204,9 +208,9 @@ public class Habitat : BuildObj, ILock
     }
     public void RandomTakeAShit()
     {
-        if (levelManager.habitatManager.allActiveHabitats.Count > 1 && listShit.Count < maxShit)
+        if (levelManager.habitatManager.allActiveHabitats.Count > 1)
         {
-            if (isReadyShit)
+            if (isReadyShit && listShit.Count < maxShit)
             {
                 isReadyShit = false;
                 if (CheckTakeAShit())
@@ -285,6 +289,33 @@ public class Habitat : BuildObj, ILock
                 TakeAShit();
                 n--;
             }
+        }
+    }
+    public void SpawnAnimal(bool isHire)
+    {
+        Vector3 randomPos = Vector3.zero;
+        while(Vector3.Distance(randomPos,Vector3.zero) == 0)
+        {
+            randomPos = RandomPosition();
+            if(Vector3.Distance(randomPos, Vector3.zero) != 0)
+            {
+                Debug.Log("he");
+                var curAnimal = AllPoolContainer.Instance.Spawn(animalPrefabs,randomPos, myTransform.rotation);
+                allAnimals.Add(curAnimal as AnimalBase);
+                (curAnimal as AnimalBase).SetHabitat(this);
+                (curAnimal as AnimalBase).StartInGame();
+                if (isHire == true)
+                {
+                    numAnimalSave++;
+                }
+            }
+        }
+    }
+    public void SpawnAnimalOnStart(int n)
+    {
+        for(int i = 0; i < n; i ++)
+        {
+            SpawnAnimal(false);
         }
     }
 }
