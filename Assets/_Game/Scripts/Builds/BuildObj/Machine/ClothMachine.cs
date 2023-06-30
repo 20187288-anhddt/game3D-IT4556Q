@@ -50,13 +50,13 @@ public class ClothMachine : MachineBase
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                    {
-                        p.isUnlock = false;
+                    {    
                        // EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         checkCollectCloth.gameObject.SetActive(true);
                         checkPush.gameObject.SetActive(true);
                         uI_InfoBuild.gameObject.SetActive(true);
                         SpawnOnStart(numInputSave, numOutputSave);
+                        p.isUnlock = false;
                     });
                 }); ;
             });

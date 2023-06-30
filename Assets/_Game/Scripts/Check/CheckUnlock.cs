@@ -40,42 +40,7 @@ public class CheckUnlock : MonoBehaviour
     }
     public void UpdateUI()
     {
-       
-        //if ((normal as BaseBuild).isKey)
-        //{
-        //    effect.DOPlay();
-        //}
-        //else
-        //{
-        //    effect.DOPause();
-        //}
-        pirceObject_UI.ReLoadUI();
-        //if ((normal as BaseBuild).unlockAds)
-        //{
-        //    bg[0].SetActive(true);
-        //    bg[1].SetActive(false);
-        //}
-        //else
-        //{
-        //    bg[0].SetActive(false);
-        //    bg[1].SetActive(true);
-        //    bound[0].fillAmount = (float)(normal.DefaultCoin - normal.CurrentCoin) / normal.DefaultCoin;
-        //    if (normal.CurrentCoin > 1000)
-        //    {
-        //        float x = normal.CurrentCoin / 1000;
-        //        if (normal.CurrentCoin % 1000 == 0)
-        //        {
-        //            text.text = "$" + (x + ((normal.CurrentCoin - 1000 * x) / 1000)).ToString() + "K";
-        //        }
-        //        else
-        //            text.text = "$" + (x + ((normal.CurrentCoin - 1000 * x) / 1000)).ToString("F2") + "K";
-        //    }
-        //    else if (normal.CurrentCoin > 100)
-        //        text.text = "$" + string.Format("{000}", normal.CurrentCoin);
-        //    else
-        //        text.text = "$" + string.Format("{00}", normal.CurrentCoin);
-        //}
-
+        pirceObject_UI.ReLoadUI(); 
     }
     private void OnTriggerStay(Collider other)
     {
@@ -109,10 +74,10 @@ public class CheckUnlock : MonoBehaviour
                                 (unlock as Player).DelayCatch(1);
                         }
                     }
-                    else
-                    {
-                        normal.UnLock(true, true);
-                    }
+                    //else
+                    //{
+                    //    normal.UnLock(true, true);
+                    //}
                 }
             }
         }
@@ -197,7 +162,11 @@ public class CheckUnlock : MonoBehaviour
                 DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, (int)normal.CurrentCoin);
                 dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
                 normal.CurrentCoin = 0;
-               
+                //normal.UnLock(true, true);
+                bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
+                {
+                    normal.UnLock(true, true);
+                });
             }
         }
     }

@@ -90,7 +90,7 @@ public class Checkout : BuildCoins,ILock
       //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        p.isUnlock = true;
+
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 6f)
@@ -103,7 +103,7 @@ public class Checkout : BuildCoins,ILock
                 unlockModel.transform.DOMoveY(1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
-                        p.isUnlock = false;
+                        
                         if (isHired)
                         {
                             GetComponent<BoxCollider>().enabled = false;
@@ -119,25 +119,28 @@ public class Checkout : BuildCoins,ILock
                         {
                             SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
                         }
+                        //p.isUnlock = false;
+                        Debug.Log(p.isUnlock);
+                        CounterHelper.Instance.QueueAction(1f, () => { p.isUnlock = false; });
                     });
                 }); ;
             });
         }
-        else
-        {
-            p.isUnlock = false;
-            if (isHired)
-            {
-                GetComponent<BoxCollider>().enabled = false;
-                staffModel.SetActive(true);
-                isHaveStaff = true;
-            }
-            else
-            {
-                GetComponent<BoxCollider>().enabled = true;
-                staffModel.SetActive(false);
-            }
-        }
+        //else
+        //{
+        //    p.isUnlock = false;
+        //    if (isHired)
+        //    {
+        //        GetComponent<BoxCollider>().enabled = false;
+        //        staffModel.SetActive(true);
+        //        isHaveStaff = true;
+        //    }
+        //    else
+        //    {
+        //        GetComponent<BoxCollider>().enabled = true;
+        //        staffModel.SetActive(false);
+        //    }
+        //}
         checkUnlock.gameObject.SetActive(false);
         coinSpawn.gameObject.SetActive(true);
       

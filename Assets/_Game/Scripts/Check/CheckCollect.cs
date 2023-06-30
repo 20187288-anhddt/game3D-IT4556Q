@@ -54,6 +54,7 @@ public class CheckCollect : MonoBehaviour
                 var curShit = habitat.listShit[value];
                 (curShit as IngredientBase).MoveToICollect(player);
                 habitat.listShit.Remove(curShit as Shit);
+                habitat.numShitSave--;
                 player.DelayCatch(player.timeDelayCatch);
             }
             else
