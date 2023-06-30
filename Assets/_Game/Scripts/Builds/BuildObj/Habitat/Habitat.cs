@@ -35,7 +35,7 @@ public class Habitat : BuildObj, ILock
     public int numShitSave;
     [SerializeField]
     private AnimalBase animalPrefabs;
-    private int numAnimalSave;
+    public int numAnimalSave;
 
     // Start is called before the first frame update
     public override void Start()
@@ -337,6 +337,7 @@ public class Habitat : BuildObj, ILock
     {
         numShitSave = (dataStatusObject as HabitatDataStatusObject).GetCountShit();
         numAnimalSave = (dataStatusObject as HabitatDataStatusObject).GetCountAnimal();
+        Debug.Log(numAnimalSave);
     }
 }
 

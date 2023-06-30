@@ -47,7 +47,7 @@ public class HireAnimal : BaseBuild, ILock
             p.isUnlock = false;
         }
         checkUnlock.gameObject.SetActive(false);
-        if (!isHired)
+        if (isPushEvent)
         {
             habitat.SpawnAnimal(true);
         }
