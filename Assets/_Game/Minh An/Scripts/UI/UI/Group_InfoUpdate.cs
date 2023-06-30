@@ -30,6 +30,7 @@ public class Group_InfoUpdate : UI_Child
     private InfoPirceObject infoPirceObject;
     private ScriptableObject scriptableObject_Staff_Boss;
     private StaffType staffType = StaffType.CHECKOUT;
+    private System.Action actionReloadCurrent;
     private void Awake()
     {
         OnInIt();
@@ -40,7 +41,14 @@ public class Group_InfoUpdate : UI_Child
         base.OnInIt();
         if (myTransform == null) { myTransform = this.transform; }
     }
-
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), ReLoadUpgrade);
+    }
+    private void ReLoadUpgrade()
+    {
+        actionReloadCurrent?.Invoke();
+    }
     public void InItData(DataStatusObject dataStatusObject, InfoPirceObject infoPirceObject)
     {
         switch (infoPirceObject.infoThese[0].typeBuff)
@@ -83,12 +91,12 @@ public class Group_InfoUpdate : UI_Child
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
-                    Open_Btn_Ads();
-                    btn_Ads.onClick.RemoveAllListeners();
-                    btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
-                    imageIcon_Ads.gameObject.SetActive(true);
-                    imageBG_Ads.sprite = spr_BG_Hong;
-                    txt_Ads.text = "FREE";
+                    //Open_Btn_Ads();
+                    //btn_Ads.onClick.RemoveAllListeners();
+                    //btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
+                    //imageIcon_Ads.gameObject.SetActive(true);
+                    //imageBG_Ads.sprite = spr_BG_Hong;
+                    //txt_Ads.text = "FREE";
                 }
 
                 break;
@@ -96,6 +104,7 @@ public class Group_InfoUpdate : UI_Child
 
         LoadUI(typeBuff.ToString() + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy();
+        actionReloadCurrent = ReLoadData;
     }
     public void Open_Btn_Money()
     {
@@ -174,13 +183,13 @@ public class Group_InfoUpdate : UI_Child
                     Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
-                    Close_Btn_Money();
-                    Open_Btn_Ads();
-                    btn_Ads.onClick.RemoveAllListeners();
-                    btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
-                    imageIcon_Ads.gameObject.SetActive(true);
-                    imageBG_Ads.sprite = spr_BG_Hong;
-                    txt_Ads.text = "FREE";
+                    //Close_Btn_Money();
+                    //Open_Btn_Ads();
+                    //btn_Ads.onClick.RemoveAllListeners();
+                    //btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
+                    //imageIcon_Ads.gameObject.SetActive(true);
+                    //imageBG_Ads.sprite = spr_BG_Hong;
+                    //txt_Ads.text = "FREE";
                 }
 
                 break;
@@ -188,6 +197,7 @@ public class Group_InfoUpdate : UI_Child
 
         LoadUI(nameInfo + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy(scriptableObject_Staff_Boss);
+        actionReloadCurrent = ReLoadData_2;
     }
     private void LoadUI(string str_Info, int value)
     {
@@ -236,7 +246,8 @@ public class Group_InfoUpdate : UI_Child
                 break;
         }
         #endregion
-        ReLoadData();
+        // ReLoadData();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     private void Buying_2(TypeCost typeCost)
     {
@@ -391,7 +402,8 @@ public class Group_InfoUpdate : UI_Child
                 break;
         }
         #endregion
-        ReLoadData_2();
+        // ReLoadData_2();
+        EnventManager.TriggerEvent(EventName.ReLoadDataUpgrade.ToString());
     }
     private void CheckOnNextBuy()
     {
@@ -509,6 +521,15 @@ public class Group_InfoUpdate : UI_Child
     }
     private void ReLoadData()
     {
+        switch (typeBuff)
+        {
+            case InfoThis.TypeBuff.Speed:
+                infoPirceObject = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed();
+                break;
+            case InfoThis.TypeBuff.Stack:
+                infoPirceObject = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack();
+                break;
+        }
         InItData(dataStatusObject, infoPirceObject);
     }
     private void ReLoadData_2()

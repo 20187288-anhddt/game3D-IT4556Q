@@ -144,6 +144,8 @@ public enum EventName {
     HireAnimal_Chicken_OnBuy,
     HireAnimal_Cow_OnBuy,
     HireAnimal_Bear_OnBuy,
+
+    ReLoadUpgrade,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

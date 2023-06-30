@@ -38,6 +38,8 @@ public abstract class AnimalBase : AllPool,IAct
     private Vector3 nextDes;
     [SerializeField]
     private HabitatManager habitatManager;
+    [SerializeField]
+    private LayerMask layer;
 
     public virtual void Awake()
     {
@@ -100,7 +102,7 @@ public abstract class AnimalBase : AllPool,IAct
     {
         isReadyCountDown = true;
         int r = Random.Range(1, 10);
-        if (r < 5)
+        if (r < 8)
         {
             if (RandomPosition(true))
             {
@@ -122,7 +124,6 @@ public abstract class AnimalBase : AllPool,IAct
         {
             if (RandomPosition(false))
             {
-                Debug.Log("je");
                 isReadyHaveFun = false;
                 isInside = false;
                 UpdateState(HAVE_FUN_STATE);
@@ -190,6 +191,7 @@ public abstract class AnimalBase : AllPool,IAct
     }
     public virtual void CheckRunToPos()
     {
+       
         if (Vector3.Distance(nextDes, myTransform.position) < 0.5f)
         {
             //myTransform.DORotate(Vector3.zero, 0f);
