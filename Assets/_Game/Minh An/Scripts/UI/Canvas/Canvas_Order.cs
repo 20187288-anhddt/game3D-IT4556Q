@@ -154,4 +154,16 @@ public class Canvas_Order : UI_Canvas
         }
         return 0;
     }
+    public override void Close()
+    {
+        UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
+        base.Close();
+    }
+    public override void Open()
+    {
+        base.Open();
+        Close();
+        base.Open();
+        UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
+    }
 }

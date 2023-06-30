@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6624245955783009307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3738277096838989510}
   - component: {fileID: 8804317787566125079}
-  - component: {fileID: 8338318721734221353}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -110,7 +109,7 @@ RectTransform:
   m_GameObject: {fileID: 1432707804480940934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5768139534893537653}
@@ -130,111 +129,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432707804480940934}
   m_CullTransparentMesh: 1
---- !u!114 &8338318721734221353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432707804480940934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d0390bd8b8ffd640b34fe25065ff1df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateType: 0
-  isSpeedBased: 0
-  hasOnStart: 0
-  hasOnPlay: 0
-  hasOnUpdate: 0
-  hasOnStepComplete: 0
-  hasOnComplete: 0
-  hasOnTweenCreated: 0
-  hasOnRewind: 0
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onPlay:
-    m_PersistentCalls:
-      m_Calls: []
-  onUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  onStepComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  onTweenCreated:
-    m_PersistentCalls:
-      m_Calls: []
-  onRewind:
-    m_PersistentCalls:
-      m_Calls: []
-  targetIsSelf: 1
-  targetGO: {fileID: 0}
-  tweenTargetIsTargetGO: 1
-  delay: 0
-  duration: 0.3
-  easeType: 6
-  easeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  loopType: 1
-  loops: -1
-  id: 
-  isRelative: 0
-  isFrom: 0
-  isIndependentUpdate: 0
-  autoKill: 1
-  isActive: 1
-  isValid: 1
-  target: {fileID: 3738277096838989510}
-  animationType: 5
-  targetType: 11
-  forcedTargetType: 0
-  autoPlay: 1
-  useTargetAsV3: 0
-  endValueFloat: 1.2
-  endValueV3: {x: 0, y: 0, z: 0}
-  endValueV2: {x: 0, y: 0}
-  endValueColor: {r: 1, g: 1, b: 1, a: 1}
-  endValueString: 
-  endValueRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  endValueTransform: {fileID: 0}
-  optionalBool0: 1
-  optionalFloat0: 0
-  optionalInt0: 0
-  optionalRotationMode: 0
-  optionalScrambleMode: 0
-  optionalString: 
 --- !u!1 &2629654542331819722
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8267831697860025280}
   - component: {fileID: 7923582628217163977}
-  - component: {fileID: 7923582628217163978}
+  - component: {fileID: 6788632175958617148}
   m_Layer: 0
   m_Name: CarMission
   m_TagString: Untagged
@@ -369,12 +263,13 @@ MonoBehaviour:
   isReadyMission: 0
   isOnMission: 0
   carWaiting: 0
-  consCarWaiting: 600
-  consDelayMission: 30
+  consCarWaiting: 10
+  consDelayMission: 5
   checkPushCarMission: {fileID: 1476446714}
   listCurClothMachine: []
   listCurBagMachine: []
---- !u!114 &7923582628217163978
+  SpeedUpMoney: 10
+--- !u!114 &6788632175958617148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,7 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3962284831437095275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
+  m_Script: {fileID: 11500000, guid: 95971eea61e05204296ff517d81eb359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status_All_Level_Object:
@@ -458,8 +353,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4818699101458826387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6624245955783009307}
@@ -490,8 +385,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.151779, y: 3.8460817, z: 7.204815}
-  m_Center: {x: 0.017677307, y: 1.4230409, z: -0.008840561}
+  m_Size: {x: 3.7085998, y: 3.8460817, z: 7.204815}
+  m_Center: {x: 0.029887557, y: 1.4230409, z: -0.008840561}
 --- !u!1 &5255014070932953698
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +414,7 @@ RectTransform:
   m_GameObject: {fileID: 5255014070932953698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3738277096838989510}
@@ -559,7 +454,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 9ecdf1670a0886c4a9236c571003135f, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

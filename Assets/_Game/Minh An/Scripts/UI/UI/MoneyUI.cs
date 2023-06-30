@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class MoneyUI : MonoBehaviour
+public class MoneyUI : UI_Child
 {
     [SerializeField] private Text text_Money;
 
@@ -11,8 +11,9 @@ public class MoneyUI : MonoBehaviour
         OnInIt();
         EnventManager.AddListener(EventName.ReLoadMoney.ToString(), LoadTextGemInData);
     }
-    public void OnInIt()
+    public  override void OnInIt()
     {
+        base.OnInIt();
         LoadTextGemInData();
     }
     public void LoadTextGemInData()
@@ -28,5 +29,16 @@ public class MoneyUI : MonoBehaviour
             text_Money.text = "   " + string.Format("{000}", value);
         else
             text_Money.text = "   " + string.Format("{00}", value);
+        Invoke(nameof(Open), 0.1f);
+    }
+    public override void Open()
+    {
+        base.Open();
+        Close();
+        base.Open();
+    }
+    public override void Close()
+    {
+        base.Close();
     }
 }

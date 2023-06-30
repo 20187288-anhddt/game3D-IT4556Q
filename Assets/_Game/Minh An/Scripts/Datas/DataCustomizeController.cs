@@ -1,100 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
-public class DataCustomizeController : MonoBehaviour
+public class CarDataStatusObject : DataStatusObject
 {
-    [SerializeField] private List<InfoSkinPlayer> infoSkinPlayers_Head;
-    private DataCustomize_Head dataCustomize_Head = new DataCustomize_Head();
-    private bool isInItData = false;
-    private void Awake()
+    private static string Name_Check_IsOpenCar_OneShot = "Car_Open_OneShot";
+    private bool isOpenOneShot = false;
+    public override void LoadData()
     {
-        InItData();
-    }
-    private void InItData()
-    {
-        dataCustomize_Head.InItData();
-        isInItData = true;
-    }
-    public DataCustomize_Head GetDataCustomize_Head()
-    {
-        if (!isInItData)
-        {
-            InItData();
-        }
-        return dataCustomize_Head;
-    }
-    public List<InfoSkinPlayer> GetInfoSkinPlayers()
-    {
-        return infoSkinPlayers_Head;
-    }
-}
-[System.Serializable]
-public class DataCustomize_Head : DataBase
-{
-    public Data_Head data_Head = new Data_Head();
-    public void InItData()
-    {
-        SetFileName(nameof(DataCustomize_Head));
+        //   Debug.Log(GetFileName());
+        base.LoadData();
+        isOpenOneShot = PlayerPrefs.GetInt(Name_Check_IsOpenCar_OneShot + GetFileName()) == 1 ? true : false;
+        //Debug.Log(Level_Speed);
+        //Debug.Log(Level_Stack);
     }
     public override void SaveData()
     {
         base.SaveData();
-        string json = JsonUtility.ToJson(data_Head);
-        File.WriteAllText(Application.persistentDataPath + "/" + GetFileName(), json);
-    }
-    public override void LoadData()
-    {
-        base.LoadData();
-        string json = File.ReadAllText(Application.persistentDataPath + "/" + GetFileName());
-        Data_Head dataSave = JsonUtility.FromJson<Data_Head>(json);
-        data_Head = dataSave;
+        PlayerPrefs.SetInt(Name_Check_IsOpenCar_OneShot + GetFileName(), isOpenOneShot == true ? 1 : -1);
     }
     public override void ResetData()
     {
-        data_Head.ResetData();
+        base.ResetData();
+        isOpenOneShot = false;
     }
-    public Data_Head GetData_Head()
+    public bool IsOpenOneShot()
     {
         LoadData();
-        return data_Head;
+        return isOpenOneShot;
     }
-    public void SetID(int value)
+    public void SetIsOpenOneShot(bool value)
     {
-        GetData_Head().SetID(value);
+        isOpenOneShot = value;
         SaveData();
         LoadData();
-    }
-    public int GetID()
-    {
-        return GetData_Head().GetID();
-    }
-    public List<int> GetID_Onboughts()
-    {
-        return GetData_Head().GetID_Onboughts();
-    }
-}
-[System.Serializable] 
-public class Data_Head
-{
-    public int ID;
-    public List<int> ID_OnBought;
-    public void SetID(int value)
-    {
-        ID = value;
-    }
-    public int GetID()
-    {
-        return ID;
-    }
-    public List<int> GetID_Onboughts()
-    {
-        return ID_OnBought;
-    }
-    public void ResetData()
-    {
-        ID = 0;
-        ID_OnBought = new List<int>();
     }
 }

@@ -134,7 +134,8 @@ public enum EventName {
     Camera_Follow_HireStaff_3,
     Car_OnBought,
     Camera_Follow_PosCar,
-    ReLoadDistanceCamera
+    ReLoadDistanceCamera,
+    ReLoadDataUpgrade,
 
 }
 public class EnventManager : GenerticSingleton<EnventManager>

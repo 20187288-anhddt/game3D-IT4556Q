@@ -89,7 +89,22 @@ public class DataProcessInMapController : DataBase
         EnventManager.AddListener(EventName.CheckOutTable_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.CheckOutTable_Complete); });
         EnventManager.AddListener(EventName.CheckOutTable_1_Complete.ToString(), () => { CheckAndLoadRewardMissionComplete(EventName.CheckOutTable_1_Complete); });
         #endregion
-
+        #region Car
+        EnventManager.AddListener(EventName.Camera_Follow_PosCar.ToString(), ()
+        =>
+        {
+            BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(IngredientType.CAR);
+            CameraController.Instance.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
+                true, 0.5f, 5, 5, 5, () => {
+                    Player.Instance.isStopMove = true;
+                    Canvas_Joystick.Instance.isStopJoysick = true;
+                    EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+                }, () => {
+                    Player.Instance.isStopMove = false;
+                    Canvas_Joystick.Instance.isStopJoysick = false;
+                });
+        });
+        #endregion
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
     {

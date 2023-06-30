@@ -189,4 +189,14 @@ public class Canvas_Upgrades : UI_Canvas
             uI_LabelShow.Close();
         }
     }
+    public override void Open()
+    {
+        base.Open();
+        Close();
+        base.Open();
+    }
+    public override void Close()
+    {
+        base.Close();
+    }
 }

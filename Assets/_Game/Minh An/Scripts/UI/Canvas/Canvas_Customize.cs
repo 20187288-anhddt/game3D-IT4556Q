@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities.Components;
 
 public class Canvas_Customize : UI_Canvas
 {
@@ -10,7 +9,6 @@ public class Canvas_Customize : UI_Canvas
     [SerializeField] private Label_Show_Customize label_Show_Customize_Prefab;
     [SerializeField] private Transform transFormParent_LabelShow;
     [SerializeField] private List<Label_Show_Customize> label_Show_Customizes = new List<Label_Show_Customize>();
-
     private void Awake()
     {
         OnInIt();
@@ -23,9 +21,7 @@ public class Canvas_Customize : UI_Canvas
     public override void OnInIt()
     {
         base.OnInIt();
-        btn_Close.onClick.AddListener(() => {
-            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
-            UI_Manager.Instance.CloseUI(nameUI); });
+        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
         LoadCustomize();
     }
     public void LoadCustomize()
@@ -54,7 +50,7 @@ public class Canvas_Customize : UI_Canvas
                     show_Customize.myTransform.SetParent(transFormParent_LabelShow);
                     label_Show_Customizes.Add(show_Customize);
                 }
-                show_Customize.Load(GetInfoSkinPlayer(i), true, GetInfoSkinPlayer(i).ID);
+                show_Customize.Load(GetInfoSkinPlayer(i), true, i);
             }
         }
         for (int i = 0; i < DataManager.Instance.GetDataCustomizeController().GetInfoSkinPlayers().Count; i++)
@@ -78,7 +74,7 @@ public class Canvas_Customize : UI_Canvas
                     show_Customize.myTransform.SetParent(transFormParent_LabelShow);
                     label_Show_Customizes.Add(show_Customize);
                 }
-                show_Customize.Load(GetInfoSkinPlayer(i), false, GetInfoSkinPlayer(i).ID);
+                show_Customize.Load(GetInfoSkinPlayer(i), false, i);
             }
         }
     }
@@ -99,12 +95,9 @@ public class Canvas_Customize : UI_Canvas
         base.Open();
         Close();
         base.Open();
-        UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
     }
     public override void Close()
     {
         base.Close();
-        UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
- 
 }

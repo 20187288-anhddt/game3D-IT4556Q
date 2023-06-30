@@ -30,6 +30,7 @@ public class CarMission : BaseBuild
     {
         base.Start();
         StartInGame();
+      //  (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(false);
     }
     public override void StartInGame()
     {
@@ -75,6 +76,11 @@ public class CarMission : BaseBuild
                 {
                     Debug.Log("he");
                     RandomCar();
+                    if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
+                    {
+                        EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
+                        (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
+                    }
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
@@ -86,9 +92,8 @@ public class CarMission : BaseBuild
                                 checkPushCarMission.SetisInItDataUI(true);
                                 checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
                             }
-
+                          
                         });
-                      
                         isOnMission = true;
                         StartCountDown();        
                     });
@@ -246,6 +251,7 @@ public class CarMission : BaseBuild
         //StopCoroutine(CountDownCarWait());
         (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).NotShow_Btn_Oder();
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
+        UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
             ClearMission();
@@ -253,12 +259,10 @@ public class CarMission : BaseBuild
             {
                 Debug.Log("Win");
                 AddReward();
-                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             }
             else
             {
                 Debug.Log("Fail");
-                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             }
         });
     }
@@ -306,6 +310,7 @@ public class CarMission : BaseBuild
             {
                 (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
             }
+            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             StartCountDown();
         });
     }
