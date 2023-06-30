@@ -8,6 +8,7 @@ public class OutfitPos : PosBase
     public OutfitBase curOutfit;
     [SerializeField]
     private OutfitBase outFitPrefab;
+    public int IDPos;
     public void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }
@@ -23,7 +24,7 @@ public class OutfitPos : PosBase
     }
     public override void  StartInGame()
     {
-        haveOutfit = true;
+       // haveOutfit = true;
         if (!closet.isLock)
         {
             if (haveOutfit)

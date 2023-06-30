@@ -8,13 +8,14 @@ public class BagPos : PosBase
     public BagBase curOutfit;
     [SerializeField]
     private BagBase outFitPrefab;
+    public int IDPos;
     public void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }
     }
     public override void StartInGame()
     {
-        haveOutfit = true;
+       // haveOutfit = true;
         if (!closet.isLock)
         {
             if (haveOutfit)

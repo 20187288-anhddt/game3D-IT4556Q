@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857110803222562684}
   - component: {fileID: 1624805024547473296}
-  - component: {fileID: 791948588}
+  - component: {fileID: 2507405538697000570}
   m_Layer: 0
   m_Name: ChickenCloset
   m_TagString: Untagged
@@ -87,7 +87,7 @@ MonoBehaviour:
   unlockModel: {fileID: 5704500699268663256}
   checkUnlock: {fileID: 4948322313780623506}
   checkPushCloset: {fileID: 2737484677887470087}
---- !u!114 &791948588
+--- !u!114 &2507405538697000570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 857110803222562683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
+  m_Script: {fileID: 11500000, guid: d9e763d9b2c5fc647a4b8d5c62d876b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status_All_Level_Object:
@@ -111,6 +111,7 @@ MonoBehaviour:
       levelThis: 0
       amountPaid: 0
     nameObject_This: 2
+  CountID_In_ListPos: 5
 --- !u!1 &1449248241221899181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,6 +1119,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 753253672280377676}
     m_Modifications:
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
       objectReference: {fileID: 3431953792199615071, guid: b7aa5e58acecf7c409efa310bf55eee5, type: 3}
@@ -1291,6 +1296,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 753253672280377676}
     m_Modifications:
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
       objectReference: {fileID: 3431953792199615071, guid: b7aa5e58acecf7c409efa310bf55eee5, type: 3}
@@ -1441,6 +1450,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 753253672280377676}
     m_Modifications:
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
       objectReference: {fileID: 3431953792199615071, guid: b7aa5e58acecf7c409efa310bf55eee5, type: 3}
@@ -1517,6 +1530,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753253672280377676}
     m_Modifications:
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 

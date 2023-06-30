@@ -10,6 +10,7 @@ public class GameManager : MenuManager
     public Joystick joystick;
     public List<LevelManager> listLevelManagers;
     public int curLevel;
+    public DataPrice dataPrice;
 
     public void Start()
     {
@@ -40,5 +41,10 @@ public class GameManager : MenuManager
         //Player.Instance.ResetPlayer();
         //AllPoolContainer.Instance.ReleaseAll();
         //BuildUnitPoolContainer.Instance.ReleaseAll();
+    }
+    public void OnApplicationQuit()
+    {
+        Debug.Log("Quit");
+        EnventManager.TriggerEvent(EventName.QuitGame.ToString());
     }
 }

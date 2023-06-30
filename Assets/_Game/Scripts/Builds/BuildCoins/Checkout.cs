@@ -38,8 +38,9 @@ public class Checkout : BuildCoins,ILock
     public override void StartInGame()
     {
         base.StartInGame();
-        coinSave = 100;
+        LoadCoin_Not_Collect();
         CurrentCoin = pirceObject.Get_Pirce();
+        EnventManager.AddListener(EventName.QuitGame.ToString(), SaveCoin_Not_Collect);
         // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
             dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
@@ -72,6 +73,7 @@ public class Checkout : BuildCoins,ILock
             }
         }
         checkUnlock.UpdateUI();
+
     }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -356,5 +358,15 @@ public class Checkout : BuildCoins,ILock
         staffModel.GetComponent<Animator>().Play("IdleNormal");
         isHaveStaff = true;
         (dataStatusObject as DataCheckOutTable).SetData_IsHireStaff(isHired);
+    }
+    public void SaveCoin_Not_Collect()
+    {
+        (dataStatusObject as DataCheckOutTable).SetCount_Money_Not_Collect(coinSave);
+        Debug.Log(coinSave);
+    }
+    public void LoadCoin_Not_Collect()
+    {
+        coinSave = (dataStatusObject as DataCheckOutTable).GetCount_Money_Not_Collect();
+        Debug.Log(coinSave);
     }
 }

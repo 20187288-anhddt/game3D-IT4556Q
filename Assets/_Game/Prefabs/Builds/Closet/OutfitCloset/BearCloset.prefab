@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857110803222562684}
   - component: {fileID: 1624805024547473296}
-  - component: {fileID: 359720129}
+  - component: {fileID: 4238870920765340066}
   m_Layer: 0
   m_Name: BearCloset
   m_TagString: Untagged
@@ -170,7 +170,7 @@ MonoBehaviour:
   unlockModel: {fileID: 1649266551753263534}
   checkUnlock: {fileID: 2323551338269544385}
   checkPushCloset: {fileID: 2737484677887470087}
---- !u!114 &359720129
+--- !u!114 &4238870920765340066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 857110803222562683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
+  m_Script: {fileID: 11500000, guid: d9e763d9b2c5fc647a4b8d5c62d876b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status_All_Level_Object:
@@ -194,6 +194,7 @@ MonoBehaviour:
       levelThis: 0
       amountPaid: 0
     nameObject_This: 14
+  CountID_In_ListPos: 5
 --- !u!1 &1649266551753263534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1433,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2954663976001964230}
     m_Modifications:
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
       objectReference: {fileID: 7656150028794359532, guid: a322fd5105f9adc4bb4fc0dd4124ea63, type: 3}
@@ -1585,6 +1590,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2954663976001964230}
     m_Modifications:
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
@@ -1905,6 +1914,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2954663976001964230}
     m_Modifications:
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 
       objectReference: {fileID: 7656150028794359532, guid: a322fd5105f9adc4bb4fc0dd4124ea63, type: 3}
@@ -1981,6 +1994,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2954663976001964230}
     m_Modifications:
+    - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
+      propertyPath: IDPos
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2916140576683029656, guid: c86d6c765d079ec4986c27c687dac12d, type: 3}
       propertyPath: outFitPrefab
       value: 

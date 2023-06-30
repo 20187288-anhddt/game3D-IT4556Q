@@ -163,6 +163,8 @@ public class BagCloset : ClosetBase
     public override void StartInGame()
     {
         base.StartInGame();
+        LoadData_IsHaveObj_In_Pos();
+        EnventManager.AddListener(EventName.QuitGame.ToString(), SaveData_IsHaveObj_In_Pos);
         CurrentCoin = pirceObject.Get_Pirce();
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
@@ -245,5 +247,21 @@ public class BagCloset : ClosetBase
             }
         }
         return n;
+    }
+    private void LoadData_IsHaveObj_In_Pos()
+    {
+        foreach (BagPos bagPos in listBagPos)
+        {
+            bagPos.haveOutfit = (dataStatusObject as DataBagCloset).Get_IsHaveAObj_In_Pos(bagPos.IDPos);
+           // Debug.Log(bagPos.haveOutfit);
+        }
+    }
+    private void SaveData_IsHaveObj_In_Pos()
+    {
+        foreach(BagPos bagPos in listBagPos)
+        {
+           // Debug.Log(bagPos.haveOutfit);
+            (dataStatusObject as DataBagCloset).Set_IsHaveAObj_In_Pos(bagPos.IDPos, bagPos.haveOutfit);
+        }
     }
 }

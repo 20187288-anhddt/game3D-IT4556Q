@@ -139,6 +139,7 @@ public enum EventName {
     NewID_Customize,
     OpenUIHome,
     Show_BtnUpgrade,
+    QuitGame,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
