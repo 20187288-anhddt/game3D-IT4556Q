@@ -27,7 +27,6 @@ public class HabitatDataStatusObject : DataStatusObject
         countShit = 0;
         countAnimal = 3;
     }
-   
     public int GetCountShit()
     {
         LoadData();
@@ -42,12 +41,12 @@ public class HabitatDataStatusObject : DataStatusObject
     {
         countShit = value;
         SaveData();
-       // LoadData();
+        LoadData();
     }
     public void SetCountAnimal(int value)
     {
         countAnimal = value;
         SaveData();
-        //LoadData();
+        LoadData();
     }
 }

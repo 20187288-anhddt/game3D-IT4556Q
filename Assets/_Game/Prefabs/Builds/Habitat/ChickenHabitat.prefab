@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8208703317744014642}
   - component: {fileID: 8208703317744014641}
-  - component: {fileID: 546453595}
+  - component: {fileID: 2327255166799641900}
   m_Layer: 0
   m_Name: ChickenHabitat
   m_TagString: Untagged
@@ -373,7 +373,7 @@ MonoBehaviour:
   maxShit: 10
   numShitSave: 0
   animalPrefabs: {fileID: 2085963854970678315, guid: 950ae3195281a2f42a8a7c8d738ff556, type: 3}
---- !u!114 &546453595
+--- !u!114 &2327255166799641900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,18 +382,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8208703317744014643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d0f21172fb682479c35b949f31098f, type: 3}
+  m_Script: {fileID: 11500000, guid: f7429e38c6fa8ee4ca49e7ca7926118d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status_All_Level_Object:
     statusObjects:
-    - typeStatus: 0
+    - typeStatus: 1
       typeStatus_IsBought: 0
       levelThis: 0
       amountPaid: 0
     statusObjectCurrent:
       typeStatus: 0
-      typeStatus_IsBought: 1
+      typeStatus_IsBought: 0
       levelThis: 0
       amountPaid: 0
     nameObject_This: 0

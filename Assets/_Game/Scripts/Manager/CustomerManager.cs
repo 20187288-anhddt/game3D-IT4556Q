@@ -54,15 +54,15 @@ public class CustomerManager : MonoBehaviour
     {
         if (levelManager.closetManager.listClosets.Count < 2)
         {
-            maxCus = 3;
+            maxCus = 5;
         }
         else if(levelManager.closetManager.listClosets.Count == 2)
         {
-            maxCus = 7;
+            maxCus = 10;
         }
         else if (levelManager.closetManager.listClosets.Count > 2)
         {
-            maxCus = 10;
+            maxCus = 15;
         }
         if (closetManager.listClosets.Count > 0)
         {

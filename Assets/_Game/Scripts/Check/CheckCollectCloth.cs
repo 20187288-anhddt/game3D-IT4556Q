@@ -34,7 +34,7 @@ public class CheckCollectCloth : MonoBehaviour
         {
             if (player is Staff)
             {
-                if ((player as Staff).ingredientType != machine.ingredientType)
+                if ((player as Staff).ingredientType != machine.ingredientType || (player as Staff).curMachine != this.machine)
                 {
                     return;
                 };
@@ -48,6 +48,7 @@ public class CheckCollectCloth : MonoBehaviour
             var curCloth = machine.outCloths[value];
             curCloth.MoveToICollect(player);
             machine.outCloths.Remove(curCloth);
+            machine.numOutputSave--;
             player.AddIngredient(curCloth);
             //(player as BaseActor).ShortObj();
             player.DelayCatch(player.timeDelayCatch);

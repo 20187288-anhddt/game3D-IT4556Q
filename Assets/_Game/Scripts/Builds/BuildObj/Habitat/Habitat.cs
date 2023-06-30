@@ -172,6 +172,8 @@ public class Habitat : BuildObj, ILock
     public override void StartInGame()
     {
         base.StartInGame();
+        LoadData();
+        EnventManager.AddListener(EventName.QuitGame.ToString(), SaveData_OnQuitGame);
         CurrentCoin = pirceObject.Get_Pirce();
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
             dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
@@ -316,6 +318,16 @@ public class Habitat : BuildObj, ILock
         {
             SpawnAnimal(false);
         }
+    }
+    public void SaveData_OnQuitGame()
+    {
+        (dataStatusObject as HabitatDataStatusObject).SetCountShit(numShitSave);
+        (dataStatusObject as HabitatDataStatusObject).SetCountAnimal(numAnimalSave);
+    }
+    public void LoadData()
+    {
+        numShitSave = (dataStatusObject as HabitatDataStatusObject).GetCountShit();
+        numAnimalSave = (dataStatusObject as HabitatDataStatusObject).GetCountAnimal();
     }
 }
 

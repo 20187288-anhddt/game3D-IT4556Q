@@ -14,7 +14,15 @@ public class CheckCollectBagCloth : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-            player.canCatch = true;
+            if(player is Player)
+                player.canCatch = true;
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType == machine.ingredientType || (player as Staff).curMachine != this.machine)
+                {
+                    player.canCatch = true;
+                };
+            }
         }
     }
     private void OnTriggerStay(Collider other)
@@ -24,6 +32,13 @@ public class CheckCollectBagCloth : MonoBehaviour
         var player = other.GetComponent<ICollect>();
         if (player != null && player.objHave < player.maxCollectObj)
         {
+            if (player is Staff)
+            {
+                if ((player as Staff).ingredientType != machine.ingredientType || (player as Staff).curMachine != this.machine)
+                {
+                    return;
+                };
+            }
             int value = machine.outCloths.Count - 1;
             if (value < 0)
                 return;
@@ -31,10 +46,11 @@ public class CheckCollectBagCloth : MonoBehaviour
                 return;
             player.canCatch = false;
             var curCloth = machine.outCloths[value];
-            curCloth.MoveToICollect(player as BaseActor);
+            curCloth.MoveToICollect(player);
             machine.outCloths.Remove(curCloth);
+            machine.numOutputSave--;
             player.AddIngredient(curCloth);
-            (player as BaseActor).ShortObj();
+            //(player as BaseActor).ShortObj();
             player.DelayCatch(player.timeDelayCatch);
         }
     }

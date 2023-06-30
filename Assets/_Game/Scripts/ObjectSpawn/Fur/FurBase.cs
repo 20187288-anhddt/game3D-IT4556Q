@@ -10,7 +10,10 @@ public class FurBase :  IngredientBase
         transform.parent = machine.inIngredientPos;
         transform.localRotation = Quaternion.identity;
         if (!machine.ingredients.Contains(this))
+        {
             machine.ingredients.Add(this);
+            machine.numInputSave++;
+        }    
         this.transform.DOLocalJump(Vector3.up * machine.ingredients.Count * ingreScale
             + Vector3.right * 0
             + Vector3.forward * 0, 3f, 1, 0.5f).OnComplete(() =>
