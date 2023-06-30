@@ -38,6 +38,11 @@ public class CheckUnlock : MonoBehaviour
     {
         normal = GetComponentInParent<ILock>();
     }
+    private void OnEnable()
+    {
+        bound[0].fillAmount = 0;
+        t = 0;
+    }
     public void UpdateUI()
     {
         pirceObject_UI.ReLoadUI(); 

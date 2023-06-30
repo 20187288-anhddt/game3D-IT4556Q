@@ -95,6 +95,10 @@ public class HireStaff : BaseBuild, ILock
         if (isLock)
         {
             checkUnlock.gameObject.SetActive(true);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         checkUnlock.UpdateUI();
     }

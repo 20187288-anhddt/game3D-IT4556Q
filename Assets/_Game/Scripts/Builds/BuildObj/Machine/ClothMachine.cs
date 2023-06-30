@@ -277,6 +277,10 @@ public class ClothMachine : MachineBase
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             uI_InfoBuild.gameObject.SetActive(false);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         //numInputSave = 5;
         //numOutputSave = 5;

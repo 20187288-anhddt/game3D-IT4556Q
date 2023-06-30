@@ -87,7 +87,7 @@ public class Habitat : BuildObj, ILock
         //        }
         //        break;
         //}
-        numAnimalSave = 3;
+       // numAnimalSave = 3;
         if (isPlayAnimUnlock) //anim
         {
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
@@ -195,6 +195,10 @@ public class Habitat : BuildObj, ILock
             unlockModel.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             checkCollect.gameObject.SetActive(false);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         //if (!isLock)
         //{

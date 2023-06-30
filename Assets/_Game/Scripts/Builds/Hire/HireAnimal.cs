@@ -8,6 +8,8 @@ public class HireAnimal : BaseBuild, ILock
     private Habitat habitat;
     [SerializeField]
     private CheckUnlock checkUnlock;
+    [SerializeField] private List<Transform> transPoint_Spawn;
+    [SerializeField] private List<Vector3> pointSpawns;
     public float DefaultCoin { get => defaultCoin; }
     public bool IsLock { get => isLock; set => isLock = value; }
     public float CurrentCoin { get => coinUnlock; set => coinUnlock = value; }
@@ -16,10 +18,17 @@ public class HireAnimal : BaseBuild, ILock
     {
         base.Awake();
         // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+        pointSpawns.Clear();
+        for (int i = 0; i < transPoint_Spawn.Count; i++)
+        {
+            pointSpawns.Add(transPoint_Spawn[i].position);
+        }
     }
+ 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;
+        base.UnLock();
         if (!IsLock)
         {
             return;
@@ -42,6 +51,8 @@ public class HireAnimal : BaseBuild, ILock
         {
             habitat.SpawnAnimal(true);
         }
+        EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
+        StartInGame();
     }
     public override void Start()
     {
@@ -55,9 +66,17 @@ public class HireAnimal : BaseBuild, ILock
         CurrentCoin = pirceObject.Get_Pirce();
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
+        Vector3 pointSpawn = pointSpawns[dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis() - 1];
+        pointSpawn.y = myTransform.position.y;
+        myTransform.position = pointSpawn;
+     //   Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis() - 1);
         if (isLock)
         {
             checkUnlock.gameObject.SetActive(true);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         checkUnlock.UpdateUI();
     }

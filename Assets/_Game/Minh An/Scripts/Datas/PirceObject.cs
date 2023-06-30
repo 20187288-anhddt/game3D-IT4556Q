@@ -13,6 +13,10 @@ public class PirceObject : MonoBehaviour
     private IngredientType ingredientType;
     public void LoadPirce(NameObject_This nameObject_This, int Level, IngredientType ingredientType)
     {
+        //if(nameObject_This == NameObject_This.HireAnimal_Chicken)
+        //{
+        //    Debug.Log(level);
+        //}
         this.nameObject_This = nameObject_This;
         this.level = Level;
         this.ingredientType = ingredientType;

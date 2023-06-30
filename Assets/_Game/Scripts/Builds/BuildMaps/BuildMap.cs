@@ -90,6 +90,10 @@ public class BuildMap : BaseBuild,  ILock
             //GetComponent<BoxCollider>().enabled = false;
             //unlockModel.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         //if (!isLock)
         //{

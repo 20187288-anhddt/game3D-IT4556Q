@@ -189,6 +189,10 @@ public class BagCloset : ClosetBase
             checkPushBagCloset.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         //else
         //{

@@ -138,7 +138,6 @@ public class Label_Show_Customize : UI_Child
     }
     private void SetTagetID(int ID)
     {
-        Debug.Log(ID);
         DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().SetID(ID);
     }
 }

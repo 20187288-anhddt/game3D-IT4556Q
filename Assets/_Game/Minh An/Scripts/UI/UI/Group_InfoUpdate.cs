@@ -81,7 +81,6 @@ public class Group_InfoUpdate : UI_Child
                 }
                 else
                 {
-                    Debug.Log("Thieu Tien!!!");
                     btn_Money.onClick.RemoveAllListeners();
                     imageBG_Money.sprite = spr_BG_Off;
                     Open_Btn_Ads();

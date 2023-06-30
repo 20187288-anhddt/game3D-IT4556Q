@@ -57,6 +57,10 @@ public class Checkout : BuildCoins,ILock
             coinSpawn.gameObject.SetActive(false);
             staffModel.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
+            if (CurrentCoin <= 0)
+            {
+                UnLock(true, true);
+            }
         }
         else
         {

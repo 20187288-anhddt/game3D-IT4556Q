@@ -195,7 +195,6 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     public virtual void CheckMoveToIdle()
     {
-        Debug.Log(Vector3.Distance(transIdle, myTransform.position));
         if (Vector3.Distance(transIdle, myTransform.position) < 0.5f)
         {
             myTransform.DORotate(Vector3.zero, 0f);
@@ -661,6 +660,6 @@ public class Staff : BaseStaff, ICollect,IAct
          {
              waitingTime--;
              CountDownWatingTime();
-         });
+         },1);
     }
 }
