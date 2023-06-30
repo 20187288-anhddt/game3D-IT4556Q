@@ -20,6 +20,8 @@ public class BagMachine : MachineBase
     {
         maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
         timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+        numInputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemInput();
+        numOutputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemOutput();
     }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -243,6 +245,8 @@ public class BagMachine : MachineBase
     public override void StartInGame()
     {
         base.StartInGame();
+        LoadAndSetData();
+        EnventManager.AddListener(EventName.QuitGame.ToString(), SaveData_QuitGame);
         CurrentCoin = pirceObject.Get_Pirce();
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
            dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
@@ -265,15 +269,14 @@ public class BagMachine : MachineBase
             checkUnlock.gameObject.SetActive(true);
             uI_InfoBuild.gameObject.SetActive(false);
         }
-        numInputSave = 5;
-        numOutputSave = 5;
+        //numInputSave = 5;
+        //numOutputSave = 5;
         //else
         //{
         //    UnLock();
         //}
         checkUnlock.UpdateUI();
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
-        LoadAndSetData();
     }
     //public override void SpawnInputOnStart(int n)
     //{
@@ -312,5 +315,10 @@ public class BagMachine : MachineBase
                 ShortCutOutCloth();
             }
         }    
+    }
+    public void SaveData_QuitGame()
+    {
+        (dataStatusObject as MachineDataStatusObject).Set_CountItemInput(numInputSave);
+        (dataStatusObject as MachineDataStatusObject).Set_CountItemOutput(numOutputSave);
     }
 }
