@@ -9,6 +9,7 @@ public class Canvas_Customize : UI_Canvas
     [SerializeField] private Label_Show_Customize label_Show_Customize_Prefab;
     [SerializeField] private Transform transFormParent_LabelShow;
     [SerializeField] private List<Label_Show_Customize> label_Show_Customizes = new List<Label_Show_Customize>();
+
     private void Awake()
     {
         OnInIt();
@@ -50,7 +51,7 @@ public class Canvas_Customize : UI_Canvas
                     show_Customize.myTransform.SetParent(transFormParent_LabelShow);
                     label_Show_Customizes.Add(show_Customize);
                 }
-                show_Customize.Load(GetInfoSkinPlayer(i), true, i);
+                show_Customize.Load(GetInfoSkinPlayer(i), true, GetInfoSkinPlayer(i).ID);
             }
         }
         for (int i = 0; i < DataManager.Instance.GetDataCustomizeController().GetInfoSkinPlayers().Count; i++)
@@ -74,7 +75,7 @@ public class Canvas_Customize : UI_Canvas
                     show_Customize.myTransform.SetParent(transFormParent_LabelShow);
                     label_Show_Customizes.Add(show_Customize);
                 }
-                show_Customize.Load(GetInfoSkinPlayer(i), false, i);
+                show_Customize.Load(GetInfoSkinPlayer(i), false, GetInfoSkinPlayer(i).ID);
             }
         }
     }

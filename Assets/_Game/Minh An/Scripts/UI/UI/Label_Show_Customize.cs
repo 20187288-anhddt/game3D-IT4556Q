@@ -59,6 +59,8 @@ public class Label_Show_Customize : UI_Child
         else
         {
             CloseAll();
+            btn_This.onClick.RemoveAllListeners();
+            btn_This.onClick.AddListener(() => { SetTagetID(ID_This); });
         }
     }
     private  void Open_Obj_Money()
@@ -105,6 +107,7 @@ public class Label_Show_Customize : UI_Child
                 {
                     isBought = true;
                     DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddID_Onboughts(ID_This);
+                    SetTagetID(ID_This);
                 }
                 Load(infoSkinPlayerTaget, isBought, ID_This);
                 break;
@@ -114,11 +117,17 @@ public class Label_Show_Customize : UI_Child
                 {
                     DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, Value_CostCurent);
                     DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddID_Onboughts(ID_This);
+                    SetTagetID(ID_This);
                     btn_This.onClick.RemoveAllListeners();
                     Load(infoSkinPlayerTaget, true, ID_This);
                 }
                 break;
 
         }
+    }
+    private void SetTagetID(int ID)
+    {
+        Debug.Log(ID);
+        DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().SetID(ID);
     }
 }

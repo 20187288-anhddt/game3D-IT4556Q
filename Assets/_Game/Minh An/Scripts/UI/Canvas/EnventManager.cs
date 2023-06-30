@@ -136,7 +136,7 @@ public enum EventName {
     Camera_Follow_PosCar,
     ReLoadDistanceCamera,
     ReLoadDataUpgrade,
-
+    NewID_Customize,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
