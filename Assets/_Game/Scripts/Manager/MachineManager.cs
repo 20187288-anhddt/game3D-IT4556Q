@@ -30,7 +30,7 @@ public class MachineManager : Singleton<MachineManager>
         else
         {
             int r = Random.Range(0, allActiveMachine.Count);
-            if (!allActiveMachine[r].isHaveInStaff && allActiveMachine[r].ingredients.Count < allActiveMachine[r].maxObjInput / 3)
+            if (!allActiveMachine[r].isHaveInStaff && allActiveMachine[r].ingredients.Count < allActiveMachine[r].maxObjInput / 2)
                 curMachine = allActiveMachine[r];
         }
         

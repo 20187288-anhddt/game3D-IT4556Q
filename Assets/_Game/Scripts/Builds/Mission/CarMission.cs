@@ -315,11 +315,14 @@ public class CarMission : BaseBuild
         CounterHelper.Instance.QueueAction(1, () =>
         {
             carWaiting--;
-            if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+            if(carWaiting >= 0)
             {
-                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
+                if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+                {
+                    (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
+                }
+                Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             }
-            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             StartCountDown();
         });
     }

@@ -62,6 +62,7 @@ public class HireStaff : BaseBuild, ILock
                 (curFarmer as Staff).staffType = StaffType.FARMER;
                 levelManager.staffManager.listAllActiveStaffs.Add(curFarmer as Staff);
                 levelManager.staffManager.listFarmers.Add(curFarmer as Staff);
+                levelManager.staffManager.ChangeStaffIdlePos(curFarmer as Staff);
                 break;
             case StaffType.WORKER:
                 var curWorker = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
@@ -70,13 +71,14 @@ public class HireStaff : BaseBuild, ILock
                 (curWorker as Staff).staffType = StaffType.WORKER;
                 levelManager.staffManager.listAllActiveStaffs.Add(curWorker as Staff);
                 levelManager.staffManager.listWorkers.Add(curWorker as Staff);
+                levelManager.staffManager.ChangeStaffIdlePos(curWorker as Staff);
                 break;
             case StaffType.CHECKOUT:
                 //Checkout curCheckout = GetComponentInParent<Checkout>();
                 curCheckout.BuyStaff();
                 break;
         }
-        levelManager.staffManager.ChangeStaffIdlePos();
+     
     }
     public override void Start()
     {

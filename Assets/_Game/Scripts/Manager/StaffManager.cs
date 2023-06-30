@@ -10,6 +10,7 @@ public class StaffManager : Singleton<StaffManager>
     public List<TrashCan> listTrashCan;
     public GameManager gameManager;
     public Transform[] listIdlePos;
+    public bool isChangeIdlePos;
 
     void Start()
     {
@@ -31,40 +32,24 @@ public class StaffManager : Singleton<StaffManager>
                 CheckWorkerMission();
             }
         }
+        //ChangeStaffIdlePos();
     }
-    public void ChangeStaffIdlePos()
+    public void ChangeStaffIdlePos(Staff staff)
     {
-        for(int i = 0; i< listAllActiveStaffs.Count; i++)
+        switch (staff.staffType)
         {
-            switch (listAllActiveStaffs[i].staffType)
-            {
-                case StaffType.FARMER:
-                    listAllActiveStaffs[i].curGarbage = listTrashCan[0];
-                    listAllActiveStaffs[i].transGarbage = listTrashCan[0].staffPos.position;
-                    if (gameManager.listLevelManagers[gameManager.curLevel].habitatManager.allActiveHabitats.Count < 3)
-                    {
-                        listAllActiveStaffs[i].transIdle = listIdlePos[0].position;
-                    }
-                    else
-                    {
-                        listAllActiveStaffs[i].transIdle = listIdlePos[1].position;
-                    }
-                    break;
-                case StaffType.WORKER:
-                    listAllActiveStaffs[i].curGarbage = listTrashCan[1];
-                    listAllActiveStaffs[i].transGarbage = listTrashCan[1].staffPos.position;
-                    if (gameManager.listLevelManagers[gameManager.curLevel].closetManager.listClosets.Count < 3)
-                    {
-                        listAllActiveStaffs[i].transIdle = listIdlePos[2].position;
-                    }
-                    else
-                    {
-                        listAllActiveStaffs[i].transIdle = listIdlePos[3].position;
-                    }
-                    break;
-            }
+            case StaffType.FARMER:
+                staff.curGarbage = listTrashCan[0];
+                staff.transGarbage = listTrashCan[0].staffPos.position;
+                staff.transIdle = listIdlePos[0].position;
+                break;
+            case StaffType.WORKER:
+                staff.curGarbage = listTrashCan[1];
+                staff.transGarbage = listTrashCan[1].staffPos.position;
+                staff.transIdle = listIdlePos[2].position;
+                break;
         }
-       
+
     }
     public void CheckFarmerMisson()
     {
