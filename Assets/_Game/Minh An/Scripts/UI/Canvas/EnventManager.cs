@@ -140,6 +140,10 @@ public enum EventName {
     OpenUIHome,
     Show_BtnUpgrade,
     QuitGame,
+
+    HireAnimal_Chicken_OnBuy,
+    HireAnimal_Cow_OnBuy,
+    HireAnimal_Bear_OnBuy,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

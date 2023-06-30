@@ -32,7 +32,7 @@ public class Closet : ClosetBase, ILock
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-        p.isUnlock = true;
+       
         //EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
@@ -42,6 +42,7 @@ public class Closet : ClosetBase, ILock
         }
         if (isPlayAnimUnlock) //anim
         {
+            p.PlayerStopMove();
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() =>
             {
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() =>
@@ -59,7 +60,10 @@ public class Closet : ClosetBase, ILock
                             o.StartInGame();
                         }
                         checkPushCloset.gameObject.SetActive(true);
-                        CounterHelper.Instance.QueueAction(1f, () => { p.isUnlock = false; });                  
+                        if (CameraController.Instance.IsCameraFollowPlayer())
+                        {
+                            p.PlayerContinueMove();
+                        }
                     });
                 }); ;
             });

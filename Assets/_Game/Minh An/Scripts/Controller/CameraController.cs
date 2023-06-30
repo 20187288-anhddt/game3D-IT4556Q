@@ -8,6 +8,7 @@ public class CameraController : GenerticSingleton<CameraController>
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtual;
     [SerializeField] private CinemachineFramingTransposer cinemachineFramingTransposer;
     [SerializeField] private CinemachineFollowZoom CinemachineFollowZoom;
+    private bool isCameraOnFollowPlayer;
     public override void Awake()
     {
         base.Awake();
@@ -17,6 +18,7 @@ public class CameraController : GenerticSingleton<CameraController>
     {
         EnventManager.AddListener(EventName.ReLoadDistanceCamera.ToString(), ReLoadDistanceInMap);
         EnventManager.TriggerEvent(EventName.ReLoadDistanceCamera.ToString());
+        isCameraOnFollowPlayer = true;
     }
     private void ReLoadDistanceInMap()
     {
@@ -37,8 +39,10 @@ public class CameraController : GenerticSingleton<CameraController>
     }
     public void SetFollowAndLookAt(Transform transformFollow, Transform transformLookAt, 
         bool isResetFollowPlayer = false, float timeDelayFollow = 0, 
-        float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null, System.Action actionEndFollow = null)
+        float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null,
+        System.Action actionEndFollow = null, bool isFollowPlayer = false)
     {
+        isCameraOnFollowPlayer = isFollowPlayer;
         UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
         actionStartFollow?.Invoke();
       //  cinemachineFramingTransposer.m_CameraDistance = Vector3.Distance(cinemachineFramingTransposer.transform.position, transformFollow.position);
@@ -95,12 +99,16 @@ public class CameraController : GenerticSingleton<CameraController>
     }
     public void ResetFollowPlayer()
     {
-        SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform);
+        SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform, false, 0, 1, 1, 1, null, null, true);
        // cinemachineFramingTransposer.m_CameraDistance = 45;
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
     {
         yield return new WaitForSeconds(timeDelay);
         action?.Invoke();
+    }
+    public bool IsCameraFollowPlayer()
+    {
+        return isCameraOnFollowPlayer;
     }
 }

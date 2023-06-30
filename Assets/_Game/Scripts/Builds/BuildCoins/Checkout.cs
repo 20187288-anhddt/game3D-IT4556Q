@@ -86,19 +86,20 @@ public class Checkout : BuildCoins,ILock
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
-     //   Debug.Log("a");
-      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+        //Debug.Log("a");
+        //EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
-
+        
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 6f)
         {
-            p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
+            p.myTransform.position = checkUnlock.myTransform.position + Vector3.forward * 4;
         }
         if (isPlayAnimUnlock) //anim
         {
+            p.PlayerStopMove();
             unlockModel.transform.DOMoveY(3, 0f).OnComplete(() => {
                 unlockModel.transform.DOMoveY(1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
@@ -120,8 +121,12 @@ public class Checkout : BuildCoins,ILock
                             SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
                         }
                         //p.isUnlock = false;
-                        Debug.Log(p.isUnlock);
-                        CounterHelper.Instance.QueueAction(1f, () => { p.isUnlock = false; });
+                        if (CameraController.Instance.IsCameraFollowPlayer())
+                        {
+                            p.PlayerContinueMove();
+                        }
+                      
+                        //CounterHelper.Instance.QueueAction(1f, () => { p.isUnlock = false; });
                     });
                 }); ;
             });
@@ -368,11 +373,9 @@ public class Checkout : BuildCoins,ILock
     public void SaveCoin_Not_Collect()
     {
         (dataStatusObject as DataCheckOutTable).SetCount_Money_Not_Collect(coinSave);
-        Debug.Log(coinSave);
     }
     public void LoadCoin_Not_Collect()
     {
         coinSave = (dataStatusObject as DataCheckOutTable).GetCount_Money_Not_Collect();
-        Debug.Log(coinSave);
     }
 }

@@ -50,12 +50,10 @@ public class DataCheckOutTable : DataStatusObject
     public int GetCount_Money_Not_Collect()
     {
         LoadData();
-        Debug.Log(countMoney_NotCollect);
         return countMoney_NotCollect;
     }
     public void SetCount_Money_Not_Collect(int value)
     {
-        Debug.Log(value);
         countMoney_NotCollect = value;
         SaveData();
         LoadData();

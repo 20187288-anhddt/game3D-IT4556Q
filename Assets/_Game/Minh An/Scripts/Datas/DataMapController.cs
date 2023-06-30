@@ -96,10 +96,10 @@ public class MapCurrent //luu data
     }
     public DataMapCurrent GetDataMapCurrent()
     {
-        if (!isInItData)
-        {
-            InItData();
-        }
+        //if (!isInItData)
+        //{
+        //    InItData();
+        //}
         return dataMapCurrent;
     }
     public void ResetData()

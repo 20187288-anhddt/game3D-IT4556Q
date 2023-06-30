@@ -725,7 +725,15 @@ public class RewardProcessCompleteMission
             case EventName.Show_BtnUpgrade:
                 DataManager.Instance.GetDataUIController().Set_IsOpenUIUpgrade(true);
                 break;
-
+            case EventName.HireAnimal_Chicken_OnBuy:
+                OnBuy(IngredientType.HIRE_ANIMAL, NameObject_This.HireAnimal_Chicken);
+                break;
+            case EventName.HireAnimal_Cow_OnBuy:
+                OnBuy(IngredientType.HIRE_ANIMAL, NameObject_This.HireAnimal_Cow);
+                break;
+            case EventName.HireAnimal_Bear_OnBuy:
+                OnBuy(IngredientType.HIRE_ANIMAL, NameObject_This.HireAnimal_Bear);
+                break;
         }
     }
 

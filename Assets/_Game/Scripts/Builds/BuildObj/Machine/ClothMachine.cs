@@ -36,9 +36,9 @@ public class ClothMachine : MachineBase
         IsLock = false;
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
+
       
-        p.isUnlock = true;
-      //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+        //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
@@ -47,6 +47,7 @@ public class ClothMachine : MachineBase
         }
         if (isPlayAnimUnlock) //anim
         {
+            p.PlayerStopMove();
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
@@ -56,7 +57,10 @@ public class ClothMachine : MachineBase
                         checkPush.gameObject.SetActive(true);
                         uI_InfoBuild.gameObject.SetActive(true);
                         SpawnOnStart(numInputSave, numOutputSave);
-                        p.isUnlock = false;
+                        if (CameraController.Instance.IsCameraFollowPlayer())
+                        {
+                            p.PlayerContinueMove();
+                        }
                     });
                 }); ;
             });

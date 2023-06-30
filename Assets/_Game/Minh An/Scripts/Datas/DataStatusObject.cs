@@ -48,6 +48,7 @@ public class DataStatusObject : DataBase
     }
     public Status_All_Level_Object GetStatus_All_Level_Object()
     {
+       // CheckInItData();
         return status_All_Level_Object;
     }
     public bool isStatusActive(StatusObject statusObjectCheck = null)
@@ -125,8 +126,11 @@ public class DataStatusObject : DataBase
                 statusObject.typeStatus_IsBought = StatusObject.TypeStatus_IsBought.Bought;
             }
         }
+       // Debug.Log(GetStatus_All_Level_Object().GetStatusObjects().Contains(statusObjectCheck));
         if (GetStatus_All_Level_Object().GetStatusObjects().Contains(statusObjectCheck))
         {
+         //   Debug.Log(GetStatus_All_Level_Object().GetStatusObjects().Count);
+          //  Debug.Log(GetStatus_All_Level_Object().GetStatusObjects().IndexOf(statusObjectCheck) + 1);
             if(GetStatus_All_Level_Object().GetStatusObjects().Count > GetStatus_All_Level_Object().GetStatusObjects().IndexOf(statusObjectCheck) + 1)
             {
                 OnBuy(GetStatus_All_Level_Object().GetStatusObjects()[GetStatus_All_Level_Object().GetStatusObjects().IndexOf(statusObjectCheck) + 1]);
@@ -198,6 +202,7 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     public NameObject_This nameObject_This;
     public StatusObject GetStatusObject_Current()
     {
+        LoadStatusObjectCurrent();
         return statusObjectCurrent;
     }
     public void SetStatusObject_Current(StatusObject statusObject)
@@ -221,6 +226,7 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     public void ResetData()
     {
         statusObjectCurrent = statusObjects[0];
+
     }
 }
 
