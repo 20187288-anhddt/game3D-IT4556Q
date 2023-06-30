@@ -35,6 +35,7 @@ public class Customer : BaseCustomer,IAct
     public Customer leader;
     public GroupCustomer grCus;
     private Vector3 pointTaget = Vector3.zero;
+    private Animator anim;
     public override void Awake()
     {
         base.Awake();
@@ -49,6 +50,7 @@ public class Customer : BaseCustomer,IAct
     }
     private void Start()
     {
+        //anim = GetComponentInChildren<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);  
     }
     public void ReloadSetDestination()
@@ -269,10 +271,51 @@ public class Customer : BaseCustomer,IAct
     }
     public void ChangeAnim()
     {
-        if (navMeshAgent.velocity.magnitude > 0.1f)
-        {
-            //animator.Play("Running");
-        }
+        //anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        //if (navMeshAgent.velocity.magnitude < 0.1f)
+        //{
+        //    if (!gotOutfit)
+        //    {
+        //        anim.Play("IdleNormal");
+        //    }
+        //    else
+        //    {
+        //        switch (this.outfitType)
+        //        {
+        //            case IngredientType.COW:
+        //                anim.Play("IdleCow");
+        //                break;
+        //            case IngredientType.CHICKEN:
+        //                anim.Play("IdleChicken");
+        //                break;
+        //            case IngredientType.BEAR:
+        //                anim.Play("IdleBear");
+        //                break;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    if (!gotOutfit)
+        //    {
+        //        anim.Play("Walk");
+        //    }
+        //    else
+        //    {
+        //        switch (this.outfitType)
+        //        {
+        //            case IngredientType.COW:
+        //                anim.Play("CowWalk");
+        //                break;
+        //            case IngredientType.CHICKEN:
+        //                anim.Play("ChickenWalk");
+        //                break;
+        //            case IngredientType.BEAR:
+        //                anim.Play("BearWalk");
+        //                break;
+        //        }
+        //    }
+        //}
     }
     public void ChangeOutfit(IngredientType type)
     {
@@ -292,6 +335,7 @@ public class Customer : BaseCustomer,IAct
                 outfitModel[3].SetActive(true);
                 break;
         }
+        anim = GetComponentInChildren<Animator>();
     }
     public void ChangeBag(IngredientType type)
     {

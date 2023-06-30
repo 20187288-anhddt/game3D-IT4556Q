@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class AnimCharacter : MonoBehaviour
 {
-    public Animator anim;
-    public Player player;
-
+    private Animator anim;
+    private Player player;
+    void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+        player = GetComponent<Player>();
+    }
     private void UpdateAnim(string state)
     {
         Debug.Log(state);

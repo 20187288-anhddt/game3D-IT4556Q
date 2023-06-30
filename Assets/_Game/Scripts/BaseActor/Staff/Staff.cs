@@ -25,6 +25,9 @@ public class Staff : BaseStaff, ICollect,IAct
     public MachineBase curMachine;
     public ClosetBase curCloset;
     public TrashCan curGarbage;
+    private float waitingTime;
+    public float consWaitingTime;
+    private Animator anim;
     
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
@@ -85,6 +88,7 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
     }
     public void ReloadSetDestination()
@@ -237,6 +241,10 @@ public class Staff : BaseStaff, ICollect,IAct
         if (!onMachinePos && Vector3.Distance(transMachine, myTransform.position) < 0.5f)
         {
             //this.transform.DORotate(Vector3.zero, 0f);
+            if(this.staffType == StaffType.WORKER)
+            {
+                CountDownWatingTime();
+            }
             myTransform.LookAt(curMachine.myTransform.position);
             this.onMachinePos = true;
             //UpdateState(IDLE_STATE);
@@ -261,24 +269,61 @@ public class Staff : BaseStaff, ICollect,IAct
                     }
                     break;
                 case StaffType.WORKER:
-                    if(curMachine is ClothMachine)
+                    if(objHave >= maxCollectObj)
                     {
-                        if (objHave >= maxCollectObj)
-                        {
-                            onMachinePos = false;
-                            curMachine.isHaveOutStaff = false;
-                            UpdateState(MOVE_TO_CLOSET_STATE);
-                        }
-                    }     
-                    if(curMachine is BagMachine)
+                        onMachinePos = false;
+                        curMachine.isHaveOutStaff = false;
+                        UpdateState(MOVE_TO_CLOSET_STATE);
+                    }
+                    else
                     {
-                        if (objHave >= maxCollectObj)   
+                        if(waitingTime <= 0)
                         {
-                            onMachinePos = false;
-                            curMachine.isHaveOutStaff = false;
-                            UpdateState(MOVE_TO_CLOSET_STATE);
+                            if(objHave > 0)
+                            {
+                                onMachinePos = false;
+                                curMachine.isHaveOutStaff = false;
+                                UpdateState(MOVE_TO_CLOSET_STATE);
+                            }
+                            else
+                            {
+                                if(curMachine.ingredients.Count == 0)
+                                {
+                                    if(curMachine is ClothMachine && (curMachine as ClothMachine).outCloths.Count == 0)
+                                    {
+                                        onMachinePos = false;
+                                        curMachine.isHaveOutStaff = false;
+                                        UpdateState(MOVE_TO_IDLE_STATE);
+                                    }
+                                    else if(curMachine is BagMachine && (curMachine as BagMachine).outCloths.Count == 0)
+                                    {
+                                        onMachinePos = false;
+                                        curMachine.isHaveOutStaff = false;
+                                        UpdateState(MOVE_TO_IDLE_STATE);
+                                    }
+                                }
+                               
+                            }
                         }
                     }
+                    //if(curMachine is ClothMachine)
+                    //{
+                    //    if (objHave >= maxCollectObj)
+                    //    {
+                    //        onMachinePos = false;
+                    //        curMachine.isHaveOutStaff = false;
+                    //        UpdateState(MOVE_TO_CLOSET_STATE);
+                    //    }
+                    //}     
+                    //if(curMachine is BagMachine)
+                    //{
+                    //    if (objHave >= maxCollectObj)   
+                    //    {
+                    //        onMachinePos = false;
+                    //        curMachine.isHaveOutStaff = false;
+                    //        UpdateState(MOVE_TO_CLOSET_STATE);
+                    //    }
+                    //}
                     break;
             } 
         }
@@ -343,9 +388,38 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     public void ChangeAnim()
     {
-        if (navMeshAgent.velocity.magnitude > 0.1f)
+        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        if (navMeshAgent.velocity.magnitude < 0.1f)
         {
-            //animator.Play("Running");
+            if (gun.activeSelf)
+            {
+                anim.Play("IdleWithGun");
+            }
+            else
+            {
+                if (objHave > 0)
+                {
+                    anim.Play("IdleCarring");
+                }
+                else
+                    anim.Play("IdleNormal");
+            }   
+        }
+        else
+        {
+            if (gun.activeSelf)
+            {
+                anim.Play("RunWithGun");
+            }
+            else
+            {
+                if (objHave > 0)
+                {
+                    anim.Play("WalkCarring");
+                }
+                else
+                    anim.Play("WalkNormal");
+            }
         }
     }
     public void Collect()
@@ -517,6 +591,7 @@ public class Staff : BaseStaff, ICollect,IAct
         onHabitatPos = false;
         onMachinePos = false;
         ingredientType = IngredientType.NONE;
+        waitingTime = consWaitingTime;
         yOffset = 0;
         foreach (IngredientBase i in allIngredients)
         {
@@ -562,5 +637,17 @@ public class Staff : BaseStaff, ICollect,IAct
             }  
         }
         return onlyHaveShit;
+    }
+    public void CountDownWatingTime()
+    {
+        if(waitingTime < 0)
+        {
+            return;
+        }
+        CounterHelper.Instance.QueueAction(1, () =>
+         {
+             waitingTime--;
+             CountDownWatingTime();
+         });
     }
 }

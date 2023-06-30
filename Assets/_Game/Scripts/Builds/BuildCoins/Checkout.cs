@@ -194,6 +194,7 @@ public class Checkout : BuildCoins,ILock
                 if (listGrCusCheckout[i].CheckonCheckoutPos())
                 {
                     isCheckout = true;
+                    staffModel.GetComponent<Animator>().Play("Wave");
                     GroupCustomer curGr = listGrCusCheckout[i];
                     listGrCusCheckout.Remove(listGrCusCheckout[i]);
                     curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
@@ -219,6 +220,10 @@ public class Checkout : BuildCoins,ILock
         }
         if(delayTime < 0)
         {
+            if (listCusCheckout.Count <= 0)
+            {
+                staffModel.GetComponent<Animator>().Play("IdleNormal");
+            }
             isCheckout = false;
             delayTime = consDelayCheckout;
         }
@@ -328,6 +333,7 @@ public class Checkout : BuildCoins,ILock
         isHired = true;
         GetComponent<BoxCollider>().enabled = false;
         staffModel.SetActive(true);
+        staffModel.GetComponent<Animator>().Play("IdleNormal");
         isHaveStaff = true;
         (dataStatusObject as DataCheckOutTable).SetData_IsHireStaff(isHired);
     }
