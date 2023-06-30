@@ -41,12 +41,14 @@ public class HabitatDataStatusObject : DataStatusObject
     {
         countShit = value;
         SaveData();
-        LoadData();
+       // LoadData();
     }
     public void SetCountAnimal(int value)
     {
+        Debug.Log(value);
         countAnimal = value;
+        Debug.Log(value);
         SaveData();
-        LoadData();
+        //LoadData();
     }
 }

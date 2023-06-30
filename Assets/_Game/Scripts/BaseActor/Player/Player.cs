@@ -40,6 +40,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public UI_ProcessPlayer uI_ProcessPlayer_Prefabs;
     private UI_ProcessPlayer uI_ProcessPlayer;
     private Animator anim;
+    private float tmpSpeed;
 
     public override void Awake()
     {
@@ -76,6 +77,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         EnventManager.AddListener(EventName.ReLoadMoney.ToString(), ReLoadCointValue);
         EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
         EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
+        tmpSpeed = speed;
     }
     protected void OnMove()
     {

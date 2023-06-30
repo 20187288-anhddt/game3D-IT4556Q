@@ -101,11 +101,12 @@ public class Habitat : BuildObj, ILock
                         {
                             isReadyShit = true;
                         },1);
+                        SpawnAnimalOnStart(numAnimalSave);
                         if (numShitSave > 0)
                         {
                             TakeAShitOnStart(numShitSave);
                         }
-                        SpawnAnimalOnStart(numAnimalSave);
+                       
                     });
                 }); ;
             });
@@ -217,7 +218,7 @@ public class Habitat : BuildObj, ILock
                 isReadyShit = false;
                 if (CheckTakeAShit())
                 {
-                    TakeAShit();
+                    TakeAShit(true);
                 }
             }
             if (!isReadyShit)
@@ -246,7 +247,7 @@ public class Habitat : BuildObj, ILock
         }
         return isTakeAShit;
     }
-    public void TakeAShit()
+    public void TakeAShit(bool isStart)
     {
         int r = Random.Range(0, allAnimals.Count);
         AnimalBase animal = allAnimals[r];
@@ -254,6 +255,10 @@ public class Habitat : BuildObj, ILock
         curShit.transform.DOJump(new Vector3(randomShitPos.x,0.5f,randomShitPos.z), 2.5f, 1, 0.5f).OnComplete(()=> 
         {
             listShit.Add(curShit as Shit);
+            if (isStart)
+            {
+                numShitSave++;
+            }
         }); 
     }
     public Vector3 RandomPosition()
@@ -288,7 +293,7 @@ public class Habitat : BuildObj, ILock
         {
             if (CheckTakeAShit())
             {
-                TakeAShit();
+                TakeAShit(false);
                 n--;
             }
         }
