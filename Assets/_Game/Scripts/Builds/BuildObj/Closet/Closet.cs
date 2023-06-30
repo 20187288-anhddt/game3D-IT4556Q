@@ -68,16 +68,16 @@ public class Closet : ClosetBase, ILock
         {
             p.isUnlock = false;
             //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-            foreach (PlaceToBuy place in listPlaceToBuy)
-            {
-                place.gameObject.SetActive(true);
-            }
-            foreach (OutfitPos o in listOutfitPos)
-            {
-                o.gameObject.SetActive(true);
-                o.StartInGame();
-            }
-            checkPushCloset.gameObject.SetActive(true);
+            //foreach (PlaceToBuy place in listPlaceToBuy)
+            //{
+            //    place.gameObject.SetActive(true);
+            //}
+            //foreach (OutfitPos o in listOutfitPos)
+            //{
+            //    o.gameObject.SetActive(true);
+            //    o.StartInGame();
+            //}
+            //checkPushCloset.gameObject.SetActive(true);
         }
         checkUnlock.gameObject.SetActive(false);
         //GetComponent<BoxCollider>().enabled = true;

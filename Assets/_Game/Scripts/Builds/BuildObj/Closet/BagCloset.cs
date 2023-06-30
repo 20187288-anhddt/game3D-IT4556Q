@@ -63,16 +63,16 @@ public class BagCloset : ClosetBase
         else
         {
             p.isUnlock = false;
-            foreach (PlaceToBuyBag place in listPlaceToBuyBag)
-            {
-                place.gameObject.SetActive(true);
+            //foreach (PlaceToBuyBag place in listPlaceToBuyBag)
+            //{
+            //    place.gameObject.SetActive(true);
 
-            }
-            foreach (BagPos o in listBagPos)
-            {
-                o.gameObject.SetActive(true);
-                o.StartInGame();
-            }
+            //}
+            //foreach (BagPos o in listBagPos)
+            //{
+            //    o.gameObject.SetActive(true);
+            //    o.StartInGame();
+            //}
         //    EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
 
             checkPushBagCloset.gameObject.SetActive(true);
