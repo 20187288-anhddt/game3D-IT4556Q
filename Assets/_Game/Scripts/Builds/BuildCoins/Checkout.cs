@@ -277,8 +277,8 @@ public class Checkout : BuildCoins,ILock
                 coins.Add(g as Coin);
                 g.transform.DOLocalJump(cur, 5f, 1, 0.5f).OnComplete(() =>
                 {
-                    float r = UnityEngine.Random.Range(-5, 5);
-                    g.transform.DORotate(new Vector3(0, r, 0), 0f);
+                    //float r = UnityEngine.Random.Range(-5, 5);
+                    //g.transform.DORotate(new Vector3(0, r, 0), 0f);
                 });
             }
         }

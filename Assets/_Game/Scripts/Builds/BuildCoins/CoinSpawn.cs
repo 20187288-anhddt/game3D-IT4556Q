@@ -27,7 +27,7 @@ public class CoinSpawn : MonoBehaviour
         current = listTrans[i].position;
         float x = Random.Range(-0.05f, 0.05f);
         float z = Random.Range(-0.05f, 0.05f);
-        current += Vector3.up * y * 0.35f + Vector3.right * x + Vector3.forward * z;
+        current += Vector3.up * y * 0.35f + Vector3.right * 0 + Vector3.forward * 0;
         return current;
     }
     private void OnTriggerEnter(Collider other)
