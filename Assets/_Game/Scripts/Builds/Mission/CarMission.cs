@@ -66,7 +66,7 @@ public class CarMission : BaseBuild
     }
     void Update()
     {
-        if (!isLock)
+        if (!isLock && levelManager.machineManager.allActiveClothMachine.Count > 0 && levelManager.machineManager.allActiveBagMachine.Count > 0)
         {
             if (isReadyMission && !isOnMission)
             {

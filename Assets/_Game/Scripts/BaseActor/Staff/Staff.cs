@@ -88,16 +88,16 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        //anim = GetComponentInChildren<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
     }
     public void ReloadSetDestination()
     {
-        if(STATE_STAFF != IDLE_STATE)
+        if (STATE_STAFF != IDLE_STATE && gameObject.activeInHierarchy)
         {
             navMeshAgent.SetDestination(pointTaget);
         }
-     
+
     }
     void Update()
     {
@@ -388,7 +388,7 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     public void ChangeAnim()
     {
-        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        //anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         if (navMeshAgent.velocity.magnitude < 0.1f)
         {
             anim.speed = 1;
@@ -623,10 +623,12 @@ public class Staff : BaseStaff, ICollect,IAct
             case StaffType.FARMER:
                 model[0].SetActive(true);
                 model[1].SetActive(false);
+                anim = model[0].GetComponent<Animator>();
                 break;
             case StaffType.WORKER:
                 model[0].SetActive(false);
                 model[1].SetActive(true);
+                anim = model[1].GetComponent<Animator>();
                 break;
         }
     }

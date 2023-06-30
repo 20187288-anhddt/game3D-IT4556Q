@@ -55,11 +55,10 @@ public class Customer : BaseCustomer,IAct
     }
     public void ReloadSetDestination()
     {
-        if (STATE_CUSTOMER != IDLE_STATE)
+        if (STATE_CUSTOMER != IDLE_STATE && gameObject.activeInHierarchy)
         {
             navMeshAgent.SetDestination(pointTaget);
         }
-
     }
     protected void Update()
     {
@@ -273,7 +272,7 @@ public class Customer : BaseCustomer,IAct
     public void ChangeAnim()
     {
         //anim = GetComponentInChildren<Animator>();
-        anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        //anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         if (navMeshAgent.velocity.magnitude < 0.1f)
         {
             if (!gotOutfit)

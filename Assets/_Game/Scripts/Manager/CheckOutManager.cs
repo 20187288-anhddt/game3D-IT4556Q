@@ -7,7 +7,7 @@ public class CheckOutManager : MonoBehaviour
     public List<GroupCustomer> listGrCusCheckout;
     public List<Checkout> listCheckout;
     public int maxCusCheckout;
-    public Transform[] exitPos;
+    //public Transform[] exitPos;
 
     public Checkout GetEmtyCheckout()
     {
@@ -17,15 +17,20 @@ public class CheckOutManager : MonoBehaviour
         //int r = Random.Range(0, listCheckout.Count);
         //c = listCheckout[r];
         //c.transExit = exitPos[r];
-        for (int i = 0; i < listCheckout.Count; i++)
+        int r = Random.Range(0, listCheckout.Count);
+        if(listCheckout[r].listCusCheckout.Count < maxCusCheckout)
         {
-            if (!listCheckout[i].isHaveCus)
-            {
-                c = listCheckout[i];
-                c.transExit = exitPos[i];
-                break;
-            }
+            c = listCheckout[r];
         }
+        //for (int i = 0; i < listCheckout.Count; i++)
+        //{
+        //    if (listCheckout[i].listCusCheckout.Count < maxCusCheckout)
+        //    {
+        //        c = listCheckout[i];
+        //        //c.transExit = exitPos[i];
+        //        break;
+        //    }
+        //}
         return c;
     }
 

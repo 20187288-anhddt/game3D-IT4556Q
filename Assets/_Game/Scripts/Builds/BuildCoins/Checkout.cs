@@ -29,6 +29,7 @@ public class Checkout : BuildCoins,ILock
     private GameObject staffModel;
     [SerializeField]
     private CheckUnlock checkUnlock;
+    public int coinSave;
     public override void Start()
     {
         base.Start();
@@ -37,6 +38,7 @@ public class Checkout : BuildCoins,ILock
     public override void StartInGame()
     {
         base.StartInGame();
+        coinSave = 100;
         CurrentCoin = pirceObject.Get_Pirce();
         // Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis());
         defaultCoin = DataManager.Instance.GetDataPirceObjectController().GetPirceObject(nameObject_This,
@@ -113,6 +115,10 @@ public class Checkout : BuildCoins,ILock
                         }
                         //GetComponent<BoxCollider>().enabled = true;
                         coinSpawn.gameObject.SetActive(true);
+                        if(coinSave > 0)
+                        {
+                            SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE,this.transform);
+                        }
                     });
                 }); ;
             });
@@ -158,7 +164,7 @@ public class Checkout : BuildCoins,ILock
     void Update()
     {
         CheckStatus();
-        if (!isLock)
+        if (!isLock && isHired)
         {
             if (listCusCheckout.Count > 0)
             {
@@ -250,6 +256,9 @@ public class Checkout : BuildCoins,ILock
             case IngredientType.BEAR:
                 a = n * GameManager.Instance.dataPrice.Data.bearOutfit;
                 break;
+            case IngredientType.NONE:
+                a = n /2;
+                break;
         }
         switch (typeBag)
         {
@@ -261,6 +270,9 @@ public class Checkout : BuildCoins,ILock
                 break;
             case IngredientType.BEAR:
                 b = n * GameManager.Instance.dataPrice.Data.bearBag; ;
+                break;
+            case IngredientType.NONE:
+                b = n /2;
                 break;
         }
         indexMoney += (a+b);
@@ -275,6 +287,7 @@ public class Checkout : BuildCoins,ILock
                 var g = AllPoolContainer.Instance.Spawn(coinPrefab, cusPos.position, Quaternion.identity);
                 Vector3 cur = coinSpawn.SpawnObjectOnComplete(coins.Count);
                 coins.Add(g as Coin);
+                coinSave++;
                 g.transform.DOLocalJump(cur, 5f, 1, 0.5f).OnComplete(() =>
                 {
                     //float r = UnityEngine.Random.Range(-5, 5);

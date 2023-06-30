@@ -55,6 +55,7 @@ public class CoinSpawn : MonoBehaviour
                 checkOut.coins[0].MoveToPlayerSpeed(player);
             //}
             checkOut.coins.Remove(checkOut.coins[0]);
+            checkOut.coinSave--;
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
             //for (int i = 0; i < checkOut.coins.Count; i++)
             //{
