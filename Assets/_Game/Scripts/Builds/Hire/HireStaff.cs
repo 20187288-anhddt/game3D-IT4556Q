@@ -57,17 +57,17 @@ public class HireStaff : BaseBuild, ILock
         {
             case StaffType.FARMER:
                 var curFarmer = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
+                (curFarmer as Staff).ChangeOutfit(StaffType.FARMER);
                 (curFarmer as Staff).ResetStaff();
                 (curFarmer as Staff).staffType = StaffType.FARMER;
-                (curFarmer as Staff).ChangeOutfit(StaffType.FARMER);
                 levelManager.staffManager.listAllActiveStaffs.Add(curFarmer as Staff);
                 levelManager.staffManager.listFarmers.Add(curFarmer as Staff);
                 break;
             case StaffType.WORKER:
                 var curWorker = AllPoolContainer.Instance.Spawn(staffPrefabs, myTransform.position, myTransform.rotation);
+                (curWorker as Staff).ChangeOutfit(StaffType.WORKER);
                 (curWorker as Staff).ResetStaff();
                 (curWorker as Staff).staffType = StaffType.WORKER;
-                (curWorker as Staff).ChangeOutfit(StaffType.WORKER);
                 levelManager.staffManager.listAllActiveStaffs.Add(curWorker as Staff);
                 levelManager.staffManager.listWorkers.Add(curWorker as Staff);
                 break;

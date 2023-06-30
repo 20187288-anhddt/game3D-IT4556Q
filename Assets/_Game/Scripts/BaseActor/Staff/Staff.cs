@@ -391,6 +391,7 @@ public class Staff : BaseStaff, ICollect,IAct
         anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         if (navMeshAgent.velocity.magnitude < 0.1f)
         {
+            anim.speed = 1;
             if (gun.activeSelf)
             {
                 anim.Play("IdleWithGun");
@@ -407,18 +408,26 @@ public class Staff : BaseStaff, ICollect,IAct
         }
         else
         {
+           
             if (gun.activeSelf)
             {
+                anim.speed = 1/4.0f * speed;
                 anim.Play("RunWithGun");
             }
             else
             {
+               
                 if (objHave > 0)
                 {
+                    anim.speed = 0.3f * speed;
                     anim.Play("WalkCarring");
                 }
                 else
+                {
+                    anim.speed = 0.3f * speed;
                     anim.Play("WalkNormal");
+                }
+                 
             }
         }
     }
