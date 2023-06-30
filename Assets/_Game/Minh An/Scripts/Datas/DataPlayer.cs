@@ -88,6 +88,8 @@ public class DataBoss
     {
         pathLoadData_Capacity = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\Boss\\Capacitys\\Level ";
         infoCapacity infoCapacity_ = (infoCapacity)Resources.Load(pathLoadData_Capacity + Level, typeof(infoCapacity));
+        Debug.Log(infoCapacity_ == null);
+        Debug.Log(Level);
         return infoCapacity_;
     }
     public infoPrice GetInfoPriceTaget(int Level)

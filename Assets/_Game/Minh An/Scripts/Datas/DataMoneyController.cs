@@ -141,7 +141,7 @@ public class Money
     }
     public void ResetData()
     {
-        value = 300;
+        value = 0;
     }
     public enum TypeMoney
     {

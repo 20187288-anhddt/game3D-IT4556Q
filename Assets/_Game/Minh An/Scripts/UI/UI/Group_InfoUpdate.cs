@@ -401,43 +401,30 @@ public class Group_InfoUpdate : UI_Child
             case InfoThis.TypeBuff.Speed:
                 if ((dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed())
                 {
-                    switch (typeCost)
-                    {
-                        case TypeCost.WatchVideo:
-                            btn_Ads.onClick.RemoveAllListeners();
-                            imageIcon_Ads.gameObject.SetActive(false);
-                            imageBG_Ads.sprite = spr_BG_Green;
-                            txt_Ads.text = "MAX";
-                            break;
-                        case TypeCost.Money:
-                            btn_Money.onClick.RemoveAllListeners();
-                            imageIcon_Money.gameObject.SetActive(false);
-                            imageBG_Money.sprite = spr_BG_Green;
-                            txt_Money.text = "MAX";
-                            break;
-                    }
-                  
+                    btn_Money.onClick.RemoveAllListeners();
+                    imageIcon_Money.gameObject.SetActive(false);
+                    imageBG_Money.sprite = spr_BG_Green;
+                    txt_Money.text = "MAX";
+                    btn_Ads.onClick.RemoveAllListeners();
+                    imageIcon_Ads.gameObject.SetActive(false);
+                    imageBG_Ads.sprite = spr_BG_Green;
+                    txt_Ads.text = "MAX";
+              
                 }
                
                 break;
             case InfoThis.TypeBuff.Stack:
                 if ((dataStatusObject as MachineDataStatusObject).isMaxLevelStack())
                 {
-                    switch (typeCost)
-                    {
-                        case TypeCost.WatchVideo:
-                            btn_Ads.onClick.RemoveAllListeners();
-                            imageIcon_Ads.gameObject.SetActive(false);
-                            imageBG_Ads.sprite = spr_BG_Green;
-                            txt_Ads.text = "MAX";
-                            break;
-                        case TypeCost.Money:
-                            btn_Money.onClick.RemoveAllListeners();
-                            imageIcon_Money.gameObject.SetActive(false);
-                            imageBG_Money.sprite = spr_BG_Green;
-                            txt_Money.text = "MAX";
-                            break;
-                    }
+                    btn_Money.onClick.RemoveAllListeners();
+                    imageIcon_Money.gameObject.SetActive(false);
+                    imageBG_Money.sprite = spr_BG_Green;
+                    txt_Money.text = "MAX";
+                    btn_Ads.onClick.RemoveAllListeners();
+                    imageIcon_Ads.gameObject.SetActive(false);
+                    imageBG_Ads.sprite = spr_BG_Green;
+                    txt_Ads.text = "MAX";
+                  
                 }
              
                 break;
@@ -509,21 +496,15 @@ public class Group_InfoUpdate : UI_Child
         }
         if (isMax)
         {
-            switch (typeCost)
-            {
-                case TypeCost.WatchVideo:
-                    btn_Ads.onClick.RemoveAllListeners();
-                    imageIcon_Ads.gameObject.SetActive(false);
-                    imageBG_Ads.sprite = spr_BG_Green;
-                    txt_Ads.text = "MAX";
-                    break;
-                case TypeCost.Money:
-                    btn_Money.onClick.RemoveAllListeners();
-                    imageIcon_Money.gameObject.SetActive(false);
-                    imageBG_Money.sprite = spr_BG_Green;
-                    txt_Money.text = "MAX";
-                    break;
-            }
+            btn_Ads.onClick.RemoveAllListeners();
+            btn_Money.onClick.RemoveAllListeners();
+            imageIcon_Ads.gameObject.SetActive(false);
+            imageBG_Ads.sprite = spr_BG_Green;
+            txt_Ads.text = "MAX";
+            imageIcon_Money.gameObject.SetActive(false);
+            imageBG_Money.sprite = spr_BG_Green;
+            txt_Money.text = "MAX";
+          
         }
        
     }
