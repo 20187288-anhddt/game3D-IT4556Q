@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488645091607795832}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -7.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,7 +244,7 @@ MonoBehaviour:
   dataStatusObject: {fileID: 0}
   pirceObject: {fileID: 7922080128544025079}
   ingredients: []
-  maxObjInput: 4
+  maxObjInput: 50
   maxObjOutput: 4
   inIngredientPos: {fileID: 1465432936970488238}
   cenIngredientPos: {fileID: 6552183797602764572}
@@ -601,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8827691194900055022}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 7.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -718,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 1970277660549166559, guid: f133b4e23a059f94089932fe2cedf321, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a45cc3c2c3b4d3547824af4fa53bba86, type: 3}
+      objectReference: {fileID: 21300000, guid: eed7dd48da6afd84e9a67b533533b4df, type: 3}
     - target: {fileID: 5367218405750213911, guid: f133b4e23a059f94089932fe2cedf321, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -1052,7 +1052,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006900501405735676, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
       propertyPath: m_Size.z
-      value: 1
+      value: 0.8324679
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006900501405735676, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
+      propertyPath: m_Center.z
+      value: -0.083766066
       objectReference: {fileID: 0}
     - target: {fileID: 8192349961961484851, guid: 0e6674debc88daa4495a5b8164bc47e3, type: 3}
       propertyPath: machine
@@ -1089,7 +1093,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 257317981772993405, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
       propertyPath: m_Size.z
-      value: 1
+      value: 0.832581
+      objectReference: {fileID: 0}
+    - target: {fileID: 257317981772993405, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
+      propertyPath: m_Center.z
+      value: 0.08370952
       objectReference: {fileID: 0}
     - target: {fileID: 1095906710825352080, guid: 1528c7c1d33a31d4ba7e7eb0c79cf6eb, type: 3}
       propertyPath: machine

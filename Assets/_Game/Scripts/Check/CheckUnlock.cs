@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CheckUnlock : MonoBehaviour
 {
+    public Transform myTransform;
     public bool isHaveUnlock;
     [SerializeField]
     private DOTweenAnimation effect;
@@ -22,20 +23,33 @@ public class CheckUnlock : MonoBehaviour
     private Image[] bound;
     [SerializeField]
     private GameObject[] bg;
-    private bool isUnlockAds;
+    [SerializeField] private PirceObject pirceObject_UI;
+    [SerializeField] private DataStatusObject dataStatusObject;
+    private bool isPlayAnim = false;
 
-    public void UpdateUI()
+    private bool isUnlockAds;
+    private void Awake()
+    {
+        if(myTransform == null) { myTransform = this.transform; }
+        if(pirceObject_UI == null) { pirceObject_UI = GetComponent<PirceObject>(); }
+        if(dataStatusObject == null) { dataStatusObject = GetComponentInParent<DataStatusObject>(); }
+    }
+    void Start()
     {
         normal = GetComponentInParent<ILock>();
-        if ((normal as BaseBuild).isKey)
-        {
-            effect.DOPlay();
-        }
-        else
-        {
-            effect.DOPause();
-        }
-
+    }
+    public void UpdateUI()
+    {
+       
+        //if ((normal as BaseBuild).isKey)
+        //{
+        //    effect.DOPlay();
+        //}
+        //else
+        //{
+        //    effect.DOPause();
+        //}
+        pirceObject_UI.ReLoadUI();
         //if ((normal as BaseBuild).unlockAds)
         //{
         //    bg[0].SetActive(true);
@@ -76,26 +90,30 @@ public class CheckUnlock : MonoBehaviour
                 {
                     if (normal.CurrentCoin > 0)
                     {
-                        if (t < 1.5f)
-                        {
-                            if (!(unlock as Player).canCatch)
-                                return;
-                            (unlock as Player).canCatch = false;
-                            normal.UnLock(true, true);
-                            //unlockBuild(unlock.CoinValue);
-                            //unlock.UnlockMap(1);
-                            //(unlock as Player).DelayCatch(0f);
-                        }
-                        else
-                        {
-                            if ((unlock as Player).canCatch)
-                            {
-                                normal.UnLock(true, true);
-                                //unlockQuick(unlock);
-                            }                             
-                            else
-                                (unlock as Player).DelayCatch(1);
-                        }
+                        unlockBuild(unlock.CoinValue);
+                        // (unlock as Player).DelayCatch(30);
+                        //unlock.UnlockMap(1);
+                        //(unlock as Player).DelayCatch(0f);
+                        //if (t < 1.5f)
+                        //{
+                        //    if (!(unlock as Player).canCatch)
+                        //        return;
+                        //    (unlock as Player).canCatch = false;
+                        //   // normal.UnLock(true, true);
+                        //    unlockBuild(unlock.CoinValue);
+                        //    //unlock.UnlockMap(1);
+                        //    //(unlock as Player).DelayCatch(0f);
+                        //}
+                        //else
+                        //{
+                        //    if ((unlock as Player).canCatch)
+                        //    {
+                        //        //normal.UnLock(true, true);
+                        //        unlockQuick(unlock);
+                        //    }                             
+                        //    else
+                        //        (unlock as Player).DelayCatch(1);
+                        //}
                     }
                     else
                     {
@@ -134,6 +152,7 @@ public class CheckUnlock : MonoBehaviour
             }
 
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -170,21 +189,22 @@ public class CheckUnlock : MonoBehaviour
             {
                 text.DOTextInt((int)normal.CurrentCoin, (int)(normal.CurrentCoin - player.CoinValue), 0.75f);
                 normal.CurrentCoin -= player.CoinValue;
+                dataStatusObject.AddAmountPaid((int)player.CoinValue);
                 bound[0].DOFillAmount(bound[0].fillAmount + (float)player.CoinValue / normal.DefaultCoin, 0.75f).OnComplete(() =>
                 {
                     UpdateUI();
                 });
                 (player as Player).coinValue = 0;
+                DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD, 0);
             }
             else
             {
                 text.DOTextInt((int)normal.CurrentCoin, 0, 0.75f);
                 (player as Player).coinValue -= normal.CurrentCoin;
+                DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, (int)normal.CurrentCoin);
+                dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
                 normal.CurrentCoin = 0;
-                bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
-                {
-                    normal.UnLock(true, true);
-                });
+               
             }
         }
     }
@@ -197,8 +217,22 @@ public class CheckUnlock : MonoBehaviour
         }
         if (index > 0 && normal.CurrentCoin > 0)
         {
-            normal.CurrentCoin -= 1f;
-            bound[0].fillAmount += (float)1 / normal.DefaultCoin;
+            int value = (int)normal.DefaultCoin / 100 * 2;
+            if(value <= 0)
+            {
+                value = 1;
+            }
+            if(value > index)
+            {
+                value = (int)index;
+            }
+            if (normal.CurrentCoin < value)
+            {
+                value = (int)normal.CurrentCoin;
+            }
+            DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, value);
+            normal.CurrentCoin -= value;
+            dataStatusObject.AddAmountPaid(value);
             Player player = Player.Instance;
             AllPool c = AllPoolContainer.Instance.Spawn(coinPrefab, player.transform.position + Vector3.up * 0.5f);
             (c as Coin).MoveToBuildLock(this.transform.position, 0f);
@@ -210,4 +244,15 @@ public class CheckUnlock : MonoBehaviour
 
         }
     }
+    //IEnumerator IE_AnimProcessUnLock(float Speed = 1)
+    //{
+    //    float m_time = bound[0].fillAmount;
+    //    while (m_time <= dataStatusObject.GetAmountPaid() / normal.DefaultCoin + 0.1f)
+    //    {
+    //        bound[0].fillAmount = m_time;
+    //        m_time += Time.deltaTime * Speed;
+    //        yield return null;
+    //    }
+    //    isPlayAnim = false;
+    //}
 }

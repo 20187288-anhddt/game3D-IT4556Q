@@ -206,6 +206,7 @@ public class Staff : BaseStaff, ICollect,IAct
                     break;
                 case StaffType.WORKER:
                     curCloset.isHaveStaff = false;
+                    waitingTime = consWaitingTime;
                     break;
             }
             UpdateState(IDLE_STATE);
