@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-publ: MonoBehaviour,IAct
+public abstract class AnimalBase : AllPool,IAct
 {
     public Transform myTransform;
     public FsmSystem fsm = new FsmSystem();
@@ -59,13 +59,13 @@ publ: MonoBehaviour,IAct
     void Update()
     {
         fsm.execute();
-        if (isNaked && isReadyReset)
+        if (habitat != null && isNaked && isReadyReset)
         {
             isReadyReset = false;
             CounterHelper.Instance.QueueAction(timeDelayFur, () => { 
-                ResetWool(); });
+                ResetWool(); },1);
         }
-        if (!habitat.isLock)
+        if (habitat != null && !habitat.isLock)
         {
             if (isInside)
             {
@@ -110,7 +110,7 @@ publ: MonoBehaviour,IAct
             {
                 CounterHelper.Instance.QueueAction(consTimeLive, () => {
                     onIdlePos = true;
-                });
+                },1);
                 UpdateState(IDLE_STATE);
             }
         }
@@ -118,7 +118,7 @@ publ: MonoBehaviour,IAct
     public void RandomMoveOutSide()
     {
         int r = Random.Range(1, 10);
-        if (r < 10 && isReadyHaveFun)
+        if (r < 0 && isReadyHaveFun)
         {
             if (RandomPosition(false))
             {
@@ -131,7 +131,7 @@ publ: MonoBehaviour,IAct
             {
                 CounterHelper.Instance.QueueAction(consTimeLive, () => {
                     onIdlePos = true;
-                });
+                },1);
                 UpdateState(IDLE_STATE);
             }
         }
@@ -181,10 +181,10 @@ publ: MonoBehaviour,IAct
     public virtual void Run(bool isInside)
     {
         navMeshAgent.isStopped = false;
-        if (isInside == false)
-        {
-            CounterHelper.Instance.QueueAction(3f, () => { GetComponent<CapsuleCollider>().enabled = true; });
-        }
+        //if (isInside == false)
+        //{
+        //    CounterHelper.Instance.QueueAction(3f, () => { GetComponent<CapsuleCollider>().enabled = true; });
+        //}
         navMeshAgent.SetDestination(nextDes);
         navMeshAgent.stoppingDistance = 0;
     }
@@ -248,7 +248,7 @@ publ: MonoBehaviour,IAct
         {
             if (!habitat.animalsIsReady.Contains(this))
                 habitat.animalsIsReady.Add(this);
-        }); 
+        },1); 
     }
 
     public void SetHabitat(Habitat habitat)
@@ -359,35 +359,35 @@ publ: MonoBehaviour,IAct
     public void ResetAnimal()
     {
         ResetWool();
-        GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<CapsuleCollider>().enabled = false;
         isInside = true;
-        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; });
+        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; },1);
         nextDes = Vector3.zero;
         timeLive = consTimeLive;
         isReadyCountDown = false;
         onIdlePos = true;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        var player = other.GetComponent<Player>();
-        if (player != null)
-        {
-            GetComponent<CapsuleCollider>().enabled = false;
-            myTransform.DORotate(new Vector3(0f,180f,0f), 0f);
-            timeLive = consTimeLive;
-            if (!habitat.allAnimals.Contains(this))
-            {
-                habitat.allAnimals.Add(this);
-                Vector3 tmpPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)].position;
-                this.transform.DOMove(tmpPos, 0f);
-            }
-            isInside = true;
-            CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { 
-                isReadyHaveFun = true;
-                onIdlePos = true;
-            });
-            nextDes = Vector3.zero;
-            UpdateState(IDLE_STATE);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    var player = other.GetComponent<Player>();
+    //    if (player != null)
+    //    {
+    //        GetComponent<CapsuleCollider>().enabled = false;
+    //        myTransform.DORotate(new Vector3(0f,180f,0f), 0f);
+    //        timeLive = consTimeLive;
+    //        if (!habitat.allAnimals.Contains(this))
+    //        {
+    //            habitat.allAnimals.Add(this);
+    //            Vector3 tmpPos = habitat.defaultAnimalPos[habitat.allAnimals.IndexOf(this)].position;
+    //            this.transform.DOMove(tmpPos, 0f);
+    //        }
+    //        isInside = true;
+    //        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { 
+    //            isReadyHaveFun = true;
+    //            onIdlePos = true;
+    //        });
+    //        nextDes = Vector3.zero;
+    //        UpdateState(IDLE_STATE);
+    //    }
+    //}
 }

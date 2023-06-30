@@ -100,7 +100,7 @@ public class Habitat : BuildObj, ILock
                         CounterHelper.Instance.QueueAction(consDelayShit, () =>
                         {
                             isReadyShit = true;
-                        });
+                        },1);
                         if (numShitSave > 0)
                         {
                             TakeAShitOnStart(numShitSave);
@@ -118,7 +118,7 @@ public class Habitat : BuildObj, ILock
             CounterHelper.Instance.QueueAction(consDelayShit, () =>
             {
                 isReadyShit = true;
-            });
+            },1);
         }
        
         checkUnlock.gameObject.SetActive(false);
@@ -299,7 +299,6 @@ public class Habitat : BuildObj, ILock
             randomPos = RandomPosition();
             if(Vector3.Distance(randomPos, Vector3.zero) != 0)
             {
-                Debug.Log("he");
                 var curAnimal = AllPoolContainer.Instance.Spawn(animalPrefabs,randomPos, myTransform.rotation);
                 allAnimals.Add(curAnimal as AnimalBase);
                 (curAnimal as AnimalBase).SetHabitat(this);

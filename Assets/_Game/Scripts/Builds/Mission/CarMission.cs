@@ -82,8 +82,10 @@ public class CarMission : BaseBuild
                     }
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {       
+                        isOnMission = true;
+                        StartCountDown();
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder(() => 
+                        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).Show_Btn_Oder(() =>
                         {
                             if (!checkPushCarMission.GetisInItDataUI())
                             {
@@ -91,12 +93,9 @@ public class CarMission : BaseBuild
                                 checkPushCarMission.SetisInItDataUI(true);
                                 checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
                             }
-                          
                         });
-                        isOnMission = true;
-                        StartCountDown();        
                     });
-                });
+                },1);
             }
             if (!isReadyMission && isOnMission)
             {
@@ -137,41 +136,52 @@ public class CarMission : BaseBuild
     }
     public void RandomMission()
     {
-        switch (levelManager.machineManager.allActiveMachine.Count)
+        int r1 = UnityEngine.Random.Range(0, 2);
+        if (r1 == 0)
         {
-            case 4:
-            case 5:       
-                int r1 = UnityEngine.Random.Range(0, 2);
-                if (r1 ==0)
-                {
-                    GetRandomType(2);
-                    AddMission(2);
-                }
-                else
-                {
-                    GetRandomType(4);
-                    AddMission(4);
-                }
-                break;
-            case 6:
-                int r2 = UnityEngine.Random.Range(0, 3);
-                if (r2 == 0)
-                {
-                    GetRandomType(2);
-                    AddMission(2);
-                }
-                else if(r2 == 1)
-                {
-                    GetRandomType(4);
-                    AddMission(4);
-                }
-                else
-                {
-                    GetRandomType(6);
-                    AddMission(6);
-                }
-                break;
+            GetRandomType(2);
+            AddMission(2);
         }
+        else
+        {
+            GetRandomType(4);
+            AddMission(4);
+        }
+        //switch (levelManager.machineManager.allActiveMachine.Count)
+        //{
+        //    case 4:
+        //    case 5:       
+        //        int r1 = UnityEngine.Random.Range(0, 2);
+        //        if (r1 ==0)
+        //        {
+        //            GetRandomType(2);
+        //            AddMission(2);
+        //        }
+        //        else
+        //        {
+        //            GetRandomType(4);
+        //            AddMission(4);
+        //        }
+        //        break;
+        //    case 6:
+        //        int r2 = UnityEngine.Random.Range(0, 3);
+        //        if (r2 == 0)
+        //        {
+        //            GetRandomType(2);
+        //            AddMission(2);
+        //        }
+        //        else if(r2 == 1)
+        //        {
+        //            GetRandomType(4);
+        //            AddMission(4);
+        //        }
+        //        else
+        //        {
+        //            GetRandomType(6);
+        //            AddMission(6);
+        //        }
+        //        break;
+        //}
         foreach(IngredientType key in listMission.Keys)
         {
             int value = listMission[key];
@@ -308,23 +318,23 @@ public class CarMission : BaseBuild
     }
     public void StartCountDown()
     {
-        if(carWaiting <= 0 || !isOnMission)
+        if(carWaiting < 0 || !isOnMission)
         {
             return;
         }
-        CounterHelper.Instance.QueueAction(1, () =>
+        else if(carWaiting >= 0 && isOnMission)
         {
             carWaiting--;
-            if(carWaiting >= 0)
+            if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
             {
-                if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
-                {
-                    (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
-                }
-                Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
+                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).LoadTime((int)carWaiting);
             }
+            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
+        }
+        CounterHelper.Instance.QueueAction(1f, () =>
+        {
             StartCountDown();
-        });
+        },1);
     }
     public void UpdateMission()
     {

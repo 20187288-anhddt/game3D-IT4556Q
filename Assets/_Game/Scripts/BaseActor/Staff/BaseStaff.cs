@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseStaff : AllPool
 {
     public FsmSystem fsm = new FsmSystem();
+    public Transform myTransform;
     public static string IDLE_STATE = "idle_state";
     public static string MOVE_TO_HABITAT_STATE = "move_to_habitat_state";
     public static string MOVE_TO_MACHINE_STATE = "move_to_machine_state";
@@ -43,10 +44,15 @@ public class BaseStaff : AllPool
     public List<CowBag> CowBags;
     public List<ChickenBag> ChickenBags;
     public List<BearBag> BearBags;
+    public List<Shit> ListShits;
 
     public StaffType staffType;
     public IngredientType ingredientType;
 
+    public virtual void Awake()
+    {
+        if(myTransform == null) { myTransform = this.transform; }
+    }
     public void UpdateState(string state)
     {
         fsm.setState(state);
@@ -59,7 +65,7 @@ public class BaseStaff : AllPool
         CounterHelper.Instance.QueueAction(time, () =>
         {
             CanCatch = true;
-        });
+        },1);
     }
     public virtual void ShortObj(IngredientBase ingredient, int indexIngredientInList)
     {
@@ -75,4 +81,5 @@ public enum StaffType
 {
     FARMER,
     WORKER,
+    CHECKOUT,
 }

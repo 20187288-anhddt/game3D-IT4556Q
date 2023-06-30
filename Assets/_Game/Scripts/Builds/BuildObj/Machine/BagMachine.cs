@@ -160,7 +160,7 @@ public class BagMachine : MachineBase
                 CounterHelper.Instance.QueueAction(delayInput, () =>
                 {
                     InputMoveToCenter();
-                });
+                },1);
             }
         }
         if (!isReadyInToMid)
