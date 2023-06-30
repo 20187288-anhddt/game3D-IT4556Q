@@ -751,13 +751,10 @@ public class RewardProcessCompleteMission
     }
     private void PlayerStopMove()
     {
-        Player.Instance.isStopMove = true;
-        Canvas_Joystick.Instance.isStopJoysick = true;
-        EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+        Player.Instance.PlayerStopMove();
     }
     private void PlayerContinueMove()
     {
-        Player.Instance.isStopMove = false;
-        Canvas_Joystick.Instance.isStopJoysick = false;
+        Player.Instance.PlayerContinueMove();
     }
 }

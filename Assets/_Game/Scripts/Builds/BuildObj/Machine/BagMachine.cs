@@ -216,6 +216,7 @@ public class BagMachine : MachineBase
     {
         var curIngredient = ingredients[0];
         ingredients.Remove(curIngredient);
+        numInputSave--;
         ShortCutIngredients();
         curIngredient.myTransform.DOMove(cenIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
@@ -232,6 +233,7 @@ public class BagMachine : MachineBase
         curCloth.transform.DOMove(outIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
             outCloths.Add(curCloth as BagBase);
+            numOutputSave++;
             curCloth.transform.position = curClothPos;
             if (outCloths.Count >= maxObjOutput)
             {

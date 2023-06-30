@@ -407,5 +407,15 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         chickenCloths.Clear();
         bearCloths.Clear();
     }
-    
+    public void PlayerStopMove()
+    {
+        isStopMove = true;
+        Canvas_Joystick.Instance.isStopJoysick = true;
+        EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+    }
+    public void PlayerContinueMove()
+    {
+        isStopMove = false;
+        Canvas_Joystick.Instance.isStopJoysick = false;
+    }
 }

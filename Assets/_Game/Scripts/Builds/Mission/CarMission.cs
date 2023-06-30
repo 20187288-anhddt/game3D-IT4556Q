@@ -343,10 +343,10 @@ public class CarMission : BaseBuild
             foreach (IngredientType key in listMission.Keys)
             {
                 int value = listMission[key];
-                (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).ShowItem(key, value);
+                Canvas_Order.Instane.ShowItem(key, value);
                // Debug.Log(key + "---" + value);
             }
-           (UI_Manager.Instance.OpenUI(NameUI.Canvas_Order) as Canvas_Order).SetCompleteAllMission(CheckCompleteAll());
+            Canvas_Order.Instane.SetCompleteAllMission(CheckCompleteAll());
         }
       
     }

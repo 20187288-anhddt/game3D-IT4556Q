@@ -5,6 +5,19 @@ using UnityEngine.UI;
 
 public class Canvas_Order : UI_Canvas
 {
+    private static Canvas_Order instane;
+    public static Canvas_Order Instane
+    {
+        get
+        {
+            if(instane == null)
+            {
+                instane = FindObjectOfType<Canvas_Order>();
+            }
+            return instane;
+        }
+    }
+
     [SerializeField] private List<Process_Item> process_Items;
     [SerializeField] private Process_Item process_Item_Prefab;
     [SerializeField] private Transform transformParent_Process_Item;
@@ -34,6 +47,7 @@ public class Canvas_Order : UI_Canvas
         btn_Collect.onClick.AddListener(Collect);
         btn_WatchVideo_CollectX3.onClick.AddListener(WatchVideo_CollectX3);
     }
+  
     //private void OnDisable()
     //{
     //    CloseAllItem();
