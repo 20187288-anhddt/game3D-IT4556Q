@@ -734,6 +734,9 @@ public class RewardProcessCompleteMission
             case EventName.HireAnimal_Bear_OnBuy:
                 OnBuy(IngredientType.HIRE_ANIMAL, NameObject_This.HireAnimal_Bear);
                 break;
+            case EventName.OnEventBonus:
+                EventBounsController.Instance.GetDataBonus().Set_OnShowBouns(true);
+                break;
         }
     }
 

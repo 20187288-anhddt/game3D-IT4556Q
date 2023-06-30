@@ -146,6 +146,9 @@ public enum EventName {
     HireAnimal_Bear_OnBuy,
 
     ReLoadUpgrade,
+    Machine_Double_Speed_Play,
+    Machine_Double_Speed_Stop,
+    OnEventBonus,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

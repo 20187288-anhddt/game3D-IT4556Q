@@ -287,6 +287,7 @@ public class BagMachine : MachineBase
         //}
         checkUnlock.UpdateUI();
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+        AddEvent();
     }
     //public override void SpawnInputOnStart(int n)
     //{

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EventBounsController : Singleton<EventBounsController>
 {
     [SerializeField] private List<InfoBouns> infoBouns;
-
     public List<float> timeShows;
     [Header("Loop")]
     public bool isLoop;
@@ -16,16 +15,6 @@ public class EventBounsController : Singleton<EventBounsController>
     private int indexTaget = 0;
     [SerializeField] float m_timeLoop;
     [SerializeField] float m_timeShow;
-    //[Header("BonusMoney")]
-    //[SerializeField] private InfoBouns infoBouns_Money_Buff;
-    //[SerializeField] private float timeLoop_BonusMoney;
-    //[SerializeField] private float m_TimeLoop_BonusMoney;
-    //[SerializeField] private float m_TimeCheck_BonusMMoney;
-    [Header("BonusBuffMoneyX2")]
-    [SerializeField] private InfoBouns infoBouns_Money_BuffX2;
-    [SerializeField] private float timeLoop_BonusMoneyX2;
-    [SerializeField] private float m_TimeLoop_BonusMoneyX2;
-    [SerializeField] private float m_TimeCheck_BonusMMoneyX2;
 
     public override void Awake()
     {
@@ -39,8 +28,6 @@ public class EventBounsController : Singleton<EventBounsController>
         indexTaget = 0;
         m_timeLoop = timeLoop;
         m_timeShow = timeShows[indexTaget];
-       // m_TimeLoop_BonusMoney = timeLoop_BonusMoney;
-        m_TimeLoop_BonusMoneyX2 = timeLoop_BonusMoneyX2;
         //dataBonus.Set_OnShowBouns(true);
     }
     private void Update()
@@ -48,25 +35,19 @@ public class EventBounsController : Singleton<EventBounsController>
         if (dataBonus.Get_OnShowBouns())
         {
             m_TimeCheck += Time.deltaTime;
-            //m_TimeCheck_BonusMMoney += Time.deltaTime;
-            m_TimeCheck_BonusMMoneyX2 += Time.deltaTime;
             if (isLoop)
             {
                 if (m_TimeCheck >= m_timeLoop)
                 {
                     reload_Bonus:
-                    if (!IsAllNoOnBonus())
+                    infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
+                    if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
                     {
-                        infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
-                        if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
-                        {
-                            goto reload_Bonus;
-                        }
-                        m_timeLoop = timeLoop + infoBouns_Taget.timeEnd_Show_Bonus;
-                        ShowBonus(infoBouns_Taget);
-                        m_TimeCheck = 0;
+                        goto reload_Bonus;
                     }
-                  
+                    m_timeLoop = timeLoop + infoBouns_Taget.timeEnd_Show_Bonus;
+                    ShowBonus(infoBouns_Taget);
+                    m_TimeCheck = 0;
                 }
             }
             else
@@ -74,59 +55,28 @@ public class EventBounsController : Singleton<EventBounsController>
                 if (m_TimeCheck >= m_timeShow)
                 {
                     reload_Bonus:
-                    if (!IsAllNoOnBonus())
+                    infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
+                    if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
                     {
-                        infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
-                        if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
-                        {
-                            goto reload_Bonus;
-                        }
-                        if (timeShows.Count > indexTaget + 1)
-                        {
-                            indexTaget++;
-                        }
-                        else
-                        {
-                            indexTaget = 0;
-                        }
-                        m_timeShow = timeShows[indexTaget] + infoBouns_Taget.timeEnd_Show_Bonus;
-                        ShowBonus(infoBouns_Taget);
-                        m_TimeCheck = 0;
+                        goto reload_Bonus;
                     }
-                   
+                    if (timeShows.Count > indexTaget + 1)
+                    {
+                        indexTaget++;
+                    }
+                    else
+                    {
+                        indexTaget = 0;
+                    }
+                    m_timeShow = timeShows[indexTaget] + infoBouns_Taget.timeEnd_Show_Bonus;
+                    ShowBonus(infoBouns_Taget);
+                    m_TimeCheck = 0;
                 }
             }
-
-            //if(m_TimeCheck_BonusMMoney >= m_TimeLoop_BonusMoney)
-            //{
-            //    m_TimeCheck_BonusMMoney = 0;
-            //    m_TimeLoop_BonusMoney = timeLoop_BonusMoney + infoBouns_Money_Buff.timeEnd_Show_Bonus;
-            //    infoBouns_Money_Buff.uI_Bonus.Active(true);
-            //    infoBouns_Money_Buff.uI_Bonus.InItTimeSecond(infoBouns_Money_Buff.timeEnd_Show_Bonus);
-            //    infoBouns_Money_Buff.uI_Bonus.SetTimeBuff(infoBouns_Money_Buff.timeEnd_Bonus);
-            //}
-            if (m_TimeCheck_BonusMMoneyX2 >= m_TimeLoop_BonusMoneyX2 && infoBouns_Money_BuffX2.uI_Bonus.Get_OnBonus())
-            {
-                m_TimeCheck_BonusMMoneyX2 = 0;
-                m_TimeLoop_BonusMoneyX2 = timeLoop_BonusMoneyX2 + infoBouns_Money_BuffX2.timeEnd_Show_Bonus;
-                infoBouns_Money_BuffX2.uI_Bonus.Active(true);
-                infoBouns_Money_BuffX2.uI_Bonus.InItTimeSecond(infoBouns_Money_BuffX2.timeEnd_Show_Bonus);
-                infoBouns_Money_BuffX2.uI_Bonus.SetTimeBuff(infoBouns_Money_BuffX2.timeEnd_Bonus);
-            }
         }
-
+       
     }
-    private bool IsAllNoOnBonus()
-    {
-        foreach(InfoBouns infoBouns in infoBouns)
-        {
-            if (infoBouns.uI_Bonus.Get_OnBonus())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+  
     //public void ShowBonus(int ID)
     //{
     //    for(int i = 0; i < infoBouns.Count; i++)
@@ -153,7 +103,7 @@ public class EventBounsController : Singleton<EventBounsController>
         }
         infoBonus.uI_Bonus.Active(true);
         infoBonus.uI_Bonus.InItTimeSecond(infoBonus.timeEnd_Show_Bonus);
-        infoBonus.uI_Bonus.SetTimeBuff(infoBonus.timeEnd_Bonus);
+       
     }
     IEnumerator IE_DelayAction(float m_timeDelay, System.Action action)
     {
@@ -183,28 +133,6 @@ public class EventBounsController : Singleton<EventBounsController>
     public DataBonus GetDataBonus()
     {
         return dataBonus;
-    }
-    public UI_Bonus GetUIBonus(TypeBonus typeBonus)
-    {
-        foreach(InfoBouns infoBouns in infoBouns)
-        {
-            if(infoBouns.uI_Bonus.typeBonus == typeBonus)
-            {
-                return infoBouns.uI_Bonus;
-            }
-        }
-        return null;
-    }
-    public InfoBouns GetInfoBonus(TypeBonus typeBonus)
-    {
-        foreach (InfoBouns infoBouns in infoBouns)
-        {
-            if (infoBouns.uI_Bonus.typeBonus == typeBonus)
-            {
-                return infoBouns;
-            }
-        }
-        return null;
     }
 } 
 [System.Serializable]

@@ -8,11 +8,9 @@ public class UI_Bonus : UI_Child
     public Transform myTransform;
     public TypeBonus typeBonus;
     [SerializeField] private Button btn_This;
-    [SerializeField] protected UI_Table_Info_Bonus uI_Table_Info_Bonus;
     protected float timeSecond = 0;
     protected bool isInItTime = false;
     [SerializeField] protected bool On_Bonus = false;
-    protected float timeBuff;
     public void InItTimeSecond(float time)
     {
         timeSecond = time;
@@ -26,7 +24,7 @@ public class UI_Bonus : UI_Child
     private void OnInit()
     {
         if (myTransform == null) { myTransform = this.transform; }
-        btn_This.onClick.AddListener(ShowTableReward);
+        btn_This.onClick.AddListener(Reward);
     }
     public void Active(bool value)
     {
@@ -34,14 +32,8 @@ public class UI_Bonus : UI_Child
     }
     public virtual void Reward()
     {
-       // EventBounsController.Instance.RewardTrigger(this);
-        //Invoke(nameof(StopReward), timeBuff);
+        EventBounsController.Instance.RewardTrigger(this);
         Close();
-    }
-    public virtual void ShowTableReward()
-    {
-        uI_Table_Info_Bonus.Open();
-        uI_Table_Info_Bonus.Show(() => { Reward(); }, typeBonus);
     }
     public void Set_OnBonus(bool value)
     {
@@ -53,18 +45,11 @@ public class UI_Bonus : UI_Child
     }
     public virtual void StopReward()
     {
-        Set_OnBonus(true);
-    }
-    public void SetTimeBuff(float value)
-    {
-        timeBuff = value;
+
     }
 }
 public enum TypeBonus
 {
     MachineSpeed,
-    Money_Double,
-    Money_Buff,
-    DoubleSpeed_Player,
-    NoShit
+    Money
 }
