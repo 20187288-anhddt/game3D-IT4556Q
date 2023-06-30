@@ -249,7 +249,7 @@ public class Habitat : BuildObj, ILock
         int r = Random.Range(0, allAnimals.Count);
         AnimalBase animal = allAnimals[r];
         var curShit = AllPoolContainer.Instance.Spawn(shitPrefabs, animal.myTransform.position, myTransform.rotation);
-        curShit.transform.DOJump(randomShitPos, 2.5f, 1, 0.5f).OnComplete(()=> 
+        curShit.transform.DOJump(new Vector3(randomShitPos.x,0.5f,randomShitPos.z), 2.5f, 1, 0.5f).OnComplete(()=> 
         {
             listShit.Add(curShit as Shit);
         }); 
