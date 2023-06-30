@@ -50,7 +50,7 @@ public class Customer : BaseCustomer,IAct
     }
     private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        anim = mainModel.GetComponent<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);  
     }
     public void ReloadSetDestination()
@@ -236,7 +236,7 @@ public class Customer : BaseCustomer,IAct
     }
     public void ResetStatus()
     {
-        anim = GetComponentInChildren<Animator>();
+        anim = mainModel.GetComponent<Animator>();
         transCloset = Vector3.zero;
         transBag = Vector3.zero;
         transExit = Vector3.zero;
@@ -272,6 +272,7 @@ public class Customer : BaseCustomer,IAct
     }
     public void ChangeAnim()
     {
+        //anim = GetComponentInChildren<Animator>();
         anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         if (navMeshAgent.velocity.magnitude < 0.1f)
         {
@@ -325,18 +326,22 @@ public class Customer : BaseCustomer,IAct
         {
             case IngredientType.COW:
                 outfitModel[0].SetActive(true);
+                anim = outfitModel[0].GetComponent<Animator>();
                 break;
             case IngredientType.SHEEP:
                 outfitModel[1].SetActive(true);
+                anim = outfitModel[1].GetComponent<Animator>();
                 break;
             case IngredientType.CHICKEN:
                 outfitModel[2].SetActive(true);
+                anim = outfitModel[2].GetComponent<Animator>();
                 break;
             case IngredientType.BEAR:
                 outfitModel[3].SetActive(true);
+                anim = outfitModel[3].GetComponent<Animator>();
                 break;
         }
-        anim = GetComponentInChildren<Animator>();
+        
     }
     public void ChangeBag(IngredientType type)
     {

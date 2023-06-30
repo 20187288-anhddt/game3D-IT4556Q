@@ -64,7 +64,7 @@ public class Group_InfoUpdate : UI_Child
                 btn_Money.gameObject.SetActive(false);
                 btn_Ads.gameObject.SetActive(true);
                 btn_Ads.onClick.RemoveAllListeners();
-                btn_Ads.onClick.AddListener(Buying);
+                btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
                 imageIcon_Ads.gameObject.SetActive(true);
                 imageBG_Ads.sprite = spr_BG_Hong;
                 txt_Ads.text = "FREE";
@@ -75,7 +75,7 @@ public class Group_InfoUpdate : UI_Child
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
-                    btn_Money.onClick.AddListener(Buying);
+                    btn_Money.onClick.AddListener(() => { Buying(TypeCost.Money); });
                     imageIcon_Money.gameObject.SetActive(true);
                     imageBG_Money.sprite = spr_BG_Green;
                 }
@@ -87,7 +87,7 @@ public class Group_InfoUpdate : UI_Child
                     btn_Money.gameObject.SetActive(false);
                     btn_Ads.gameObject.SetActive(true);
                     btn_Ads.onClick.RemoveAllListeners();
-                    btn_Ads.onClick.AddListener(Buying);
+                    btn_Ads.onClick.AddListener(() => { Buying(TypeCost.WatchVideo); });
                     imageIcon_Ads.gameObject.SetActive(true);
                     imageBG_Ads.sprite = spr_BG_Hong;
                     txt_Ads.text = "FREE";
@@ -136,7 +136,7 @@ public class Group_InfoUpdate : UI_Child
                 btn_Money.gameObject.SetActive(false);
                 btn_Ads.gameObject.SetActive(true);
                 btn_Ads.onClick.RemoveAllListeners();
-                btn_Ads.onClick.AddListener(Buying_2);
+                btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
                 imageIcon_Ads.gameObject.SetActive(true);
                 imageBG_Ads.sprite = spr_BG_Hong;
                 txt_Ads.text = "FREE";
@@ -147,7 +147,7 @@ public class Group_InfoUpdate : UI_Child
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
-                    btn_Money.onClick.AddListener(Buying_2);
+                    btn_Money.onClick.AddListener(() => { Buying_2(TypeCost.Money); });
                     imageIcon_Money.gameObject.SetActive(true);
                     imageBG_Money.sprite = spr_BG_Green;
                 }
@@ -159,7 +159,7 @@ public class Group_InfoUpdate : UI_Child
                     btn_Money.gameObject.SetActive(false);
                     btn_Ads.gameObject.SetActive(true);
                     btn_Ads.onClick.RemoveAllListeners();
-                    btn_Ads.onClick.AddListener(Buying_2);
+                    btn_Ads.onClick.AddListener(() => { Buying_2(TypeCost.WatchVideo); });
                     imageIcon_Ads.gameObject.SetActive(true);
                     imageBG_Ads.sprite = spr_BG_Hong;
                     txt_Ads.text = "FREE";
@@ -185,7 +185,7 @@ public class Group_InfoUpdate : UI_Child
             txt_Money.text = string.Format("{00}", value);
         txt_Info.text = str_Info;
     }
-    private void Buying()
+    private void Buying(TypeCost typeCost)
     {
         #region Check Money
         switch (typeCost)
@@ -220,7 +220,7 @@ public class Group_InfoUpdate : UI_Child
         #endregion
         ReLoadData();
     }
-    private void Buying_2()
+    private void Buying_2(TypeCost typeCost)
     {
         #region Check Money
         Debug.Log(staffType);
