@@ -40,17 +40,28 @@ public class Label_Show_Customize : UI_Child
                 case TypeCost.Money:
                     Open_Obj_Money();
                     int value = infoSkinPlayer.infoBuy.value;
-                    Value_CostCurent = value;
-                    if (value > 1000)
+                    if (value <= 0)
                     {
-                        float x = value / 1000;
-                        txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString("F2") + "K";
-                        txt_Money.text = txt_Money.text.Replace(",", ".");
+                        DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddID_Onboughts(ID_This);
+                        SetTagetID(ID);
+                        Load(infoSkinPlayer, true, ID);
+
+                        return;
                     }
-                    else if (value > 100)
-                        txt_Money.text = string.Format("{000}", value);
                     else
-                        txt_Money.text = string.Format("{00}", value);
+                    {
+                        Value_CostCurent = value;
+                        if (value > 1000)
+                        {
+                            float x = value / 1000;
+                            txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString("F2") + "K";
+                            txt_Money.text = txt_Money.text.Replace(",", ".");
+                        }
+                        else if (value > 100)
+                            txt_Money.text = string.Format("{000}", value);
+                        else
+                            txt_Money.text = string.Format("{00}", value);
+                    }
                     break;
             }
             btn_This.onClick.RemoveAllListeners();
