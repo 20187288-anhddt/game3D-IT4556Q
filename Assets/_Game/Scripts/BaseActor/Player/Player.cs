@@ -34,9 +34,12 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
     public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+    public List<Shit> listShits { get => ListShits; set => ListShits = value; }
+    public float SpeedAnim_Run_InOneSpeed = 0.3f;
     public CharacterController characterController;
     public UI_ProcessPlayer uI_ProcessPlayer_Prefabs;
     private UI_ProcessPlayer uI_ProcessPlayer;
+    private Animator anim;
 
     public override void Awake()
     {
@@ -50,9 +53,18 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         DontDestroyOnLoad(this.gameObject);
         if(characterController == null) { characterController = GetComponent<CharacterController>(); }
         isStopMove = false;
+
+        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+        LoadAndSetData();
+    }
+    private void LoadAndSetData()
+    {
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
+        maxCollectObj = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoCapacityTaget().Capacity;
     }
     protected void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         fsm.init(2);
         fsm.add(new FsmState(IDLE_STATE, null, OnIdleState));
         fsm.add(new FsmState(RUN_STATE, null, OnRunState));
@@ -60,7 +72,8 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         fsm.execute();
         if(gun.activeSelf)
             gun.SetActive(false);
-        coinValue = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
+        ReLoadCointValue();
+        EnventManager.AddListener(EventName.ReLoadMoney.ToString(), ReLoadCointValue);
         EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
         EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
     }
@@ -81,6 +94,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     protected void Update()
     {
         fsm.execute();
+        ChangeAnim();
         //var rig = GetComponent<Rigidbody>();
         //animSpd = rig.velocity.magnitude;
         //if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
@@ -119,6 +133,47 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         }
         #endregion
     }
+    public void ChangeAnim()
+    {
+        if (STATE_ACTOR == IDLE_STATE)
+        {
+            anim.speed = 1;
+            if (gun.activeSelf)
+            {
+                anim.Play("IdleWithGun");
+            }
+            else
+            {
+                if (objHave > 0)
+                {
+                    anim.Play("IdleCarring");
+                }
+                else
+                    anim.Play("IdleNormal");
+            }
+        }
+        else if (STATE_ACTOR == RUN_STATE)
+        {
+            anim.speed = SpeedAnim_Run_InOneSpeed * speed;
+            if (gun.activeSelf)
+            {
+                anim.Play("WalkWithGun");
+            }
+            else
+            {
+                if (objHave > 0)
+                {
+                    anim.Play("WalkCarring");
+                }
+                else
+                {
+                    anim.Play("WalkNormal");
+                }
+            }
+
+        }
+    }
+
     public Vector2 Config(Vector2 input)
     {
         if (input.magnitude >= 0.09)
@@ -232,6 +287,10 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (!bearBags.Contains(ingredient as BearBag))
                     bearBags.Add(ingredient as BearBag);
                 break;
+            case IngredientType.SHIT:
+                if (!listShits.Contains(ingredient as Shit))
+                    listShits.Add(ingredient as Shit);
+                break;
         }
     }
     public void RemoveIngredient(IngredientBase ingredient)
@@ -292,6 +351,10 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (bearBags.Contains(ingredient as BearBag))
                     bearBags.Remove(ingredient as BearBag);
                 break;
+            case IngredientType.SHIT:
+                if (listShits.Contains(ingredient as Shit))
+                    listShits.Remove(ingredient as Shit);
+                break;
         }
         ShortObj(ingredient, n);
     }
@@ -321,7 +384,10 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             coinValue = 0;
         }
     }
-    
+    public void ReLoadCointValue()
+    {
+        coinValue = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
+    }
     public void ResetPlayer()
     {
         objHave = 0;

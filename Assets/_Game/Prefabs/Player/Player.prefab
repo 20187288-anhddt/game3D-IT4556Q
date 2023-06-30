@@ -711,8 +711,6 @@ GameObject:
   - component: {fileID: 5290669755432635080}
   - component: {fileID: 303888481105284568}
   - component: {fileID: 1288348940122836268}
-  - component: {fileID: 7262027187632478416}
-  - component: {fileID: 590055293324985093}
   - component: {fileID: 3829092117582956619}
   m_Layer: 0
   m_Name: Player
@@ -815,40 +813,9 @@ MonoBehaviour:
   isUnlock: 0
   isStopMove: 0
   coinValue: 0
+  SpeedAnim_Run_InOneSpeed: 0.3
   characterController: {fileID: 0}
   uI_ProcessPlayer_Prefabs: {fileID: 5823177660466699966, guid: 3aa1d8ffb5804c745ac14c46690ca77e, type: 3}
---- !u!114 &7262027187632478416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567294145521889762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b517ec2ae01006469a4b4202151f316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &590055293324985093
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567294145521889762}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9d954d37baf41b24489d34ad0525effe, type: 3}
-  m_Controller: {fileID: 9100000, guid: c306e1c5e12583a46a858369cfb7b268, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3829092117582956619
 MonoBehaviour:
   m_ObjectHideFlags: 0
