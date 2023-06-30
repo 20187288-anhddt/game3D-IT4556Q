@@ -236,6 +236,7 @@ public class Customer : BaseCustomer,IAct
     }
     public void ResetStatus()
     {
+        anim = GetComponentInChildren<Animator>();
         transCloset = Vector3.zero;
         transBag = Vector3.zero;
         transExit = Vector3.zero;

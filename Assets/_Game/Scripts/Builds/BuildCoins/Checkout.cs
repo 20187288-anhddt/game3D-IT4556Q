@@ -89,7 +89,7 @@ public class Checkout : BuildCoins,ILock
         p.isUnlock = true;
         unlockModel.SetActive(true);
         //lockModel.SetActive(false);
-        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
+        if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 6f)
         {
             p.myTransform.position = checkUnlock.myTransform.position - Vector3.forward * 4;
         }
@@ -158,6 +158,17 @@ public class Checkout : BuildCoins,ILock
     void Update()
     {
         CheckStatus();
+        if (!isLock)
+        {
+            if (listCusCheckout.Count > 0)
+            {
+                staffModel.GetComponent<Animator>().Play("Wave");
+            }
+            else
+            {
+                staffModel.GetComponent<Animator>().Play("IdleNormal");
+            }
+        }
     }
     public void AddGrCus(GroupCustomer grCustomer)
     {
@@ -220,10 +231,6 @@ public class Checkout : BuildCoins,ILock
         }
         if(delayTime < 0)
         {
-            if (listCusCheckout.Count <= 0)
-            {
-                staffModel.GetComponent<Animator>().Play("IdleNormal");
-            }
             isCheckout = false;
             delayTime = consDelayCheckout;
         }

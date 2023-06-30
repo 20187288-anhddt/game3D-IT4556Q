@@ -47,7 +47,38 @@ MonoBehaviour:
   moneyData:
     moneys:
     - typeMoney: 0
-      value: 100
+      value: 100000
+--- !u!1 &3953734951703477758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5253984077669049813}
+  m_Layer: 0
+  m_Name: Xoa_dI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5253984077669049813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953734951703477758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5408763061545696402}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5408763059989509400
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,14 +174,25 @@ MonoBehaviour:
           level_Capacity_Taget: 0
           level_Price_Taget: 0
           level_Speed_Taget: 0
-        DataStaff:
+        DataStaff_Worker:
           level_Capacity_Taget: 0
           level_Hire_Taget: 0
           level_Speed_Taget: 0
+        DataStaff_Farmer:
+          level_Capacity_Taget: 0
+          level_Hire_Taget: 0
+          level_Speed_Taget: 0
+      data_InCheckout:
+        data_Staff_InCheckouts:
+        - NameObject_This: 24
+          isActiveStaff: 0
+        - NameObject_This: 25
+          isActiveStaff: 0
       LevelMap: 0
   mapCurrent:
     dataMapCurrent:
       LevelCurrent: 0
+      LevelInMapCurrent: 0
 --- !u!1 &5408763061246875658
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,10 +237,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d88fa8590e60d740af85bbfdecd4b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataApparatusProcessCurrent:
-    ingredientType: 6
-    LevelCurrent: 0
-  apparatusProcessCurrent: {fileID: 0}
+  dataProcess:
+    dataApparatusProcess:
+      dataApparatusProcessCurrent:
+        ingredientType: 0
+        LevelCurrent: 0
+    dataEventProcess:
+      dataEventProcessCurrent:
+        LevelCurrent: 0
 --- !u!1 &5408763061545696401
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +278,8 @@ Transform:
   - {fileID: 5408763059989509401}
   - {fileID: 5408763061246875659}
   - {fileID: 5942351683882657360}
+  - {fileID: 8991708362123594728}
+  - {fileID: 5253984077669049813}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,3 +299,60 @@ MonoBehaviour:
   dataPirceObjectController: {fileID: 5408763059989509402}
   dataProcessInMapController: {fileID: 5408763061246875660}
   dataMoneyController: {fileID: 2751444141086479436}
+  dataCustomizeController: {fileID: 7571196996313159246}
+--- !u!1 &5702914814168093419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8991708362123594728}
+  - component: {fileID: 7571196996313159246}
+  m_Layer: 0
+  m_Name: DataCustomizeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8991708362123594728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702914814168093419}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5408763061545696402}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7571196996313159246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702914814168093419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0682340c179d6469bb1f9a270be5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSkinPlayers_Head:
+  - {fileID: 11400000, guid: cae8c80ec2a0973418fca5c1ebe66865, type: 2}
+  - {fileID: 11400000, guid: 8ccb983e05d0ed8409d5332579359019, type: 2}
+  - {fileID: 11400000, guid: 5c02b636415bd1a4eb8f6400febb6ed7, type: 2}
+  - {fileID: 11400000, guid: 0ec2ebf7b5bb1724daa25ff377fcb185, type: 2}
+  - {fileID: 11400000, guid: 9dee3ecfca276f5449cf2c8a6b7e64c5, type: 2}
+  - {fileID: 11400000, guid: 8e6bc2b11377f74408290801b7b1f56f, type: 2}
+  - {fileID: 11400000, guid: 3e4f97d651600b94c9cf3d63e3907ebe, type: 2}
+  - {fileID: 11400000, guid: 0a61fa684ae415b429d5b78c273183cc, type: 2}
+  - {fileID: 11400000, guid: 1d66c8bbe573d1445895a2fe33b6f937, type: 2}
+  - {fileID: 11400000, guid: bb07f0539a9ad6148b9d1a818ffb9f3e, type: 2}
+  - {fileID: 11400000, guid: 207b8572a9904014d9222a2ba764c0d0, type: 2}
