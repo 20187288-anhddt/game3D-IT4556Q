@@ -53,6 +53,7 @@ public abstract class AnimalBase : AllPool,IAct
         fsm.add(new FsmState(RUN_STATE, StartRunState, OnRunState));
         fsm.add(new FsmState(FINISH_COLLECT_STATE, null, OnFinishCollectState));
         fsm.add(new FsmState(HAVE_FUN_STATE, StartHaveFunState, OnHaveFunState));
+        UpdateState(IDLE_STATE);
         fsm.execute();
     }
     public void StartInGame()
@@ -61,6 +62,7 @@ public abstract class AnimalBase : AllPool,IAct
         habitatManager = GameManager.Instance.listLevelManagers[0].habitatManager;
         mainModel.SetActive(true);
         nakedModel.SetActive(false);
+        anim = mainModel.GetComponent<Animator>();
     }
     void Update()
     {
@@ -102,53 +104,51 @@ public abstract class AnimalBase : AllPool,IAct
             }
         }
     }
-    public void ChangeAnim(bool isSuprise)
+    public void ChangeAnim()
     {
-        //if (STATE_ANIMAL == IDLE_STATE)
-        //{
-        //    switch (habitat.ingredientType)
-        //    {
-        //        case IngredientType.BEAR:
-        //            anim.SetTrigger("bearIsIdle");
-        //            break;
-        //        case IngredientType.COW:
-        //            anim.SetTrigger("cowIsIdle");
-        //            break;
-        //        case IngredientType.CHICKEN:
-        //            anim.SetTrigger("chickenIsIdle");
-        //            break;
-        //    }
-        //}
-        //else if (STATE_ANIMAL == RUN_STATE)
-        //{
-        //    switch (habitat.ingredientType)
-        //    {
-        //        case IngredientType.BEAR:
-        //            anim.SetTrigger("bearIsRun");
-        //            break;
-        //        case IngredientType.COW:
-        //            anim.SetTrigger("cowIsRun");
-        //            break;
-        //        case IngredientType.CHICKEN:
-        //            anim.SetTrigger("chickenIsRun");
-        //            break;
-        //    }
-        //}
-
-        if (isSuprise)
+        if (!isNaked)
         {
-            if (STATE_ANIMAL == IDLE_STATE)
+            anim = mainModel.GetComponent<Animator>();
+            if(STATE_ANIMAL == IDLE_STATE)
             {
+                int r = Random.Range(1, 5);
+                switch (r)
+                {
+                    case 1:
+                        anim.Play("IdleJump");
+                        break;
+                    case 2:
+                        anim.Play("IdleDance");
+                        break;
+                    case 3:
+                        anim.Play("IdleEat");
+                        break;
+                    case 4:
+                        anim.Play("IdleSleep");
+                        break;
+                }
+            }
+            else if(STATE_ANIMAL == RUN_STATE)
+            {
+                anim.Play("Walk");
+            }
+        }
+        else
+        {
+            anim = nakedModel.GetComponent<Animator>();
+            anim.Play("Suprise");
+            if (STATE_ANIMAL == IDLE_STATE)
+            {   
                 switch (habitat.ingredientType)
                 {
                     case IngredientType.BEAR:
-                        anim.SetTrigger("bearIsIdle");
+                        anim.SetBool("bearIsIdle", true);
                         break;
                     case IngredientType.COW:
-                        anim.SetTrigger("cowIsIdle");
+                        anim.SetBool("cowIsIdle", true);
                         break;
                     case IngredientType.CHICKEN:
-                        anim.SetTrigger("chickenIsIdle");
+                        anim.SetBool("chickenIsIdle", true);
                         break;
                 }
             }
@@ -157,72 +157,14 @@ public abstract class AnimalBase : AllPool,IAct
                 switch (habitat.ingredientType)
                 {
                     case IngredientType.BEAR:
-                        anim.SetTrigger("bearIsRun");
+                        anim.SetBool("bearIsRun", true);
                         break;
                     case IngredientType.COW:
-                        anim.SetTrigger("cowIsRun");
+                        anim.SetBool("cowIsRun", true);
                         break;
                     case IngredientType.CHICKEN:
-                        anim.SetTrigger("chickenIsRun");
+                        anim.SetBool("chickenIsRun", true);
                         break;
-                }
-            }
-            anim.Play("Suprise");
-        }
-        else
-        {
-            if (!isNaked)
-            {
-                //anim = mainModel.GetComponent<Animator>();
-                if (STATE_ANIMAL == IDLE_STATE)
-                {
-                    int r = Random.Range(1, 5);
-                    switch (r)
-                    {
-                        case 1:
-                            anim.Play("IdleJump");
-                            break;
-                        case 2:
-                            anim.Play("IdleDance");
-                            break;
-                        case 3:
-                            anim.Play("IdleEat");
-                            break;
-                        case 4:
-                            anim.Play("IdleSleep");
-                            break;
-                    }
-                }
-                else if (STATE_ANIMAL == RUN_STATE)
-                {
-                    anim.Play("Walk");
-                }
-            }
-            else
-            {
-                //anim = nakedModel.GetComponent<Animator>();
-                if (STATE_ANIMAL == IDLE_STATE)
-                {
-                    int r = Random.Range(1, 5);
-                    switch (r)
-                    {
-                        case 1:
-                            anim.Play("IdleJump");
-                            break;
-                        case 2:
-                            anim.Play("IdleDance");
-                            break;
-                        case 3:
-                            anim.Play("IdleEat");
-                            break;
-                        case 4:
-                            anim.Play("IdleSleep");
-                            break;
-                    }
-                }
-                else if (STATE_ANIMAL == RUN_STATE)
-                {
-                    anim.Play("Walk");
                 }
             }
         }
@@ -314,7 +256,7 @@ public abstract class AnimalBase : AllPool,IAct
     }
     public virtual void Run(bool isInside)
     {
-        ChangeAnim(false);
+        ChangeAnim();
         navMeshAgent.isStopped = false;
         //if (isInside == false)
         //{
@@ -355,11 +297,11 @@ public abstract class AnimalBase : AllPool,IAct
     }
     public virtual void StartIdle()
     {
-        ChangeAnim(false);
+        ChangeAnim();
     }
     public virtual void Idle()
     {
-        //navMeshAgent.isStopped = true;
+        navMeshAgent.isStopped = true;
     }
 
     public virtual void Eat()
@@ -380,7 +322,6 @@ public abstract class AnimalBase : AllPool,IAct
         mainModel.SetActive(false);
         nakedModel.SetActive(true);
         anim = nakedModel.GetComponent<Animator>();
-        ChangeAnim(true);
         if (habitat.animalsIsReady.Contains(this))
             habitat.animalsIsReady.Remove(this);
     }
@@ -401,8 +342,6 @@ public abstract class AnimalBase : AllPool,IAct
     public void SetHabitat(Habitat habitat)
     {
         this.habitat = habitat;
-        anim = mainModel.GetComponent<Animator>();
-        UpdateState(IDLE_STATE);
     }
 
     public bool RandomPosition(bool tmp)
