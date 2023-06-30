@@ -74,7 +74,6 @@ public class CarMission : BaseBuild
                 RandomMission();
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
-                    Debug.Log("he");
                     RandomCar();
                     if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
                     {
@@ -191,12 +190,17 @@ public class CarMission : BaseBuild
             }
             else
             {
-                while (curClothMachine.clothPrefab.ingredientType == listCurClothMachine[i-1].clothPrefab.ingredientType)
+                curClothMachine = null;
+                while (curClothMachine == null)
                 {
                     curClothMachine = levelManager.machineManager.GetRandomTypeClothMachine();
                     if (!listCurClothMachine.Contains(curClothMachine))
                     {
                         listCurClothMachine.Add(curClothMachine);
+                    }
+                    else
+                    {
+                        curClothMachine = null;
                     }
                 }
             }
@@ -210,12 +214,17 @@ public class CarMission : BaseBuild
             }
             else
             {
-                while (curBagMachine.clothPrefab.ingredientType == listCurBagMachine[i-1].clothPrefab.ingredientType)
+                curBagMachine = null;
+                while (curBagMachine == null)
                 {
                     curBagMachine = levelManager.machineManager.GetRandomTypeBagMachine();
                     if (!listCurBagMachine.Contains(curBagMachine))
                     {
                         listCurBagMachine.Add(curBagMachine);
+                    }
+                    else
+                    {
+                        curBagMachine = null;
                     }
                 }
             }

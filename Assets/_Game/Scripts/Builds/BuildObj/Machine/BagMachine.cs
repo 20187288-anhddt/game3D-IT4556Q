@@ -67,10 +67,7 @@ public class BagMachine : MachineBase
         }
         checkUnlock.gameObject.SetActive(false);   
         //GetComponent<BoxCollider>().enabled = true;
-        if (!levelManager.machineManager.allActiveMachine.Contains(this))
-            levelManager.machineManager.allActiveMachine.Add(this);
-        if (!levelManager.machineManager.allActiveBagMachine.Contains(this))
-            levelManager.machineManager.allActiveBagMachine.Add(this);
+       
         switch (ingredientType)
         {
             case IngredientType.BEAR:
@@ -126,6 +123,10 @@ public class BagMachine : MachineBase
                 }
                 break;
         }
+        if (!levelManager.machineManager.allActiveMachine.Contains(this))
+            levelManager.machineManager.allActiveMachine.Add(this);
+        if (!levelManager.machineManager.allActiveBagMachine.Contains(this))
+            levelManager.machineManager.allActiveBagMachine.Add(this);
     }
     public override void Start()
     {
