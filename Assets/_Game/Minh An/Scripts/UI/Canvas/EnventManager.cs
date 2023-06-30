@@ -137,6 +137,8 @@ public enum EventName {
     ReLoadDistanceCamera,
     ReLoadDataUpgrade,
     NewID_Customize,
+    OpenUIHome,
+    Show_BtnUpgrade,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

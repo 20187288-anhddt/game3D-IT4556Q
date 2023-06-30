@@ -48,7 +48,7 @@ MonoBehaviour:
     moneys:
     - typeMoney: 0
       value: 100000
---- !u!1 &3953734951703477758
+--- !u!1 &5056877997914541573
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,21 +56,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5253984077669049813}
+  - component: {fileID: 8068599368349422902}
+  - component: {fileID: 2248334570631547935}
   m_Layer: 0
-  m_Name: Xoa_dI
+  m_Name: DataUIController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5253984077669049813
+--- !u!4 &8068599368349422902
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3953734951703477758}
+  m_GameObject: {fileID: 5056877997914541573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -79,6 +80,18 @@ Transform:
   m_Father: {fileID: 5408763061545696402}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2248334570631547935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5056877997914541573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81854fe8971a91d49b20e0a2124dd605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5408763059989509400
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +292,7 @@ Transform:
   - {fileID: 5408763061246875659}
   - {fileID: 5942351683882657360}
   - {fileID: 8991708362123594728}
-  - {fileID: 5253984077669049813}
+  - {fileID: 8068599368349422902}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -300,6 +313,7 @@ MonoBehaviour:
   dataProcessInMapController: {fileID: 5408763061246875660}
   dataMoneyController: {fileID: 2751444141086479436}
   dataCustomizeController: {fileID: 7571196996313159246}
+  dataUIController: {fileID: 2248334570631547935}
 --- !u!1 &5702914814168093419
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,4 +369,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0a61fa684ae415b429d5b78c273183cc, type: 2}
   - {fileID: 11400000, guid: 1d66c8bbe573d1445895a2fe33b6f937, type: 2}
   - {fileID: 11400000, guid: bb07f0539a9ad6148b9d1a818ffb9f3e, type: 2}
-  - {fileID: 11400000, guid: 207b8572a9904014d9222a2ba764c0d0, type: 2}
+  - {fileID: 11400000, guid: c2bf1f64fb5b71e43992bef8f6aa5f3c, type: 2}

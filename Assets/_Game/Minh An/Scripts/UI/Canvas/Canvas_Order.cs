@@ -158,6 +158,7 @@ public class Canvas_Order : UI_Canvas
     {
         UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
         base.Close();
+        UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
     public override void Open()
     {
@@ -165,5 +166,7 @@ public class Canvas_Order : UI_Canvas
         Close();
         base.Open();
         UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
+        UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
     }
+  
 }

@@ -719,6 +719,12 @@ public class RewardProcessCompleteMission
                 CameraFollowObject(IngredientType.CAR, NameObject_This.Car, true, 0.5f, 2.5f, 2.5f, 2.5f
                     , PlayerStopMove, PlayerContinueMove);
                 break;
+            case EventName.OpenUIHome:
+                DataManager.Instance.GetDataUIController().Set_IsOpenCanvasHome(true);
+                break;
+            case EventName.Show_BtnUpgrade:
+                DataManager.Instance.GetDataUIController().Set_IsOpenUIUpgrade(true);
+                break;
 
         }
     }

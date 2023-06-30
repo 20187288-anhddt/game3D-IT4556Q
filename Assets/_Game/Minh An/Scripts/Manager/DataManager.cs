@@ -9,6 +9,7 @@ public class DataManager : GenerticSingleton<DataManager>
     [SerializeField] private DataProcessInMapController dataProcessInMapController;
     [SerializeField] private DataMoneyController dataMoneyController;
     [SerializeField] private DataCustomizeController dataCustomizeController;
+    [SerializeField] private DataUIController dataUIController;
     public void Start()
     {
         //dataMapController.SelectDataMap(1);
@@ -44,5 +45,9 @@ public class DataManager : GenerticSingleton<DataManager>
     public DataCustomizeController GetDataCustomizeController()
     {
         return dataCustomizeController;
+    }
+    public DataUIController GetDataUIController()
+    {
+        return dataUIController;
     }
 }

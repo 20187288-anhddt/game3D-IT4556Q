@@ -84,4 +84,14 @@ public class Canvas_Settings : UI_Canvas
             txt_FixedJoystick.text = nameJoystick + "On";
         }
     }
+    public override void Open()
+    {
+        base.Open();
+        UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
+    }
+    public override void Close()
+    {
+        base.Close();
+        UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
+    }
 }

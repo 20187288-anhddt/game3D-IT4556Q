@@ -39,6 +39,7 @@ public class CameraController : GenerticSingleton<CameraController>
         bool isResetFollowPlayer = false, float timeDelayFollow = 0, 
         float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null, System.Action actionEndFollow = null)
     {
+        UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
         actionStartFollow?.Invoke();
       //  cinemachineFramingTransposer.m_CameraDistance = Vector3.Distance(cinemachineFramingTransposer.transform.position, transformFollow.position);
         cinemachineFramingTransposer.m_XDamping = XDamping;
@@ -57,6 +58,8 @@ public class CameraController : GenerticSingleton<CameraController>
             {
                 ResetFollowPlayer();
                 actionEndFollow?.Invoke();
+                UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
+                UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
             }, 2.5f));
         }
         else
@@ -64,10 +67,12 @@ public class CameraController : GenerticSingleton<CameraController>
             StartCoroutine(IE_DelayAction(() =>
             {
                 actionEndFollow?.Invoke();
+                UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
+                UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
             }, 3.5f));
 
         }
-
+      
     }
     public void MoveDistance(float value, float speedMove)
     {

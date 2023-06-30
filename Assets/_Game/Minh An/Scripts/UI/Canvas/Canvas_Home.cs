@@ -38,6 +38,19 @@ public class Canvas_Home : UI_Canvas
         btn_Oder.onClick.AddListener(Open_UI_Oder);
         btn_Upgrade.onClick.AddListener(Open_UI_Upgrade);
         NotShow_Btn_Oder();
+        if (!DataManager.Instance.GetDataUIController().Get_IsOpenUIUpgrade())
+        {
+            NotShow_Btn_Upgrade();
+        }
+        else
+        {
+            Show_Btn_Upgrade();
+        }
+     
+    }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.Show_BtnUpgrade.ToString(), Show_Btn_Upgrade);
     }
     public void Open_Settings()
     {
@@ -60,6 +73,14 @@ public class Canvas_Home : UI_Canvas
     {
         UI_Manager.Instance.OpenUI(NameUI.Canvas_Upgrades);
     }
+    public void Show_Btn_Upgrade()
+    {
+        btn_Upgrade.gameObject.SetActive(true);
+    }
+    public void NotShow_Btn_Upgrade()
+    {
+        btn_Upgrade.gameObject.SetActive(false);
+    }
     public void Show_Btn_Oder(System.Action actionOpen_Oder)
     {
         btn_Oder.gameObject.SetActive(true);
@@ -75,4 +96,15 @@ public class Canvas_Home : UI_Canvas
         int second = valueSecond - minute * 60;
         txt_Time_Order.text = minute + "m " + second + "s";
     }
+    public override void Open()
+    {
+        base.Open();
+        UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
+    }
+    public override void Close()
+    {
+        base.Close();
+        UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
+    }
+
 }
