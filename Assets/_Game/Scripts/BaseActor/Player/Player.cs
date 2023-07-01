@@ -22,18 +22,39 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public Transform backPos { get => BackPos; set => BackPos = value; }
     public Transform carryPos { get => CarryPos; set => CarryPos = value; }
     public List<IngredientBase> allIngredients { get => AllIngredients; set => AllIngredients = value; }
+
     public List<Fleece> fleeces { get => Fleeces; set => Fleeces = value; }
     public List<SheepCloth> sheepCloths { get => SheepCloths; set => SheepCloths = value; }
+    public List<SheepBag> sheepBags { get => SheepBags; set => SheepBags = value; }
+
     public List<CowFur> cowFurs { get => CowFurs; set => CowFurs = value; }
     public List<CowCloth> cowCloths { get => CowCloths; set => CowCloths = value; }
+    public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
+
     public List<ChickenFur> chickenFurs { get => ChickenFurs; set => ChickenFurs = value; }
     public List<ChickenCloth> chickenCloths { get => ChickenCloths; set => ChickenCloths = value; }
+    public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
+
     public List<BearFur> bearFurs { get => BearFurs; set => BearFurs = value; }
     public List<BearCloth> bearCloths { get => BearCloths; set => BearCloths = value; }
-    public List<SheepBag> sheepBags { get => SheepBags; set => SheepBags = value; }
-    public List<CowBag> cowBags { get => CowBags; set => CowBags = value; }
-    public List<ChickenBag> chickenBags { get => ChickenBags; set => ChickenBags = value; }
     public List<BearBag> bearBags { get => BearBags; set => BearBags = value; }
+
+    public List<LionFur> lionFurs { get => LionFurs; set => LionFurs = value; }
+    public List<LionCloth> lionCloths { get => LionCloths; set => LionCloths = value; }
+    public List<LionBag> lionBags { get => LionBags; set => LionBags = value; }
+
+    public List<CrocFur> crocFurs { get => CrocFurs; set => CrocFurs = value; }
+    public List<CrocCloth> crocCloths { get => CrocCloths; set => CrocCloths = value; }
+    public List<CrocBag> crocBags { get => CrocBags; set => CrocBags = value; }
+
+    public List<EleFur> eleFurs { get => EleFurs; set => EleFurs = value; }
+    public List<EleCloth> eleCloths { get => EleCloths; set => EleCloths = value; }
+    public List<EleBag> eleBags { get => EleBags; set => EleBags = value; }
+
+    public List<ZebraFur> zebraFurs { get => ZebraFurs; set => ZebraFurs = value; }
+    public List<ZebraCloth> zebraCloths { get => ZebraCloths; set => ZebraCloths = value; }
+    public List<ZebraBag> zebraBags { get => ZebraBags; set => ZebraBags = value; }
+
     public List<Shit> listShits { get => ListShits; set => ListShits = value; }
     public float SpeedAnim_Run_InOneSpeed = 0.3f;
     public CharacterController characterController;
@@ -42,6 +63,9 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     private Animator anim;
     private float tmpSpeed;
     private bool isBuff = false;
+    public GameObject trailSmoke;
+    public GameObject fxBuffSpeed;
+    public GameObject fxBuffMoney;
 
     public override void Awake()
     {
@@ -55,9 +79,9 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         DontDestroyOnLoad(this.gameObject);
         if(characterController == null) { characterController = GetComponent<CharacterController>(); }
         isStopMove = false;
-
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
         LoadAndSetData();
+        ResetPlayer();
     }
     
     private void LoadAndSetData()
@@ -72,12 +96,22 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     private void DoubleSpeed()
     {
         isBuff = true;
+        fxBuffSpeed.SetActive(true);
         speed *= 1.5f;
     }
     private void ResetSpeed()
     {
         isBuff = false;
+        fxBuffSpeed.SetActive(false);
         speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
+    }
+    public void DoubleMoneyBuff()
+    {
+        fxBuffMoney.SetActive(true);
+    }
+    public void ResetMoneyBuff()
+    {
+        fxBuffMoney.SetActive(false);
     }
     protected void Start()
     {
@@ -267,6 +301,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (!sheepCloths.Contains(ingredient as SheepCloth))
                     sheepCloths.Add(ingredient as SheepCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (!sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Add(ingredient as SheepBag);
+                break;
+
             case IngredientType.COW:
                 if (!cowFurs.Contains(ingredient as CowFur))
                     cowFurs.Add(ingredient as CowFur);
@@ -275,6 +314,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (!cowCloths.Contains(ingredient as CowCloth))
                     cowCloths.Add(ingredient as CowCloth);
                 break;
+            case IngredientType.COW_BAG:
+                if (!cowBags.Contains(ingredient as CowBag))
+                    cowBags.Add(ingredient as CowBag);
+                break;
+
             case IngredientType.CHICKEN:
                 if (!chickenFurs.Contains(ingredient as ChickenFur))
                     chickenFurs.Add(ingredient as ChickenFur);
@@ -283,6 +327,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (!chickenCloths.Contains(ingredient as ChickenCloth))
                     chickenCloths.Add(ingredient as ChickenCloth);
                 break;
+            case IngredientType.CHICKEN_BAG:
+                if (!chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Add(ingredient as ChickenBag);
+                break;
+
             case IngredientType.BEAR:
                 if (!bearFurs.Contains(ingredient as BearFur))
                     bearFurs.Add(ingredient as BearFur);
@@ -291,22 +340,63 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (!bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Add(ingredient as BearCloth);
                 break;
-            case IngredientType.SHEEP_BAG:
-                if (!sheepBags.Contains(ingredient as SheepBag))
-                    sheepBags.Add(ingredient as SheepBag);
-                break;
-            case IngredientType.COW_BAG:
-                if (!cowBags.Contains(ingredient as CowBag))
-                    cowBags.Add(ingredient as CowBag);
-                break;
-            case IngredientType.CHICKEN_BAG:
-                if (!chickenBags.Contains(ingredient as ChickenBag))
-                    chickenBags.Add(ingredient as ChickenBag);
-                break;
             case IngredientType.BEAR_BAG:
                 if (!bearBags.Contains(ingredient as BearBag))
                     bearBags.Add(ingredient as BearBag);
                 break;
+
+            case IngredientType.LION:
+                if (!lionFurs.Contains(ingredient as LionFur))
+                    lionFurs.Add(ingredient as LionFur);
+                break;
+            case IngredientType.LION_CLOTH:
+                if (!lionCloths.Contains(ingredient as LionCloth))
+                    lionCloths.Add(ingredient as LionCloth);
+                break;
+            case IngredientType.LION_BAG:
+                if (!lionBags.Contains(ingredient as LionBag))
+                    lionBags.Add(ingredient as LionBag);
+                break;
+
+            case IngredientType.CROC:
+                if (!crocFurs.Contains(ingredient as CrocFur))
+                    crocFurs.Add(ingredient as CrocFur);
+                break;
+            case IngredientType.CROC_CLOTH:
+                if (!crocCloths.Contains(ingredient as CrocCloth))
+                    crocCloths.Add(ingredient as CrocCloth);
+                break;
+            case IngredientType.CROC_BAG:
+                if (!crocBags.Contains(ingredient as CrocBag))
+                    crocBags.Add(ingredient as CrocBag);
+                break;
+
+            case IngredientType.ELE:
+                if (!eleFurs.Contains(ingredient as EleFur))
+                    eleFurs.Add(ingredient as EleFur);
+                break;
+            case IngredientType.ELE_CLOTH:
+                if (!eleCloths.Contains(ingredient as EleCloth))
+                    eleCloths.Add(ingredient as EleCloth);
+                break;
+            case IngredientType.ELE_BAG:
+                if (!eleBags.Contains(ingredient as EleBag))
+                    eleBags.Add(ingredient as EleBag);
+                break;
+
+            case IngredientType.ZEBRA:
+                if (!zebraFurs.Contains(ingredient as ZebraFur))
+                    zebraFurs.Add(ingredient as ZebraFur);
+                break;
+            case IngredientType.ZEBRA_CLOTH:
+                if (!zebraCloths.Contains(ingredient as ZebraCloth))
+                    zebraCloths.Add(ingredient as ZebraCloth);
+                break;   
+            case IngredientType.ZEBRA_BAG:
+                if (!zebraBags.Contains(ingredient as ZebraBag))
+                    zebraBags.Add(ingredient as ZebraBag);
+                break;
+
             case IngredientType.SHIT:
                 if (!listShits.Contains(ingredient as Shit))
                     listShits.Add(ingredient as Shit);
@@ -331,6 +421,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (sheepCloths.Contains(ingredient as SheepCloth))
                     sheepCloths.Remove(ingredient as SheepCloth);
                 break;
+            case IngredientType.SHEEP_BAG:
+                if (sheepBags.Contains(ingredient as SheepBag))
+                    sheepBags.Remove(ingredient as SheepBag);
+                break;
+
             case IngredientType.COW:
                 if (cowFurs.Contains(ingredient as CowFur))
                     cowFurs.Remove(ingredient as CowFur);
@@ -339,6 +434,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (cowCloths.Contains(ingredient as CowCloth))
                     cowCloths.Remove(ingredient as CowCloth);
                 break;
+            case IngredientType.COW_BAG:
+                if (cowBags.Contains(ingredient as CowBag))
+                    cowBags.Remove(ingredient as CowBag);
+                break;
+
             case IngredientType.CHICKEN:
                 if (chickenFurs.Contains(ingredient as ChickenFur))
                     chickenFurs.Remove(ingredient as ChickenFur);
@@ -347,6 +447,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 if (chickenCloths.Contains(ingredient as ChickenCloth))
                     chickenCloths.Remove(ingredient as ChickenCloth);
                 break;
+            case IngredientType.CHICKEN_BAG:
+                if (chickenBags.Contains(ingredient as ChickenBag))
+                    chickenBags.Remove(ingredient as ChickenBag);
+                break;
+
             case IngredientType.BEAR:
                 if (bearFurs.Contains(ingredient as BearFur))
                     bearFurs.Remove(ingredient as BearFur);
@@ -354,23 +459,64 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             case IngredientType.BEAR_CLOTH:
                 if (bearCloths.Contains(ingredient as BearCloth))
                     bearCloths.Remove(ingredient as BearCloth);
-                break;
-            case IngredientType.SHEEP_BAG:
-                if (sheepBags.Contains(ingredient as SheepBag))
-                    sheepBags.Remove(ingredient as SheepBag);
-                break;
-            case IngredientType.COW_BAG:
-                if (cowBags.Contains(ingredient as CowBag))
-                    cowBags.Remove(ingredient as CowBag);
-                break;
-            case IngredientType.CHICKEN_BAG:
-                if (chickenBags.Contains(ingredient as ChickenBag))
-                    chickenBags.Remove(ingredient as ChickenBag);
-                break;
+                break;  
             case IngredientType.BEAR_BAG:
                 if (bearBags.Contains(ingredient as BearBag))
                     bearBags.Remove(ingredient as BearBag);
                 break;
+
+            case IngredientType.LION:
+                if (lionFurs.Contains(ingredient as LionFur))
+                    lionFurs.Remove(ingredient as LionFur);
+                break;
+            case IngredientType.LION_CLOTH:
+                if (lionCloths.Contains(ingredient as LionCloth))
+                    lionCloths.Remove(ingredient as LionCloth);
+                break;
+            case IngredientType.LION_BAG:
+                if (lionBags.Contains(ingredient as LionBag))
+                    lionBags.Remove(ingredient as LionBag);
+                break;
+
+            case IngredientType.CROC:
+                if (crocFurs.Contains(ingredient as CrocFur))
+                    crocFurs.Remove(ingredient as CrocFur);
+                break;
+            case IngredientType.CROC_CLOTH:
+                if (crocCloths.Contains(ingredient as CrocCloth))
+                    crocCloths.Remove(ingredient as CrocCloth);
+                break;
+            case IngredientType.CROC_BAG:
+                if (crocBags.Contains(ingredient as CrocBag))
+                    crocBags.Remove(ingredient as CrocBag);
+                break;
+
+            case IngredientType.ELE:
+                if (eleFurs.Contains(ingredient as EleFur))
+                    eleFurs.Remove(ingredient as EleFur);
+                break;
+            case IngredientType.ELE_CLOTH:
+                if (eleCloths.Contains(ingredient as EleCloth))
+                    eleCloths.Remove(ingredient as EleCloth);
+                break;
+            case IngredientType.ELE_BAG:
+                if (eleBags.Contains(ingredient as EleBag))
+                    eleBags.Remove(ingredient as EleBag);
+                break;
+
+            case IngredientType.ZEBRA:
+                if (zebraFurs.Contains(ingredient as ZebraFur))
+                    zebraFurs.Remove(ingredient as ZebraFur);
+                break;
+            case IngredientType.ZEBRA_CLOTH:
+                if (zebraCloths.Contains(ingredient as ZebraCloth))
+                    zebraCloths.Remove(ingredient as ZebraCloth);
+                break;
+            case IngredientType.ZEBRA_BAG:
+                if (zebraBags.Contains(ingredient as ZebraBag))
+                    zebraBags.Remove(ingredient as ZebraBag);
+                break;
+
             case IngredientType.SHIT:
                 if (listShits.Contains(ingredient as Shit))
                     listShits.Remove(ingredient as Shit);
@@ -424,6 +570,20 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         cowCloths.Clear();
         chickenCloths.Clear();
         bearCloths.Clear();
+        lionFurs.Clear();
+        crocFurs.Clear();
+        eleFurs.Clear();
+        zebraFurs.Clear();
+        lionCloths.Clear();
+        crocCloths.Clear();
+        zebraCloths.Clear();
+        eleCloths.Clear();
+        lionBags.Clear();
+        crocBags.Clear();
+        zebraBags.Clear();
+        eleBags.Clear();
+        fxBuffSpeed.SetActive(false);
+        fxBuffMoney.SetActive(false);
     }
     public void PlayerStopMove()
     {

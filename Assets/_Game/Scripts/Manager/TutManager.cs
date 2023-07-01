@@ -42,7 +42,7 @@ public class TutManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        line.material.SetTextureOffset("_MainTex", Vector2.left * Time.time);
         if (!levelManager.isDoneMachineTUT)
         {
             if (levelManager.habitatManager.allActiveHabitats.Count <= 0)
@@ -79,7 +79,7 @@ public class TutManager : MonoBehaviour
                 //line.gameObject.SetActive(false);
                 habitat.checkCollect.gameObject.SetActive(true);
                 fxTUT.SetActive(false);
-                levelManager.isDoneMachineTUT = true;
+                levelManager.Set_isDoneMachineTUT(true);
             }
         }
         else if (!levelManager.isDoneClosetTUT)
@@ -154,7 +154,7 @@ public class TutManager : MonoBehaviour
                     clothMachine.checkCollectCloth.gameObject.SetActive(false);
                     line.gameObject.SetActive(false);
                     fxTUT.SetActive(false);
-                    levelManager.isDoneClosetTUT = true;
+                    levelManager.Set_isDoneClosetTUT(true);
                 }
             }
         }
@@ -218,13 +218,18 @@ public class TutManager : MonoBehaviour
             }
             else
             {
-                levelManager.isDoneBagClosetTUT = true;
+                levelManager.Set_isDoneBagClosetTUT(true);
                 clothMachine.checkPush.gameObject.SetActive(true);
                 clothMachine.checkCollectCloth.gameObject.SetActive(true);
                 habitat.checkCollect.gameObject.SetActive(true);
                 fxTUT.SetActive(false);
                 line.gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            fxTUT.SetActive(false);
+            line.gameObject.SetActive(false);
         }
     }
 }

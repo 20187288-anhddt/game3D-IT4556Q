@@ -54,6 +54,7 @@ public class Checkout : BuildCoins,ILock
         isHired = (dataStatusObject as DataCheckOutTable).GetData_IsHireStaff();
         if (isLock)
         {
+            unlockFx.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             coinSpawn.gameObject.SetActive(false);
@@ -99,6 +100,7 @@ public class Checkout : BuildCoins,ILock
         //levelManager.CheckUnlockBuildID(IDUnlock, this);
         
         unlockModel.SetActive(true);
+        unlockFx.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 6f)
         {
@@ -111,7 +113,7 @@ public class Checkout : BuildCoins,ILock
                 unlockModel.transform.DOMoveY(1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
-                        
+                        unlockFx.SetActive(false);
                         if (isHired)
                         {
                             GetComponent<BoxCollider>().enabled = false;

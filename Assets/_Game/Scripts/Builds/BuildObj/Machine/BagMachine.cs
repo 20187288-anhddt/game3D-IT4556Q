@@ -46,6 +46,7 @@ public class BagMachine : MachineBase
        
         //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
+        unlockFx.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 3f)
         {
@@ -57,8 +58,9 @@ public class BagMachine : MachineBase
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                    {            
-                     //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                    {
+                        unlockFx.SetActive(false);
+                        //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         checkCollectBagCloth.gameObject.SetActive(true);
                         checkPushBagMachine.gameObject.SetActive(true);
                         uI_InfoBuild.gameObject.SetActive(true);
@@ -328,6 +330,7 @@ public class BagMachine : MachineBase
         isReadyMidToOut = false;
         if (isLock)
         {
+            unlockFx.SetActive(false);
             checkCollectBagCloth.gameObject.SetActive(false);
             checkPushBagMachine.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);

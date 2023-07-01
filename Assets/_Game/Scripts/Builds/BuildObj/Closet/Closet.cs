@@ -17,6 +17,7 @@ public class Closet : ClosetBase, ILock
     //private GameObject lockModel;
     public CheckUnlock checkUnlock;
     public CheckPushCloset checkPushCloset;
+    public GameObject fxPos;
 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -33,6 +34,7 @@ public class Closet : ClosetBase, ILock
        
         //EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
+        unlockFx.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
         {
@@ -47,6 +49,7 @@ public class Closet : ClosetBase, ILock
                 {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
+                        unlockFx.SetActive(false);
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         //foreach (PlaceToBuy place in listPlaceToBuy)
                         //{
@@ -57,6 +60,7 @@ public class Closet : ClosetBase, ILock
                         //    o.gameObject.SetActive(true);
                         //    o.StartInGame();
                         //}
+                        fxPos.SetActive(true);
                         for (int i = 0; i < listEmtyPlaceToBuy.Count; i++)
                         {
                             listEmtyPlaceToBuy[i].gameObject.SetActive(true);
@@ -277,6 +281,9 @@ public class Closet : ClosetBase, ILock
         }
         if (isLock)
         {
+            unlockModel.SetActive(false);
+            fxPos.SetActive(false);
+            unlockFx.SetActive(false);
             checkPushCloset.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);

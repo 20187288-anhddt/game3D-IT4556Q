@@ -74,11 +74,13 @@ public class DataMoneyController : DataBase
     private void OnDoubleMoneyAdd()
     {
         isDoubleAddMoney = true;
+        Player.Instance.DoubleMoneyBuff();
         Debug.Log("ON Double Add Money");
     }
     private void OffDoubleMoneyAdd()
     {
         isDoubleAddMoney = true;
+        Player.Instance.ResetMoneyBuff();
         Debug.Log("OFF Double Add Money");
     }
 }
@@ -162,7 +164,7 @@ public class Money
     }
     public void ResetData()
     {
-        value = 200;
+        value = 300;
     }
     public enum TypeMoney
     {

@@ -30,6 +30,7 @@ public class BagCloset : ClosetBase
        
         //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
+        unlockFx.SetActive(true);
         //lockModel.SetActive(false);
         if (Vector3.Distance(new Vector3(unlockModel.transform.position.x, 0, unlockModel.transform.position.z), new Vector3(p.transform.position.x, 0, p.transform.position.z)) < 4f)
         {
@@ -42,7 +43,7 @@ public class BagCloset : ClosetBase
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() => {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
-                        
+                        unlockFx.SetActive(false);
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         foreach (PlaceToBuyBag place in listPlaceToBuyBag)
                         {
@@ -237,6 +238,7 @@ public class BagCloset : ClosetBase
         }
         if (isLock)
         {
+            unlockModel.SetActive(false);
             checkPushBagCloset.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
             checkUnlock.gameObject.SetActive(true);

@@ -59,6 +59,7 @@ public class Habitat : BuildObj, ILock
         p.isUnlock = true;
       //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
+        unlockFx.SetActive(true);
         //lockModel.SetActive(false);
         //switch (habitatType)
         //{
@@ -87,7 +88,7 @@ public class Habitat : BuildObj, ILock
         //        }
         //        break;
         //}
-       // numAnimalSave = 3;
+        // numAnimalSave = 3;
         if (isPlayAnimUnlock) //anim
         {
             unlockModel.transform.DOMoveY(2, 0f).OnComplete(() => {
@@ -95,6 +96,7 @@ public class Habitat : BuildObj, ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
+                        unlockFx.SetActive(false);
                         //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
                         if (!levelManager.isDoneMachineTUT)
                         {
@@ -113,7 +115,7 @@ public class Habitat : BuildObj, ILock
                         {
                             TakeAShitOnStart(numShitSave);
                         }
-                       
+                        
                     });
                 }); ;
             });
@@ -236,6 +238,7 @@ public class Habitat : BuildObj, ILock
         {
             //GetComponent<BoxCollider>().enabled = false;
             unlockModel.SetActive(false);
+            unlockFx.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             checkCollect.gameObject.SetActive(false);
             if (CurrentCoin <= 0)

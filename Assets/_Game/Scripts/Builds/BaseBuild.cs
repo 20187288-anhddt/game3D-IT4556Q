@@ -18,6 +18,7 @@ public class BaseBuild : MonoBehaviour
     public LevelManager levelManager;
     public DataStatusObject dataStatusObject;
     public PirceObject pirceObject;
+    public GameObject unlockFx;
     public virtual void Awake()
     {
         if(dataStatusObject == null) { dataStatusObject = GetComponent<DataStatusObject>(); }
