@@ -49,7 +49,8 @@ public class HireAnimal : BaseBuild, ILock
         checkUnlock.gameObject.SetActive(false);
         if (isPushEvent)
         {
-            habitat.SpawnAnimal(true);
+           // Debug.Log("bbbb");
+            habitat.SpawnAnimal(false);
         }
         EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
         StartInGame();
@@ -73,9 +74,11 @@ public class HireAnimal : BaseBuild, ILock
         if (isLock)
         {
             checkUnlock.gameObject.SetActive(true);
+            //Debug.Log(CurrentCoin);
             if (CurrentCoin <= 0)
             {
                 UnLock(true, true);
+               // Debug.Log("a");
             }
         }
         checkUnlock.UpdateUI();

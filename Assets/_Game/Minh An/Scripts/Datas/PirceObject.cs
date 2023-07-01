@@ -41,14 +41,18 @@ public class PirceObject : MonoBehaviour
     }
     public void ReLoadUI()
     {
-        if(level == 0)
+        level = dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis();
+        if (level == 0)
         {
             level = 1;
             BaseBuild baseBuild = GetComponentInParent<BaseBuild>();
             nameObject_This = baseBuild.nameObject_This;
             ingredientType = baseBuild.ingredientType;
         }
-        LoadPirce(nameObject_This, dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType);
+        //Debug.Log(level);
+        //Debug.Log(nameObject_This.ToString());
+        //Debug.Log(ingredientType.ToString());
+        LoadPirce(nameObject_This, level, ingredientType);
     }
     public int Get_Pirce()
     {

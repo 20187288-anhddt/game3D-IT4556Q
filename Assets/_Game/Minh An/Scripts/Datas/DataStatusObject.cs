@@ -115,6 +115,7 @@ public class DataStatusObject : DataBase
     }
     public void OnBought(StatusObject statusObjectCheck = null)//chuyen sang trang thai da mua
     {
+       // Debug.Log("Bought");
         if (statusObjectCheck == null)
         {
             statusObjectCheck = GetStatusObject_Current();

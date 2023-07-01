@@ -23,7 +23,6 @@ public class BaseBuild : MonoBehaviour
         if(dataStatusObject == null) { dataStatusObject = GetComponent<DataStatusObject>(); }
         if (myTransform == null) { myTransform = this.transform; }
         if (pirceObject == null) { pirceObject = GetComponentInChildren<PirceObject>(); }
-        Load_LoadPirce_UI();
     }
     public void Load_LoadPirce_UI()
     {
@@ -35,6 +34,7 @@ public class BaseBuild : MonoBehaviour
 
     public virtual void Start()
     {
+        Load_LoadPirce_UI();
         EnventManager.AddListener(EventName.StatusData_OnLoad.ToString(), () =>
         {
             if (dataStatusObject != null)
@@ -45,6 +45,7 @@ public class BaseBuild : MonoBehaviour
                 }
                 else if (dataStatusObject.isStaus_OnBuy())
                 {
+                    isLock = true;
                     Active(true);
                 }
                 else
@@ -78,8 +79,9 @@ public class BaseBuild : MonoBehaviour
     {
         Active(true);
         //GameManager.Instance.buildUnlock++;
-        if (!dataStatusObject.isStatus_Bought())
+        if (!dataStatusObject.isStatus_Bought() && isPushEvent)
         {
+            //Debug.Log("Bought");
             OnBought();
         }
         //GameManager.Instance.CheckShowInter();

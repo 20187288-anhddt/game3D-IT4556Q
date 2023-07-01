@@ -338,7 +338,7 @@ public class Habitat : BuildObj, ILock
     {
         numShitSave = (dataStatusObject as HabitatDataStatusObject).GetCountShit();
         numAnimalSave = (dataStatusObject as HabitatDataStatusObject).GetCountAnimal();
-        Debug.Log(numAnimalSave);
+       // Debug.Log(numAnimalSave);
     }
 }
 

@@ -7209,6 +7209,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[0].amountPaid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[1].amountPaid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: status_All_Level_Object.statusObjects.Array.data[1].typeStatus
       value: 1
       objectReference: {fileID: 0}
@@ -14659,8 +14667,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[0].amountPaid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: status_All_Level_Object.statusObjects.Array.data[0].typeStatus
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[1].amountPaid
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: status_All_Level_Object.statusObjects.Array.data[1].typeStatus
@@ -63304,6 +63320,14 @@ PrefabInstance:
     - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: status_All_Level_Object.statusObjects.Array.data[2].levelThis
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[0].amountPaid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.statusObjects.Array.data[1].amountPaid
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: status_All_Level_Object.statusObjects.Array.data[1].typeStatus
