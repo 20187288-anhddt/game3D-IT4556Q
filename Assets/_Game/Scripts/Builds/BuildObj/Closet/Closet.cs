@@ -15,10 +15,8 @@ public class Closet : ClosetBase, ILock
     private GameObject unlockModel;
     //[SerializeField]
     //private GameObject lockModel;
-    [SerializeField]
-    private CheckUnlock checkUnlock;
-    [SerializeField]
-    private CheckPushCloset checkPushCloset;
+    public CheckUnlock checkUnlock;
+    public CheckPushCloset checkPushCloset;
 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
@@ -166,6 +164,70 @@ public class Closet : ClosetBase, ILock
                 }
              
                 break;
+            //case IngredientType.LION:
+            //    if (!levelManager.closetManager.listLionClosetActive.Contains(this))
+            //        levelManager.closetManager.listLionClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.LionCloset:
+            //                EnventManager.TriggerEvent(EventName.LionCloset_Complete.ToString());
+            //                break;
+            //            case NameObject_This.LionCloset_1:
+            //                EnventManager.TriggerEvent(EventName.LionCloset_1_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.CROC:
+            //    if (!levelManager.closetManager.listCrocClosetActive.Contains(this))
+            //        levelManager.closetManager.listCrocClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.CrocCloset:
+            //                EnventManager.TriggerEvent(EventName.CrocCloset_Complete.ToString());
+            //                break;
+            //            case NameObject_This.CrocCloset_1:
+            //                EnventManager.TriggerEvent(EventName.CrocCloset_1_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ELE:
+            //    if (!levelManager.closetManager.listEleClosetActive.Contains(this))
+            //        levelManager.closetManager.listEleClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.EleCloset:
+            //                EnventManager.TriggerEvent(EventName.EleCloset_Complete.ToString());
+            //                break;
+            //            case NameObject_This.EleCloset_1:
+            //                EnventManager.TriggerEvent(EventName.EleCloset_1_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ZEBRA:
+            //    if (!levelManager.closetManager.listZebraClosetActive.Contains(this))
+            //        levelManager.closetManager.listZebraClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.ZebraCloset:
+            //                EnventManager.TriggerEvent(EventName.ZebraCloset_Complete.ToString());
+            //                break;
+            //            case NameObject_This.ZebraCloset_1:
+            //                EnventManager.TriggerEvent(EventName.ZebraCloset_1_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
         }
         if (!levelManager.closetManager.listClosets.Contains(this))
         {

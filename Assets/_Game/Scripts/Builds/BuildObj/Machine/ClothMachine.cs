@@ -10,12 +10,9 @@ public class ClothMachine : MachineBase
     public ClothBase clothPrefab;
     [SerializeField]
     private GameObject unlockModel;
-    [SerializeField]
-    private CheckUnlock checkUnlock;
-    [SerializeField]
-    private CheckPush checkPush;
-    [SerializeField]
-    private CheckCollectCloth checkCollectCloth;
+    public CheckUnlock checkUnlock;
+    public CheckPush checkPush;
+    public CheckCollectCloth checkCollectCloth;
     private void LoadAndSetData()
     {
         maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
@@ -142,6 +139,58 @@ public class ClothMachine : MachineBase
                 }
               
                 break;
+            //case IngredientType.LION:
+            //    if (!levelManager.machineManager.listLionClothMachineActive.Contains(this))
+            //        levelManager.machineManager.listLionClothMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.LionClothMachine:
+            //                EnventManager.TriggerEvent(EventName.LionClothMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.CROC:
+            //    if (!levelManager.machineManager.listCrocClothMachineActive.Contains(this))
+            //        levelManager.machineManager.listCrocClothMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.CrocClothMachine:
+            //                EnventManager.TriggerEvent(EventName.CrocClothMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ELE:
+            //    if (!levelManager.machineManager.listEleClothMachineActive.Contains(this))
+            //        levelManager.machineManager.listEleClothMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.EleClothMachine:
+            //                EnventManager.TriggerEvent(EventName.EleClothMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ZEBRA:
+            //    if (!levelManager.machineManager.listZebraClothMachineActive.Contains(this))
+            //        levelManager.machineManager.listZebraBagMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.ZebraClothMachine:
+            //                EnventManager.TriggerEvent(EventName.ZebraClothMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
         }
         if (!levelManager.machineManager.allActiveMachine.Contains(this))
             levelManager.machineManager.allActiveMachine.Add(this);

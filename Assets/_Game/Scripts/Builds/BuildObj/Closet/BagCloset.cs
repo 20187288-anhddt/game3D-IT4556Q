@@ -15,10 +15,8 @@ public class BagCloset : ClosetBase
     private GameObject unlockModel;
     //[SerializeField]
     //private GameObject lockModel;
-    [SerializeField]
-    private CheckUnlock checkUnlock;
-    [SerializeField]
-    private CheckPushBagCloset checkPushBagCloset;
+    public CheckUnlock checkUnlock;
+    public CheckPushBagCloset checkPushBagCloset;
    
 
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
@@ -141,6 +139,58 @@ public class BagCloset : ClosetBase
                     }
                 }
                 break;
+            //case IngredientType.LION:
+            //    if (!levelManager.closetManager.listLionBagClosetActive.Contains(this))
+            //        levelManager.closetManager.listLionBagClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.LionBagCloset:
+            //                EnventManager.TriggerEvent(EventName.LionBagCloset_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.CROC:
+            //    if (!levelManager.closetManager.listCrocBagClosetActive.Contains(this))
+            //        levelManager.closetManager.listCrocBagClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.CrocBagCloset:
+            //                EnventManager.TriggerEvent(EventName.CrocBagCloset_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ELE:
+            //    if (!levelManager.closetManager.listEleBagClosetActive.Contains(this))
+            //        levelManager.closetManager.listEleBagClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.EleBagCloset:
+            //                EnventManager.TriggerEvent(EventName.EleBagCloset_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ZEBRA:
+            //    if (!levelManager.closetManager.listZebraBagClosetActive.Contains(this))
+            //        levelManager.closetManager.listZebraBagClosetActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.ZebraBagCloset:
+            //                EnventManager.TriggerEvent(EventName.ZebraBagCloset_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
         }
         if (!levelManager.closetManager.listBagClosets.Contains(this))
             levelManager.closetManager.listBagClosets.Add(this);

@@ -10,12 +10,9 @@ public class BagMachine : MachineBase
     public BagBase clothPrefab;
     [SerializeField]
     private GameObject unlockModel;
-    [SerializeField]
-    private CheckUnlock checkUnlock;
-    [SerializeField]
-    private CheckPush checkPushBagMachine;
-    [SerializeField]
-    private CheckCollectBagCloth checkCollectBagCloth;
+    public CheckUnlock checkUnlock;
+    public CheckPush checkPushBagMachine;
+    public CheckCollectBagCloth checkCollectBagCloth;
     private void LoadAndSetData()
     {
         maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
@@ -139,6 +136,58 @@ public class BagMachine : MachineBase
                     }
                 }
                 break;
+            //case IngredientType.LION:
+            //    if (!levelManager.machineManager.listLionBagMachineActive.Contains(this))
+            //        levelManager.machineManager.listLionBagMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.LionBagMachine:
+            //                EnventManager.TriggerEvent(EventName.LionBagMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.CROC:
+            //    if (!levelManager.machineManager.listCrocBagMachineActive.Contains(this))
+            //        levelManager.machineManager.listCrocBagMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.CrocBagMachine:
+            //                EnventManager.TriggerEvent(EventName.CrocBagMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ELE:
+            //    if (!levelManager.machineManager.listEleBagMachineActive.Contains(this))
+            //        levelManager.machineManager.listEleBagMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.EleBagMachine:
+            //                EnventManager.TriggerEvent(EventName.EleBagMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
+            //case IngredientType.ZEBRA:
+            //    if (!levelManager.machineManager.listZebraBagMachineActive.Contains(this))
+            //        levelManager.machineManager.listZebraBagMachineActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        switch (nameObject_This)
+            //        {
+            //            case NameObject_This.ZebraBagMachine:
+            //                EnventManager.TriggerEvent(EventName.ZebraBagMachine_Complete.ToString());
+            //                break;
+            //        }
+            //    }
+            //    break;
         }
         if (!levelManager.machineManager.allActiveMachine.Contains(this))
             levelManager.machineManager.allActiveMachine.Add(this);
