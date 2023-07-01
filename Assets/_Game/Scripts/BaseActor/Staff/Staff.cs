@@ -90,6 +90,18 @@ public class Staff : BaseStaff, ICollect,IAct
     {
         //anim = GetComponentInChildren<Animator>();
         EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
+        EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
+        EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
+    }
+    private void DoubleSpeed()
+    {
+        speed *= 1.5f;
+        navMeshAgent.speed = speed;
+    }
+    private void ResetSpeed()
+    {
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
+        navMeshAgent.speed = speed;
     }
     public void ReloadSetDestination()
     {

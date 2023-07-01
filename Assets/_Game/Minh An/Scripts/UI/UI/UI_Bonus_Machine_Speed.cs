@@ -27,7 +27,7 @@ public class UI_Bonus_Machine_Speed : UI_Bonus
         base.Reward();
         Set_OnBonus(false);
         EnventManager.TriggerEvent(EventName.Machine_Double_Speed_Play.ToString());
-        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(timeBuff);
+        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Machine_Speed, timeBuff);
         Debug.Log("On Play Machine double Speed");
     }
     public override void StopReward()

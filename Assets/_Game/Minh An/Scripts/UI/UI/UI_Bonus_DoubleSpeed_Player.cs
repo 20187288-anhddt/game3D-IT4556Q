@@ -9,7 +9,6 @@ public class UI_Bonus_DoubleSpeed_Player : UI_Bonus
     public override void Awake()
     {
         base.Awake();
-        Close();
     }
 
     public void LoadUI()
@@ -43,40 +42,13 @@ public class UI_Bonus_DoubleSpeed_Player : UI_Bonus
     }
     public override void Reward()
     {
-        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_Double_Speed_All_Player", () =>
-        {
-            base.Reward();
-            Set_OnBonus(false);
-            EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
-            UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
-                StopReward);
-        });
-       
-    }
-    public void Reward(float timeBuff, bool IsAds = true)
-    {
-        if (IsAds)
-        {
-            SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_Double_Speed_All_Player", () =>
-            {
-                Set_OnBonus(false);
-                EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
-                UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
-                    StopReward);
-            });
-
-        }
-        else
-        {
-            Set_OnBonus(false);
-            EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
-            UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
-                StopReward);
-        }
+        base.Reward();
+        Set_OnBonus(false);
+        EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
+        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff);
     }
     public override void StopReward()
     {
-        Debug.Log("Stop Player_Double_Speed_Stop");
         base.StopReward();
         EnventManager.TriggerEvent(EventName.Player_Double_Speed_Stop.ToString());
     }

@@ -6,16 +6,23 @@ using System.IO;
 public class DataMoneyController : DataBase
 {
     public MoneyData moneyData;
-
+    private bool isDoubleAddMoney = false;
     public void Awake()
     {
         InItData();
     }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.OnEventDoubleMoney.ToString(), OnDoubleMoneyAdd);
+        EnventManager.AddListener(EventName.OffEventDoubleMoney.ToString(), OffDoubleMoneyAdd);
+    }
     public void InItData()
     {
+        isDoubleAddMoney = false;
         SetFileName(nameof(DataMoneyController));
         LoadData();
     }
+
     public override void SaveData()
     {
         base.SaveData();
@@ -36,6 +43,10 @@ public class DataMoneyController : DataBase
     }
     public void AddMoney(Money.TypeMoney typeMoney, int value)
     {
+        if (isDoubleAddMoney)
+        {
+            value *= 2;
+        }
         moneyData.AddMoney(typeMoney, value);
         SaveData();
         LoadData();
@@ -59,6 +70,16 @@ public class DataMoneyController : DataBase
     {
         LoadData();
         return moneyData.GetMoney(typeMoney);
+    }
+    private void OnDoubleMoneyAdd()
+    {
+        isDoubleAddMoney = true;
+        Debug.Log("ON Double Add Money");
+    }
+    private void OffDoubleMoneyAdd()
+    {
+        isDoubleAddMoney = true;
+        Debug.Log("OFF Double Add Money");
     }
 }
 [System.Serializable]

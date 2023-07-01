@@ -149,6 +149,11 @@ public enum EventName {
     Machine_Double_Speed_Play,
     Machine_Double_Speed_Stop,
     OnEventBonus,
+    OnEventDoubleMoney,
+    OffEventDoubleMoney,
+    Player_Double_Speed_Play,
+    Player_Double_Speed_Stop,
+    NextDataProcessBonusMoneyBuff,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

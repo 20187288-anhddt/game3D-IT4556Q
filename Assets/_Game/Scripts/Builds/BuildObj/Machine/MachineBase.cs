@@ -34,9 +34,9 @@ public class MachineBase : BuildObj, ILock
     {
         timeDelay = timeDelay / 2;
     }
-    public void ResetSpeed()
+    public virtual void ResetSpeed()
     {
-        timeDelay *= 2;
+        
     }
     public void ShortCutIngredients()
     {

@@ -10,6 +10,7 @@ public class DataManager : GenerticSingleton<DataManager>
     [SerializeField] private DataMoneyController dataMoneyController;
     [SerializeField] private DataCustomizeController dataCustomizeController;
     [SerializeField] private DataUIController dataUIController;
+    [SerializeField] private Data_Bonus_BuffMoney data_Bonus_BuffMoney;
     public void Start()
     {
         //dataMapController.SelectDataMap(1);
@@ -49,5 +50,9 @@ public class DataManager : GenerticSingleton<DataManager>
     public DataUIController GetDataUIController()
     {
         return dataUIController;
+    }
+    public Data_Bonus_BuffMoney GetData_Bonus_BuffMoney()
+    {
+        return data_Bonus_BuffMoney;
     }
 }

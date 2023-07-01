@@ -56,5 +56,7 @@ public class UI_Bonus : UI_Child
 public enum TypeBonus
 {
     MachineSpeed,
-    Money
+    Money_Double,
+    Money_Buff,
+    DoubleSpeed_Player
 }

@@ -23,6 +23,11 @@ public class BagMachine : MachineBase
         numInputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemInput();
         numOutputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemOutput();
     }
+    public override void ResetSpeed()
+    {
+        base.ResetSpeed();
+        timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+    }
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
         Player p = Player.Instance;

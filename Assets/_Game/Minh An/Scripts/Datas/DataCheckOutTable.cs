@@ -30,7 +30,8 @@ public class DataCheckOutTable : DataStatusObject
     }
     public void SetData_IsHireStaff(bool Value)
     {
-        if(Value)
+        CheckInItData();
+        if (Value)
         {
             isHireStaff = 1;
         }
@@ -56,6 +57,7 @@ public class DataCheckOutTable : DataStatusObject
     }
     public void SetCount_Money_Not_Collect(int value)
     {
+        CheckInItData();
         countMoney_NotCollect = value;
         SaveData();
         LoadData();

@@ -58,10 +58,19 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
         LoadAndSetData();
     }
+    
     private void LoadAndSetData()
     {
         speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
         maxCollectObj = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoCapacityTaget().Capacity;
+    }
+    private void DoubleSpeed()
+    {
+        speed *= 1.5f;
+    }
+    private void ResetSpeed()
+    {
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
     }
     protected void Start()
     {
@@ -77,6 +86,8 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         EnventManager.AddListener(EventName.ReLoadMoney.ToString(), ReLoadCointValue);
         EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
         EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
+        EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
+        EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
         tmpSpeed = speed;
     }
     protected void OnMove()
