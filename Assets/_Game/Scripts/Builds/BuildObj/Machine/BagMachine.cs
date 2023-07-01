@@ -330,6 +330,7 @@ public class BagMachine : MachineBase
         isReadyMidToOut = false;
         if (isLock)
         {
+            buffFx.SetActive(false);
             unlockFx.SetActive(false);
             checkCollectBagCloth.gameObject.SetActive(false);
             checkPushBagMachine.gameObject.SetActive(false);

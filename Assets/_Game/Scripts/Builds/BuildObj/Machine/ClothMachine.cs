@@ -332,6 +332,7 @@ public class ClothMachine : MachineBase
         isReadyMidToOut = false; 
         if (isLock)
         {
+            buffFx.SetActive(false);
             unlockFx.SetActive(false);
             checkCollectCloth.gameObject.SetActive(false);
             checkPush.gameObject.SetActive(false);
