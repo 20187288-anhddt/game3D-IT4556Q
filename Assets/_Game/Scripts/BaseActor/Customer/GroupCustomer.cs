@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GroupCustomer : AllPool
 {
+    public Transform myTransform;
     public IngredientType typeOutfit;
     public IngredientType typeBag;
     public List<Customer> listCus;
@@ -11,7 +12,10 @@ public class GroupCustomer : AllPool
     public List<Customer> teammates;
     public ClosetBase closetBase;
     public int grNum;
-
+    private void Awake()
+    {
+        if(myTransform == null) { myTransform = this.transform; }
+    }
     public void AddLeader(Customer cus)
     {
         this.leader = cus;
@@ -53,6 +57,17 @@ public class GroupCustomer : AllPool
         }
         return true;
     }
+    public bool CheckonCheckoutPos()
+    {
+        for(int i = 0; i < grNum; i++)
+        {
+            if (!listCus[i].onCheckoutPos)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public void TeamFollowLeader()
     {
         for (int i = 0; i < teammates.Count; i++)
@@ -73,5 +88,7 @@ public class GroupCustomer : AllPool
         leader = null;
         teammates.Clear();
         grNum = 0;
+        typeOutfit = IngredientType.NONE;
+        typeBag = IngredientType.NONE;
     }
 }

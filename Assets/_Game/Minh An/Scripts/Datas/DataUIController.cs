@@ -29,7 +29,6 @@ public class DataUIController : DataBase
     }
     public override void LoadData()
     {
-        Debug.Log("Load Data");
         base.LoadData();
         isOpenCanvasHome = (PlayerPrefs.GetInt(name_IsOpen_CanvasHome) == -1) ? false : true;
         isOpen_UI_Upgrade = (PlayerPrefs.GetInt(name_IsOpen_UIUpgrade) == -1) ? false : true;

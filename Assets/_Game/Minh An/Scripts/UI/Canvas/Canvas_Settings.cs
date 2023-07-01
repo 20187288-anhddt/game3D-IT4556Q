@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class Canvas_Settings : UI_Canvas
 {
+    private static Canvas_Settings instance;
+    public static Canvas_Settings Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = GameObject.FindObjectOfType<Canvas_Settings>();
+            }
+            return instance;
+        }
+    }
     [SerializeField] private Button btn_Close;
-    [Header("Button Haptics")]
-    [SerializeField] private Button btn_Haptics;
-    [SerializeField] private Text txt_Haptics;
-    [Header("Button FixedJoystick")]
-    [SerializeField] private Button btn_FixedJoystick;
-    [SerializeField] private Text txt_FixedJoystick;
-
-
-    private static string nameHaptics = "Haptics: ";
-    private static string nameJoystick = "Fixed Joystick: ";
-
-    private int indexClick_Haptics = 0;
-    private int indexClick_Joystick = 0;
+    [SerializeField] private List<UI_InfoGroupSettingChild> uI_InfoGroupSettingChildrens;
+    public DataSetting dataSetting;
     private void Awake()
     {
         OnInIt();
@@ -26,62 +28,18 @@ public class Canvas_Settings : UI_Canvas
     public override void OnInIt()
     {
         base.OnInIt();
-        //indexClick_Haptics = 1;
-        //indexClick_Joystick = 1;
-
-        //CheckData_Haptics(indexClick_Haptics);
-        //CheckData_FixedJoystick(indexClick_Joystick);
-
         btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
-        //btn_Haptics.onClick.AddListener(() => { Click_Haptics(); });
-        //btn_FixedJoystick.onClick.AddListener(() => { Click_FixedJoystick(); });
+        dataSetting.InItData();
     }
-    public void Click_Haptics()
+    private void OnEnable()
     {
-        if(indexClick_Haptics == 0)
-        {
-            indexClick_Haptics++;
-            CheckData_Haptics(indexClick_Haptics);
-        }
-        else
-        {
-            indexClick_Haptics--;
-            CheckData_Haptics(indexClick_Haptics);
-        }
+        LoadData();
     }
-    public void Click_FixedJoystick()
+    private void OnDisable()
     {
-        if (indexClick_Joystick == 0)
+        foreach(UI_InfoGroupSettingChild uI_InfoGroupSettingChild in uI_InfoGroupSettingChildrens)
         {
-            indexClick_Joystick++;
-            CheckData_FixedJoystick(indexClick_Joystick);
-        }
-        else
-        {
-            indexClick_Joystick--;
-            CheckData_FixedJoystick(indexClick_Joystick);
-        }
-    }
-    private void CheckData_Haptics(int valueData)
-    {
-        if (valueData == 0)
-        {
-            txt_Haptics.text = nameHaptics + "Off";
-        }
-        else
-        {
-            txt_Haptics.text = nameHaptics + "On";
-        }
-    }
-    private void CheckData_FixedJoystick(int valueData)
-    {
-        if (indexClick_Joystick == 0)
-        {
-            txt_FixedJoystick.text = nameJoystick + "Off";
-        }
-        else
-        {
-            txt_FixedJoystick.text = nameJoystick + "On";
+            dataSetting.SetDataInfoSettings(uI_InfoGroupSettingChild.name_SettingChild, uI_InfoGroupSettingChild.isOn);
         }
     }
     public override void Open()
@@ -94,4 +52,107 @@ public class Canvas_Settings : UI_Canvas
         base.Close();
         UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
+    public void LoadData()
+    {
+        foreach(UI_InfoGroupSettingChild uI_InfoGroupSettingChild in uI_InfoGroupSettingChildrens)
+        {
+            uI_InfoGroupSettingChild.InItData(dataSetting.GetDataInfoSettings(uI_InfoGroupSettingChild.name_SettingChild).isOn);
+        }
+    }
+}
+[System.Serializable]
+public class DataSetting
+{
+    public DataInfoSetting dataInfoSetting;
+    private bool isInItData = false;
+    private string fileName = " ";
+    public void InItData()
+    {
+        SetFileName(nameof(DataSetting));
+        LoadData();
+        isInItData = true;
+    }
+    public void SetFileName(string fileName)
+    {
+        this.fileName = fileName;
+    }
+    public string GetFileName()
+    {
+        return fileName;
+    }
+    public void SaveData()
+    {
+        string json = JsonUtility.ToJson(dataInfoSetting);
+        File.WriteAllText(Application.persistentDataPath + GetFileName(), json);
+    }
+    public void LoadData()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
+        {
+            FileStream file = new FileStream(Application.persistentDataPath + "/" + GetFileName(), FileMode.Create);
+            ResetData();
+            file.Dispose();
+            SaveData();
+        }
+        string json = File.ReadAllText(Application.persistentDataPath + GetFileName());
+        dataInfoSetting = JsonUtility.FromJson<DataInfoSetting>(json);
+    }
+    public void ResetData()
+    {
+        dataInfoSetting.ResetData();
+    }
+    private void CheckInItData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
+    }
+    public List<DataDictInfoSetting> GetDataDictInfoSettings()
+    {
+        CheckInItData();
+        return dataInfoSetting.dataDictInfoSettings;
+    }
+    public void SetDataInfoSettings(UI_InfoGroupSettingChild.Name_SettingChild name_SettingChild, bool isOn)
+    {
+        CheckInItData();
+        foreach (DataDictInfoSetting dataDictInfoSetting in dataInfoSetting.dataDictInfoSettings)
+        {
+            if(dataDictInfoSetting.name_SettingChild == name_SettingChild)
+            {
+                dataDictInfoSetting.isOn = isOn;
+            }
+        }
+        SaveData();
+    }
+    public DataDictInfoSetting GetDataInfoSettings(UI_InfoGroupSettingChild.Name_SettingChild name_SettingChild)
+    {
+        CheckInItData();
+        foreach (DataDictInfoSetting dataDictInfoSetting in dataInfoSetting.dataDictInfoSettings)
+        {
+            if (dataDictInfoSetting.name_SettingChild == name_SettingChild)
+            {
+                return dataDictInfoSetting;
+            }
+        }
+        return null;
+    }
+}
+[System.Serializable]
+public class DataInfoSetting
+{
+    public List<DataDictInfoSetting> dataDictInfoSettings;
+    public void ResetData()
+    {
+        foreach (DataDictInfoSetting dataDictInfoSetting in dataDictInfoSettings)
+        {
+            dataDictInfoSetting.isOn = true;
+        }
+    }
+}
+[System.Serializable]
+public class DataDictInfoSetting
+{
+    public bool isOn;
+    public UI_InfoGroupSettingChild.Name_SettingChild name_SettingChild;
 }

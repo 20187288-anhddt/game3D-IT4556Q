@@ -1,10 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Bonus_Machine_Speed : UI_Bonus
 {
-    
+    [SerializeField] private Text txt_Time;
+    public override void Awake()
+    {
+        base.Awake();
+        Close();
+    }
+    public void LoadUI()
+    {
+        if (timeSecond >= 10 || timeSecond < 1)
+        {
+            txt_Time.text = ((int)timeSecond).ToString() + "s";
+        }
+        else
+        {
+            txt_Time.text = "0" + ((int)timeSecond).ToString() + "s";
+        }
+
+    }
     private void Update()
     {
         if (isInItTime)
@@ -18,7 +36,7 @@ public class UI_Bonus_Machine_Speed : UI_Bonus
                 timeSecond = 0;
                 Close();
             }
-         
+            LoadUI();
         }
 
     }
