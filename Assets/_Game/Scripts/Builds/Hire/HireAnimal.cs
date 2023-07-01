@@ -50,7 +50,7 @@ public class HireAnimal : BaseBuild, ILock
         if (isPushEvent)
         {
            // Debug.Log("bbbb");
-            habitat.SpawnAnimal(true);
+            habitat.SpawnAnimal(true,new Vector3(this.transform.position.x, habitat.transform.position.y, this.transform.position.z));
         }
         EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
         StartInGame();

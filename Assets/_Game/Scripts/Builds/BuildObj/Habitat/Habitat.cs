@@ -372,7 +372,7 @@ public class Habitat : BuildObj, ILock
             }
         }
     }
-    public void SpawnAnimal(bool isHired)
+    public void SpawnAnimal(bool isHired , Vector3 hiredPos)
     {
         Vector3 randomPos = Vector3.zero;
         while(Vector3.Distance(randomPos,Vector3.zero) == 0)
@@ -380,11 +380,17 @@ public class Habitat : BuildObj, ILock
             randomPos = RandomPosition();
             if(Vector3.Distance(randomPos, Vector3.zero) != 0)
             {
-                var curAnimal = AllPoolContainer.Instance.Spawn(animalPrefabs,randomPos, myTransform.rotation);
+                if (!isHired)
+                {
+                    hiredPos = randomPos;
+                }
+                var curAnimal = AllPoolContainer.Instance.Spawn(animalPrefabs, hiredPos, myTransform.rotation);
                 curAnimal.transform.Rotate(0f, 180f, 0.0f, Space.Self);
                 allAnimals.Add(curAnimal as AnimalBase);
                 (curAnimal as AnimalBase).SetHabitat(this);
                 (curAnimal as AnimalBase).StartInGame();
+                (curAnimal as AnimalBase).nextDes = randomPos;
+                (curAnimal as AnimalBase).UpdateState(AnimalBase.RUN_STATE);
                 if (isHired == true)
                 {
                     numAnimalSave++;
@@ -396,7 +402,7 @@ public class Habitat : BuildObj, ILock
     {
         for(int i = 0; i < n; i ++)
         {
-            SpawnAnimal(false);
+            SpawnAnimal(false,Vector3.zero);
         }
     }
     public void SaveData_OnQuitGame()
