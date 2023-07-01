@@ -48,7 +48,7 @@ public class PirceObject : MonoBehaviour
             nameObject_This = baseBuild.nameObject_This;
             ingredientType = baseBuild.ingredientType;
         }
-        LoadPirce(nameObject_This, level, ingredientType);
+        LoadPirce(nameObject_This, dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType);
     }
     public int Get_Pirce()
     {
