@@ -435,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7153776641802267259
 Transform:
   m_ObjectHideFlags: 0
@@ -518,7 +518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3402096290714174534
 Transform:
   m_ObjectHideFlags: 0
@@ -1117,9 +1117,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChickenClotherMachineNoAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 3741358003619097817, guid: a8e1ff7b62b18ab4abae66a4b7c24d0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8413615821076576949, guid: a8e1ff7b62b18ab4abae66a4b7c24d0e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622556028119208598, guid: a8e1ff7b62b18ab4abae66a4b7c24d0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e1ff7b62b18ab4abae66a4b7c24d0e, type: 3}

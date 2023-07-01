@@ -806,6 +806,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3404818423723521974, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3026679666152352171, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -813,6 +817,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}
       propertyPath: m_Name
       value: BearClotherMachineNoAnim
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741358003619097817, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622556028119208598, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 483249f1c091c3942a38c26e28f6b901, type: 3}

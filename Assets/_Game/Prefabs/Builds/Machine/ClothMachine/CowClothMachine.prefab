@@ -962,6 +962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CowClotherMachineNoAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 3741358003619097817, guid: 479bbbb26df80544a814d6f582d9366b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 479bbbb26df80544a814d6f582d9366b, type: 3}
       propertyPath: m_Controller
       value: 
@@ -971,6 +975,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8136519945784610630, guid: 479bbbb26df80544a814d6f582d9366b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622556028119208598, guid: 479bbbb26df80544a814d6f582d9366b, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

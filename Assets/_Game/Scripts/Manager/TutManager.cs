@@ -90,7 +90,7 @@ public class TutManager : MonoBehaviour
             {
                 if(levelManager.customerManager.listGroupsHaveOutfit.Count <= 0)
                 {
-                    if (player.chickenCloths.Count < 1)
+                    if (player.chickenCloths.Count < 1 && clothMachine.checkCollectCloth.gameObject.activeSelf)
                     {
                         if (clothMachine.outCloths.Count < 1)
                         {
@@ -122,6 +122,8 @@ public class TutManager : MonoBehaviour
                     }
                     else
                     {
+                        clothMachine.checkPush.gameObject.SetActive(false);
+                        clothMachine.checkCollectCloth.gameObject.SetActive(false);
                         line.SetPosition(0, player.transform.position);
                         line.SetPosition(1, new Vector3(closet.transform.position.x, 0, closet.transform.position.z));
                     }
@@ -152,8 +154,6 @@ public class TutManager : MonoBehaviour
                 else
                 {
                     bagMachine.checkUnlock.gameObject.SetActive(true);
-                    clothMachine.checkPush.gameObject.SetActive(false);
-                    clothMachine.checkCollectCloth.gameObject.SetActive(false);
                     line.gameObject.SetActive(false);
                     fxTUT.SetActive(false);
                     levelManager.Set_isDoneClosetTUT(true);
