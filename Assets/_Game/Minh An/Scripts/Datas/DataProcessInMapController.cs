@@ -735,6 +735,7 @@ public class RewardProcessCompleteMission
                 OnBuy(IngredientType.HIRE_ANIMAL, NameObject_This.HireAnimal_Bear);
                 break;
             case EventName.OnEventBonus:
+                DataManager.Instance.GetDataUIController().Set_IsOpenCanvasBonus(true);
                 EventBounsController.Instance.GetDataBonus().Set_OnShowBouns(true);
                 break;
             case EventName.NextDataProcessBonusMoneyBuff:

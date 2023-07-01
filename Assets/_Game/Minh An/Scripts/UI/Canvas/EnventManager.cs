@@ -154,6 +154,11 @@ public enum EventName {
     Player_Double_Speed_Play,
     Player_Double_Speed_Stop,
     NextDataProcessBonusMoneyBuff,
+    NoShit_Play,
+    NoShit_Stop,
+    OnBonus_NoShit,
+    CheckTickInCustomize,
+    OpenUIBonus,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
