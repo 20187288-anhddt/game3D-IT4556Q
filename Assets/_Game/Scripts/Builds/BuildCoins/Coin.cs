@@ -48,11 +48,11 @@ public class Coin : AllPool
     //}
     public void MoveToBuildLock(Vector3 trans, float time)
     {
-        this.transform.DOMove(trans, time).OnComplete(() =>
+        this.transform.DOJump(trans,1f,1, time).OnComplete(() =>
         {
             AllPoolContainer.Instance.Release(this);
             //Vibration.Vibrate(20);
-        }).SetEase(Ease.Linear);
+        }).SetEase(Ease.OutCirc);
     }
     //public void MoveToPlayer(Player player, float time)
     //{

@@ -2218,6 +2218,7 @@ GameObject:
   - component: {fileID: 5545678184750889703}
   - component: {fileID: 5545678184750889702}
   - component: {fileID: 5545678184750889701}
+  - component: {fileID: 6960766009155993406}
   m_Layer: 5
   m_Name: Canvas_Bonus
   m_TagString: Untagged
@@ -2308,6 +2309,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 55
+--- !u!114 &6960766009155993406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545678184750889700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f3ae1f3c1a8e614cbed25864c587f3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5833445422645487395
 GameObject:
   m_ObjectHideFlags: 0

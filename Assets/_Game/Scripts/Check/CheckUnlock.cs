@@ -202,7 +202,7 @@ public class CheckUnlock : MonoBehaviour
             dataStatusObject.AddAmountPaid(value);
             Player player = Player.Instance;
             AllPool c = AllPoolContainer.Instance.Spawn(coinPrefab, player.transform.position + Vector3.up * 0.5f);
-            (c as Coin).MoveToBuildLock(this.transform.position, 0f);
+            (c as Coin).MoveToBuildLock(this.transform.position, 0.1f);
             UpdateUI();
             if (normal.CurrentCoin <= 0)
             {
