@@ -35,10 +35,6 @@ public class BagMachine : MachineBase
         Player p = Player.Instance;
         if (!IsLock)
         {
-            if (isBuff)
-            {
-                buffFx.SetActive(true);
-            }
             return;
         }
         base.UnLock(isPushEvent, isPlayAnimUnlock);
@@ -203,6 +199,7 @@ public class BagMachine : MachineBase
     public override void Start()
     {
         base.Start();
+        anim = unlockModel.GetComponentInChildren<Animator>();
         StartInGame();
     }
     void Update()
@@ -244,6 +241,18 @@ public class BagMachine : MachineBase
             }
         }
     }
+    private void ChangeAnim(bool isWorking)
+    {
+        if (isWorking)
+        {
+            anim.enabled = true;
+            anim.Play("Working");
+        }
+        else
+        {
+            anim.enabled = false;
+        }
+    }
     //private void SpawnObject()
     //{
     //    var curCloth = AllPoolContainer.Instance.Spawn(clothPrefab, cenIngredientPos.transform.position, transform.rotation);
@@ -283,6 +292,7 @@ public class BagMachine : MachineBase
     }
     private void InputMoveToCenter()
     {
+        ChangeAnim(true);
         var curIngredient = ingredients[0];
         ingredients.Remove(curIngredient);
         numInputSave--;
@@ -311,6 +321,7 @@ public class BagMachine : MachineBase
             ShortCutOutCloth();
             isReadyInToMid = true;
             isReadyMidToOut = false;
+            ChangeAnim(false);
         });
     }
     public override void StartInGame()

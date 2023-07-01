@@ -27,6 +27,8 @@ public class MachineBase : BuildObj, ILock
     public FurBase furPrefabs;
     protected bool isBuff = false;
     public GameObject buffFx;
+    public Animator anim;
+
     public void AddEvent()
     {
         EnventManager.AddListener(EventName.Machine_Double_Speed_Play.ToString(), DoubleSpeed);
@@ -34,11 +36,8 @@ public class MachineBase : BuildObj, ILock
     }
     public void DoubleSpeed()
     {
-        if (!IsLock)
-        {
-            buffFx.SetActive(true);
-        }
         isBuff = true;
+        buffFx.SetActive(true);
         timeDelay = timeDelay / 2;
     }
     public virtual void ResetSpeed()
