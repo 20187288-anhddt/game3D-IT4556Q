@@ -311,6 +311,7 @@ public class Habitat : BuildObj, ILock
             if(Vector3.Distance(randomPos, Vector3.zero) != 0)
             {
                 var curAnimal = AllPoolContainer.Instance.Spawn(animalPrefabs,randomPos, myTransform.rotation);
+                curAnimal.transform.Rotate(0f, 180f, 0.0f, Space.Self);
                 allAnimals.Add(curAnimal as AnimalBase);
                 (curAnimal as AnimalBase).SetHabitat(this);
                 (curAnimal as AnimalBase).StartInGame();

@@ -48,16 +48,25 @@ public class Closet : ClosetBase, ILock
                 unlockModel.transform.DOMoveY(-0.1f, 0.5f).OnComplete(() =>
                 {
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
-                    {                  
+                    {
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-                        foreach (PlaceToBuy place in listPlaceToBuy)
+                        //foreach (PlaceToBuy place in listPlaceToBuy)
+                        //{
+                        //    place.gameObject.SetActive(true);
+                        //}
+                        //foreach (OutfitPos o in listOutfitPos)
+                        //{
+                        //    o.gameObject.SetActive(true);
+                        //    o.StartInGame();
+                        //}
+                        for (int i = 0; i < listEmtyPlaceToBuy.Count; i++)
                         {
-                            place.gameObject.SetActive(true);
+                            listEmtyPlaceToBuy[i].gameObject.SetActive(true);
                         }
-                        foreach (OutfitPos o in listOutfitPos)
+                        for (int i = 0; i < listOutfitPos.Count; i++)
                         {
-                            o.gameObject.SetActive(true);
-                            o.StartInGame();
+                            listOutfitPos[i].gameObject.SetActive(true);
+                            listOutfitPos[i].StartInGame();
                         }
                         checkPushCloset.gameObject.SetActive(true);
                         if (CameraController.Instance.IsCameraFollowPlayer())
