@@ -16,13 +16,17 @@ public class ClothMachine : MachineBase
     private CheckPush checkPush;
     [SerializeField]
     private CheckCollectCloth checkCollectCloth;
-   
     private void LoadAndSetData()
     {
         maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
-        timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
         numInputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemInput();
         numOutputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemOutput();
+      
+        timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+        if (isBuff)
+        {
+            DoubleSpeed();
+        }
     }
     public override void ResetSpeed()
     {
@@ -296,6 +300,10 @@ public class ClothMachine : MachineBase
         checkUnlock.UpdateUI();
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
         AddEvent();
+        if (isBuff)
+        {
+            DoubleSpeed();
+        }
     }
     //public override void SpawnInputOnStart(int n)
     //{

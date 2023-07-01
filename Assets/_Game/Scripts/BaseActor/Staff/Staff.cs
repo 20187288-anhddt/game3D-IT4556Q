@@ -55,7 +55,7 @@ public class Staff : BaseStaff, ICollect,IAct
     public List<Shit> listShits { get => ListShits; set => ListShits = value; }
     private Vector3 pointTaget = Vector3.zero;
     public GameObject[] model;
-
+    private bool isBuff = false;
     public GameManager gameManager;
     public override void Awake()
     {
@@ -79,11 +79,19 @@ public class Staff : BaseStaff, ICollect,IAct
         ResetStaff();
         EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
         LoadAndSetData();
+        if (isBuff)
+        {
+            DoubleSpeed();
+        }
     }
     private void LoadAndSetData()
     {
-        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
         maxCollectObj = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoCapacityTaget(staffType).Capacity;
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
+        if (isBuff)
+        {
+            DoubleSpeed();
+        }
         navMeshAgent.speed = speed;
     }
     private void Start()
@@ -95,11 +103,13 @@ public class Staff : BaseStaff, ICollect,IAct
     }
     private void DoubleSpeed()
     {
+        isBuff = true;
         speed *= 1.5f;
         navMeshAgent.speed = speed;
     }
     private void ResetSpeed()
     {
+        isBuff = false;
         speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
         navMeshAgent.speed = speed;
     }

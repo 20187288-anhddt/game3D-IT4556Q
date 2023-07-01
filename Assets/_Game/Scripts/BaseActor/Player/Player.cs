@@ -41,6 +41,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     private UI_ProcessPlayer uI_ProcessPlayer;
     private Animator anim;
     private float tmpSpeed;
+    private bool isBuff = false;
 
     public override void Awake()
     {
@@ -61,15 +62,21 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     
     private void LoadAndSetData()
     {
-        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
         maxCollectObj = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoCapacityTaget().Capacity;
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
+        if (isBuff)
+        {
+            DoubleSpeed();
+        }
     }
     private void DoubleSpeed()
     {
+        isBuff = true;
         speed *= 1.5f;
     }
     private void ResetSpeed()
     {
+        isBuff = false;
         speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
     }
     protected void Start()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EventBounsController : Singleton<EventBounsController>
 {
     [SerializeField] private List<InfoBouns> infoBouns;
+
     public List<float> timeShows;
     [Header("Loop")]
     public bool isLoop;
@@ -15,6 +16,11 @@ public class EventBounsController : Singleton<EventBounsController>
     private int indexTaget = 0;
     [SerializeField] float m_timeLoop;
     [SerializeField] float m_timeShow;
+    [Header("BonusMoney")]
+    [SerializeField] private InfoBouns infoBouns_Money_Buff;
+    [SerializeField] private float timeLoop_BonusMoney;
+    [SerializeField] private float m_TimeLoop_BonusMoney;
+    [SerializeField] private float m_TimeCheck_BonusMMoney;
 
     public override void Awake()
     {
@@ -28,6 +34,7 @@ public class EventBounsController : Singleton<EventBounsController>
         indexTaget = 0;
         m_timeLoop = timeLoop;
         m_timeShow = timeShows[indexTaget];
+        m_TimeLoop_BonusMoney = timeLoop_BonusMoney;
         //dataBonus.Set_OnShowBouns(true);
     }
     private void Update()
@@ -35,11 +42,16 @@ public class EventBounsController : Singleton<EventBounsController>
         if (dataBonus.Get_OnShowBouns())
         {
             m_TimeCheck += Time.deltaTime;
+            m_TimeCheck_BonusMMoney += Time.deltaTime;
             if (isLoop)
             {
                 if (m_TimeCheck >= m_timeLoop)
                 {
                     reload_Bonus:
+                    if (IsAllNoOnBonus())
+                    {
+                        return;
+                    }
                     infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
                     if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
                     {
@@ -55,6 +67,10 @@ public class EventBounsController : Singleton<EventBounsController>
                 if (m_TimeCheck >= m_timeShow)
                 {
                     reload_Bonus:
+                    if (IsAllNoOnBonus())
+                    {
+                        return;
+                    }
                     infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
                     if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
                     {
@@ -73,10 +89,29 @@ public class EventBounsController : Singleton<EventBounsController>
                     m_TimeCheck = 0;
                 }
             }
+
+            if(m_TimeCheck_BonusMMoney >= m_TimeLoop_BonusMoney)
+            {
+                m_TimeCheck_BonusMMoney = 0;
+                m_TimeLoop_BonusMoney = timeLoop_BonusMoney + infoBouns_Money_Buff.timeEnd_Show_Bonus;
+                infoBouns_Money_Buff.uI_Bonus.Active(true);
+                infoBouns_Money_Buff.uI_Bonus.InItTimeSecond(infoBouns_Money_Buff.timeEnd_Show_Bonus);
+                infoBouns_Money_Buff.uI_Bonus.SetTimeBuff(infoBouns_Money_Buff.timeEnd_Bonus);
+            }
         }
        
     }
-  
+    private bool IsAllNoOnBonus()
+    {
+        foreach(InfoBouns infoBouns in infoBouns)
+        {
+            if (infoBouns.uI_Bonus.Get_OnBonus())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     //public void ShowBonus(int ID)
     //{
     //    for(int i = 0; i < infoBouns.Count; i++)
