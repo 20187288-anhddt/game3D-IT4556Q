@@ -48,18 +48,18 @@ public class EventBounsController : Singleton<EventBounsController>
                 if (m_TimeCheck >= m_timeLoop)
                 {
                     reload_Bonus:
-                    if (IsAllNoOnBonus())
+                    if (!IsAllNoOnBonus())
                     {
-                        return;
+                        infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
+                        if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
+                        {
+                            goto reload_Bonus;
+                        }
+                        m_timeLoop = timeLoop + infoBouns_Taget.timeEnd_Show_Bonus;
+                        ShowBonus(infoBouns_Taget);
+                        m_TimeCheck = 0;
                     }
-                    infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
-                    if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
-                    {
-                        goto reload_Bonus;
-                    }
-                    m_timeLoop = timeLoop + infoBouns_Taget.timeEnd_Show_Bonus;
-                    ShowBonus(infoBouns_Taget);
-                    m_TimeCheck = 0;
+                  
                 }
             }
             else
@@ -67,26 +67,26 @@ public class EventBounsController : Singleton<EventBounsController>
                 if (m_TimeCheck >= m_timeShow)
                 {
                     reload_Bonus:
-                    if (IsAllNoOnBonus())
+                    if (!IsAllNoOnBonus())
                     {
-                        return;
+                        infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
+                        if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
+                        {
+                            goto reload_Bonus;
+                        }
+                        if (timeShows.Count > indexTaget + 1)
+                        {
+                            indexTaget++;
+                        }
+                        else
+                        {
+                            indexTaget = 0;
+                        }
+                        m_timeShow = timeShows[indexTaget] + infoBouns_Taget.timeEnd_Show_Bonus;
+                        ShowBonus(infoBouns_Taget);
+                        m_TimeCheck = 0;
                     }
-                    infoBouns_Taget = infoBouns[Random.Range(0, infoBouns.Count)];
-                    if (!infoBouns_Taget.uI_Bonus.Get_OnBonus())
-                    {
-                        goto reload_Bonus;
-                    }
-                    if (timeShows.Count > indexTaget + 1)
-                    {
-                        indexTaget++;
-                    }
-                    else
-                    {
-                        indexTaget = 0;
-                    }
-                    m_timeShow = timeShows[indexTaget] + infoBouns_Taget.timeEnd_Show_Bonus;
-                    ShowBonus(infoBouns_Taget);
-                    m_TimeCheck = 0;
+                   
                 }
             }
 

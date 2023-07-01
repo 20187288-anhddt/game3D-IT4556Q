@@ -238,6 +238,7 @@ public class BagCloset : ClosetBase
         }
         if (isLock)
         {
+            unlockFx.SetActive(false);
             unlockModel.SetActive(false);
             checkPushBagCloset.gameObject.SetActive(false);
             unlockModel.gameObject.SetActive(false);
