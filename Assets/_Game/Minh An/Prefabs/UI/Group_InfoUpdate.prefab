@@ -481,11 +481,11 @@ MonoBehaviour:
   txt_Info: {fileID: 1331205465807262765}
   btn_Money: {fileID: 2726459527541260861}
   txt_Money: {fileID: 3781605678920552116}
-  imageBG_Money: {fileID: 1822265658722815341}
+  imageBG_Money: {fileID: 2663805700059746550}
   imageIcon_Money: {fileID: 8171675900529481406}
   btn_Ads: {fileID: 3769997570405623269}
   txt_Ads: {fileID: 9188769731927622004}
-  imageBG_Ads: {fileID: 6315630091176393060}
+  imageBG_Ads: {fileID: 1236691809820024809}
   imageIcon_Ads: {fileID: 1997691195006443874}
   spr_BG_Green: {fileID: 21300000, guid: 565bc057d45cdb64e9f38cad711fc8e3, type: 3}
   spr_BG_Hong: {fileID: 21300000, guid: 0880ee69a087c61438afeacd671cb60b, type: 3}
@@ -583,7 +583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4527325513698905652
 RectTransform:
   m_ObjectHideFlags: 0
@@ -704,14 +704,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.011764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 565bc057d45cdb64e9f38cad711fc8e3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -720,7 +720,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.4
 --- !u!114 &2726459527541260861
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -414,12 +414,14 @@ public class Group_InfoUpdate : UI_Child
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     imageIcon_Money.gameObject.SetActive(false);
-                    imageBG_Money.sprite = spr_BG_Green;
+                    imageBG_Money.sprite = spr_BG_Off;
                     txt_Money.text = "MAX";
                     btn_Ads.onClick.RemoveAllListeners();
                     imageIcon_Ads.gameObject.SetActive(false);
-                    imageBG_Ads.sprite = spr_BG_Green;
+                    imageBG_Ads.sprite = spr_BG_Off;
                     txt_Ads.text = "MAX";
+                    btn_Money.enabled = false;
+                    btn_Ads.enabled = false;
               
                 }
                
@@ -429,13 +431,15 @@ public class Group_InfoUpdate : UI_Child
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     imageIcon_Money.gameObject.SetActive(false);
-                    imageBG_Money.sprite = spr_BG_Green;
+                    imageBG_Money.sprite = spr_BG_Off;
                     txt_Money.text = "MAX";
                     btn_Ads.onClick.RemoveAllListeners();
                     imageIcon_Ads.gameObject.SetActive(false);
-                    imageBG_Ads.sprite = spr_BG_Green;
+                    imageBG_Ads.sprite = spr_BG_Off;
                     txt_Ads.text = "MAX";
-                  
+                    btn_Money.enabled = false;
+                    btn_Ads.enabled = false;
+
                 }
              
                 break;
@@ -510,12 +514,14 @@ public class Group_InfoUpdate : UI_Child
             btn_Ads.onClick.RemoveAllListeners();
             btn_Money.onClick.RemoveAllListeners();
             imageIcon_Ads.gameObject.SetActive(false);
-            imageBG_Ads.sprite = spr_BG_Green;
+            imageBG_Ads.sprite = spr_BG_Off;
             txt_Ads.text = "MAX";
             imageIcon_Money.gameObject.SetActive(false);
-            imageBG_Money.sprite = spr_BG_Green;
+            imageBG_Money.sprite = spr_BG_Off;
             txt_Money.text = "MAX";
-          
+            btn_Money.enabled = false;
+            btn_Ads.enabled = false;
+
         }
        
     }
