@@ -184,7 +184,10 @@ public class Checkout : BuildCoins,ILock
     }
     void Update()
     {
-        CheckStatus();
+        if (!isLock)
+        {
+            CheckStatus();
+        }
         if (!isLock && isHired)
         {
             if (listCusCheckout.Count > 0)
