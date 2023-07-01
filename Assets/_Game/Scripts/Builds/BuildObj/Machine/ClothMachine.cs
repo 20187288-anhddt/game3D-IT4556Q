@@ -35,6 +35,11 @@ public class ClothMachine : MachineBase
         Player p = Player.Instance;
         if (!IsLock)
         {
+            if (isBuff)
+            {
+                buffFx.SetActive(true);
+            }
+          
             return;
         }
         base.UnLock(isPushEvent, isPlayAnimUnlock);

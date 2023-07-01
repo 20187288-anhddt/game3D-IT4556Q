@@ -16,15 +16,12 @@ public class UI_InfoBuff : UI_Child
     private bool isInItInfo = false;
     private void Awake()
     {
-        if(myTransform == null) { myTransform = this.transform; }
-    }
-    private void OnEnable()
-    {
         OnInIt();
     }
     public override void OnInIt()
     {
         isInItInfo = false;
+        if (myTransform == null) { myTransform = this.transform; }
     }
     public void InItInfo(float timeBuff)
     {

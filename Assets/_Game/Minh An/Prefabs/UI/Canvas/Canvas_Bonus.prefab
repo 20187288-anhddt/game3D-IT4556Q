@@ -89,16 +89,16 @@ MonoBehaviour:
   infoBouns:
   - uI_Bonus: {fileID: 618636997165026870}
     timeEnd_Show_Bonus: 10
-    timeEnd_Bonus: 30
+    timeEnd_Bonus: 900
   - uI_Bonus: {fileID: 7160587394645505951}
     timeEnd_Show_Bonus: 10
-    timeEnd_Bonus: 30
+    timeEnd_Bonus: 900
   - uI_Bonus: {fileID: 271162086611486398}
     timeEnd_Show_Bonus: 10
-    timeEnd_Bonus: 30
+    timeEnd_Bonus: 900
   - uI_Bonus: {fileID: 2581279291194621224}
     timeEnd_Show_Bonus: 10
-    timeEnd_Bonus: 30
+    timeEnd_Bonus: 900
   timeShows:
   - 5
   - 5
@@ -1148,7 +1148,7 @@ MonoBehaviour:
     m_Top: 200
     m_Bottom: 0
   m_ChildAlignment: 2
-  m_Spacing: 50
+  m_Spacing: 80
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
