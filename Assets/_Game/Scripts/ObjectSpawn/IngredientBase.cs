@@ -92,5 +92,10 @@ public enum IngredientType
     BUILDSTAGE,
     HIRESTAFF,
     CAR,
-    SHIT
+    SHIT,
+    HIRE_ANIMAL,
+    LION,
+    CROC,
+    ELE,
+    ZEBRA
 }

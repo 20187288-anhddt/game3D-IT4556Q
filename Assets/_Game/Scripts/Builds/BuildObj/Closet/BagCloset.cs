@@ -46,32 +46,15 @@ public class BagCloset : ClosetBase
                     {
                         
                         //   EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-                        for(int i = 0; i< listEmtyPlaceToBuyBag.Count; i++)
+                        foreach (PlaceToBuyBag place in listPlaceToBuyBag)
                         {
-                            listEmtyPlaceToBuyBag[i].gameObject.SetActive(true);
-                        }
-                        for (int i = 0; i < listBagPos.Count; i++)
-                        {
-                            listBagPos[i].gameObject.SetActive(true);
-                            listBagPos[i].StartInGame();
-                        }
-                        //foreach (PlaceToBuyBag place in listPlaceToBuyBag)
-                        //{
-                        //    place.gameObject.SetActive(true);
+                            place.gameObject.SetActive(true);
 
-<<<<<<< HEAD
                         }
                         //foreach (BagPos o in listBagPos)
                         //{
                         //    o.gameObject.SetActive(true);
                         //    o.StartInGame();
-=======
-                        //}
-                        //foreach (BagPos o in listBagPos)
-                        //{
-                        //    o.gameObject.SetActive(true);
-                        //    o.StartInGame(); 
->>>>>>> 1a20b06 (change sth)
                         //}
                         checkPushBagCloset.gameObject.SetActive(true);
                         if (CameraController.Instance.IsCameraFollowPlayer())
