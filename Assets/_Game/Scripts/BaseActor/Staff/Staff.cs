@@ -79,6 +79,7 @@ public class Staff : BaseStaff, ICollect,IAct
     public GameObject[] model;
     private bool isBuff = false;
     public GameManager gameManager;
+    private bool isInItEvent = false;
     public override void Awake()
     {
         base.Awake();
@@ -99,8 +100,22 @@ public class Staff : BaseStaff, ICollect,IAct
         }
         gameManager = GameManager.Instance;
         ResetStaff();
-        EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+      
         LoadAndSetData();
+    }
+    private void OnEnable()
+    {
+      
+        LoadAndSetData();
+        if (!isInItEvent)
+        {
+            isInItEvent = true;
+            EnventManager.AddListener(EventName.ReLoadDataUpgrade.ToString(), LoadAndSetData);
+            //anim = GetComponentInChildren<Animator>();
+            EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
+            EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
+            EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
+        }
     }
     private void LoadAndSetData()
     {
@@ -112,16 +127,14 @@ public class Staff : BaseStaff, ICollect,IAct
         }
         navMeshAgent.speed = speed;
     }
-    private void Start()
-    {
-        //anim = GetComponentInChildren<Animator>();
-        EnventManager.AddListener(EventName.ReLoadNavMesh.ToString(), ReloadSetDestination);
-        EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
-        EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
-    }
+    //private void Start()
+    //{
+       
+    //}
     private void DoubleSpeed()
     {
         isBuff = true;
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataStaff(staffType).GetInfoSpeedTaget(staffType).Speed;
         speed *= 1.5f;
         fxBuffSpeed.SetActive(true);
         navMeshAgent.speed = speed;
