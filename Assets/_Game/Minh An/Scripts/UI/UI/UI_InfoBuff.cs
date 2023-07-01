@@ -1,42 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UI_GroupInfoBuffController : Singleton<UI_GroupInfoBuffController>
+public class UI_InfoBuff : UI_Child
 {
-    [SerializeField] private UI_InfoBuff uI_InfoBuff_Prefab;
-    [SerializeField] private Transform parent_InfoBuff;
-    public void SpawnInfoBuff(NameBonusSpawn nameBonusSpawn, float timeBuff)
+    public Transform myTransform;
+    [SerializeField] private Text txt_Time;
+    [SerializeField] private Image iconBuff;
+    public GameObject Icon_Machine_Speed;
+    public GameObject Icon_Money_Double;
+    public GameObject Icon_Player_DoubleSpeed;
+    public GameObject Icon_NoShit;
+    private float m_TimeBuff;
+    private bool isInItInfo = false;
+    private void Awake()
     {
-        UI_InfoBuff uI_InfoBuff = Instantiate(uI_InfoBuff_Prefab);
-        uI_InfoBuff.myTransform.SetParent(parent_InfoBuff);
-        uI_InfoBuff.InItInfo(timeBuff);
-        uI_InfoBuff.myTransform.localScale = Vector3.one;
-
-        switch (nameBonusSpawn)
-        {
-            case NameBonusSpawn.Machine_Speed:
-                uI_InfoBuff.Icon_Machine_Speed.gameObject.SetActive(true);
-                uI_InfoBuff.Icon_Money_Double.gameObject.SetActive(false);
-                uI_InfoBuff.Icon_Player_DoubleSpeed.gameObject.SetActive(false);
-                break;
-            case NameBonusSpawn.Money_Double:
-                uI_InfoBuff.Icon_Machine_Speed.gameObject.SetActive(false);
-                uI_InfoBuff.Icon_Money_Double.gameObject.SetActive(true);
-                uI_InfoBuff.Icon_Player_DoubleSpeed.gameObject.SetActive(false);
-                break;
-            case NameBonusSpawn.Player_Speed:
-                uI_InfoBuff.Icon_Machine_Speed.gameObject.SetActive(false);
-                uI_InfoBuff.Icon_Money_Double.gameObject.SetActive(false);
-                uI_InfoBuff.Icon_Player_DoubleSpeed.gameObject.SetActive(true);
-                break;
-        }
-
+        if(myTransform == null) { myTransform = this.transform; }
     }
-    public enum NameBonusSpawn
+    private void OnEnable()
     {
-        Machine_Speed,
-        Money_Double,
-        Player_Speed,
+        OnInIt();
+    }
+    public override void OnInIt()
+    {
+        isInItInfo = false;
+    }
+    public void InItInfo(float timeBuff)
+    {
+        isInItInfo = true;
+        m_TimeBuff = timeBuff;
+    }
+    private void LoadUI()
+    {
+        int minute = (int)m_TimeBuff / 60;
+        int second = (int)m_TimeBuff - minute * 60;
+        txt_Time.text = "Time out: " + minute + "m " + second + "s";
+    }
+    private void Update()
+    {
+        if (isInItInfo)
+        {
+            if(m_TimeBuff <= 0)
+            {
+                DestroyThis();
+            }
+            else
+            {
+                m_TimeBuff -= Time.deltaTime;
+            }
+            LoadUI();
+        }
+    }
+    public override void Close()
+    {
+        base.Close();
+        isInItInfo = false;
+    }
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }

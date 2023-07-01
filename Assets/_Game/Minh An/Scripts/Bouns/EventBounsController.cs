@@ -169,6 +169,17 @@ public class EventBounsController : Singleton<EventBounsController>
     {
         return dataBonus;
     }
+    public UI_Bonus GetUIBonus(TypeBonus typeBonus)
+    {
+        foreach(InfoBouns infoBouns in infoBouns)
+        {
+            if(infoBouns.uI_Bonus.typeBonus == typeBonus)
+            {
+                return infoBouns.uI_Bonus;
+            }
+        }
+        return null;
+    }
 } 
 [System.Serializable]
 public class DataBonus : DataBase

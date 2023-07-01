@@ -36,6 +36,7 @@ public class Habitat : BuildObj, ILock
     [SerializeField]
     private AnimalBase animalPrefabs;
     public int numAnimalSave;
+    public bool isBuff_NoShit;
 
     // Start is called before the first frame update
     public override void Start()
@@ -167,6 +168,42 @@ public class Habitat : BuildObj, ILock
                 }
                
                 break;
+            //case IngredientType.LION:
+            //    if (!levelManager.habitatManager.listLionHabitatsActive.Contains(this))
+            //        levelManager.habitatManager.listLionHabitatsActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        EnventManager.TriggerEvent(EventName.LionHabitat_Complete.ToString());
+            //    }
+
+            //    break;
+            //case IngredientType.CROC:
+            //    if (!levelManager.habitatManager.listCrocHabitatsActive.Contains(this))
+            //        levelManager.habitatManager.listCrocHabitatsActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        EnventManager.TriggerEvent(EventName.CrocHabitat_Complete.ToString());
+            //    }
+
+            //    break;
+            //case IngredientType.ELE:
+            //    if (!levelManager.habitatManager.listEleHabitatsActive.Contains(this))
+            //        levelManager.habitatManager.listEleHabitatsActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        EnventManager.TriggerEvent(EventName.EleHabitat_Complete.ToString());
+            //    }
+
+            //    break;
+            //case IngredientType.ZEBRA:
+            //    if (!levelManager.habitatManager.listZebraHabitatsActive.Contains(this))
+            //        levelManager.habitatManager.listZebraHabitatsActive.Add(this);
+            //    if (isPushEvent)
+            //    {
+            //        EnventManager.TriggerEvent(EventName.ZebraHabitat_Complete.ToString());
+            //    }
+
+            //    break;
         }
     }
  
@@ -205,6 +242,8 @@ public class Habitat : BuildObj, ILock
         //    UnLock();
         //}
         checkUnlock.UpdateUI();
+        EnventManager.AddListener(EventName.NoShit_Play.ToString(), OnNoShit);
+        EnventManager.AddListener(EventName.NoShit_Stop.ToString(), OffNoShit);
     }
     void Update()
     {
@@ -215,6 +254,10 @@ public class Habitat : BuildObj, ILock
     }
     public void RandomTakeAShit()
     {
+        if (isBuff_NoShit)
+        {
+            return;
+        }
         if (levelManager.habitatManager.allActiveHabitats.Count > 1)
         {
             if (isReadyShit && listShit.Count < maxShit)
@@ -265,6 +308,24 @@ public class Habitat : BuildObj, ILock
             }
         }); 
     }
+    private void OnNoShit()
+    {
+        isBuff_NoShit = true;
+        ClearShit();
+    }
+    private void ClearShit()
+    {
+        foreach (Shit shit in listShit)
+        {
+            Destroy(shit.gameObject);
+        }
+        listShit.Clear();
+        numShitSave = 0;
+    }
+    private void OffNoShit()
+    {
+        isBuff_NoShit = false;
+    }
     public Vector3 RandomPosition()
     {
         Vector3 randomPos = Vector3.zero;
@@ -272,13 +333,13 @@ public class Habitat : BuildObj, ILock
         switch (this.ingredientType)
         {
             case IngredientType.CHICKEN:
-                radius = 5f;
+                radius = 4.5f;
                 break;
             case IngredientType.COW:
-                radius = 7.5f;
+                radius = 7f;
                 break;
             case IngredientType.BEAR:
-                radius = 9f;
+                radius = 8.5f;
                 break;
 
         }

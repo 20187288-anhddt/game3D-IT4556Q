@@ -737,6 +737,12 @@ public class RewardProcessCompleteMission
             case EventName.OnEventBonus:
                 EventBounsController.Instance.GetDataBonus().Set_OnShowBouns(true);
                 break;
+            case EventName.NextDataProcessBonusMoneyBuff:
+                DataManager.Instance.GetData_Bonus_BuffMoney().NextProcessMoneyBuff();
+                break;
+            case EventName.OnBonus_NoShit:
+                (EventBounsController.Instance.GetUIBonus(TypeBonus.NoShit) as UI_Bonus_NoShit).SetDataOnBonus(true);
+                break;
         }
     }
 
