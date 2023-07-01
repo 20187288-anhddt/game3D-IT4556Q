@@ -9,6 +9,7 @@ public class GameManager : MenuManager
     public int buildUnlock;
     public Joystick joystick;
     public List<LevelManager> listLevelManagers;
+    public List<TutManager> tutManagers;
     public int curLevel;
     public DataPrice dataPrice;
 

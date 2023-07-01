@@ -105,7 +105,16 @@ public class DataProcessInMapController : DataBase
                 });
         });
         #endregion
+        #region TuT
+        EnventManager.AddListener(EventName.DoneAllTuT.ToString(), () =>
+        {
+            DataManager.Instance.GetDataUIController().Set_IsOpenCanvasHome(true);
+            DataManager.Instance.GetDataUIController().Set_IsOpenCanvasBonus(true);
+            EventBounsController.Instance.GetDataBonus().Set_OnShowBouns(true);
+        });
+        #endregion
     }
+
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
     {
         yield return new WaitForSeconds(timeDelay);

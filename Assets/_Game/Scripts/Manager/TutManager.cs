@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TutManager : MonoBehaviour
 {
+    public List<NameTuT> nameTuTs_Taget;
     private LineRenderer line;
     [SerializeField]
     private Habitat habitat;
@@ -37,6 +38,7 @@ public class TutManager : MonoBehaviour
         line.widthMultiplier = 1f;
         line.positionCount = 2;
         fxTUT.SetActive(false);
+        CheckDoneAllTuT();
     }
 
     // Update is called once per frame
@@ -231,5 +233,50 @@ public class TutManager : MonoBehaviour
             fxTUT.SetActive(false);
             line.gameObject.SetActive(false);
         }
+    }
+    public void DoneAllTuT()
+    {
+        EnventManager.TriggerEvent(EventName.DoneAllTuT.ToString());
+    }
+    public void CheckDoneAllTuT()
+    {
+        foreach (NameTuT nameTuT in nameTuTs_Taget)
+        {
+            switch (nameTuT)
+            {
+                case NameTuT.MachineTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneMachineTUT)
+                    {
+                        return;
+                    }
+                    break;
+                case NameTuT.ClosetTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneClosetTUT)
+                    {
+                        return;
+                    }
+                    break;
+                case NameTuT.BagClosetTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneBagClosetTUT)
+                    {
+                        return;
+                    }
+                    break;
+                case NameTuT.CarTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneCarTUT)
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+        DoneAllTuT();
+    }
+    public enum NameTuT
+    {
+        MachineTUT,
+        ClosetTUT,
+        BagClosetTUT,
+        CarTUT
     }
 }

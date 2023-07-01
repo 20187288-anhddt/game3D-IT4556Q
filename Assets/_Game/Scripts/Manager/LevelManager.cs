@@ -33,22 +33,40 @@ public class LevelManager : MonoBehaviour
     {
         isDoneMachineTUT = value;
         dataLevelManager.Set_isDoneMachineTUT(value);
+        if (value)
+        {
+            GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
+        }
     }
     public void Set_isDoneClosetTUT(bool value)
     {
         isDoneClosetTUT = value;
         dataLevelManager.Set_isDoneClosetTUT(value);
+        if (value)
+        {
+            GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
+        }
+      
     }
     public void Set_isDoneBagClosetTUT(bool value)
     {
         isDoneBagClosetTUT = value;
         dataLevelManager.Set_isDoneBagClosetTUT(value);
+        if (value)
+        {
+            GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
+        }
     }
     public void Set_isDoneCarTUT(bool value)
     {
         isDoneCarTUT = value;
         dataLevelManager.Set_isDoneCarTUT(value);
+        if (value)
+        {
+            GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
+        }
     }
+   
 }
 [System.Serializable]
 public class DataLevelManager
