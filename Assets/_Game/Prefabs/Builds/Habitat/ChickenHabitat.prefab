@@ -373,6 +373,8 @@ MonoBehaviour:
   maxShit: 10
   numShitSave: 0
   animalPrefabs: {fileID: 2085963854970678315, guid: 950ae3195281a2f42a8a7c8d738ff556, type: 3}
+  numAnimalSave: 0
+  isBuff_NoShit: 0
 --- !u!114 &2327255166799641900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7799934039719395543, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7799934039719395543, guid: 3a5f521648497ed48ace6821933f7cbe, type: 3}
       propertyPath: m_LocalRotation.w

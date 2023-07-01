@@ -27,12 +27,13 @@ public class TutManager : MonoBehaviour
     private LevelManager levelManager;
     [SerializeField]
     private GameObject fxTUT;
-    
+
     void Start()
     {
         levelManager = GameManager.Instance.listLevelManagers[0]; 
         player = Player.Instance;
         line = GetComponentInChildren<LineRenderer>();
+        //line.material.SetTextureScale("_MainTex", new Vector2(1,1));
         line.widthMultiplier = 1f;
         line.positionCount = 2;
         fxTUT.SetActive(false);
@@ -41,6 +42,7 @@ public class TutManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!levelManager.isDoneMachineTUT)
         {
             if (levelManager.habitatManager.allActiveHabitats.Count <= 0)
