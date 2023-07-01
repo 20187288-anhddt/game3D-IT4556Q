@@ -29,15 +29,15 @@ public class PirceObject : MonoBehaviour
             float x = value_pirce / 1000;
             if (value_pirce % 1000 == 0)
             {
-                text.text = "$" + (x + ((value_pirce - 1000 * x) / 1000)).ToString() + "K";
+                text.text =  (x + ((value_pirce - 1000 * x) / 1000)).ToString() + "K";
             }
             else
-                text.text = "$" + (x + ((value_pirce - 1000 * x) / 1000)).ToString("F2") + "K";
+                text.text =  (x + ((value_pirce - 1000 * x) / 1000)).ToString("F2") + "K";
         }
         else if (value_pirce > 100)
-            text.text = "$" + string.Format("{000}", value_pirce);
+            text.text =  string.Format("{000}", value_pirce);
         else
-            text.text = "$" + string.Format("{00}", value_pirce);
+            text.text =  string.Format("{00}", value_pirce);
     }
     public void ReLoadUI()
     {
