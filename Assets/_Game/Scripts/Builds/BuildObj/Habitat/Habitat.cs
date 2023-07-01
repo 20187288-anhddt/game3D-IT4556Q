@@ -15,8 +15,7 @@ public class Habitat : BuildObj, ILock
     private GameObject unlockModel;
     [SerializeField]
     private CheckUnlock checkUnlock;
-    [SerializeField]
-    private CheckCollect checkCollect;
+    public CheckCollect checkCollect;
     public Transform[] defaultAnimalPos;
     public bool IsLock { get => isLock; set => isLock = value; }
     public float DefaultCoin { get => defaultCoin; }
@@ -96,8 +95,15 @@ public class Habitat : BuildObj, ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         p.isUnlock = false;
-                      //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
-                        checkCollect.gameObject.SetActive(true);
+                        //  EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+                        if (!levelManager.isDoneMachineTUT)
+                        {
+                            checkCollect.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            checkCollect.gameObject.SetActive(true);
+                        } 
                         CounterHelper.Instance.QueueAction(consDelayShit, () =>
                         {
                             isReadyShit = true;

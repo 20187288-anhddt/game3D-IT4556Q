@@ -64,7 +64,7 @@ public class CustomerManager : MonoBehaviour
         {
             maxCus = 15;
         }
-        if (closetManager.listClosets.Count > 0)
+        if (levelManager.isDoneMachineTUT && closetManager.listClosets.Count > 0)
         {
             CheckCusToOutfit();
         }
@@ -171,7 +171,11 @@ public class CustomerManager : MonoBehaviour
                 {
                     isReadySpawn = false;
                     int x;
-                    if (curCloset.listEmtyPlaceToBuy.Count >= 3)
+                    if (!levelManager.isDoneClosetTUT)
+                    {
+                        x = 1;
+                    }
+                    else if (curCloset.listEmtyPlaceToBuy.Count >= 3)
                     {
                         x = Random.Range(1, 4);
                     }

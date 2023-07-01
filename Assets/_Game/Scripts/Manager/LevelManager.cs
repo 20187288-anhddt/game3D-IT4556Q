@@ -10,12 +10,18 @@ public class LevelManager : MonoBehaviour
     public ClosetManager closetManager;
     public HabitatManager habitatManager;
     public StaffManager staffManager;
-    public bool isTUT;
+    public bool isDoneMachineTUT;
+    public bool isDoneClosetTUT;
+    public bool isDoneBagClosetTUT;
+    public bool isDoneCarTUT;
     //public PlaceManager placeManager;
-    
+
     public void StartInGame()
     {
-        
+        isDoneMachineTUT = false;
+        isDoneClosetTUT = false;
+        isDoneBagClosetTUT = false;
+        isDoneCarTUT = false;
     }
     public void ResetLevel()
     {

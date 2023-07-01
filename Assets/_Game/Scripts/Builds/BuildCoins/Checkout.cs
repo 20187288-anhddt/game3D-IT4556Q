@@ -30,6 +30,8 @@ public class Checkout : BuildCoins,ILock
     [SerializeField]
     private CheckUnlock checkUnlock;
     public int coinSave;
+    public GameObject fxPos;
+
     public override void Start()
     {
         base.Start();
@@ -61,6 +63,7 @@ public class Checkout : BuildCoins,ILock
             {
                 UnLock(true, true);
             }
+            fxPos.SetActive(false);
         }
         else
         {
@@ -114,11 +117,13 @@ public class Checkout : BuildCoins,ILock
                             GetComponent<BoxCollider>().enabled = false;
                             staffModel.SetActive(true);
                             isHaveStaff = true;
+                            fxPos.SetActive(false);
                         }
                         else
                         {
                             GetComponent<BoxCollider>().enabled = true;
                             staffModel.SetActive(false);
+                            fxPos.SetActive(true);
                         }
                         if (coinSave > 0)
                         {
@@ -400,6 +405,7 @@ public class Checkout : BuildCoins,ILock
     {
         isHired = true;
         GetComponent<BoxCollider>().enabled = false;
+        fxPos.SetActive(false);
         staffModel.SetActive(true);
         staffModel.GetComponent<Animator>().Play("IdleNormal");
         isHaveStaff = true;
