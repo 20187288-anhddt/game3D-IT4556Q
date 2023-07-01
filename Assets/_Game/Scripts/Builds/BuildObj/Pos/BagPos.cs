@@ -43,7 +43,7 @@ public class BagPos : PosBase
             AddOutfit(curBag as BagBase);
             (curBag as BagBase).AddPos(this);
             (closet as BagCloset).listBags.Add(curBag as BagBase);
-            Debug.Log("Spawn");
+          //  Debug.Log("Spawn");
         }
         (curBag as BagBase).myTransform.parent = myTransform;
         (curBag as BagBase).myTransform.position = myTransform.position;

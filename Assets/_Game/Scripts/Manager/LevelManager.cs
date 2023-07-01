@@ -20,19 +20,42 @@ public class LevelManager : MonoBehaviour
 
     public void StartInGame()
     {
-        isDoneMachineTUT = dataLevelManager.Get_isDoneMachineTUT();
-        isDoneClosetTUT = dataLevelManager.Get_isDoneClosetTUT();
-        isDoneBagClosetTUT = dataLevelManager.Get_isDoneBagClosetTUT();
-        isDoneCarTUT = dataLevelManager.Get_isDoneCarTUT();
+        if (dataLevelManager.Get_isDoneAllTUT())
+        {
+            isDoneMachineTUT = true;
+            isDoneClosetTUT = true;
+            isDoneBagClosetTUT = true;
+            isDoneCarTUT = true;
+        }
+        else
+        {
+            isDoneMachineTUT = false;
+            isDoneClosetTUT = false;
+            isDoneBagClosetTUT = false;
+            isDoneCarTUT = false;
+        }
+      
+    }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.DoneAllTuT.ToString(), () =>
+        {
+            Set_isDoneAllTUT(true);
+        });
     }
     public void ResetLevel()
     {
         
     }
+    public void Set_isDoneAllTUT(bool value)
+    {
+        isDoneMachineTUT = value;
+        dataLevelManager.Set_isDoneAllTUT(value);
+    }
     public void Set_isDoneMachineTUT(bool value)
     {
         isDoneMachineTUT = value;
-        dataLevelManager.Set_isDoneMachineTUT(value);
+       // dataLevelManager.Set_isDoneMachineTUT(value);
         if (value)
         {
             GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
@@ -41,17 +64,17 @@ public class LevelManager : MonoBehaviour
     public void Set_isDoneClosetTUT(bool value)
     {
         isDoneClosetTUT = value;
-        dataLevelManager.Set_isDoneClosetTUT(value);
+       // dataLevelManager.Set_isDoneClosetTUT(value);
         if (value)
         {
             GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
         }
-      
+
     }
     public void Set_isDoneBagClosetTUT(bool value)
     {
         isDoneBagClosetTUT = value;
-        dataLevelManager.Set_isDoneBagClosetTUT(value);
+       // dataLevelManager.Set_isDoneBagClosetTUT(value);
         if (value)
         {
             GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
@@ -60,13 +83,13 @@ public class LevelManager : MonoBehaviour
     public void Set_isDoneCarTUT(bool value)
     {
         isDoneCarTUT = value;
-        dataLevelManager.Set_isDoneCarTUT(value);
+      //  dataLevelManager.Set_isDoneCarTUT(value);
         if (value)
         {
             GameManager.Instance.tutManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].CheckDoneAllTuT();
         }
     }
-   
+
 }
 [System.Serializable]
 public class DataLevelManager
@@ -116,64 +139,76 @@ public class DataLevelManager
             InItData();
         }
     }
-    public void Set_isDoneMachineTUT(bool value)
+    public void Set_isDoneAllTUT(bool value)
     {
         CheckInItData();
-        dataLevelMap.isDoneMachineTUT = value;
+        dataLevelMap.isDoneAllTuT = value;
         SaveData();
     }
-    public void Set_isDoneClosetTUT(bool value)
+    public bool Get_isDoneAllTUT()
     {
         CheckInItData();
-        dataLevelMap.isDoneClosetTUT = value;
-        SaveData();
+        return dataLevelMap.isDoneAllTuT;
     }
-    public void Set_isDoneBagClosetTUT(bool value)
-    {
-        CheckInItData();
-        dataLevelMap.isDoneBagClosetTUT = value;
-        SaveData();
-    }
-    public void Set_isDoneCarTUT(bool value)
-    {
-        CheckInItData();
-        dataLevelMap.isDoneCarTUT = value;
-        SaveData();
-    }
-    public bool Get_isDoneMachineTUT()
-    {
-        CheckInItData();
-        return dataLevelMap.isDoneMachineTUT;
-    }
-    public bool Get_isDoneClosetTUT()
-    {
-        CheckInItData();
-        return dataLevelMap.isDoneClosetTUT;
-    }
-    public bool Get_isDoneBagClosetTUT()
-    {
-        CheckInItData();
-        return dataLevelMap.isDoneBagClosetTUT;
-    }
-    public bool Get_isDoneCarTUT()
-    {
-        CheckInItData();
-        return dataLevelMap.isDoneCarTUT;
-    }
+    //public void Set_isDoneMachineTUT(bool value)
+    //{
+    //    CheckInItData();
+    //    dataLevelMap.isDoneMachineTUT = value;
+    //    SaveData();
+    //}
+    //public void Set_isDoneClosetTUT(bool value)
+    //{
+    //    CheckInItData();
+    //    dataLevelMap.isDoneClosetTUT = value;
+    //    SaveData();
+    //}
+    //public void Set_isDoneBagClosetTUT(bool value)
+    //{
+    //    CheckInItData();
+    //    dataLevelMap.isDoneBagClosetTUT = value;
+    //    SaveData();
+    //}
+    //public void Set_isDoneCarTUT(bool value)
+    //{
+    //    CheckInItData();
+    //    dataLevelMap.isDoneCarTUT = value;
+    //    SaveData();
+    //}
+    //public bool Get_isDoneMachineTUT()
+    //{
+    //    CheckInItData();
+    //    return dataLevelMap.isDoneMachineTUT;
+    //}
+    //public bool Get_isDoneClosetTUT()
+    //{
+    //    CheckInItData();
+    //    return dataLevelMap.isDoneClosetTUT;
+    //}
+    //public bool Get_isDoneBagClosetTUT()
+    //{
+    //    CheckInItData();
+    //    return dataLevelMap.isDoneBagClosetTUT;
+    //}
+    //public bool Get_isDoneCarTUT()
+    //{
+    //    CheckInItData();
+    //    return dataLevelMap.isDoneCarTUT;
+    //}
 }
 [System.Serializable]
 public class DataLevelMap
 {
-    public bool isDoneMachineTUT;
-    public bool isDoneClosetTUT;
-    public bool isDoneBagClosetTUT;
-    public bool isDoneCarTUT;
-
+    //public bool isDoneMachineTUT;
+    //public bool isDoneClosetTUT;
+    //public bool isDoneBagClosetTUT;
+    //public bool isDoneCarTUT;
+    public bool isDoneAllTuT;
     public void ResetData()
     {
-        isDoneMachineTUT = false;
-        isDoneClosetTUT = false;
-        isDoneBagClosetTUT = false;
-        isDoneCarTUT = false;
+        isDoneAllTuT = false;
+        //isDoneMachineTUT = false;
+        //isDoneClosetTUT = false;
+        //isDoneBagClosetTUT = false;
+        //isDoneCarTUT = false;
     }
 }

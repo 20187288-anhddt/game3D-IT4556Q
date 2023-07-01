@@ -177,7 +177,7 @@ MonoBehaviour:
   tweenTargetIsTargetGO: 1
   delay: 0
   duration: 0.3
-  easeType: 6
+  easeType: 14
   easeCurve:
     serializedVersion: 2
     m_Curve:
@@ -207,7 +207,7 @@ MonoBehaviour:
   id: 
   isRelative: 0
   isFrom: 0
-  isIndependentUpdate: 0
+  isIndependentUpdate: 1
   autoKill: 1
   isActive: 1
   isValid: 1
@@ -215,9 +215,9 @@ MonoBehaviour:
   animationType: 5
   targetType: 11
   forcedTargetType: 0
-  autoPlay: 1
+  autoPlay: 0
   useTargetAsV3: 0
-  endValueFloat: 1.2
+  endValueFloat: 1.7
   endValueV3: {x: 0, y: 0, z: 0}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
@@ -511,10 +511,7 @@ MonoBehaviour:
   effect: {fileID: 8231296310067216971}
   coinPrefab: {fileID: 1812985819602535312, guid: 3afb6e1576bace54c8654348b049ebab, type: 3}
   text: {fileID: 6728004929781685754}
-  bound:
-  - {fileID: 7048095795940393635}
-  bg:
-  - {fileID: 5287603814593725952}
+  bg: {fileID: 1328237513935648740}
   pirceObject_UI: {fileID: 0}
   dataStatusObject: {fileID: 0}
 --- !u!114 &8608965814865496382
@@ -599,7 +596,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ecdf1670a0886c4a9236c571003135f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 612d7707911eec343891f4567cecb3fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

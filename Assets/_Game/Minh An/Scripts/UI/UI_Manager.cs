@@ -16,14 +16,9 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
         CloseUI_FULL();
         OpenUI(NameUI.Canvas_Joystick);
         OpenUI(NameUI.Canvas_Static);
-        if (DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome())
-        {
-            OpenUI(NameUI.Canvas_Home);
-        }
-        if (DataManager.Instance.GetDataUIController().Get_IsOpenCanvasBonus())
-        {
-            OpenUI(NameUI.Canvas_Bonus);
-        }
+        OpenUI(NameUI.Canvas_Home);
+        OpenUI(NameUI.Canvas_Bonus);
+      
     }
     private void Start()
     {
@@ -44,8 +39,16 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
 
     public UI_Canvas OpenUI(NameUI nameUI)
     {
-        Debug.Log("Open");
-        foreach(UI_Canvas UI_canvas in canvasUI)
+       // Debug.Log("Open");
+        if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome() && nameUI == NameUI.Canvas_Home)
+        {
+            return null;
+        }
+        if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasBonus() && nameUI == NameUI.Canvas_Bonus)
+        {
+            return null;
+        }
+        foreach (UI_Canvas UI_canvas in canvasUI)
         {
             if(UI_canvas.nameUI == nameUI)
             {

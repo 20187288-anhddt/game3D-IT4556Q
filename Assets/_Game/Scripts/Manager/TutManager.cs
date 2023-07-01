@@ -263,6 +263,7 @@ public class TutManager : MonoBehaviour
     }
     public void DoneAllTuT()
     {
+       
         EnventManager.TriggerEvent(EventName.DoneAllTuT.ToString());
     }
     public void CheckDoneAllTuT()

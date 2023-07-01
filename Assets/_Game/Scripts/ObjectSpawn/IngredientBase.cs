@@ -56,20 +56,20 @@ public class IngredientBase : AllPool
     }
     public void MoveToCar(GameObject car)
     {
-        //this.transform.DOMoveY(this.transform.position.y + 0.5f, 0.125f).OnComplete(() =>
-        //{
-        //    transform.DOMove(car.transform.position, 0.125f).OnComplete(() =>
-        //    {
-        //        this.transform.parent = null;
-        //        AllPoolContainer.Instance.Release(this);
-        //        //if (isPlayer)
-        //        //{
-        //        //    Vibration.Vibrate(25);
-        //        //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
-        //        //}
-        //    });
-        //}).SetEase(Ease.Linear);
-        AllPoolContainer.Instance.Release(this);
+        this.transform.DOMoveY(this.transform.position.y + 2f, 0.25f).OnComplete(() =>
+        {
+            transform.DOMove(car.transform.position, 0.25f).OnComplete(() =>
+            {
+                this.transform.parent = null;
+                AllPoolContainer.Instance.Release(this);
+                //if (isPlayer)
+                //{
+                //    Vibration.Vibrate(25);
+                //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
+                //}
+            }).SetEase(Ease.OutCirc);
+        }).SetEase(Ease.OutCirc);
+        //AllPoolContainer.Instance.Release(this);
     }
 }
 
@@ -97,5 +97,13 @@ public enum IngredientType
     LION,
     CROC,
     ELE,
-    ZEBRA
+    ZEBRA,
+    LION_CLOTH,
+    CROC_CLOTH,
+    ELE_CLOTH,
+    ZEBRA_CLOTH,
+    LION_BAG,
+    CROC_BAG,
+    ELE_BAG,
+    ZEBRA_BAG
 }

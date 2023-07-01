@@ -33,7 +33,8 @@ public class UI_Bonus : UI_Child
     }
     public virtual void Reward()
     {
-        EventBounsController.Instance.RewardTrigger(this);
+       // EventBounsController.Instance.RewardTrigger(this);
+        Invoke(nameof(StopReward), timeBuff);
         Close();
     }
     public void Set_OnBonus(bool value)
@@ -46,7 +47,7 @@ public class UI_Bonus : UI_Child
     }
     public virtual void StopReward()
     {
-
+        Set_OnBonus(true);
     }
     public void SetTimeBuff(float value)
     {
@@ -58,5 +59,6 @@ public enum TypeBonus
     MachineSpeed,
     Money_Double,
     Money_Buff,
-    DoubleSpeed_Player
+    DoubleSpeed_Player,
+    NoShit
 }

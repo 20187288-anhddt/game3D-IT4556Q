@@ -170,7 +170,8 @@ public class Canvas_Order : UI_Canvas
     }
     public override void Close()
     {
-       // UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
+        // UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
+        Canvas_Home.Instance?.gameObject.SetActive(true);
         base.Close();
         UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
@@ -181,6 +182,7 @@ public class Canvas_Order : UI_Canvas
         base.Open();
        // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
         UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
+        Canvas_Home.Instance?.gameObject.SetActive(false);
     }
   
 }

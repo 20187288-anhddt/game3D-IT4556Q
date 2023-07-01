@@ -36,8 +36,12 @@ public class MachineBase : BuildObj, ILock
     }
     public void DoubleSpeed()
     {
+        if (!IsLock)
+        {
+            buffFx.SetActive(true);
+        }
         isBuff = true;
-        buffFx.SetActive(true);
+       // buffFx.SetActive(true);
         timeDelay = timeDelay / 2;
     }
     public virtual void ResetSpeed()

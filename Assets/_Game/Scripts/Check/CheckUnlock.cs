@@ -20,9 +20,7 @@ public class CheckUnlock : MonoBehaviour
     [SerializeField]
     private TMP_Text text;
     [SerializeField]
-    private Image[] bound;
-    [SerializeField]
-    private GameObject[] bg;
+    private GameObject bg;
     [SerializeField] private PirceObject pirceObject_UI;
     [SerializeField] private DataStatusObject dataStatusObject;
     private bool isPlayAnim = false;
@@ -38,11 +36,6 @@ public class CheckUnlock : MonoBehaviour
     {
         normal = GetComponentInParent<ILock>();
     }
-    private void OnEnable()
-    {
-        bound[0].fillAmount = 0;
-        t = 0;
-    }
     public void UpdateUI()
     {
         pirceObject_UI.ReLoadUI(); 
@@ -55,6 +48,7 @@ public class CheckUnlock : MonoBehaviour
             IUnlock unlock = other.GetComponent<IUnlock>();
             if (unlock != null)
             {
+                effect.DOPlay();
                 t += Time.deltaTime;
                 if (t > 0.75f)
                 {
@@ -102,7 +96,7 @@ public class CheckUnlock : MonoBehaviour
                 tmp -= Time.deltaTime;
                 if (tmp < 1.5f)
                 {
-                    bound[1].DOFillAmount(1, 1.5f).OnComplete(() => { bound[1].fillAmount = 0; });
+                    //bound[1].DOFillAmount(1, 1.5f).OnComplete(() => { bound[1].fillAmount = 0; });
                     if (tmp < 0)
                     {
                         //if (!MaxManager.Ins.isStartWaitting_Reward)
@@ -123,6 +117,7 @@ public class CheckUnlock : MonoBehaviour
         if (player != null)
         {
             player.canCatch = true;
+            
         }
     }
     private void OnTriggerExit(Collider other)
@@ -130,10 +125,11 @@ public class CheckUnlock : MonoBehaviour
         IUnlock unlock = other.GetComponent<IUnlock>();
         if (unlock != null)
         {
+            effect.DOPause();
             if (isUnlockAds)
             {
-                bound[1].DOKill();
-                bound[1].fillAmount = 0;
+                //bound[1].DOKill();
+                //bound[1].fillAmount = 0;
                 tmp = 2.5f;
             }
             t = 0;
@@ -153,10 +149,10 @@ public class CheckUnlock : MonoBehaviour
                 text.DOTextInt((int)normal.CurrentCoin, (int)(normal.CurrentCoin - player.CoinValue), 0.75f);
                 normal.CurrentCoin -= player.CoinValue;
                 dataStatusObject.AddAmountPaid((int)player.CoinValue);
-                bound[0].DOFillAmount(bound[0].fillAmount + (float)player.CoinValue / normal.DefaultCoin, 0.75f).OnComplete(() =>
-                {
-                    UpdateUI();
-                });
+                //bound[0].DOFillAmount(bound[0].fillAmount + (float)player.CoinValue / normal.DefaultCoin, 0.75f).OnComplete(() =>
+                //{
+                //    UpdateUI();
+                //});
                 (player as Player).coinValue = 0;
                 DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD, 0);
             }
@@ -168,10 +164,11 @@ public class CheckUnlock : MonoBehaviour
                 dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
                 normal.CurrentCoin = 0;
                 //normal.UnLock(true, true);
-                bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
-                {
-                    normal.UnLock(true, true);
-                });
+                //bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
+                //{
+                normal.UnLock(true, true);
+                effect.DOPause();
+                //});
             }
         }
     }
@@ -207,6 +204,7 @@ public class CheckUnlock : MonoBehaviour
             if (normal.CurrentCoin <= 0)
             {
                 normal.UnLock(true, true);
+                effect.DOPause();
             }
 
         }

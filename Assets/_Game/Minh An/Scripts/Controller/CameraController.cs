@@ -65,7 +65,7 @@ public class CameraController : GenerticSingleton<CameraController>
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
-            }, 2.5f));
+            }, 3.5f));
         }
         else
         {
