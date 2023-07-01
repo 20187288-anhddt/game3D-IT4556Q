@@ -122,7 +122,7 @@ public class Checkout : BuildCoins,ILock
                         }
                         if (coinSave > 0)
                         {
-                            SpawnMoney(coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
+                            SpawnMoney(true, coinSave, IngredientType.NONE, IngredientType.NONE, this.transform);
                         }
                         //p.isUnlock = false;
                         if (CameraController.Instance.IsCameraFollowPlayer())
@@ -236,7 +236,7 @@ public class Checkout : BuildCoins,ILock
                         curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
                         listCusCheckout.Remove(curGr.teammates[j]);
                     }
-                    SpawnMoney(curGr.grNum, curGr.typeOutfit, curGr.typeBag,
+                    SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
                             curGr.leader.transform);
                     for (int x = 0; x < curGr.listCus.Count; x++)
                     {
@@ -255,7 +255,7 @@ public class Checkout : BuildCoins,ILock
             delayTime = consDelayCheckout;
         }
     }
-    public void SpawnMoney(int n,IngredientType typeOutfit, IngredientType typeBag, Transform cusPos)
+    public void SpawnMoney(bool isStart, int n,IngredientType typeOutfit, IngredientType typeBag, Transform cusPos)
     {
         int a = 0;
         int b = 0;
@@ -270,8 +270,20 @@ public class Checkout : BuildCoins,ILock
             case IngredientType.BEAR:
                 a = n * GameManager.Instance.dataPrice.Data.bearOutfit;
                 break;
+            case IngredientType.LION:
+                a = n * GameManager.Instance.dataPrice.Data.lionOutfit;
+                break;
+            case IngredientType.CROC:
+                a = n * GameManager.Instance.dataPrice.Data.crocOutfit;
+                break;
+            case IngredientType.ELE:
+                a = n * GameManager.Instance.dataPrice.Data.eleOutfit;
+                break;
+            case IngredientType.ZEBRA:
+                a = n * GameManager.Instance.dataPrice.Data.zebraOutfit;
+                break;
             case IngredientType.NONE:
-                a = n /2;
+                a = n / 2;
                 break;
         }
         switch (typeBag)
@@ -285,8 +297,27 @@ public class Checkout : BuildCoins,ILock
             case IngredientType.BEAR:
                 b = n * GameManager.Instance.dataPrice.Data.bearBag; ;
                 break;
+            case IngredientType.LION:
+                b = n * GameManager.Instance.dataPrice.Data.lionBag;
+                break;
+            case IngredientType.CROC:
+                b = n * GameManager.Instance.dataPrice.Data.crocBag; ;
+                break;
+            case IngredientType.ELE:
+                b = n * GameManager.Instance.dataPrice.Data.eleBag; ;
+                break;
+            case IngredientType.ZEBRA:
+                b = n * GameManager.Instance.dataPrice.Data.zebraBag; ;
+                break;
             case IngredientType.NONE:
-                b = n /2;
+                if (isStart)
+                {
+                    b = n / 2;
+                }
+                else
+                {
+                    b = 0;
+                }
                 break;
         }
         indexMoney += (a+b);

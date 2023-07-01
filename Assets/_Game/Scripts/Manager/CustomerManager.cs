@@ -213,44 +213,64 @@ public class CustomerManager : MonoBehaviour
 
     private void CheckCusToBag()
     {
-        if (listGroupsHaveOutfit.Count > 0 && !isCheckBag)
+        if (!isCheckBag)
         {
-            closetManager.CheckBagClosetEmptyWithNum(listGroupsHaveOutfit[0].grNum);
-            if (closetManager.listAvailableBagClosets.Count > 0)
+            if(closetManager.listBagClosets.Count > 0)
             {
-                isCheckBag = true;
-                int r = Random.Range(0, closetManager.listAvailableBagClosets.Count);
-                BagCloset curBagCloset = closetManager.listAvailableBagClosets[r] ;
-                GroupCustomer curGr = listGroupsHaveOutfit[0];
-                PlaceToBuyBag curBagPlace = curBagCloset.listEmtyPlaceToBuyBag[0];
-                if (curBagPlace != null)
+                closetManager.CheckBagClosetEmptyWithNum(listGroupsHaveOutfit[0].grNum);
+                if (closetManager.listAvailableBagClosets.Count > 0)
                 {
-                    closetManager.listAvailableBagClosets.Remove(curBagCloset);
-                    listGroupsHaveOutfit.Remove(curGr);
-                    curGr.AddCloset(curBagCloset);
-                    curGr.typeBag = curBagCloset.ingredientType;
-                    for (int i = 0; i < curGr.listCus.Count; i++)
+                    isCheckBag = true;
+                    int r = Random.Range(0, closetManager.listAvailableBagClosets.Count);
+                    BagCloset curBagCloset = closetManager.listAvailableBagClosets[r];
+                    GroupCustomer curGr = listGroupsHaveOutfit[0];
+                    PlaceToBuyBag curBagPlace = curBagCloset.listEmtyPlaceToBuyBag[0];
+                    if (curBagPlace != null)
                     {
-                        PlaceToBuyBag nextPlace = curBagCloset.listEmtyPlaceToBuyBag[i];
-                        nextPlace.AddCus(curGr.listCus[i]);
-                        curGr.listCus[i].placeToBuy.isHaveCus = false;
-                        curGr.listCus[i].placeToBuy.readyGo = false;
-                        curGr.listCus[i].onPlacePos = false;
+                        closetManager.listAvailableBagClosets.Remove(curBagCloset);
+                        listGroupsHaveOutfit.Remove(curGr);
+                        curGr.AddCloset(curBagCloset);
+                        curGr.typeBag = curBagCloset.ingredientType;
+                        for (int i = 0; i < curGr.listCus.Count; i++)
+                        {
+                            PlaceToBuyBag nextPlace = curBagCloset.listEmtyPlaceToBuyBag[i];
+                            nextPlace.AddCus(curGr.listCus[i]);
+                            curGr.listCus[i].placeToBuy.isHaveCus = false;
+                            curGr.listCus[i].placeToBuy.readyGo = false;
+                            curGr.listCus[i].onPlacePos = false;
+                        }
+                        //curBagPlace.AddCus(leader);
+                        //leader.placeToBuy.isHaveCus = false;
+                        //leader.onPlacePos = false;
+                        //closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag.Clear();
+                        //closetManager.listAvailableBagClosets.Clear();
+                        for (int i = 0; i < curGr.listCus.Count; i++)
+                        {
+                            //listGroupsHaveOutfit[0].listCus[i].onPlacePos = false;
+                            curGr.listCus[i].placeToBuy.closet.listCurCus.Remove(curGr.listCus[i]);
+                        }
+                        //leader.placeToBuy.isHaveCus = false;
                     }
-                    //curBagPlace.AddCus(leader);
-                    //leader.placeToBuy.isHaveCus = false;
-                    //leader.onPlacePos = false;
-                    //closetManager.listAvailableBagClosets[r].listEmtyPlaceToBuyBag.Clear();
-                    //closetManager.listAvailableBagClosets.Clear();
-                    for (int i = 0; i < curGr.listCus.Count; i++)
-                    {
-                        //listGroupsHaveOutfit[0].listCus[i].onPlacePos = false;
-                        curGr.listCus[i].placeToBuy.closet.listCurCus.Remove(curGr.listCus[i]);
-                    }
-                    //leader.placeToBuy.isHaveCus = false;
                 }
             }
-
+            else
+            {
+                isCheckBag = true;
+                GroupCustomer curGr = listGroupsHaveOutfit[0];
+                listGroupsHaveOutfit.Remove(curGr);
+                curGr.typeBag = IngredientType.NONE;
+                for (int i = 0; i < curGr.listCus.Count; i++)
+                {
+                    curGr.listCus[i].placeToBuy.isHaveCus = false;
+                    curGr.listCus[i].placeToBuy.readyGo = false;
+                    curGr.listCus[i].onPlacePos = false;
+                }
+                for (int i = 0; i < curGr.listCus.Count; i++)
+                {
+                    curGr.listCus[i].placeToBuy.closet.listCurCus.Remove(curGr.listCus[i]);
+                }
+                listGroupsHaveBag.Add(curGr);
+            }
         }
         if (isCheckBag)
         {
