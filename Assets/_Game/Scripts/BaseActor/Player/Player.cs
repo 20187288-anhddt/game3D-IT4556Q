@@ -588,12 +588,14 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public void PlayerStopMove()
     {
         isStopMove = true;
+        trailSmoke.SetActive(false);
         Canvas_Joystick.Instance.isStopJoysick = true;
         EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
     public void PlayerContinueMove()
     {
         isStopMove = false;
+        trailSmoke.SetActive(true);
         Canvas_Joystick.Instance.isStopJoysick = false;
     }
 }

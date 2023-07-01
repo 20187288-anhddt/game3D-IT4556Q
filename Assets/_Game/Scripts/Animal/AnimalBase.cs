@@ -46,13 +46,11 @@ public abstract class AnimalBase : AllPool,IAct
     public virtual void Awake()
     {
         if (myTransform == null) { myTransform = this.transform; }
-        fsm.init(5);
+        fsm.init(2);
         fsm.add(new FsmState(IDLE_STATE, StartIdleState, OnIdleState));
-        fsm.add(new FsmState(EAT_STATE, null, OnEatState));
         fsm.add(new FsmState(RUN_STATE, StartRunState, OnRunState));
-        fsm.add(new FsmState(FINISH_COLLECT_STATE, null, OnFinishCollectState));
-        fsm.add(new FsmState(HAVE_FUN_STATE, StartHaveFunState, OnHaveFunState));
         fsm.execute();
+        UpdateState(IDLE_STATE);
     }
     public void StartInGame()
     {
@@ -77,26 +75,28 @@ public abstract class AnimalBase : AllPool,IAct
                 if(onIdlePos)
                 {
                     onIdlePos = false;
-                    switch (habitatManager.allActiveHabitats.Count)
-                    {
-                        case 1:
-                            RandomMoveInSide();
-                            break;
-                        case 2:
-                        case 3:
-                            RandomMoveOutSide();
-                            break;
-                    }
+                    RandomMoveInSide();
+                    //switch (habitatManager.allActiveHabitats.Count)
+                    //{
+                    //    case 1:
+                    //        RandomMoveInSide();
+                    //        break;
+                    //    case 2:
+                    //    case 3:
+                    //        RandomMoveOutSide();
+                    //        break;
+                    //}
                 }
-                else if(isReadyCountDown)
+                else //if(isReadyCountDown)
                 {
                     timeLive -= Time.deltaTime;
-                    if (timeLive < 0)
-                    {
-                        isReadyCountDown = false;
-                        timeLive = consTimeLive;
-                        onIdlePos = true;
-                    }
+                   
+                }
+                if (timeLive < 0)
+                {
+                    //isReadyCountDown = false;
+                    timeLive = consTimeLive;
+                    onIdlePos = true;
                 }
             }
         }
@@ -228,7 +228,7 @@ public abstract class AnimalBase : AllPool,IAct
     }
     public void RandomMoveInSide()
     {
-        isReadyCountDown = true;
+        //isReadyCountDown = true;
         int r = Random.Range(1, 10);
         if (r < 8)
         {
@@ -238,9 +238,9 @@ public abstract class AnimalBase : AllPool,IAct
             }
             else
             {
-                CounterHelper.Instance.QueueAction(consTimeLive, () => {
-                    onIdlePos = true;
-                },1);
+                //CounterHelper.Instance.QueueAction(consTimeLive, () => {
+                //    onIdlePos = true;
+                //},1);
                 UpdateState(IDLE_STATE);
             }
         }
@@ -509,11 +509,12 @@ public abstract class AnimalBase : AllPool,IAct
         ResetWool();
         //GetComponent<CapsuleCollider>().enabled = false;
         isInside = true;
-        CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; },1);
+        //CounterHelper.Instance.QueueAction(consTimeDelayHaveFun, () => { isReadyHaveFun = true; },1);
         nextDes = Vector3.zero;
         timeLive = consTimeLive;
         isReadyCountDown = false;
         onIdlePos = true;
+        UpdateState(IDLE_STATE);
     }
     //private void OnTriggerEnter(Collider other)
     //{

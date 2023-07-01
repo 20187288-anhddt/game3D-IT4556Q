@@ -389,11 +389,11 @@ public class Habitat : BuildObj, ILock
                 allAnimals.Add(curAnimal as AnimalBase);
                 (curAnimal as AnimalBase).SetHabitat(this);
                 (curAnimal as AnimalBase).StartInGame();
-                (curAnimal as AnimalBase).nextDes = randomPos;
-                (curAnimal as AnimalBase).UpdateState(AnimalBase.RUN_STATE);
                 if (isHired == true)
                 {
                     numAnimalSave++;
+                    (curAnimal as AnimalBase).nextDes = randomPos;
+                    (curAnimal as AnimalBase).UpdateState(AnimalBase.RUN_STATE);
                 }
             }
         }

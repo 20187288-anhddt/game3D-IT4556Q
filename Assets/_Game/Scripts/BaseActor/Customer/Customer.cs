@@ -198,21 +198,21 @@ public class Customer : BaseCustomer,IAct
                 UpdateState(MOVE_TO_CLOSET_STATE);
             }
         }
-        else if (leader.gotOutfit && !leader.gotBag && !leader.isExit)
+        if (leader.gotOutfit && !leader.gotBag && !leader.isExit)
         {
             if (Vector3.Distance(transBag, myTransform.position) < 6f || leader.onBagPos)
             {
                 UpdateState(MOVE_TO_BAG_STATE);
             }
         }
-        else if (leader.gotOutfit && leader.gotBag && !leader.isExit)
+        if (leader.gotOutfit && leader.gotBag && !leader.isExit)
         {
             if (Vector3.Distance(transCheckOut, myTransform.position) < 6f || leader.onCheckoutPos)
             {
                 UpdateState(MOVE_CHECKOUT_STATE);
             }
         }
-        else if( leader.gotOutfit && leader.gotBag && leader.isExit)
+        if( leader.gotOutfit && leader.gotBag && leader.isExit)
         {
 
         }
