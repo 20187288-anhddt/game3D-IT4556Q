@@ -40,7 +40,7 @@ public class UI_InfoAddMoney : UI_Child
         if (MoneyShow > 1000)
         {
             float x = MoneyShow / 1000;
-            txt_Money.text = dau + (x + ((MoneyShow - 1000 * x) / 1000)).ToString() + "K" + " ";
+            txt_Money.text = dau + (x + ((MoneyShow - 1000 * x) / 1000)).ToString("F2") + "K" + " ";
             txt_Money.text = txt_Money.text.Replace(",", ".");
         }
         else if (MoneyShow > 100)

@@ -7,9 +7,10 @@ public class DataMoneyController : DataBase
 {
     public MoneyData moneyData;
     private bool isDoubleAddMoney = false;
+    private bool isInItData;
     public void Awake()
     {
-        InItData();
+        CheckInItData();
     }
     private void Start()
     {
@@ -22,8 +23,16 @@ public class DataMoneyController : DataBase
         isDoubleAddMoney = false;
         SetFileName(nameof(DataMoneyController));
         LoadData();
+        isInItData = true;
+        Debug.Log("InitData");
     }
-
+    public void CheckInItData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
+    }
     public override void SaveData()
     {
         base.SaveData();
@@ -44,6 +53,7 @@ public class DataMoneyController : DataBase
     }
     public void AddMoney(Money.TypeMoney typeMoney, int value)
     {
+        CheckInItData();
         if (isDoubleAddMoney)
         {
             value *= 2;
@@ -55,6 +65,7 @@ public class DataMoneyController : DataBase
     }
     public void RemoveMoney(Money.TypeMoney typeMoney, int value)
     {
+        CheckInItData();
         moneyData.RemoveMoney(typeMoney, value);
         SaveData();
         LoadData();
@@ -62,6 +73,7 @@ public class DataMoneyController : DataBase
     }
     public void SetMoney(Money.TypeMoney typeMoney, int value)
     {
+        CheckInItData();
         moneyData.SetMoney(typeMoney, value);
         SaveData();
         LoadData();
@@ -69,6 +81,7 @@ public class DataMoneyController : DataBase
     }
     public int GetMoney(Money.TypeMoney typeMoney)
     {
+        CheckInItData();
         LoadData();
         return moneyData.GetMoney(typeMoney);
     }

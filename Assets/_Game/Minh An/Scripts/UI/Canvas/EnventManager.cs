@@ -161,6 +161,11 @@ public enum EventName {
     OpenUIBonus,
     DoneAllTuT,
     ClearData,
+
+    Camera_Follow_CowBagMachine,
+    Camera_Follow_CowBagCloset,
+    Camera_Follow_BearBagMachine,
+    Camera_Follow_BearBagCloset,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

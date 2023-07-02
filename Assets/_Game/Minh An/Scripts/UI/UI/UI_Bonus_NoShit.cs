@@ -82,6 +82,13 @@ public class DataBonusNoShit : DataBase
     {
         InItData();
     }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ClearData.ToString(), () =>
+        {
+            ClearData();
+        });
+    }
     public void InItData()
     {
         isInItData = true;
@@ -120,5 +127,10 @@ public class DataBonusNoShit : DataBase
     {
         CheckInItData();
         return isOnBonus;
+    }
+    public void ClearData()
+    {
+        ResetData();
+        SaveData();
     }
 }
