@@ -261,16 +261,18 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     {
         if (Input.GetMouseButton(0))
         {
-            Canvas_Joystick joystick = Canvas_Joystick.Instance;
-            Vector3 inputAxist = joystick.Get_Diraction();
+           // Canvas_Joystick joystick = Canvas_Joystick.Instance;
+            Vector3 Diraction = Canvas_Joystick.Instance.Get_Diraction();
             //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
             //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
-            characterController.Move(inputAxist * speed * Time.deltaTime);
-            if (inputAxist.x != 0 || inputAxist.z != 0)
+            characterController.Move(Diraction * speed * Time.deltaTime);
+            if (Diraction.x != 0 || Diraction.z != 0)
             {
-                Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
-                myTransform.rotation = Quaternion.LookRotation(moveDir).normalized;
-                myTransform.eulerAngles = new Vector3(myTransform.eulerAngles.x, myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+              //  Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
+                Diraction.y = 0;
+                myTransform.rotation = Quaternion.LookRotation(Diraction).normalized;
+                Vector3 Euler = Vector3.right * myTransform.eulerAngles.x + Vector3.up * (myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y) + Vector3.forward * transform.eulerAngles.z;
+                myTransform.eulerAngles = Euler;
                 // transform.Translate(Vector3.forward * speed * 0.02f);
             }
         }

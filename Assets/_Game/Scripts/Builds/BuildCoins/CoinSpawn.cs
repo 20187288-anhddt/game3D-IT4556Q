@@ -8,7 +8,7 @@ using Utilities.Components;
 
 public class CoinSpawn : MonoBehaviour
 {
-    private float t;
+   // private float t;
     public float timeDelaySpawn;
     public List<Transform> listTrans;
     public Transform transMoney;
@@ -25,48 +25,50 @@ public class CoinSpawn : MonoBehaviour
         int i = value % 9;
         int y = value / 9;
         current = listTrans[i].position;
-        float x = Random.Range(-0.05f, 0.05f);
-        float z = Random.Range(-0.05f, 0.05f);
+      //  float x = Random.Range(-0.05f, 0.05f);
+       // float z = Random.Range(-0.05f, 0.05f);
         current += Vector3.up * y * 0.35f + Vector3.right * 0 + Vector3.forward * 0;
         return current;
     }
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<Player>();
-        if (player != null)
+        //var player = other.GetComponent<Player>();
+       // Player player = Player.Instance;
+        if (Player.Instance != null)
         {
-            player.canCatch = true;
+            Player.Instance.canCatch = true;
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Player>();
-        if (player != null)
-        {
-            if (!player.canCatch || checkOut.coins.Count <= 0)
+        //var player = other.GetComponent<Player>();
+       // Player player = Player.Instance;
+        //if (player != null)
+        //{
+            if (!Player.Instance.canCatch || checkOut.coins.Count <= 0)
                 return;
-            player.canCatch = false;
+            Player.Instance.canCatch = false;
             //if(checkOut.coins.Count < 25)
             //{
             //    checkOut.coins[0].MoveToPlayerSpeed(player,0.1f);
             //}
             //else
             //{
-                checkOut.coins[checkOut.coins.Count-1].MoveToPlayerSpeed(player);
+                checkOut.coins[checkOut.coins.Count-1].MoveToPlayerSpeed(Player.Instance);
             //}
             checkOut.coins.Remove(checkOut.coins[checkOut.coins.Count-1]);
             checkOut.coinSave--;
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
-            //for (int i = 0; i < checkOut.coins.Count; i++)
-            //{
-            //    checkOut.coins[i].MoveToPlayerSpeed(player);
-            //    checkOut.coins.Remove(checkOut.coins[i]);
-            //    DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
-            //    i--;
-            //    break;
-            //}
-            player.DelayCatch(0.01f);
-        }
+        //for (int i = 0; i < checkOut.coins.Count; i++)
+        //{
+        //    checkOut.coins[i].MoveToPlayerSpeed(player);
+        //    checkOut.coins.Remove(checkOut.coins[i]);
+        //    DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
+        //    i--;
+        //    break;
+        //}
+            Player.Instance.DelayCatch(0.01f);
+        //}
     }
 
 }
