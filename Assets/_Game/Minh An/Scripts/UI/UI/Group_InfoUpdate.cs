@@ -20,6 +20,7 @@ public class Group_InfoUpdate : UI_Child
     [Header("Sprite")]
     [SerializeField] private Sprite spr_BG_Green;
     [SerializeField] private Sprite spr_BG_Hong;
+    [SerializeField] private Sprite spr_BG_Orange;
     [SerializeField] private Sprite spr_BG_Off;
 
     private TypeCost typeCost;
@@ -414,11 +415,11 @@ public class Group_InfoUpdate : UI_Child
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     imageIcon_Money.gameObject.SetActive(false);
-                    imageBG_Money.sprite = spr_BG_Off;
+                    imageBG_Money.sprite = spr_BG_Orange;
                     txt_Money.text = "MAX";
                     btn_Ads.onClick.RemoveAllListeners();
                     imageIcon_Ads.gameObject.SetActive(false);
-                    imageBG_Ads.sprite = spr_BG_Off;
+                    imageBG_Ads.sprite = spr_BG_Orange;
                     txt_Ads.text = "MAX";
                     btn_Money.enabled = false;
                     btn_Ads.enabled = false;
@@ -431,11 +432,11 @@ public class Group_InfoUpdate : UI_Child
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     imageIcon_Money.gameObject.SetActive(false);
-                    imageBG_Money.sprite = spr_BG_Off;
+                    imageBG_Money.sprite = spr_BG_Orange;
                     txt_Money.text = "MAX";
                     btn_Ads.onClick.RemoveAllListeners();
                     imageIcon_Ads.gameObject.SetActive(false);
-                    imageBG_Ads.sprite = spr_BG_Off;
+                    imageBG_Ads.sprite = spr_BG_Orange;
                     txt_Ads.text = "MAX";
                     btn_Money.enabled = false;
                     btn_Ads.enabled = false;
@@ -514,10 +515,10 @@ public class Group_InfoUpdate : UI_Child
             btn_Ads.onClick.RemoveAllListeners();
             btn_Money.onClick.RemoveAllListeners();
             imageIcon_Ads.gameObject.SetActive(false);
-            imageBG_Ads.sprite = spr_BG_Off;
+            imageBG_Ads.sprite = spr_BG_Orange;
             txt_Ads.text = "MAX";
             imageIcon_Money.gameObject.SetActive(false);
-            imageBG_Money.sprite = spr_BG_Off;
+            imageBG_Money.sprite = spr_BG_Orange;
             txt_Money.text = "MAX";
             btn_Money.enabled = false;
             btn_Ads.enabled = false;

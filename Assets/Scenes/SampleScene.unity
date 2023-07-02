@@ -2703,6 +2703,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9068783231934469856, guid: ddf9f1e99b3ddaa4e899150a15470031, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068783231934469856, guid: ddf9f1e99b3ddaa4e899150a15470031, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068783231934469856, guid: ddf9f1e99b3ddaa4e899150a15470031, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddf9f1e99b3ddaa4e899150a15470031, type: 3}
 --- !u!4 &47758380 stripped

@@ -10,7 +10,7 @@ public class Canvas_Home : UI_Canvas
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = FindObjectOfType<Canvas_Home>();
             }
@@ -29,8 +29,10 @@ public class Canvas_Home : UI_Canvas
     {
         OnInIt();
     }
+
     public override void OnInIt()
     {
+        instance = this;
         base.OnInIt();
         btn_Settings.onClick.AddListener(Open_Settings);
         btn_Customize.onClick.AddListener(Open_Customize);
@@ -66,6 +68,7 @@ public class Canvas_Home : UI_Canvas
     }
     public void Open_UI_Oder()
     {
+        
         UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
         actionClickShowOder?.Invoke();
     }
@@ -85,6 +88,10 @@ public class Canvas_Home : UI_Canvas
     {
         btn_Oder.gameObject.SetActive(true);
         actionClickShowOder = actionOpen_Oder;
+    }
+    public bool IsShow_Btn_Oder()
+    {
+        return btn_Oder.gameObject.activeInHierarchy;
     }
     public void NotShow_Btn_Oder()
     {

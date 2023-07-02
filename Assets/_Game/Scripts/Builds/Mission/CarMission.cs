@@ -82,25 +82,36 @@ public class CarMission : BaseBuild
                     //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
                     //}
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
-                    {       
+                    {
                         isOnMission = true;
                         StartCountDown();
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                        Canvas_Home.Instance.Show_Btn_Oder(() =>
+                        if (Canvas_Home.Instance != null)
                         {
-                            if (!checkPushCarMission.GetisInItDataUI())
+                            if (!Canvas_Home.Instance.IsShow_Btn_Oder())
                             {
-                                InItDataMissionCurrent();
-                                checkPushCarMission.SetisInItDataUI(true);
-                                checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
+                                Canvas_Home.Instance.Show_Btn_Oder(() =>
+                                {
+                                    if (!checkPushCarMission.GetisInItDataUI())
+                                    {
+                                        InItDataMissionCurrent();
+                                        checkPushCarMission.SetisInItDataUI(true);
+                                        checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
+                                    }
+                                });
                             }
-                        });
+
+                        }
                     });
+
                 },1);
+               
+
             }
             if (!isReadyMission && isOnMission)
             {
                 CheckMission();
+            
             }
         }
     }
@@ -327,11 +338,15 @@ public class CarMission : BaseBuild
         else if(carWaiting >= 0 && isOnMission)
         {
             carWaiting--;
-            if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+            if (Canvas_Home.Instance != null)
             {
-                Canvas_Order.Instane.LoadTime((int)carWaiting);
+                if (UI_Manager.Instance.isOpenUI(NameUI.Canvas_Order))
+                {
+                    Canvas_Order.Instane.LoadTime((int)carWaiting);
+                }
+                Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
             }
-            Canvas_Home.Instance.LoadTextTimeOder((int)carWaiting);
+
         }
         CounterHelper.Instance.QueueAction(1f, () =>
         {
@@ -382,7 +397,7 @@ public class CarMission : BaseBuild
                 //    value += GameManager.Instance.dataPrice.Data.cowBag
                 //    break;
                 case IngredientType.BEAR_CLOTH:
-                    value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
+                    value += (GameManager.Instance.dataPrice.Data.bearOutfit *
                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.CHICKEN_CLOTH:
@@ -392,6 +407,22 @@ public class CarMission : BaseBuild
                 case IngredientType.COW_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.cowOutfit *
                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_CLOTH)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.LION_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.lionOutfit *
+                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_CLOTH)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.CROC_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.crocOutfit *
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_CLOTH)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.ELE_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.eleOutfit *
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_CLOTH)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.ZEBRA_CLOTH:
+                    value += (GameManager.Instance.dataPrice.Data.zebraOutfit *
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_CLOTH)) * SpeedUpMoney * count;
                     break;
                 case IngredientType.CHICKEN_BAG:
                     value += (GameManager.Instance.dataPrice.Data.chickenBag *
@@ -404,6 +435,22 @@ public class CarMission : BaseBuild
                 case IngredientType.BEAR_BAG:
                     value += (GameManager.Instance.dataPrice.Data.bearBag *
                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_BAG)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.LION_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.lionBag *
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_BAG)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.CROC_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.crocBag *
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_BAG)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.ELE_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.eleBag *
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_BAG)) * SpeedUpMoney * count;
+                    break;
+                case IngredientType.ZEBRA_BAG:
+                    value += (GameManager.Instance.dataPrice.Data.zebraBag *
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_BAG)) * SpeedUpMoney * count;
                     break;
             }
         }
@@ -466,6 +513,58 @@ public class CarMission : BaseBuild
                     }
                 }
                 break;
+            case IngredientType.LION_CLOTH:
+                if (listMission.ContainsKey(IngredientType.LION_CLOTH))
+                {
+                    if (listMission[IngredientType.LION_CLOTH] > 0)
+                    {
+                        listMission[IngredientType.LION_CLOTH]--;
+                        //if (listMission[IngredientType.COW_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.COW_CLOTH);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.CROC_CLOTH:
+                if (listMission.ContainsKey(IngredientType.CROC_CLOTH))
+                {
+                    if (listMission[IngredientType.CROC_CLOTH] > 0)
+                    {
+                        listMission[IngredientType.CROC_CLOTH]--;
+                        //if(listMission[IngredientType.CHICKEN_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.CHICKEN_CLOTH);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.ELE_CLOTH:
+                if (listMission.ContainsKey(IngredientType.ELE_CLOTH))
+                {
+                    if (listMission[IngredientType.ELE_CLOTH] > 0)
+                    {
+                        listMission[IngredientType.ELE_CLOTH]--;
+                        //if (listMission[IngredientType.BEAR_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_CLOTH);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.ZEBRA_CLOTH:
+                if (listMission.ContainsKey(IngredientType.ZEBRA_CLOTH))
+                {
+                    if (listMission[IngredientType.ZEBRA_CLOTH] > 0)
+                    {
+                        listMission[IngredientType.ZEBRA_CLOTH]--;
+                        //if (listMission[IngredientType.BEAR_CLOTH] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_CLOTH);
+                        //}
+                    }
+                }
+                break;
             case IngredientType.COW_BAG:
                 if (listMission.ContainsKey(IngredientType.COW_BAG))
                 {
@@ -498,6 +597,58 @@ public class CarMission : BaseBuild
                     if (listMission[IngredientType.BEAR_BAG] > 0)
                     {
                         listMission[IngredientType.BEAR_BAG]--;
+                        //if (listMission[IngredientType.BEAR_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_BAG);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.LION_BAG:
+                if (listMission.ContainsKey(IngredientType.LION_BAG))
+                {
+                    if (listMission[IngredientType.LION_BAG] > 0)
+                    {
+                        listMission[IngredientType.LION_BAG]--;
+                        //if (listMission[IngredientType.COW_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.COW_BAG);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.CROC_BAG:
+                if (listMission.ContainsKey(IngredientType.CROC_BAG))
+                {
+                    if (listMission[IngredientType.CROC_BAG] > 0)
+                    {
+                        listMission[IngredientType.CROC_BAG]--;
+                        //if (listMission[IngredientType.CHICKEN_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.CHICKEN_BAG);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.ELE_BAG:
+                if (listMission.ContainsKey(IngredientType.ELE_BAG))
+                {
+                    if (listMission[IngredientType.ELE_BAG] > 0)
+                    {
+                        listMission[IngredientType.ELE_BAG]--;
+                        //if (listMission[IngredientType.BEAR_BAG] == 0)
+                        //{
+                        //    listMission.Remove(IngredientType.BEAR_BAG);
+                        //}
+                    }
+                }
+                break;
+            case IngredientType.ZEBRA_BAG:
+                if (listMission.ContainsKey(IngredientType.ZEBRA_BAG))
+                {
+                    if (listMission[IngredientType.ZEBRA_BAG] > 0)
+                    {
+                        listMission[IngredientType.ZEBRA_BAG]--;
                         //if (listMission[IngredientType.BEAR_BAG] == 0)
                         //{
                         //    listMission.Remove(IngredientType.BEAR_BAG);
