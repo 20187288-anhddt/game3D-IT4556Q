@@ -32,6 +32,7 @@ public class Canvas_Order : UI_Canvas
     [SerializeField] private Sprite spr_BG_Off;
     [Header("Button")]
     [SerializeField] private Button btn_Close;
+    [SerializeField] private Button btn_CloseAll;
     [SerializeField] private Button btn_Collect;
     [SerializeField] private Button btn_WatchVideo_CollectX3;
     private bool isCompleteAllMission = false;
@@ -44,6 +45,7 @@ public class Canvas_Order : UI_Canvas
     private void InItData()
     {
         btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
+        btn_CloseAll.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_Collect.onClick.AddListener(Collect);
         btn_WatchVideo_CollectX3.onClick.AddListener(WatchVideo_CollectX3);
     }
