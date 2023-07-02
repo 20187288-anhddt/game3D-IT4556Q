@@ -40,7 +40,7 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     public UI_Canvas OpenUI(NameUI nameUI)
     {
        // Debug.Log("Open");
-        if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome() && nameUI == NameUI.Canvas_Home)
+        if ((!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome() || isOpenUI(NameUI.Canvas_Order)) && nameUI == NameUI.Canvas_Home)
         {
             return null;
         }

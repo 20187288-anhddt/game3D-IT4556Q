@@ -55,31 +55,33 @@ public class CheckUnlock : MonoBehaviour
                 t += Time.deltaTime;
                 if (t > 0.75f)
                 {
-                    if (normal.CurrentCoin > 0)
-                    {
-                        if (t < 1.5f)
-                        {
-                            if (!(unlock as Player).canCatch)
-                                return;
-                            (unlock as Player).canCatch = false;
-                            unlockBuild(unlock.CoinValue);
-                            //unlock.UnlockMap(1);
-                            (unlock as Player).DelayCatch(0f);
-                        }
-                        else
-                        {
-                            if ((unlock as Player).canCatch)
-                            {
-                                unlockQuick(unlock);
-                            }
-                            else
-                                (unlock as Player).DelayCatch(1);
-                        }
-                    }
-                    //else
+                    unlockBuild(unlock.CoinValue);
+                    //if (normal.CurrentCoin > 0)
                     //{
-                    //    normal.UnLock(true, true);
+                      
+                    //    //if (t < 1.5f)
+                    //    //{
+                    //    //    if (!(unlock as Player).canCatch)
+                    //    //        return;
+                    //    //    (unlock as Player).canCatch = false;
+                    //    //    unlockBuild(unlock.CoinValue);
+                    //    //    //unlock.UnlockMap(1);
+                    //    //    (unlock as Player).DelayCatch(0f);
+                    //    //}
+                    //    //else
+                    //    //{
+                    //    //    if ((unlock as Player).canCatch)
+                    //    //    {
+                    //    //        unlockQuick(unlock);
+                    //    //    }
+                    //    //    else
+                    //    //        (unlock as Player).DelayCatch(1);
+                    //    //}
                     //}
+                    ////else
+                    ////{
+                    ////    normal.UnLock(true, true);
+                    ////}
                 }
             }
         }
@@ -162,17 +164,20 @@ public class CheckUnlock : MonoBehaviour
             }
             else
             {
-                text.DOTextInt((int)normal.CurrentCoin, 0, 0.75f);
-                (player as Player).coinValue -= normal.CurrentCoin;
-                DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, (int)normal.CurrentCoin);
-                dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
-                normal.CurrentCoin = 0;
-                //normal.UnLock(true, true);
-                //bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
-                //{
-                normal.UnLock(true, true);
-                //effect.DOPause();
-                //});
+                text.DOTextInt((int)normal.CurrentCoin, 0, 0.75f).OnComplete(() => 
+                {
+                    (player as Player).coinValue -= normal.CurrentCoin;
+                    DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, (int)normal.CurrentCoin);
+                    dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
+                    normal.CurrentCoin = 0;
+                    //normal.UnLock(true, true);
+                    //bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
+                    //{
+                    normal.UnLock(true, true);
+                    //effect.DOPause();
+                    //});
+                });
+           
             }
         }
     }

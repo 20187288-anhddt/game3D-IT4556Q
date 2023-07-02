@@ -75,7 +75,7 @@ public class UI_Bonus_NoShit : UI_Bonus
 
 public class DataBonusNoShit : DataBase
 {
-    private static string NameDataIsOnBonus = "DataIsOnBonus";
+    private static string NameDataIsOnBonus = "DataBonusNoShit";
     public bool isOnBonus = false;
     private bool isInItData = false;
     private void Awake()
