@@ -81,11 +81,12 @@ public class Group_InfoUpdate : UI_Child
                 Open_Btn_Money();
                 Invoke(nameof(Open_Btn_Money), 0.1f);
                 Close_Btn_Ads();
+                imageIcon_Money.gameObject.SetActive(true);
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     btn_Money.onClick.AddListener(() => { Buying(TypeCost.Money); });
-                    imageIcon_Money.gameObject.SetActive(true);
+                    
                     imageBG_Money.sprite = spr_BG_Green;
                 }
                 else
@@ -103,6 +104,8 @@ public class Group_InfoUpdate : UI_Child
                 break;
         }
 
+        btn_Money.enabled = true;
+        btn_Ads.enabled = true;
         LoadUI(typeBuff.ToString() + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy();
         actionReloadCurrent = ReLoadData;
@@ -172,11 +175,12 @@ public class Group_InfoUpdate : UI_Child
                 Open_Btn_Money();
                 Invoke(nameof(Open_Btn_Money), 0.1f);
                 Close_Btn_Ads();
+                imageIcon_Money.gameObject.SetActive(true);
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
                     btn_Money.onClick.AddListener(() => { Buying_2(TypeCost.Money); });
-                    imageIcon_Money.gameObject.SetActive(true);
+                  
                     imageBG_Money.sprite = spr_BG_Green;
                 }
                 else
@@ -195,7 +199,8 @@ public class Group_InfoUpdate : UI_Child
 
                 break;
         }
-
+        btn_Money.enabled = true;
+        btn_Ads.enabled = true;
         LoadUI(nameInfo + " - Lvl." + Level_Current, Value_MoneyCurent);
         CheckOnNextBuy(scriptableObject_Staff_Boss);
         actionReloadCurrent = ReLoadData_2;

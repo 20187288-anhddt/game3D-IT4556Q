@@ -53,7 +53,7 @@ public class CameraController : GenerticSingleton<CameraController>
     public void SetFollowAndLookAt(Transform transformFollow, Transform transformLookAt, 
         bool isResetFollowPlayer = false, float timeDelayFollow = 0, float timeDelayResetFollowPlayer = 2.5f,
         float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null,
-        System.Action actionEndFollow = null, bool isFollowPlayer = false)
+        System.Action actionEndFollow = null, bool isFollowPlayer = false, bool isCloseALLUI = false)
     {
         if(cinemachineFramingTransposer == null)
         {
@@ -62,7 +62,11 @@ public class CameraController : GenerticSingleton<CameraController>
        
         // Debug.Log(timeDelayResetFollowPlayer);
         isCameraOnFollowPlayer = isFollowPlayer;
-        UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
+        if (isCloseALLUI)
+        {
+            UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
+        }
+       
         actionStartFollow?.Invoke();
       //  cinemachineFramingTransposer.m_CameraDistance = Vector3.Distance(cinemachineFramingTransposer.transform.position, transformFollow.position);
         cinemachineFramingTransposer.m_XDamping = XDamping;
@@ -118,13 +122,13 @@ public class CameraController : GenerticSingleton<CameraController>
             yield return null;
         }
     }
-    public void ResetFollowPlayer()
+    public void ResetFollowPlayer(bool isCloseALLUI = true)
     {
         if(Player.Instance == null)
         {
             return;
         }
-        SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform, false, 0, 2.5f, 1, 1, 1, null, null, true);
+        SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform, false, 0, 2.5f, 1, 1, 1, null, null, true, isCloseALLUI);
        // cinemachineFramingTransposer.m_CameraDistance = 45;
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)

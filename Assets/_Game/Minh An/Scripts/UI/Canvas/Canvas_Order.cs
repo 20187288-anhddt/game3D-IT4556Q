@@ -174,7 +174,7 @@ public class Canvas_Order : UI_Canvas
         Canvas_Home.Instance?.gameObject.SetActive(true);
         base.Close();
         UI_Manager.Instance?.ReMoveUI_To_Stack_UI_Open();
-        CameraController.Instance?.ResetFollowPlayer();
+        CameraController.Instance?.ResetFollowPlayer(false);
     }
     public override void Open()
     {

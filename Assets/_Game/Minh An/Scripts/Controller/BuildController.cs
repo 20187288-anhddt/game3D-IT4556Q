@@ -8,7 +8,6 @@ public class BuildController : Singleton<BuildController>
 
     public BuildIngredientController GetBuildIngredientController(IngredientType ingredientType)
     {
-        Debug.Log(ingredientType);
         foreach (BuildIngredientController buildIngredientController in buildIngredientControllers)
         {
             if(buildIngredientController.ingredientType == ingredientType)
