@@ -207,10 +207,10 @@ public class Group_InfoUpdate : UI_Child
     }
     private void LoadUI(string str_Info, int value)
     {
-        if (value > 1000)
+        if (value >= 1000)
         {
             float x = value / 1000;
-            txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString("F2") + "K";
+            txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString() + "K";
             txt_Money.text = txt_Money.text.Replace(",", ".");
         }
         else if (value > 100)

@@ -16,11 +16,18 @@ public class Label_Show_Customize : UI_Child
     [SerializeField] private Text txt_Video;
     [Header("Button")]
     [SerializeField] private Button btn_This;
+    [Header("Tick")]
+    [SerializeField] private GameObject obj_Tick;
     private int Value_CostCurent = 0;
     private InfoSkinPlayer infoSkinPlayerTaget;
     private void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }
+    }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.CheckTickInCustomize.ToString(), CheckTickInThis);
+        EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString());
     }
     public void Load(InfoSkinPlayer infoSkinPlayer, bool isBought, int ID)
     {
@@ -54,7 +61,7 @@ public class Label_Show_Customize : UI_Child
                         if (value > 1000)
                         {
                             float x = value / 1000;
-                            txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString("F2") + "K";
+                            txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString() + "K";
                             txt_Money.text = txt_Money.text.Replace(",", ".");
                         }
                         else if (value > 100)
@@ -71,7 +78,19 @@ public class Label_Show_Customize : UI_Child
         {
             CloseAll();
             btn_This.onClick.RemoveAllListeners();
-            btn_This.onClick.AddListener(() => { SetTagetID(ID_This); });
+            btn_This.onClick.AddListener(() => { SetTagetID(ID_This); EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString()); });
+        }
+        EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString());
+    }
+    private void CheckTickInThis()
+    {
+        if (DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().GetID() == ID_This)
+        {
+            Open_Obj_Tick();
+        }
+        else
+        {
+            Close_Obj_Tick();
         }
     }
     private  void Open_Obj_Money()
@@ -82,6 +101,7 @@ public class Label_Show_Customize : UI_Child
         {
             obj_Money.SetActive(true);
             obj_Video.SetActive(false);
+            obj_Tick.SetActive(false);
         }));
     
     }
@@ -93,13 +113,25 @@ public class Label_Show_Customize : UI_Child
         {
             obj_Video.SetActive(false);
             obj_Video.SetActive(true);
+            obj_Tick.SetActive(false);
         }));
        
+    }
+    private void Open_Obj_Tick()
+    {
+        obj_Video.SetActive(false);
+        obj_Video.SetActive(false);
+        obj_Tick.SetActive(true);
+    }
+    private void Close_Obj_Tick()
+    {
+        obj_Tick.SetActive(false);
     }
     private void CloseAll()
     {
         obj_Money.SetActive(false);
         obj_Video.SetActive(false);
+        obj_Tick.SetActive(false);
     }
     IEnumerator IE_DelayAction(float m_Time, System.Action action)
     {

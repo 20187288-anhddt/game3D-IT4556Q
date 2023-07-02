@@ -87,10 +87,10 @@ public class MoneyUI : UI_Child
         }
       
         MoneyTemp = value - valueMoney_ob;
-        if (value > 1000)
+        if (value >= 1000)
         {
             float x = value / 1000;
-            text_Money.text = "   " + (x + ((value - 1000 * x) / 1000)).ToString("F2") + "K" + " ";
+            text_Money.text = "   " + (x + ((value - 1000 * x) / 1000)).ToString() + "K" + " ";
             text_Money.text = text_Money.text.Replace(",", ".");
         }
         else if (value > 100)

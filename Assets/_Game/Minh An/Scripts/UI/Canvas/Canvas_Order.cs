@@ -136,10 +136,10 @@ public class Canvas_Order : UI_Canvas
     }
     public void LoadTextMoneyCurrent()
     {
-        if (MoneyCurrent > 1000)
+        if (MoneyCurrent >= 1000)
         {
             float x = MoneyCurrent / 1000;
-            txt_Money.text = (x + ((MoneyCurrent - 1000 * x) / 1000)).ToString("F2") + "K";
+            txt_Money.text = (x + ((MoneyCurrent - 1000 * x) / 1000)).ToString() + "K";
             txt_Money.text = txt_Money.text.Replace(",", ".");
         }
         else if (MoneyCurrent > 100)
