@@ -2,9 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
-public class Canvas_Joystick : Singleton<Canvas_Joystick>
+public class Canvas_Joystick : UI_Canvas
 {
+    private static Canvas_Joystick instance;
+    public static Canvas_Joystick Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<Canvas_Joystick>();
+            }
+            return instance;
+        }
+    }
     private static float LIMIT_DISTANCE_TOUTCH = 120;
     [SerializeField] private Transform Trans_Touch;
     [SerializeField] private Transform Trans_BG;
@@ -14,19 +27,25 @@ public class Canvas_Joystick : Singleton<Canvas_Joystick>
     private Vector3 Position_Mouse;
     public bool isStopJoysick;
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
         OnInIt();
     }
-    public void OnInIt()
+    //public void Start()
+    //{
+    //    EnventManager.AddListener(EventName.PlayJoystick.ToString(), () => { isStopJoysick = false; });
+    //    EnventManager.AddListener(EventName.StopJoyStick.ToString(), () => { isStopJoysick = true; });
+    //}
+    public override void OnInIt()
     {
+        base.OnInIt();
         isStopJoysick = false;
     }
     private void Update()
     {
-        if (isStopJoysick)
+        if (isStopJoysick || EventSystem.current.currentSelectedGameObject != null)
         {
+            JoyStick.SetActive(false);
             return;
         }
         if (Input.GetMouseButtonDown(0))
@@ -38,6 +57,13 @@ public class Canvas_Joystick : Singleton<Canvas_Joystick>
         }
         if (Input.GetMouseButton(0))
         {
+            if (!JoyStick.activeInHierarchy)
+            {
+                JoyStick.SetActive(true);
+                Position_Mouse = Input.mousePosition;
+                Trans_BG.position = Position_Mouse;
+                Trans_Touch.localPosition = Vector3.zero;
+            }
             Position_Mouse = Input.mousePosition;
             Trans_Touch.transform.position = Position_Mouse;
 

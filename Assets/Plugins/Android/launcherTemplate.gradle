@@ -3,6 +3,12 @@ buildscript {
         google()
         jcenter()
     }
+    dependencies {
+        // Must be Android Gradle Plugin 3.6.0 or later. For a list of
+        // compatible Gradle versions refer to:
+        // https://developer.android.com/studio/releases/gradle-plugin
+        classpath 'com.android.tools.build:gradle:3.6.0'
+    }
 }
 allprojects {
    repositories {
@@ -18,8 +24,6 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation project(':unityLibrary')
-	implementation "androidx.multidex:multidex:2.0.1"
-	implementation 'androidx.appcompat:appcompat:1.4.1'
     }
 
 android {
@@ -35,7 +39,6 @@ android {
         minSdkVersion **MINSDKVERSION**
         targetSdkVersion **TARGETSDKVERSION**
         applicationId '**APPLICATIONID**'
-	multiDexEnabled true
         ndk {
             abiFilters **ABIFILTERS**
         }

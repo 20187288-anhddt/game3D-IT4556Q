@@ -115,7 +115,7 @@ MonoBehaviour:
   m_timeShow: 0
   infoBouns_Money_Buff:
     uI_Bonus: {fileID: 4925346547366388246}
-    timeEnd_Show_Bonus: 25
+    timeEnd_Show_Bonus: 20
     timeEnd_Bonus: 0
   timeLoop_BonusMoney: 10
   m_TimeLoop_BonusMoney: 0
@@ -1127,7 +1127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -740, y: -745.88904}
+  m_AnchoredPosition: {x: -740, y: -800}
   m_SizeDelta: {x: 1480, y: 602.979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4725312918756709807
