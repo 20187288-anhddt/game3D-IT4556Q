@@ -35,7 +35,7 @@ jobs:
             Library-
       - uses: game-ci/unity-test-runner@v2
         id: tests
-        env:
+#         env:
           UNITY_LICENSE: "<?xml version="1.0" encoding="UTF-8"?><root>
     <License id="Terms">
         <MachineBindings>
