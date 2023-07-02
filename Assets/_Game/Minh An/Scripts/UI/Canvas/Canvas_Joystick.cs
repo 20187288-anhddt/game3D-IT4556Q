@@ -45,8 +45,19 @@ public class Canvas_Joystick : UI_Canvas
     {
         if (isStopJoysick || EventSystem.current.currentSelectedGameObject != null)
         {
-            JoyStick.SetActive(false);
-            return;
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                if (EventSystem.current.currentSelectedGameObject.gameObject.activeInHierarchy)
+                {
+                    JoyStick.SetActive(false);
+                    return;
+                }
+            }
+            else
+            {
+                JoyStick.SetActive(false);
+                return;
+            }
         }
         if (Input.GetMouseButtonDown(0))
         {

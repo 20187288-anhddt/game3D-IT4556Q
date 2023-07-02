@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class  : MonoBehaviour
+public class CheckPushCarMission : MonoBehaviour
 {
     private IngredientBase curIngredient;
     [SerializeField]
     private CarMission carMission;
     private bool isInItDataUI = false;
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         //if (carMission.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
         //    return;
@@ -24,10 +24,7 @@ public class  : MonoBehaviour
                 isInItDataUI = true;
                 carMission.InItDataMissionCurrent();
             }
-            else
-            {
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
-            }
+            UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -38,12 +35,11 @@ public class  : MonoBehaviour
             UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
         }
     }
-    private void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<ICollect>();
         if (player != null)
         {
-
             int v = -1;
             for(int i = 0;i<carMission.listMission.Keys.Count;i++)
             {
@@ -73,6 +69,38 @@ public class  : MonoBehaviour
                         if (carMission.listMission[IngredientType.BEAR_BAG] > 0)
                             v = player.bearBags.Count - 1;
                         break;
+                    case IngredientType.LION_CLOTH:
+                        if (carMission.listMission[IngredientType.LION_CLOTH] > 0)
+                            v = player.lionCloths.Count - 1;
+                        break;
+                    case IngredientType.CROC_CLOTH:
+                        if (carMission.listMission[IngredientType.CROC_CLOTH] > 0)
+                            v = player.crocCloths.Count - 1;
+                        break;
+                    case IngredientType.ELE_CLOTH:
+                        if (carMission.listMission[IngredientType.ELE_CLOTH] > 0)
+                            v = player.eleCloths.Count - 1;
+                        break;
+                    case IngredientType.LION_BAG:
+                        if (carMission.listMission[IngredientType.LION_BAG] > 0)
+                            v = player.lionBags.Count - 1;
+                        break;
+                    case IngredientType.CROC_BAG:
+                        if (carMission.listMission[IngredientType.CROC_BAG] > 0)
+                            v = player.crocBags.Count - 1;
+                        break;
+                    case IngredientType.ELE_BAG:
+                        if (carMission.listMission[IngredientType.ELE_BAG] > 0)
+                            v = player.eleBags.Count - 1;
+                        break;
+                    case IngredientType.ZEBRA_CLOTH:
+                        if (carMission.listMission[IngredientType.ZEBRA_CLOTH] > 0)
+                            v = player.zebraCloths.Count - 1;
+                        break;
+                    case IngredientType.ZEBRA_BAG:
+                        if (carMission.listMission[IngredientType.ZEBRA_BAG] > 0)
+                            v = player.zebraBags.Count - 1;
+                        break;
                 }
                 if (v >= 0)
                 {
@@ -100,12 +128,37 @@ public class  : MonoBehaviour
                         case IngredientType.BEAR_BAG:
                             curIngredient = player.bearBags[v];
                             break;
+                        case IngredientType.LION_CLOTH:
+                            curIngredient = player.lionCloths[v];
+                            break;
+                        case IngredientType.CROC_CLOTH:
+                            curIngredient = player.crocCloths[v];
+                            break;
+                        case IngredientType.ELE_CLOTH:
+                            curIngredient = player.eleCloths[v];
+                            break;
+                        case IngredientType.LION_BAG:
+                            curIngredient = player.lionBags[v];
+                            break;
+                        case IngredientType.CROC_BAG:
+                            curIngredient = player.crocBags[v];
+                            break;
+                        case IngredientType.ELE_BAG:
+                            curIngredient = player.eleBags[v];
+                            break;
+                        case IngredientType.ZEBRA_CLOTH:
+                            curIngredient = player.zebraBags[v];
+                            break;
+                        case IngredientType.ZEBRA_BAG:
+                            curIngredient = player.zebraBags[v];
+                            break;
                         default:
                             curIngredient = null;
                             break;
                     }
                     if (curIngredient != null)
                     {
+                        Debug.Log("a");
                         (curIngredient as IngredientBase).MoveToCar(carMission.car);
                         carMission.ReduceType(carMission.listMission.ElementAt(i).Key);
                         player.RemoveIngredient(curIngredient);
@@ -123,8 +176,13 @@ public class  : MonoBehaviour
             carMission.UpdateMission();
         }
     }
+  
     public void SetisInItDataUI(bool isValue)
     {
         isInItDataUI = isValue;
+    }
+    public bool GetisInItDataUI()
+    {
+        return isInItDataUI;
     }
 }

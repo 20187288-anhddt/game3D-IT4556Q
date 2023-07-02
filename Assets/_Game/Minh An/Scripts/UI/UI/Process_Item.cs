@@ -32,6 +32,7 @@ public class Process_Item : UI_Child
     }
     public void InItData(int valueMax, IngredientType ingredientTypeCurrent)
     {
+       // Debug.Log(valueMax);
         this.valueMax = valueMax;
         this.ingredientTypeCurrent = ingredientTypeCurrent;
         myTransform.transform.localScale = Vector3.one;
@@ -67,7 +68,7 @@ public class Process_Item : UI_Child
     }
     public int GetValueMax()
     {
-        Debug.Log(valueMax);
+       // Debug.Log(valueMax);
         return valueMax;
     }
 }

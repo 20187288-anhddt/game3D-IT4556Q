@@ -174,6 +174,7 @@ public class Canvas_Order : UI_Canvas
     {
         // UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
         Canvas_Home.Instance?.gameObject.SetActive(true);
+        Canvas_Bonus.Instance?.gameObject.SetActive(true);
         base.Close();
         UI_Manager.Instance?.ReMoveUI_To_Stack_UI_Open();
         CameraController.Instance?.ResetFollowPlayer(false);
@@ -186,6 +187,7 @@ public class Canvas_Order : UI_Canvas
        // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
         UI_Manager.Instance?.AddUI_To_Stack_UI_Open(this);
         Canvas_Home.Instance?.gameObject.SetActive(false);
+        Canvas_Bonus.Instance?.gameObject.SetActive(false);
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(IngredientType.CAR);
         CameraController.Instance?.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
         0, 2.5f, 2.5f, 2.5f);

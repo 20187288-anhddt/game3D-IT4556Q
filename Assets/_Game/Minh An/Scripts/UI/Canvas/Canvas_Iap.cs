@@ -26,4 +26,8 @@ public class Canvas_Iap : UI_Canvas
         base.Close();
         UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
+    public void BuySuperPack()
+    {
+
+    }
 }

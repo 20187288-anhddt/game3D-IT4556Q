@@ -94,9 +94,10 @@ public class CarMission : BaseBuild
                                 {
                                     if (!checkPushCarMission.GetisInItDataUI())
                                     {
-                                        InItDataMissionCurrent();
-                                        checkPushCarMission.SetisInItDataUI(true);
-                                        checkPushCarMission.OnTriggerStay(Player.Instance.GetComponent<CharacterController>());
+                                        //InItDataMissionCurrent();
+                                        //checkPushCarMission.SetisInItDataUI(true);
+                                        checkPushCarMission.OnTriggerEnter(Player.Instance.GetComponent<CharacterController>());
+                                        UpdateMission();
                                     }
                                 });
                             }
@@ -466,6 +467,8 @@ public class CarMission : BaseBuild
         {
             int value = listMission[key];
             Canvas_Order.Instane.InItData(value, key);
+            //Debug.Log(value);
+            //Debug.Log(key);
         }
         Canvas_Order.Instane.LoadTime((int)carWaiting);
         Canvas_Order.Instane.SetMoneyCurrent(GetRewardMoneyAllMission());
