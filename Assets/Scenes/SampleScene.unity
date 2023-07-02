@@ -7874,6 +7874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HireAnimal_Cow
       objectReference: {fileID: 0}
+    - target: {fileID: 7542043637659243201, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: habitat
+      value: 
+      objectReference: {fileID: 1867786004}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
 --- !u!4 &196038639 stripped
@@ -15733,6 +15737,14 @@ PrefabInstance:
     - target: {fileID: 4083069982578152474, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: m_Name
       value: HireAnimal_Chicken
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542043637659243201, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: habitat
+      value: 
+      objectReference: {fileID: 546453596}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.nameObject_This
+      value: 33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
@@ -58149,7 +58161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5656809218947363579, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 252.44446
+      value: 254.5
       objectReference: {fileID: 0}
     - target: {fileID: 5656809218947363579, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -58425,7 +58437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6424367356589294068, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 127.444435
+      value: 129.49998
       objectReference: {fileID: 0}
     - target: {fileID: 6424367356589294068, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -65381,6 +65393,14 @@ PrefabInstance:
     - target: {fileID: 4083069982578152474, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
       propertyPath: m_Name
       value: HireAnimal_Bear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542043637659243201, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: habitat
+      value: 
+      objectReference: {fileID: 1274532918}
+    - target: {fileID: 8140635473116617297, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}
+      propertyPath: status_All_Level_Object.nameObject_This
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935d0c2e20acf414fa84e1e0169266fa, type: 3}

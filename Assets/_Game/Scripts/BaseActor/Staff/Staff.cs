@@ -865,15 +865,6 @@ public class Staff : BaseStaff, ICollect,IAct
                 ChangeEmoji(r);
             }
         }
-        else
-        {
-            if (!isAct)
-            {
-                isAct = true;
-                int r = Random.Range(4,6);
-                ChangeEmoji(r);
-            }
-        }
         if (isAct)
         {
             delayAct -= Time.deltaTime;
@@ -906,7 +897,7 @@ public class Staff : BaseStaff, ICollect,IAct
                 }
                 else
                 {
-                    if (listEmojis[i - 1].activeSelf)
+                    if (!listEmojis[i - 1].activeSelf)
                     {
                         listEmojis[i - 1].SetActive(true);
                     }
