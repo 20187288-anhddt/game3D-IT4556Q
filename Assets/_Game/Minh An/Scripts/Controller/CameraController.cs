@@ -55,7 +55,12 @@ public class CameraController : GenerticSingleton<CameraController>
         float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null,
         System.Action actionEndFollow = null, bool isFollowPlayer = false)
     {
-       // Debug.Log(timeDelayResetFollowPlayer);
+        if(cinemachineFramingTransposer == null)
+        {
+            cinemachineFramingTransposer = cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
+       
+        // Debug.Log(timeDelayResetFollowPlayer);
         isCameraOnFollowPlayer = isFollowPlayer;
         UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
         actionStartFollow?.Invoke();
@@ -114,6 +119,10 @@ public class CameraController : GenerticSingleton<CameraController>
     }
     public void ResetFollowPlayer()
     {
+        if(Player.Instance == null)
+        {
+            return;
+        }
         SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform, false, 0, 2.5f, 1, 1, 1, null, null, true);
        // cinemachineFramingTransposer.m_CameraDistance = 45;
     }
