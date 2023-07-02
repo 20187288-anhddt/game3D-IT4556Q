@@ -392,7 +392,7 @@ public class Customer : BaseCustomer,IAct
         if (!isAct)
         {
             isAct = true;
-            int r = Random.Range(4, 7);
+            int r = Random.Range(4, 6);
             ChangeEmoji(r);
         }
         if (isAct)
@@ -401,9 +401,9 @@ public class Customer : BaseCustomer,IAct
         }
         if (delayAct < 0)
         {
-            delayAct = consDelayAct;
-            ChangeEmoji(0);
             isAct = false;
+            ChangeEmoji(0);
+            delayAct = consDelayAct;
         }
 
     }
@@ -419,25 +419,21 @@ public class Customer : BaseCustomer,IAct
         }
         else
         {
-            int r = Random.Range(0, 10);
-            if (r < 5)
+            for (int i = 1; i <= listEmojis.Count; i++)
             {
-                for (int i = 1; i <= listEmojis.Count; i++)
+                if (i != n)
                 {
-                    if (i != n)
+                    listEmojis[i - 1].SetActive(false);
+                }
+                else
+                {
+                    if (!listEmojis[i - 1].activeSelf)
                     {
-                        listEmojis[i - 1].SetActive(false);
-                    }
-                    else
-                    {
-                        if (!listEmojis[i - 1].activeSelf)
-                        {
-                            listEmojis[i - 1].SetActive(true);
-                        }
+                        listEmojis[i - 1].SetActive(true);
                     }
                 }
-                emojiPanel.SetActive(true);
             }
+            emojiPanel.SetActive(true);
             //CounterHelper.Instance.QueueAction(5f, () =>
             //{
             //    ChangeEmoji(0);

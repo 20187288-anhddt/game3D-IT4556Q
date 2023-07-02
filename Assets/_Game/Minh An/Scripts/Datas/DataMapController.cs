@@ -13,6 +13,13 @@ public class DataMapController : DataBase
     {
         CheckInItData();
     }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ClearData.ToString(), () =>
+        {
+            ClearData();
+        });
+    }
     public void InItData()
     {
         dataMap.InItData();
@@ -41,6 +48,11 @@ public class DataMapController : DataBase
     {
         mapCurrent.SetLevelCurrent(levelCurrent);
         dataMap.SelectDataMap(levelCurrent);
+    }
+    public void ClearData()
+    {
+        dataMap.ClearData();
+        mapCurrent.ClearData();
     }
 }
 [System.Serializable]
@@ -106,6 +118,12 @@ public class MapCurrent //luu data
     public void ResetData()
     {
         dataMapCurrent.ResetData();
+    }
+    public void ClearData()
+    {
+        ResetData();
+        SaveData();
+        LoadData();
     }
 }
 [System.Serializable]
@@ -295,6 +313,12 @@ public class DataMap //luu data
     //    LoadData();
     //}
     //#endregion
+    public void ClearData()
+    {
+        ResetData();
+        SaveData();
+        LoadData();
+    }
 }
 [System.Serializable]
 public class Data_Map //dong goi de quan li

@@ -26,7 +26,6 @@ public class DataStatusObject : DataBase
             "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
         LoadData();
         IsInItData = true;
-        status_All_Level_Object.OnInIt();
         // OnBuy();
         // OnBought();
     }
@@ -51,10 +50,7 @@ public class DataStatusObject : DataBase
     }
     public virtual void ClearData()
     {
-        ResetData();
-        SaveData();
-        LoadData();
-        Debug.Log("Clear");
+        File.Delete(Application.persistentDataPath + "/" + GetFileName());
     }
     public Status_All_Level_Object GetStatus_All_Level_Object()
     {
@@ -212,12 +208,6 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     public StatusObject statusObjectCurrent;
     public NameObject_This nameObject_This;
 
-    public List<StatusObject> statusObjectReset;
-    public  void OnInIt()
-    {
-        statusObjectReset = statusObjects;
-    }
-
     public StatusObject GetStatusObject_Current()
     {
         LoadStatusObjectCurrent();
@@ -244,15 +234,6 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     }
     public void ResetData()
     {
-      //  Debug.Log(statusObjectReset.);
-        if (statusObjectReset.Count == 0)
-        {
-            statusObjectReset = statusObjects;
-        }
-        else
-        {
-            statusObjects = statusObjectReset;
-        }
         statusObjectCurrent = statusObjects[0];
 
     }

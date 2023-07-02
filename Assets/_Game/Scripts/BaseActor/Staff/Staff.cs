@@ -870,7 +870,7 @@ public class Staff : BaseStaff, ICollect,IAct
             if (!isAct)
             {
                 isAct = true;
-                int r = Random.Range(4,7);
+                int r = Random.Range(4,6);
                 ChangeEmoji(r);
             }
         }

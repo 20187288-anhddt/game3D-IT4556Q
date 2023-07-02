@@ -47,11 +47,17 @@ public class BuildIngredientController : MonoBehaviour
     public void OnBuy(NameObject_This nameObject_This)
     {
         //neu Habitat da hoat dong thi k OnBuy
+        Debug.Log(nameObject_This);
+        Debug.Log(GetDataStatusObject(nameObject_This) == null);
         GetDataStatusObject(nameObject_This).OnBuy();
     }
     public void OnBought(NameObject_This nameObject_This)
     {
         GetDataStatusObject(nameObject_This).OnBought();
         EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
+    }
+    public List<DataStatusObject> GetDataStatusObject()
+    {
+        return dataStatusObjects;
     }
 }
