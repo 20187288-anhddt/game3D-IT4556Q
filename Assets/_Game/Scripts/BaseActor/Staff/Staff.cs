@@ -30,6 +30,11 @@ public class Staff : BaseStaff, ICollect,IAct
     private Animator anim;
     public GameObject fxBuffSpeed;
 
+    [SerializeField]
+    private float consDelayAct;
+    private float delayAct;
+    private bool isAct;
+    public List<GameObject> listEmojis { get => ListEmojis; set => ListEmojis = value; }
     public int maxCollectObj { get => MaxCollectObj; set => MaxCollectObj = value; }
     public int objHave { get => ObjHave; set => ObjHave = value; }
     public float timeDelayCatch { get => TimeDelayCatch; set => TimeDelayCatch = value; }
@@ -80,6 +85,7 @@ public class Staff : BaseStaff, ICollect,IAct
     private bool isBuff = false;
     public GameManager gameManager;
     private bool isInItEvent = false;
+    public GameObject emojiPanel;
     public override void Awake()
     {
         base.Awake();
@@ -158,6 +164,7 @@ public class Staff : BaseStaff, ICollect,IAct
     {
         fsm.execute();
         ChangeAnim();
+        StartActing();
     }
     private FsmSystem.ACTION OnIdleState(FsmSystem _fsm)
     {
@@ -799,6 +806,8 @@ public class Staff : BaseStaff, ICollect,IAct
         crocBags.Clear();
         zebraBags.Clear();
         eleBags.Clear();
+        emojiPanel.SetActive(false);
+        isAct = false;
     }
     public void ChangeOutfit(StaffType type)
     {
@@ -844,5 +853,70 @@ public class Staff : BaseStaff, ICollect,IAct
              waitingTime--;
              CountDownWatingTime();
          },1);
+    }
+    public void StartActing()
+    {
+        if (listShits.Count > 0)
+        {
+            if (!isAct)
+            {
+                isAct = true;
+                int r = Random.Range(1, 4);
+                ChangeEmoji(r);
+            }
+        }
+        else
+        {
+            if (!isAct)
+            {
+                isAct = true;
+                int r = Random.Range(4,7);
+                ChangeEmoji(r);
+            }
+        }
+        if (isAct)
+        {
+            delayAct -= Time.deltaTime;
+        }
+        if (delayAct < 0)
+        {
+            isAct = false;
+            ChangeEmoji(0);
+            delayAct = consDelayAct;
+        }
+
+    }
+    public void ChangeEmoji(int n)
+    {
+        if (n == 0)
+        {
+            emojiPanel.SetActive(false);
+            //for (int i = 0; i < listEmojis.Count; i++)
+            //{
+            //    listEmojis[i].SetActive(false);
+            //}
+        }
+        else
+        {
+            for (int i = 1; i <= listEmojis.Count; i++)
+            {
+                if (i != n)
+                {
+                    listEmojis[i - 1].SetActive(false);
+                }
+                else
+                {
+                    if (listEmojis[i - 1].activeSelf)
+                    {
+                        listEmojis[i - 1].SetActive(true);
+                    }
+                }
+            }
+            emojiPanel.SetActive(true);
+            //CounterHelper.Instance.QueueAction(5f, () =>
+            //{
+            //    ChangeEmoji(0);
+            //});
+        }
     }
 }

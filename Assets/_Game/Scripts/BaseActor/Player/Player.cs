@@ -55,6 +55,11 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public List<ZebraCloth> zebraCloths { get => ZebraCloths; set => ZebraCloths = value; }
     public List<ZebraBag> zebraBags { get => ZebraBags; set => ZebraBags = value; }
 
+    [SerializeField]
+    private float consDelayAct;
+    private float delayAct;
+    private bool isAct;
+    public List<GameObject> listEmojis { get => ListEmojis; set => ListEmojis = value; }
     public List<Shit> listShits { get => ListShits; set => ListShits = value; }
     public float SpeedAnim_Run_InOneSpeed = 0.3f;
     public CharacterController characterController;
@@ -66,6 +71,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public GameObject trailSmoke;
     public GameObject fxBuffSpeed;
     public GameObject fxBuffMoney;
+    public GameObject emojiPanel;
 
     public override void Awake()
     {
@@ -149,6 +155,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     {
         fsm.execute();
         ChangeAnim();
+        StartActing();
         //var rig = GetComponent<Rigidbody>();
         //animSpd = rig.velocity.magnitude;
         //if (Config(GameManager.Instance.joystick.Direction) != Vector2.zero && !isUnlock)
@@ -556,6 +563,8 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     }
     public void ResetPlayer()
     {
+        isAct = false;
+        delayAct = consDelayAct;
         objHave = 0;
         foreach(IngredientBase i in allIngredients)
         {
@@ -584,6 +593,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         eleBags.Clear();
         fxBuffSpeed.SetActive(false);
         fxBuffMoney.SetActive(false);
+        emojiPanel.SetActive(false);
     }
     public void PlayerStopMove()
     {
@@ -597,5 +607,61 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         isStopMove = false;
         trailSmoke.SetActive(true);
         Canvas_Joystick.Instance.isStopJoysick = false;
+    }
+    public void StartActing()
+    {
+        if(listShits.Count > 0)
+        {
+            if (!isAct)
+            {
+                isAct = true;
+                int r = Random.Range(1, 4);
+                ChangeEmoji(r);
+            }
+        }
+        if (isAct)
+        {
+            delayAct -= Time.deltaTime;
+        }
+        if (delayAct < 0)
+        {
+            isAct = false;
+            ChangeEmoji(0);
+            delayAct = consDelayAct;
+        }
+
+    }
+    public void ChangeEmoji(int n)
+    {
+        if(n == 0)
+        {
+            emojiPanel.SetActive(false);
+            //for (int i = 0; i < listEmojis.Count; i++)
+            //{
+            //    listEmojis[i].SetActive(false);
+            //}
+        }
+        else
+        {
+            for (int i = 1; i <= listEmojis.Count; i++)
+            {
+                if (i != n)
+                {
+                    listEmojis[i-1].SetActive(false);
+                }
+                else
+                {
+                    if (listEmojis[i-1].activeSelf)
+                    {
+                        listEmojis[i-1].SetActive(true);
+                    }
+                }
+            }
+            emojiPanel.SetActive(true);
+            //CounterHelper.Instance.QueueAction(5f, () =>
+            //{
+            //    ChangeEmoji(0);
+            //});
+        }
     }
 }

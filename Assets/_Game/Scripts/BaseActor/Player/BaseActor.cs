@@ -29,20 +29,41 @@ public class BaseActor : AllPool
 
     [Header("-----ListIngredients-----")]
     public List<IngredientBase> AllIngredients;
+
     public List<Fleece> Fleeces;
     public List<SheepCloth> SheepCloths;
+    public List<SheepBag> SheepBags;
+
     public List<CowFur> CowFurs;
     public List<CowCloth> CowCloths;
+    public List<CowBag> CowBags;
+
     public List<ChickenFur> ChickenFurs;
     public List<ChickenCloth> ChickenCloths;
+    public List<ChickenBag> ChickenBags;
+
     public List<BearFur> BearFurs;
     public List<BearCloth> BearCloths;
-    public List<SheepBag> SheepBags;
-    public List<CowBag> CowBags;
-    public List<ChickenBag> ChickenBags;
     public List<BearBag> BearBags;
-    public List<Shit> ListShits;
 
+    public List<LionFur> LionFurs;
+    public List<LionCloth> LionCloths;
+    public List<LionBag> LionBags;
+
+    public List<CrocFur> CrocFurs;
+    public List<CrocCloth> CrocCloths;
+    public List<CrocBag> CrocBags;
+
+    public List<EleFur> EleFurs;
+    public List<EleCloth> EleCloths;
+    public List<EleBag> EleBags;
+
+    public List<ZebraFur> ZebraFurs;
+    public List<ZebraCloth> ZebraCloths;
+    public List<ZebraBag> ZebraBags;
+
+    public List<Shit> ListShits;
+    public List<GameObject> ListEmojis;
     public virtual void Awake()
     {
         if(myTransform == null) { myTransform = this.transform; }

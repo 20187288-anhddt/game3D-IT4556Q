@@ -36,6 +36,12 @@ public class Customer : BaseCustomer,IAct
     public GroupCustomer grCus;
     private Vector3 pointTaget = Vector3.zero;
     private Animator anim;
+    [SerializeField]
+    private float consDelayAct;
+    private float delayAct;
+    private bool isAct;
+    public GameObject emojiPanel;
+    public List<GameObject> listEmojis { get => ListEmojis; set => ListEmojis = value; }
     public override void Awake()
     {
         base.Awake();
@@ -64,6 +70,7 @@ public class Customer : BaseCustomer,IAct
     {
         fsm.execute();
         ChangeAnim();
+        StartActing();
     }
     private void StartMoveToCloset(FsmSystem _fsm)
     {
@@ -235,6 +242,7 @@ public class Customer : BaseCustomer,IAct
     }
     public void ResetStatus()
     {
+        emojiPanel.SetActive(false);
         anim = mainModel.GetComponent<Animator>();
         transCloset = Vector3.zero;
         transBag = Vector3.zero;
@@ -252,6 +260,7 @@ public class Customer : BaseCustomer,IAct
         leader = null;
         isLeader = false;
         isExit = false;
+        isAct = false;
         mainModel.SetActive(true);
         outfitType = IngredientType.NONE;
         bagType = IngredientType.NONE;
@@ -377,5 +386,62 @@ public class Customer : BaseCustomer,IAct
         //        flag[3].SetActive(true);
         //        break;
         //}
+    }
+    public void StartActing()
+    {
+        if (!isAct)
+        {
+            isAct = true;
+            int r = Random.Range(4, 7);
+            ChangeEmoji(r);
+        }
+        if (isAct)
+        {
+            delayAct -= Time.deltaTime;
+        }
+        if (delayAct < 0)
+        {
+            delayAct = consDelayAct;
+            ChangeEmoji(0);
+            isAct = false;
+        }
+
+    }
+    public void ChangeEmoji(int n)
+    {
+        if (n == 0)
+        {
+            emojiPanel.SetActive(false);
+            //for (int i = 0; i < listEmojis.Count; i++)
+            //{
+            //    listEmojis[i].SetActive(false);
+            //}
+        }
+        else
+        {
+            int r = Random.Range(0, 10);
+            if (r < 5)
+            {
+                for (int i = 1; i <= listEmojis.Count; i++)
+                {
+                    if (i != n)
+                    {
+                        listEmojis[i - 1].SetActive(false);
+                    }
+                    else
+                    {
+                        if (!listEmojis[i - 1].activeSelf)
+                        {
+                            listEmojis[i - 1].SetActive(true);
+                        }
+                    }
+                }
+                emojiPanel.SetActive(true);
+            }
+            //CounterHelper.Instance.QueueAction(5f, () =>
+            //{
+            //    ChangeEmoji(0);
+            //});
+        }
     }
 }
