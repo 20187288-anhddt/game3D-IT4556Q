@@ -8,9 +8,10 @@ public class DataStatusObject : DataBase
     public Status_All_Level_Object status_All_Level_Object;
     private bool IsInItData = false;
    
-    public void Start()
+    public virtual void Start()
     {
         CheckInItData();
+        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
     }
     public void CheckInItData()
     {
@@ -25,6 +26,7 @@ public class DataStatusObject : DataBase
             "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
         LoadData();
         IsInItData = true;
+        status_All_Level_Object.OnInIt();
         // OnBuy();
         // OnBought();
     }
@@ -46,6 +48,13 @@ public class DataStatusObject : DataBase
     {
         base.ResetData();
         status_All_Level_Object.ResetData();
+    }
+    public virtual void ClearData()
+    {
+        ResetData();
+        SaveData();
+        LoadData();
+        Debug.Log("Clear");
     }
     public Status_All_Level_Object GetStatus_All_Level_Object()
     {
@@ -115,7 +124,7 @@ public class DataStatusObject : DataBase
     }
     public void OnBought(StatusObject statusObjectCheck = null)//chuyen sang trang thai da mua
     {
-       // Debug.Log("Bought");
+        Debug.Log("Bought");
         if (statusObjectCheck == null)
         {
             statusObjectCheck = GetStatusObject_Current();
@@ -202,6 +211,13 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     public List<StatusObject> statusObjects;
     public StatusObject statusObjectCurrent;
     public NameObject_This nameObject_This;
+
+    public List<StatusObject> statusObjectReset;
+    public  void OnInIt()
+    {
+        statusObjectReset = statusObjects;
+    }
+
     public StatusObject GetStatusObject_Current()
     {
         LoadStatusObjectCurrent();
@@ -222,11 +238,20 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
             if (statusObject.levelThis == statusObjectCurrent.levelThis)
             {
                 statusObjectCurrent = statusObject;
+               
             }
         }
     }
     public void ResetData()
     {
+        if (statusObjectReset.Count == 0)
+        {
+            statusObjectReset = statusObjects;
+        }
+        else
+        {
+            statusObjects = statusObjectReset;
+        }
         statusObjectCurrent = statusObjects[0];
 
     }

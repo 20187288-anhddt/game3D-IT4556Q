@@ -23,7 +23,8 @@ public class DataBagCloset : DataStatusObject
     }
     private void ResetDataInListPos()
     {
-        for(int i = 0; i < CountID_In_ListPos; i++)
+        keyValue_DataInListPos.Clear();
+        for (int i = 0; i < CountID_In_ListPos; i++)
         {
             keyValue_DataInListPos.Add(i, false);
         }

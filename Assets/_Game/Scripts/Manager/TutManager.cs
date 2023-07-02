@@ -39,6 +39,7 @@ public class TutManager : MonoBehaviour
         line.positionCount = 2;
         fxTUT.SetActive(false);
         CheckDoneAllTuT();
+      //  EnventManager.AddListener(EventName.QuitGame.ToString(), Quit_Game);
     }
 
     // Update is called once per frame
@@ -263,7 +264,6 @@ public class TutManager : MonoBehaviour
     }
     public void DoneAllTuT()
     {
-       
         EnventManager.TriggerEvent(EventName.DoneAllTuT.ToString());
     }
     public void CheckDoneAllTuT()
@@ -300,6 +300,15 @@ public class TutManager : MonoBehaviour
         }
         DoneAllTuT();
     }
+    //private void Quit_Game()
+    //{
+    //    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
+    //    {
+    //      //  DataManager.Instance.ClearAllData();
+    //        EnventManager.TriggerEvent(EventName.ClearData.ToString());
+    //    }
+       
+    //}
     public enum NameTuT
     {
         MachineTUT,

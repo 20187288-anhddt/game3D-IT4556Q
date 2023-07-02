@@ -28,7 +28,8 @@ public class MachineBase : BuildObj, ILock
     protected bool isBuff = false;
     public GameObject buffFx;
     public Animator anim;
-
+    public float Speed_Anim;
+    protected float timeDelay_DeFault;
     public void AddEvent()
     {
         EnventManager.AddListener(EventName.Machine_Double_Speed_Play.ToString(), DoubleSpeed);
@@ -43,11 +44,13 @@ public class MachineBase : BuildObj, ILock
         isBuff = true;
        // buffFx.SetActive(true);
         timeDelay = timeDelay / 2;
+        anim.speed = Speed_Anim * (2 * timeDelay_DeFault - timeDelay);
     }
     public virtual void ResetSpeed()
     {
         buffFx.SetActive(false);
         isBuff = false;
+        anim.speed = Speed_Anim * (2 * timeDelay_DeFault - timeDelay);
     }
     public void ShortCutIngredients()
     {

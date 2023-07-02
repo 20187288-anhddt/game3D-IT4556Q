@@ -8,6 +8,10 @@ public class Data_Bonus_BuffMoney : DataBase
     public int moneyBuff = 0;
     public int level_MoneyBuff = 0;
     private bool isInItData = false;
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
+    }
     public void InItData()
     {
         SetFileName(nameof(Data_Bonus_BuffMoney));
@@ -36,6 +40,13 @@ public class Data_Bonus_BuffMoney : DataBase
         base.ResetData();
         moneyBuff = 100;
         level_MoneyBuff = 1;
+    }
+    public void ClearData()
+    {
+        CheckInItData();
+        ResetData();
+        SaveData();
+        LoadData();
     }
     public int GetMoneyBuff()
     {

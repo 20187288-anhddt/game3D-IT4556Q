@@ -13,6 +13,7 @@ public class DataProcessInMapController : DataBase
         {
             CheckAndLoadRewardMissionComplete(EventName.ChickenHabitat_OnBuy);
         }, 0.5f));
+        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
     }
     public void InItData()
     {
@@ -46,7 +47,13 @@ public class DataProcessInMapController : DataBase
         dataProcess.GetDataApparatusProcess().InItData();
         dataProcess.GetDataEventProcess().InItData();
     }
-
+    public void ClearData()
+    {
+        dataProcess.GetDataApparatusProcess().ClearData();
+        dataProcess.GetDataEventProcess().ClearData();
+        SaveData();
+        LoadData();
+    }
     public void AddEvent()
     {
         #region Bear
@@ -141,11 +148,20 @@ public class DataEventProcess
     public DataEventProcessCurrent dataEventProcessCurrent;
     private EventInMapProcess eventInMapProcessCurrent;
     private string fileName = " ";
+    private bool isInItData;
+    public void CheckInInData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
+    }
     public void InItData()
     {
         SetFileName(nameof(DataEventProcess) +
             "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
         LoadData();
+        isInItData = true;
     }
     public void CheckAndLoadRewardMissionComplete(EventName eventName)
     {
@@ -214,7 +230,13 @@ public class DataEventProcess
     {
         dataEventProcessCurrent.ResetData();
     }
-
+    public void ClearData()
+    {
+        CheckInInData();
+        ResetData();
+        SaveData();
+        LoadData();
+    }
 }
 [System.Serializable]
 public class DataEventProcessCurrent
@@ -231,11 +253,20 @@ public class DataApparatusProcess
     public DataApparatusProcessCurrent dataApparatusProcessCurrent;
     private ApparatusProcess apparatusProcessCurrent;
     private string fileName = " ";
+    private bool isInItData;
+    public void CheckInInData()
+    {
+        if (!isInItData)
+        {
+            InItData();
+        }
+    }
     public void InItData()
     {
         SetFileName(nameof(DataProcessInMapController) +
             "_Map " + DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
         LoadData();
+        isInItData = true;
     }
     public void CheckAndLoadRewardMissionComplete(EventName eventName)
     {
@@ -317,7 +348,13 @@ public class DataApparatusProcess
     {
         dataApparatusProcessCurrent.ResetData();
     }
-
+    public void ClearData()
+    {
+        CheckInInData();
+        ResetData();
+        SaveData();
+        LoadData();
+    }
 }
 [System.Serializable]
 public class DataApparatusProcessCurrent

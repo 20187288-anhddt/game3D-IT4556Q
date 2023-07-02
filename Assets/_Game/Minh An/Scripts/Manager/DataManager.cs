@@ -29,7 +29,13 @@ public class DataManager : GenerticSingleton<DataManager>
       //  GetDataMap().GetDataMap().SetData_ActiveStaff_Checkout(NameObject_This.CheckOutTable, true);
       //  Debug.Log(GetDataMap().GetDataMap().GetData_Map().GetData_InCheckout().GetData_Checkout(NameObject_This.CheckOutTable).isActiveStaff);
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ClearAllData();
+        }
+    }
 
     public DataMapController GetDataMap()
     {
@@ -54,5 +60,9 @@ public class DataManager : GenerticSingleton<DataManager>
     public Data_Bonus_BuffMoney GetData_Bonus_BuffMoney()
     {
         return data_Bonus_BuffMoney;
+    }
+    public void ClearAllData()
+    {
+        EnventManager.TriggerEvent(EventName.ClearData.ToString());
     }
 }

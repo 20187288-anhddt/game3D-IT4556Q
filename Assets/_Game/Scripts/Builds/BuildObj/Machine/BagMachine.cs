@@ -20,6 +20,8 @@ public class BagMachine : MachineBase
         numOutputSave = (dataStatusObject as MachineDataStatusObject).Get_CountItemOutput();
        
         timeDelay = (dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Speed().infoThese[0].value;
+        Speed_Anim = 1 / timeDelay;
+        timeDelay_DeFault = timeDelay;
         if (isBuff)
         {
             DoubleSpeed();
@@ -251,6 +253,7 @@ public class BagMachine : MachineBase
     }
     private void ChangeAnim(bool isWorking)
     {
+        anim.speed = Speed_Anim * (2 * timeDelay_DeFault - timeDelay);
         if (isWorking)
         {
             anim.enabled = true;

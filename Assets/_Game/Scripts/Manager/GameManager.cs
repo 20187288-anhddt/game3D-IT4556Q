@@ -47,5 +47,10 @@ public class GameManager : MenuManager
     {
         Debug.Log("Quit");
         EnventManager.TriggerEvent(EventName.QuitGame.ToString());
+        if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
+        {
+            //  DataManager.Instance.ClearAllData();
+            EnventManager.TriggerEvent(EventName.ClearData.ToString());
+        }
     }
 }

@@ -16,6 +16,10 @@ public class DataUIController : DataBase
     {
         CheckInItData();
     }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
+    }
     private void InItData()
     {
         SetFileName(nameof(DataUIController));
@@ -49,6 +53,13 @@ public class DataUIController : DataBase
         isOpenCanvasHome = false;
         isOpen_UI_Upgrade = false;
         isOpen_UI_UIBonus = false;
+    }
+    public void ClearData()
+    {
+        CheckInItData();
+        ResetData();
+        SaveData();
+        LoadData();
     }
     public bool Get_IsOpenCanvasHome()
     {

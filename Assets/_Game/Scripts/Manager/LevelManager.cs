@@ -42,6 +42,10 @@ public class LevelManager : MonoBehaviour
         {
             Set_isDoneAllTUT(true);
         });
+        EnventManager.AddListener(EventName.ClearData.ToString(), () =>
+        {
+            dataLevelManager.ClearData();
+        });
     }
     public void ResetLevel()
     {
@@ -131,6 +135,12 @@ public class DataLevelManager
     public void ResetData()
     {
         dataLevelMap.ResetData();
+    }
+    public void ClearData()
+    {
+        ResetData();
+        SaveData();
+        LoadData();
     }
     private void CheckInItData()
     {

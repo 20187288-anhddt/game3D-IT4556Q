@@ -15,6 +15,7 @@ public class DataMoneyController : DataBase
     {
         EnventManager.AddListener(EventName.OnEventDoubleMoney.ToString(), OnDoubleMoneyAdd);
         EnventManager.AddListener(EventName.OffEventDoubleMoney.ToString(), OffDoubleMoneyAdd);
+        EnventManager.AddListener(EventName.ClearData.ToString(), ClearData);
     }
     public void InItData()
     {
@@ -82,6 +83,12 @@ public class DataMoneyController : DataBase
         isDoubleAddMoney = true;
         Player.Instance.ResetMoneyBuff();
         Debug.Log("OFF Double Add Money");
+    }
+    public void ClearData()
+    {
+        ResetData();
+        SaveData();
+        LoadData();
     }
 }
 [System.Serializable]

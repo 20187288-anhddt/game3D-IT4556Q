@@ -159,7 +159,8 @@ public enum EventName {
     OnBonus_NoShit,
     CheckTickInCustomize,
     OpenUIBonus,
-    DoneAllTuT
+    DoneAllTuT,
+    ClearData,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
