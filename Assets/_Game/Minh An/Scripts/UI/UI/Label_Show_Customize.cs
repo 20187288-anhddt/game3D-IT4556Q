@@ -58,7 +58,7 @@ public class Label_Show_Customize : UI_Child
                     else
                     {
                         Value_CostCurent = value;
-                        if (value > 1000)
+                        if (value >= 1000)
                         {
                             float x = value / 1000;
                             txt_Money.text = (x + ((value - 1000 * x) / 1000)).ToString() + "K";

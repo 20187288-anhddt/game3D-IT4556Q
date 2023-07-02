@@ -34,7 +34,7 @@ public class UI_Bonus : UI_Child
     public virtual void Reward()
     {
        // EventBounsController.Instance.RewardTrigger(this);
-        Invoke(nameof(StopReward), timeBuff);
+        //Invoke(nameof(StopReward), timeBuff);
         Close();
     }
     public void Set_OnBonus(bool value)

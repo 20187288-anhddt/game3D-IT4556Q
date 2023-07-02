@@ -66,6 +66,15 @@ public class Canvas_Order : UI_Canvas
             img_BG_Btn_Collect.sprite = spr_BG_Collect_On;
             img_BG_Btn_Collect_WatchVideo.sprite = spr_BG_CollectWatchVideo_On;
         }
+        if (Canvas_Bonus.Instance != null)
+        {
+            if (Canvas_Bonus.Instance.gameObject.activeInHierarchy)
+            {
+                Canvas_Bonus.Instance?.gameObject.SetActive(false);
+            }
+         
+        }
+        
     }
     public void ShowItem(IngredientType ingredientType, int valueCurrent)
     {
@@ -187,7 +196,6 @@ public class Canvas_Order : UI_Canvas
        // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
         UI_Manager.Instance?.AddUI_To_Stack_UI_Open(this);
         Canvas_Home.Instance?.gameObject.SetActive(false);
-        Canvas_Bonus.Instance?.gameObject.SetActive(false);
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(IngredientType.CAR);
         CameraController.Instance?.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
         0, 2.5f, 2.5f, 2.5f);

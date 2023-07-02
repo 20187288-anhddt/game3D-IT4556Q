@@ -14,6 +14,7 @@ public class UI_InfoBuff : UI_Child
     public GameObject Icon_NoShit;
     private float m_TimeBuff;
     private bool isInItInfo = false;
+    private System.Action action_StopBuff;
     private void Awake()
     {
         OnInIt();
@@ -26,7 +27,14 @@ public class UI_InfoBuff : UI_Child
     public void InItInfo(float timeBuff)
     {
         isInItInfo = true;
-        m_TimeBuff = timeBuff;
+        if (gameObject.activeInHierarchy)
+        {
+            m_TimeBuff += timeBuff;
+        }
+        else
+        {
+            m_TimeBuff = timeBuff;
+        }
     }
     private void LoadUI()
     {
@@ -40,6 +48,7 @@ public class UI_InfoBuff : UI_Child
         {
             if(m_TimeBuff <= 0)
             {
+                action_StopBuff?.Invoke();
                 DestroyThis();
             }
             else
@@ -57,5 +66,9 @@ public class UI_InfoBuff : UI_Child
     public void DestroyThis()
     {
         Destroy(gameObject);
+    }
+    public void SetActionStopBuff(System.Action actionStopBuff)
+    {
+        action_StopBuff = actionStopBuff;
     }
 }

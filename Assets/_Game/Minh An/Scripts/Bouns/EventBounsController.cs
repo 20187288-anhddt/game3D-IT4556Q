@@ -180,6 +180,17 @@ public class EventBounsController : Singleton<EventBounsController>
         }
         return null;
     }
+    public InfoBouns GetInfoBonus(TypeBonus typeBonus)
+    {
+        foreach (InfoBouns infoBouns in infoBouns)
+        {
+            if (infoBouns.uI_Bonus.typeBonus == typeBonus)
+            {
+                return infoBouns;
+            }
+        }
+        return null;
+    }
 } 
 [System.Serializable]
 public class DataBonus : DataBase

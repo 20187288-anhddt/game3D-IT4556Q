@@ -53,7 +53,7 @@ public class UI_Bonus_NoShit : UI_Bonus
         base.Reward();
         Set_OnBonus(false);
         EnventManager.TriggerEvent(EventName.NoShit_Play.ToString());
-        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff);
+        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff, StopReward);
     }
     public override void StopReward()
     {
