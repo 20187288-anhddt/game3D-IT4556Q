@@ -37,6 +37,22 @@ public class CameraController : GenerticSingleton<CameraController>
         }
         SetMoveDistance(30 + levelMap * 5);
     }
+    public void SetFollow_LookAt(Transform transformFollow, Transform transformLookAt, float timeDelayFollow = 0, float XDamping = 1, float YDamping = 1, float ZDamping = 1)
+    {
+        if(cinemachineFramingTransposer == null)
+        {
+            cinemachineFramingTransposer = cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
+        StartCoroutine(IE_DelayAction(() =>
+        {
+            cinemachineVirtual.Follow = transformFollow;
+            cinemachineVirtual.LookAt = transformLookAt;
+
+        }, timeDelayFollow));
+        cinemachineFramingTransposer.m_XDamping = XDamping;
+        cinemachineFramingTransposer.m_YDamping = YDamping;
+        cinemachineFramingTransposer.m_ZDamping = ZDamping;
+    }
     public void SetFollowAndLookAt(Transform transformFollow, Transform transformLookAt, 
         bool isResetFollowPlayer = false, float timeDelayFollow = 0, float timeDelayResetFollowPlayer = 2.5f,
         float XDamping = 1, float YDamping = 1, float ZDamping = 1, System.Action actionStartFollow = null,
@@ -101,7 +117,11 @@ public class CameraController : GenerticSingleton<CameraController>
     }
     public void ResetFollowPlayer()
     {
-        SetFollowAndLookAt(Player.Instance.myTransform, Player.Instance.myTransform, false, 0, 2.5f, 1, 1, 1, null, null, true);
+        if(Player.Instance == null)
+        {
+            return;
+        }
+        SetFollow_LookAt(Player.Instance.myTransform, Player.Instance.myTransform, 0, 1, 1, 1);
        // cinemachineFramingTransposer.m_CameraDistance = 45;
     }
     IEnumerator IE_DelayAction(System.Action action, float timeDelay)
