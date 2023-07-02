@@ -48,7 +48,10 @@ public class Canvas_Home : UI_Canvas
         {
             Show_Btn_Upgrade();
         }
-     
+        if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome())
+        {
+            Close();
+        }
     }
     private void Start()
     {

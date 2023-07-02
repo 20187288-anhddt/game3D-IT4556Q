@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class DataUIController : DataBase
 {
@@ -56,10 +57,7 @@ public class DataUIController : DataBase
     }
     public void ClearData()
     {
-        CheckInItData();
-        ResetData();
-        SaveData();
-        LoadData();
+        File.Delete(Application.persistentDataPath + "/" + GetFileName());
     }
     public bool Get_IsOpenCanvasHome()
     {

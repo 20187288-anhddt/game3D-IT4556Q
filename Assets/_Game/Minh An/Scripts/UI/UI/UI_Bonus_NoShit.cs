@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class UI_Bonus_NoShit : UI_Bonus
 {
     [SerializeField] private Text txt_Time;
+    private DataBonusNoShit dataBonusNoShit = new DataBonusNoShit();
     public override void Awake()
     {
         base.Awake();
         OnInIt();
         Close();
     }
-    
     public override void OnInIt()
     {
         base.OnInIt();
-        Set_OnBonus(Canvas_Bonus.Instance.GetDataBonusNoShit().IsOnBonus());
+        Set_OnBonus(dataBonusNoShit.IsOnBonus());
     }
 
     public void LoadUI()
@@ -50,14 +50,10 @@ public class UI_Bonus_NoShit : UI_Bonus
     }
     public override void Reward()
     {
-        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_NoShit", () => 
-        {
-            base.Reward();
-            Set_OnBonus(false);
-            EnventManager.TriggerEvent(EventName.NoShit_Play.ToString());
-            UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff, StopReward);
-        });
-      
+        base.Reward();
+        Set_OnBonus(false);
+        EnventManager.TriggerEvent(EventName.NoShit_Play.ToString());
+        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff);
     }
     public override void StopReward()
     {
@@ -71,25 +67,20 @@ public class UI_Bonus_NoShit : UI_Bonus
     }
     public void SetDataOnBonus(bool value)
     {
-        //Debug.Log(value);
-        Canvas_Bonus.Instance.GetDataBonusNoShit().SetIsOnBonus(value);
-        Set_OnBonus(Canvas_Bonus.Instance.GetDataBonusNoShit().IsOnBonus());
+        Debug.Log(value);
+        dataBonusNoShit.SetIsOnBonus(value);
+        Set_OnBonus(dataBonusNoShit.IsOnBonus());
     }
 }
 
 public class DataBonusNoShit : DataBase
 {
-    private static string NameDataIsOnBonus = "DataBonusNoShit";
+    private static string NameDataIsOnBonus = "DataIsOnBonus";
     public bool isOnBonus = false;
     private bool isInItData = false;
-
-    public void AddEvent()
+    private void Awake()
     {
-        EnventManager.AddListener(EventName.ClearData.ToString(), () =>
-        {
-            ClearData();
-            Debug.Log("ab");
-        });
+        InItData();
     }
     public void InItData()
     {
@@ -128,13 +119,6 @@ public class DataBonusNoShit : DataBase
     public bool IsOnBonus()
     {
         CheckInItData();
-        LoadData();
         return isOnBonus;
-    }
-    public void ClearData()
-    {
-        ResetData();
-        SaveData();
-        Debug.Log(isOnBonus);
     }
 }

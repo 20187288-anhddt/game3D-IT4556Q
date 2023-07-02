@@ -116,6 +116,7 @@ public class CheckUnlock : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        t = 0;
         var player = other.GetComponent<Player>();
         if (player != null)
         {
