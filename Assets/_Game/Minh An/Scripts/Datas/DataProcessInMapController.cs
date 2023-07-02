@@ -791,19 +791,19 @@ public class RewardProcessCompleteMission
                 (EventBounsController.Instance.GetUIBonus(TypeBonus.NoShit) as UI_Bonus_NoShit).SetDataOnBonus(true);
                 break;
             case EventName.Camera_Follow_CowBagMachine:
-                CameraFollowObject(IngredientType.COW_BAG, NameObject_This.CowBagMachine, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowBagMachine, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
                     , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_CowBagCloset:
-                CameraFollowObject(IngredientType.COW_BAG, NameObject_This.CowBagCloset, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
+                CameraFollowObject(IngredientType.COW, NameObject_This.CowBagCloset, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
                    , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_BearBagMachine:
-                CameraFollowObject(IngredientType.BEAR_BAG, NameObject_This.BearBagMachine, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearBagMachine, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
                   , PlayerStopMove, PlayerContinueMove);
                 break;
             case EventName.Camera_Follow_BearBagCloset:
-                CameraFollowObject(IngredientType.BEAR_BAG, NameObject_This.BearBagCloset, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
+                CameraFollowObject(IngredientType.BEAR, NameObject_This.BearBagCloset, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
                   , PlayerStopMove, PlayerContinueMove);
                 break;
         }
@@ -825,6 +825,7 @@ public class RewardProcessCompleteMission
         float timeDelayFollow = 0, float timeDelayResetFollowPlayer = 2.5f, float XDamping = 1, float YDamping = 1, float ZDamping = 1, 
         System.Action actionStartFollow = null, System.Action actionEndFollow = null)
     {
+       
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(ingredientType);
         CameraController.Instance.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(nameObject_This).myTransform, buildIngredientController.GetBaseBuild(nameObject_This).myTransform, 
             isResetFollowPlayer, timeDelayFollow, timeDelayResetFollowPlayer, XDamping, YDamping, ZDamping, actionStartFollow, actionEndFollow);
