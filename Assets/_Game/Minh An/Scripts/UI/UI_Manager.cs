@@ -124,4 +124,12 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
         }
         CloseAll_UI_In_Stack_Open();
     }
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
+    public void Open()
+    {
+        gameObject.SetActive(true);
+    }
 }

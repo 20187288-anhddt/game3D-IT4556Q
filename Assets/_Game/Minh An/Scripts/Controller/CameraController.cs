@@ -64,7 +64,8 @@ public class CameraController : GenerticSingleton<CameraController>
         isCameraOnFollowPlayer = isFollowPlayer;
         if (isCloseALLUI)
         {
-            UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
+            // UI_Manager.Instance.CloseAll_UI_In_Stack_Open();
+            UI_Manager.Instance.Close();
         }
        
         actionStartFollow?.Invoke();
@@ -85,13 +86,13 @@ public class CameraController : GenerticSingleton<CameraController>
             {
                 ResetFollowPlayer();
                 actionEndFollow?.Invoke();
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
-                if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
-                {
-                    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
-                }
-               
+                //UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
+                //UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
+                //if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
+                //{
+                //    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                //}
+                UI_Manager.Instance.Open();
             }, timeDelayResetFollowPlayer));
         }
         else
@@ -99,12 +100,13 @@ public class CameraController : GenerticSingleton<CameraController>
             StartCoroutine(IE_DelayAction(() =>
             {
                 actionEndFollow?.Invoke();
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
-                if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
-                {
-                    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
-                }
+                //UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
+                //UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
+                //if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
+                //{
+                //    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                //}
+                UI_Manager.Instance.Open();
             }, timeDelayResetFollowPlayer));
 
         }

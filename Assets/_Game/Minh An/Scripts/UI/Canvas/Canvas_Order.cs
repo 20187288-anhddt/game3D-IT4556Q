@@ -44,6 +44,7 @@ public class Canvas_Order : UI_Canvas
     }
     private void InItData()
     {
+        if(instane == null) { instane = this; }
         btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_CloseAll.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_Collect.onClick.AddListener(Collect);
@@ -121,7 +122,7 @@ public class Canvas_Order : UI_Canvas
     {
         if (isCompleteAllMission)
         {
-            Debug.Log("Collect");
+           // Debug.Log("Collect");
             DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
                  DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent);
             isCompleteAllMission = false;
@@ -133,7 +134,7 @@ public class Canvas_Order : UI_Canvas
     {
         if (isCompleteAllMission)
         {
-            Debug.Log("Collect WatchVideo");
+          //  Debug.Log("Collect WatchVideo");
             DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
                  DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent * 3);
             isCompleteAllMission = false;
@@ -193,14 +194,24 @@ public class Canvas_Order : UI_Canvas
     public override void Open()
     {
         base.Open();
-        Close();
-        base.Open();
+       // Close();
+       // base.Open();
        // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
         UI_Manager.Instance?.AddUI_To_Stack_UI_Open(this);
         Canvas_Home.Instance?.gameObject.SetActive(false);
         BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(IngredientType.CAR);
         CameraController.Instance?.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
         0, 2.5f, 2.5f, 2.5f);
+        //CloseDelay();
+        Invoke(nameof(CloseDelay), 0.05f);
+        Invoke(nameof(OpenDelay), 0.051f);
     }
-  
+    private void CloseDelay()
+    {
+        gameObject.SetActive(false);
+    }
+    private void OpenDelay()
+    {
+        gameObject.SetActive(true);
+    }
 }

@@ -106,6 +106,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     {
         isBuff = true;
         fxBuffSpeed.SetActive(true);
+        speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
         speed *= 1.25f;
     }
     private void ResetSpeed()

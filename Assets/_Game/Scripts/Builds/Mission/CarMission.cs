@@ -12,6 +12,7 @@ public class CarMission : BaseBuild
     public Transform idlePos;
     public GameObject[] carModel;
     public GameObject car;
+    public GameObject carSmoke;
     public bool isReadyMission;
     public bool isOnMission;
     [SerializeField]
@@ -36,6 +37,7 @@ public class CarMission : BaseBuild
     public override void StartInGame()
     {
         base.StartInGame();
+        carSmoke.gameObject.SetActive(false);
         listMission = new Dictionary<IngredientType, int>();
         listCurClothMachine = new List<ClothMachine>();
         listCurBagMachine = new List<BagMachine>();
@@ -85,6 +87,7 @@ public class CarMission : BaseBuild
                     checkColliPlayer.SetActive(true);
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {
+                        carSmoke.gameObject.SetActive(true);
                         isOnMission = true;
                         checkColliPlayer.SetActive(false);
                         StartCountDown();
@@ -290,6 +293,7 @@ public class CarMission : BaseBuild
         UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
+            carSmoke.gameObject.SetActive(false);
             ClearMission();
             if (isWin)
             {
