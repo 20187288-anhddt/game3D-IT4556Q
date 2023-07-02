@@ -51,7 +51,6 @@ public class UI_Bonus_DoubleSpeed_Player : UI_Bonus
     }
     public void Reward(float timeBuff)
     {
-        base.Reward();
         Set_OnBonus(false);
         EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
         UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
@@ -59,6 +58,7 @@ public class UI_Bonus_DoubleSpeed_Player : UI_Bonus
     }
     public override void StopReward()
     {
+        Debug.Log("Stop Player_Double_Speed_Stop");
         base.StopReward();
         EnventManager.TriggerEvent(EventName.Player_Double_Speed_Stop.ToString());
     }

@@ -13,32 +13,7 @@ public class UI_Bonus_BuffMoney : UI_Bonus
         base.Awake();
         Close();
     }
-    private void Start()
-    {
-        EnventManager.AddListener(EventName.ReLoadBonusMoneyBuff.ToString(), LoadMoneyBuff);
-    }
     private void OnEnable()
-    {
-        LoadMoneyBuff();
-    }
-    private void Update()
-    {
-        if (isInItTime)
-        {
-            if (timeSecond > 0)
-            {
-                timeSecond -= Time.deltaTime;
-            }
-            if (timeSecond <= 0)
-            {
-                timeSecond = 0;
-                Close();
-            }
-            LoadUI();
-        }
-
-    }
-    private void LoadMoneyBuff()
     {
         moneyBuff = DataManager.Instance.GetData_Bonus_BuffMoney().GetMoneyBuff();
         if (moneyBuff > 1000)
@@ -64,42 +39,29 @@ public class UI_Bonus_BuffMoney : UI_Bonus
         }
 
     }
-    public override void ShowTableReward()
+    private void Update()
     {
-        base.ShowTableReward();
-        (uI_Table_Info_Bonus.GetI_TableLabelBuff(TypeBonus.Money_Buff) as UI_TableLabelBuff_Money).LoadMoney(DataManager.Instance.GetData_Bonus_BuffMoney().GetMoneyBuff());
-    }
-    //private void Update()
-    //{
-    //    if (isInItTime)
-    //    {
-    //        if (timeSecond > 0)
-    //        {
-    //            timeSecond -= Time.deltaTime;
-    //        }
-    //        if (timeSecond <= 0)
-    //        {
-    //            timeSecond = 0;
-    //            Close();
-    //        }
-    //        LoadUI();
-    //    }
+        if (isInItTime)
+        {
+            if (timeSecond > 0)
+            {
+                timeSecond -= Time.deltaTime;
+            }
+            if (timeSecond <= 0)
+            {
+                timeSecond = 0;
+                Close();
+            }
+            LoadUI();
+        }
 
-    //}
+    }
     public override void Reward()
     {
-        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>
-        {
-            base.Reward();
-            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
-                DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) +
-                moneyBuff);
-            Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
-            parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
-            parameters[1] = new Firebase.Analytics.Parameter("value", moneyBuff);
-            parameters[2] = new Firebase.Analytics.Parameter("source", "Bonus_Buff_AddMoney");
-            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
-        });
+        base.Reward();
+        DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+            DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) +
+            moneyBuff);
        // Set_OnBonus(false);
     }
     public override void StopReward()

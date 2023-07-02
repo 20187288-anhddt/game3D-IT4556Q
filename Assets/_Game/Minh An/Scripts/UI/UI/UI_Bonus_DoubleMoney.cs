@@ -53,7 +53,7 @@ public class UI_Bonus_DoubleMoney : UI_Bonus
         //DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD,
         //     DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD));
         UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Money_Double, timeBuff,
-            EventBounsController.Instance.GetUIBonus(TypeBonus.DoubleSpeed_Player).StopReward);
+            StopReward);
         Set_OnBonus(false);
         EnventManager.TriggerEvent(EventName.OnEventDoubleMoney.ToString());
     }

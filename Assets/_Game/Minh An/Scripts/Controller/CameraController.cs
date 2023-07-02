@@ -87,7 +87,11 @@ public class CameraController : GenerticSingleton<CameraController>
                 actionEndFollow?.Invoke();
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
+                {
+                    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                }
+               
             }, timeDelayResetFollowPlayer));
         }
         else
@@ -97,7 +101,10 @@ public class CameraController : GenerticSingleton<CameraController>
                 actionEndFollow?.Invoke();
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Static);
                 UI_Manager.Instance.OpenUI(NameUI.Canvas_Home);
-                UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                if (UI_Manager.Instance.isCloseUI(NameUI.Canvas_Order))
+                {
+                    UI_Manager.Instance.OpenUI(NameUI.Canvas_Bonus);
+                }
             }, timeDelayResetFollowPlayer));
 
         }

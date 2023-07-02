@@ -122,7 +122,8 @@ public class Canvas_Order : UI_Canvas
         if (isCompleteAllMission)
         {
             Debug.Log("Collect");
-            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent);
+            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+                 DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent);
             isCompleteAllMission = false;
             UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             actionCollect?.Invoke();
@@ -133,7 +134,8 @@ public class Canvas_Order : UI_Canvas
         if (isCompleteAllMission)
         {
             Debug.Log("Collect WatchVideo");
-            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, MoneyCurrent * 3);
+            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+                 DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent * 3);
             isCompleteAllMission = false;
             UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             actionCollect?.Invoke();
