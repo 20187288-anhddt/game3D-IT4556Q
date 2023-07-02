@@ -44,11 +44,14 @@ public class CheckUnlock : MonoBehaviour
     {
         if (!(normal as BaseBuild).unlockAds)
         {
-            if (!normal.IsLock) return;
+            if (!normal.IsLock)
+            {
+                return;
+            }
             IUnlock unlock = other.GetComponent<IUnlock>();
             if (unlock != null)
             {
-                effect.DOPlay();
+                
                 t += Time.deltaTime;
                 if (t > 0.75f)
                 {
@@ -125,7 +128,7 @@ public class CheckUnlock : MonoBehaviour
         IUnlock unlock = other.GetComponent<IUnlock>();
         if (unlock != null)
         {
-            effect.DOPause();
+            
             if (isUnlockAds)
             {
                 //bound[1].DOKill();
@@ -167,7 +170,7 @@ public class CheckUnlock : MonoBehaviour
                 //bound[0].DOFillAmount(1, 0.75f).OnComplete(() =>
                 //{
                 normal.UnLock(true, true);
-                effect.DOPause();
+                //effect.DOPause();
                 //});
             }
         }
@@ -204,7 +207,7 @@ public class CheckUnlock : MonoBehaviour
             if (normal.CurrentCoin <= 0)
             {
                 normal.UnLock(true, true);
-                effect.DOPause();
+                //effect.DOPause();
             }
 
         }

@@ -244,6 +244,7 @@ public class Status_All_Level_Object //1 doi tuong co nhieu level
     }
     public void ResetData()
     {
+      //  Debug.Log(statusObjectReset.);
         if (statusObjectReset.Count == 0)
         {
             statusObjectReset = statusObjects;
