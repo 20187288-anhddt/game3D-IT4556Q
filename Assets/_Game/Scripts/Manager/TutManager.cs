@@ -208,13 +208,14 @@ public class TutManager : MonoBehaviour
             }
             else if (player.chickenBags.Count < 1)
             {
-                fxTUT.SetActive(false);
+                //fxTUT.SetActive(false);
                 if (bagMachine.outCloths.Count < 1)
                 {
                     if (bagMachine.ingredients.Count < 1)
                     {
                         if (player.objHave < 1)
                         {
+                            fxTUT.SetActive(false);
                             habitat.checkCollect.gameObject.SetActive(true);
                             line.SetPosition(0, player.transform.position);
                             line.SetPosition(1, new Vector3(habitat.transform.position.x, 0, habitat.transform.position.z));

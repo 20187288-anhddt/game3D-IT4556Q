@@ -651,7 +651,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 }
                 else
                 {
-                    if (listEmojis[i-1].activeSelf)
+                    if (!listEmojis[i-1].activeSelf)
                     {
                         listEmojis[i-1].SetActive(true);
                     }
