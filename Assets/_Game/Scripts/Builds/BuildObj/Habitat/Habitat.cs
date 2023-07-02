@@ -326,7 +326,7 @@ public class Habitat : BuildObj, ILock
     {
         foreach (Shit shit in listShit)
         {
-            Destroy(shit.gameObject);
+            AllPoolContainer.Instance.Release(shit);
         }
         listShit.Clear();
         numShitSave = 0;
