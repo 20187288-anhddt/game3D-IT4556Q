@@ -12,27 +12,23 @@ public class CheckColliPlayerCar : MonoBehaviour
     {
         if(myTransform == null) { myTransform = this.transform; }
     }
-    
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        //var player = other.GetComponent<Player>();
-        //IUnlock player = Cache.getIUnlock(other);
-        //if (player != null)
-        //{
+        var player = other.GetComponent<Player>();
+        if (player != null)
+        {
             Vector3 point = Vector3.zero;
-            if (other.transform.position.z <= myTransform.position.z)
+            if (player.myTransform.position.z <= myTransform.position.z)
             {
                 point = pointLeft.position;
-                //this.GetComponent<BoxCollider>().isTrigger = false;
             }
             else
             {
                 point = pointLeft.position;
-                
             }
            
-            point.y = other.transform.position.y;
-            other.transform.position = point;
-        //}
+            point.y = player.myTransform.position.y;
+            player.myTransform.position = point;
+        }
     }
 }

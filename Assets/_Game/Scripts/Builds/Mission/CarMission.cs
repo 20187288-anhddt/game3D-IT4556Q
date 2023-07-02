@@ -22,6 +22,7 @@ public class CarMission : BaseBuild
     private float consDelayMission;
     [SerializeField]
     private CheckPushCarMission checkPushCarMission;
+    [SerializeField] private GameObject checkColliPlayer;
     public Dictionary<IngredientType, int> listMission;
     public List<ClothMachine> listCurClothMachine;
     public List<BagMachine> listCurBagMachine;
@@ -81,9 +82,11 @@ public class CarMission : BaseBuild
                     //    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
                     //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
                     //}
+                    checkColliPlayer.SetActive(true);
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {
                         isOnMission = true;
+                        checkColliPlayer.SetActive(false);
                         StartCountDown();
                         checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
                         if (Canvas_Home.Instance != null)
