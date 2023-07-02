@@ -25,7 +25,7 @@ public class CarMission : BaseBuild
     public Dictionary<IngredientType, int> listMission;
     public List<ClothMachine> listCurClothMachine;
     public List<BagMachine> listCurBagMachine;
-    public int SpeedUpMoney = 10;
+    public int SpeedUpMoney = 100;
     public override void Start()
     {
         base.Start();
@@ -384,10 +384,10 @@ public class CarMission : BaseBuild
     public int GetRewardMoneyAllMission()
     {
         int value = 0;
-        int count = 1;
+       // int count = 1;
         foreach (IngredientType key in listMission.Keys)
         {
-            count = listMission[key];
+           // count = listMission[key];
             switch (key)
             {
                 //case IngredientType.SHEEP_CLOTH:
@@ -398,62 +398,63 @@ public class CarMission : BaseBuild
                 //    break;
                 case IngredientType.BEAR_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.bearOutfit *
-                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * SpeedUpMoney * count;
+                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.CHICKEN_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.chickenOutfit *
-                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_CLOTH)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.COW_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.cowOutfit *
-                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_CLOTH)) * SpeedUpMoney * count;
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.LION_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.lionOutfit *
-                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_CLOTH)) * SpeedUpMoney * count;
+                     Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.CROC_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.crocOutfit *
-                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_CLOTH)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.ELE_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.eleOutfit *
-                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_CLOTH)) * SpeedUpMoney * count;
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.ZEBRA_CLOTH:
                     value += (GameManager.Instance.dataPrice.Data.zebraOutfit *
-                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_CLOTH)) * SpeedUpMoney * count;
+                    Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_CLOTH)) * SpeedUpMoney;
                     break;
                 case IngredientType.CHICKEN_BAG:
                     value += (GameManager.Instance.dataPrice.Data.chickenBag *
-                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CHICKEN_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.COW_BAG:
                     value += (GameManager.Instance.dataPrice.Data.cowBag *
-                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.COW_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.BEAR_BAG:
                     value += (GameManager.Instance.dataPrice.Data.bearBag *
-                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_BAG)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.BEAR_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.LION_BAG:
                     value += (GameManager.Instance.dataPrice.Data.lionBag *
-                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.LION_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.CROC_BAG:
                     value += (GameManager.Instance.dataPrice.Data.crocBag *
-                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_BAG)) * SpeedUpMoney * count;
+                       Canvas_Order.Instane.GetValueMax_Mission(IngredientType.CROC_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.ELE_BAG:
                     value += (GameManager.Instance.dataPrice.Data.eleBag *
-                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_BAG)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ELE_BAG)) * SpeedUpMoney;
                     break;
                 case IngredientType.ZEBRA_BAG:
                     value += (GameManager.Instance.dataPrice.Data.zebraBag *
-                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_BAG)) * SpeedUpMoney * count;
+                      Canvas_Order.Instane.GetValueMax_Mission(IngredientType.ZEBRA_BAG)) * SpeedUpMoney;
                     break;
             }
         }
+        Debug.Log(value);
         return value;
     }
     public void InItDataMissionCurrent()
