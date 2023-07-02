@@ -72,6 +72,9 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public GameObject fxBuffSpeed;
     public GameObject fxBuffMoney;
     public GameObject emojiPanel;
+    public GameObject tutPanel;
+    [SerializeField]
+    private List<GameObject> listEmojisTUT;
 
     public override void Awake()
     {
@@ -103,7 +106,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     {
         isBuff = true;
         fxBuffSpeed.SetActive(true);
-        speed *= 1.5f;
+        speed *= 1.25f;
     }
     private void ResetSpeed()
     {
@@ -255,18 +258,22 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     }
     public virtual void UpdateMove(float speed)
     {
-        Canvas_Joystick joystick = Canvas_Joystick.Instance;
-        Vector3 inputAxist = joystick.Get_Diraction();
-        //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
-        //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
-        characterController.Move(inputAxist * speed * Time.deltaTime);
-        if (inputAxist.x != 0 || inputAxist.z != 0)
+        if (Input.GetMouseButton(0))
         {
-            Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
-            myTransform.rotation = Quaternion.LookRotation(moveDir).normalized;
-            myTransform.eulerAngles = new Vector3(myTransform.eulerAngles.x, myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
-           // transform.Translate(Vector3.forward * speed * 0.02f);
+            Canvas_Joystick joystick = Canvas_Joystick.Instance;
+            Vector3 inputAxist = joystick.Get_Diraction();
+            //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
+            //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
+            characterController.Move(inputAxist * speed * Time.deltaTime);
+            if (inputAxist.x != 0 || inputAxist.z != 0)
+            {
+                Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
+                myTransform.rotation = Quaternion.LookRotation(moveDir).normalized;
+                myTransform.eulerAngles = new Vector3(myTransform.eulerAngles.x, myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+                // transform.Translate(Vector3.forward * speed * 0.02f);
+            }
         }
+
     }
     public virtual void Idle()
     {
@@ -662,6 +669,34 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             //{
             //    ChangeEmoji(0);
             //});
+        }
+    }
+    public void OpenPanelTUT(int n)
+    {
+        if (!tutPanel.activeSelf)
+        {
+            tutPanel.SetActive(true);
+        }
+        if (listEmojisTUT[n].activeSelf)
+        {
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < listEmojisTUT.Count; i++)
+            {
+                if (i != n)
+                {
+                    listEmojisTUT[i].SetActive(false);
+                }
+                else
+                {
+                    if (!listEmojisTUT[i].activeSelf)
+                    {
+                        listEmojisTUT[i].SetActive(true);
+                    }
+                }
+            }
         }
     }
 }
