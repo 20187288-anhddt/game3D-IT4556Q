@@ -15,8 +15,8 @@ public class CheckPushCarMission : MonoBehaviour
         //if (carMission.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
         //    return;
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             if (player is Player)
                 player.canCatch = true;
             if (!isInItDataUI)
@@ -25,21 +25,21 @@ public class CheckPushCarMission : MonoBehaviour
                 carMission.InItDataMissionCurrent();
             }
             UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
-        }
+        //}
     }
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //var player = other.GetComponent<ICollect>();
+        //if (player != null)
+        //{
             UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
-        }
+        //}
     }
     public void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             int v = -1;
             for(int i = 0;i<carMission.listMission.Keys.Count;i++)
             {
@@ -174,7 +174,7 @@ public class CheckPushCarMission : MonoBehaviour
                 }
             }
             carMission.UpdateMission();
-        }
+        //}
     }
   
     public void SetisInItDataUI(bool isValue)

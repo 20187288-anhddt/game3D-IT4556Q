@@ -16,8 +16,8 @@ public class CheckPushCloset : MonoBehaviour
         if (closet.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             if (player is Player)
                 player.canCatch = true;
             if (player is Staff)
@@ -27,13 +27,13 @@ public class CheckPushCloset : MonoBehaviour
                     player.canCatch = true;
                 };
             }
-        }
+        //}
     }
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             if (player is Staff)
             {
                 if ((player as Staff).ingredientType != closet.ingredientType)
@@ -57,6 +57,18 @@ public class CheckPushCloset : MonoBehaviour
                 case IngredientType.BEAR:
                     v = player.bearCloths.Count - 1;
                     break;
+                case IngredientType.LION:
+                    v = player.lionCloths.Count - 1;
+                    break;
+                case IngredientType.CROC:
+                    v = player.crocCloths.Count - 1;
+                    break;
+                case IngredientType.ELE:
+                    v = player.eleCloths.Count - 1;
+                    break;
+                case IngredientType.ZEBRA:
+                    v = player.zebraCloths.Count - 1;
+                    break;
             }
             if (v >= 0)
             {
@@ -73,6 +85,18 @@ public class CheckPushCloset : MonoBehaviour
                         break;
                     case IngredientType.BEAR:
                         curCloth = player.bearCloths[v];
+                        break;
+                    case IngredientType.LION:
+                        curCloth = player.lionCloths[v];
+                        break;
+                    case IngredientType.CROC:
+                        curCloth = player.crocCloths[v];
+                        break;
+                    case IngredientType.ELE:
+                        curCloth = player.eleCloths[v];
+                        break;
+                    case IngredientType.ZEBRA:
+                        curCloth = player.zebraCloths[v];
                         break;
                     default:
                         curCloth = null;
@@ -94,7 +118,7 @@ public class CheckPushCloset : MonoBehaviour
                     //(player as BaseActor).ShortObj();     
                 }
             }
-        }
+        //}
     }
     //private void OnTriggerExit(Collider other)
     //{

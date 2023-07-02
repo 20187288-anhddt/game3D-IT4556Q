@@ -12,8 +12,8 @@ public class CheckCollectBagCloth : MonoBehaviour
         if (machine.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             if(player is Player)
                 player.canCatch = true;
             if (player is Staff)
@@ -23,14 +23,14 @@ public class CheckCollectBagCloth : MonoBehaviour
                     player.canCatch = true;
                 };
             }
-        }
+        //}
     }
     private void OnTriggerStay(Collider other)
     {
         if (machine.isLock || machine.outCloths.Count <= 0)
             return;
         var player = other.GetComponent<ICollect>();
-        if (player != null && player.objHave < player.maxCollectObj)
+        if (/*player != null && */player.objHave < player.maxCollectObj)
         {
             if (player is Staff)
             {

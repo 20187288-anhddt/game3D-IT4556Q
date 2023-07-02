@@ -198,7 +198,6 @@ MonoBehaviour:
       levelThis: 0
       amountPaid: 0
     nameObject_This: 14
-    statusObjectReset: []
   CountID_In_ListPos: 5
 --- !u!1 &1649266551753263534
 GameObject:
@@ -210,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1548098981269289416}
   - component: {fileID: 3052257381872252819}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,8 +12,8 @@ public class CheckCollect : MonoBehaviour
         if (habitat.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             if(player is Player)
             {
                 player.canCatch = true;
@@ -27,14 +27,14 @@ public class CheckCollect : MonoBehaviour
                     player.Collect();
                 } ;
             }
-        }
+        //}
     }
     private void OnTriggerStay(Collider other)
     {
         if (habitat.isLock)
             return;
         var player = other.GetComponent<ICollect>();
-        if (player != null && player.objHave < player.maxCollectObj)
+        if (/*player != null && */player.objHave < player.maxCollectObj)
         {
             if (player is Staff)
             {
@@ -77,10 +77,10 @@ public class CheckCollect : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<ICollect>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             player.canCatch = false;
             player.CollectDone();
-        }
+        //}
     }
 }

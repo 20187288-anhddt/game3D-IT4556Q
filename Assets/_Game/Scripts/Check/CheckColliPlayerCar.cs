@@ -15,20 +15,22 @@ public class CheckColliPlayerCar : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Player>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             Vector3 point = Vector3.zero;
             if (player.myTransform.position.z <= myTransform.position.z)
             {
                 point = pointLeft.position;
+                //this.GetComponent<BoxCollider>().isTrigger = false;
             }
             else
             {
                 point = pointLeft.position;
+                
             }
            
             point.y = player.myTransform.position.y;
             player.myTransform.position = point;
-        }
+        //}
     }
 }

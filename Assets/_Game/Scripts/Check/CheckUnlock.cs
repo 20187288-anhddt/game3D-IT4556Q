@@ -49,8 +49,8 @@ public class CheckUnlock : MonoBehaviour
                 return;
             }
             IUnlock unlock = other.GetComponent<IUnlock>();
-            if (unlock != null)
-            {
+            //if (unlock != null)
+            //{
                 
                 t += Time.deltaTime;
                 if (t > 0.75f)
@@ -83,7 +83,7 @@ public class CheckUnlock : MonoBehaviour
                     ////    normal.UnLock(true, true);
                     ////}
                 }
-            }
+            //}
         }
         else
         {
@@ -120,17 +120,17 @@ public class CheckUnlock : MonoBehaviour
     {
         t = 0;
         var player = other.GetComponent<Player>();
-        if (player != null)
-        {
+        //if (player != null)
+        //{
             player.canCatch = true;
             
-        }
+        //}
     }
     private void OnTriggerExit(Collider other)
     {
         IUnlock unlock = other.GetComponent<IUnlock>();
-        if (unlock != null)
-        {
+        //if (unlock != null)
+        //{
             
             if (isUnlockAds)
             {
@@ -139,7 +139,7 @@ public class CheckUnlock : MonoBehaviour
                 tmp = 2.5f;
             }
             t = 0;
-        }
+        //}
     }
     private void unlockQuick(IUnlock player)
     {

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4037024346325557925}
   - component: {fileID: 8045155001094326383}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,6 @@ MonoBehaviour:
       levelThis: 0
       amountPaid: 0
     nameObject_This: 13
-    statusObjectReset: []
 --- !u!1 &2475932192431486167
 GameObject:
   m_ObjectHideFlags: 0
