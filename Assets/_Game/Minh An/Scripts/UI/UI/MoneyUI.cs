@@ -66,6 +66,22 @@ public class MoneyUI : UI_Child
         CheckInIt();
         m_timeShowInfoAddMoney = 0;
         int value = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
+        if(MoneyTemp > 0)
+        {
+            if(MoneyTemp > value - valueMoney_ob)
+            {
+                MoneyTemp = 0;
+                valueMoney_ob = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
+            }
+        }
+        else
+        {
+            if (MoneyTemp < value - valueMoney_ob)
+            {
+                MoneyTemp = 0;
+                valueMoney_ob = DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD);
+            }
+        }
         MoneyTemp = value - valueMoney_ob;
         if (value > 1000)
         {

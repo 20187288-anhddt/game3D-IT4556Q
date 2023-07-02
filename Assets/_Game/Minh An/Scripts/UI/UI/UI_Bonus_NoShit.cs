@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class UI_Bonus_NoShit : UI_Bonus
 {
     [SerializeField] private Text txt_Time;
-    private DataBonusNoShit dataBonusNoShit = new DataBonusNoShit();
     public override void Awake()
     {
         base.Awake();
         OnInIt();
         Close();
     }
+    
     public override void OnInIt()
     {
         base.OnInIt();
-        Set_OnBonus(dataBonusNoShit.IsOnBonus());
+        Set_OnBonus(Canvas_Bonus.Instance.GetDataBonusNoShit().IsOnBonus());
     }
 
     public void LoadUI()
@@ -68,8 +68,8 @@ public class UI_Bonus_NoShit : UI_Bonus
     public void SetDataOnBonus(bool value)
     {
         Debug.Log(value);
-        dataBonusNoShit.SetIsOnBonus(value);
-        Set_OnBonus(dataBonusNoShit.IsOnBonus());
+        Canvas_Bonus.Instance.GetDataBonusNoShit().SetIsOnBonus(value);
+        Set_OnBonus(Canvas_Bonus.Instance.GetDataBonusNoShit().IsOnBonus());
     }
 }
 
@@ -78,15 +78,13 @@ public class DataBonusNoShit : DataBase
     private static string NameDataIsOnBonus = "DataBonusNoShit";
     public bool isOnBonus = false;
     private bool isInItData = false;
-    private void Awake()
-    {
-        InItData();
-    }
-    private void Start()
+
+    public void AddEvent()
     {
         EnventManager.AddListener(EventName.ClearData.ToString(), () =>
         {
             ClearData();
+            Debug.Log("ab");
         });
     }
     public void InItData()
@@ -126,11 +124,13 @@ public class DataBonusNoShit : DataBase
     public bool IsOnBonus()
     {
         CheckInItData();
+        LoadData();
         return isOnBonus;
     }
     public void ClearData()
     {
         ResetData();
         SaveData();
+        Debug.Log(isOnBonus);
     }
 }

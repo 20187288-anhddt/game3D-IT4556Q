@@ -68239,6 +68239,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 197.33333
       objectReference: {fileID: 0}
+    - target: {fileID: 6256607399639022507, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75.63818
+      objectReference: {fileID: 0}
     - target: {fileID: 6424367355728521768, guid: a16ff7eaf2edb4745be7b92a02cadbb4, type: 3}
       propertyPath: m_Name
       value: UI
@@ -87443,6 +87447,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1761035175830449076, guid: afb3e1831728dc3498e7bfa315130223, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3261271565278581450, guid: afb3e1831728dc3498e7bfa315130223, type: 3}
       propertyPath: m_Name
       value: TUTManager
