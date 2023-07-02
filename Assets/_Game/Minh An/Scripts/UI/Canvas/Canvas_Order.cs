@@ -43,15 +43,11 @@ public class Canvas_Order : UI_Canvas
     }
     private void InItData()
     {
-        btn_Close.onClick.AddListener(() =>
-        {
-            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
-        
-        });
+        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_Collect.onClick.AddListener(Collect);
         btn_WatchVideo_CollectX3.onClick.AddListener(WatchVideo_CollectX3);
     }
-
+  
     //private void OnDisable()
     //{
     //    CloseAllItem();
@@ -188,14 +184,9 @@ public class Canvas_Order : UI_Canvas
        // UI_Manager.Instance.CloseUI(NameUI.Canvas_Home);
         UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
         Canvas_Home.Instance?.gameObject.SetActive(false);
-        if (BuildController.Instance != null && CameraController.Instance != null)
-        {
-            CameraController.Instance.SetFollow_LookAt(BuildController.Instance.GetBuildIngredientController(IngredientType.CAR)
-           .GetBaseBuild(NameObject_This.Car).transform, BuildController.Instance.GetBuildIngredientController(IngredientType.CAR).GetBaseBuild(NameObject_This.Car).transform,
-           0, 2.5f, 2.5f, 2.5f);
-        }
-
-
+        BuildIngredientController buildIngredientController = BuildController.Instance.GetBuildIngredientController(IngredientType.CAR);
+        CameraController.Instance?.SetFollowAndLookAt(buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform, buildIngredientController.GetBaseBuild(NameObject_This.Car).myTransform,
+        0, 2.5f, 2.5f, 2.5f);
     }
-
+  
 }

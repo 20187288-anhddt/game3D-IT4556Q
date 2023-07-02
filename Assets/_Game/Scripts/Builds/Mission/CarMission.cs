@@ -281,7 +281,7 @@ public class CarMission : BaseBuild
         Debug.Log("End");
         isOnMission = false;
         //StopCoroutine(CountDownCarWait());
-        (UI_Manager.Instance.OpenUI(NameUI.Canvas_Home) as Canvas_Home).NotShow_Btn_Oder();
+        Canvas_Home.Instance.NotShow_Btn_Oder();
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
