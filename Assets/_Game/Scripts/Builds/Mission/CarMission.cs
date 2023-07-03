@@ -44,14 +44,14 @@ public class CarMission : BaseBuild
         isReadyMission = true;
         isOnMission = false;
         carWaiting = consCarWaiting;
-        checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
+        checkPushCarMission.gameObject.SetActive(false);
         for (int i = 0; i < carModel.Length; i++)
         {
             carModel[i].SetActive(false);
         }
         if (!isLock)
         {
-            checkPushCarMission.gameObject.SetActive(false);
+          //  checkPushCarMission.gameObject.SetActive(false);
             car.SetActive(false);
         }
     }
@@ -91,7 +91,7 @@ public class CarMission : BaseBuild
                         isOnMission = true;
                         checkColliPlayer.SetActive(false);
                         StartCountDown();
-                        checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
+                        checkPushCarMission.gameObject.SetActive(true);
                         if (Canvas_Home.Instance != null)
                         {
                             if (!Canvas_Home.Instance.IsShow_Btn_Oder())
@@ -294,6 +294,7 @@ public class CarMission : BaseBuild
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
             carSmoke.gameObject.SetActive(false);
+            checkPushCarMission.gameObject.SetActive(true);
             ClearMission();
             if (isWin)
             {
