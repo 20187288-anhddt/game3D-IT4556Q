@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaffManager : Singleton<StaffManager>
+public class StaffManager : MonoBehaviour
 {
     public List<Staff> listAllActiveStaffs;
     public List<Staff> listFarmers;
@@ -39,14 +39,32 @@ public class StaffManager : Singleton<StaffManager>
         switch (staff.staffType)
         {
             case StaffType.FARMER:
-                staff.curGarbage = listTrashCan[0];
-                staff.transGarbage = listTrashCan[0].staffPos.position;
-                staff.transIdle = listIdlePos[0].position;
+                if(listFarmers.Count == 1)
+                {
+                    staff.curGarbage = listTrashCan[0];
+                    staff.transGarbage = listTrashCan[0].staffPos.position;
+                    staff.transIdle = listIdlePos[0].position;
+                }
+                else if(listFarmers.Count == 2)
+                {
+                    staff.curGarbage = listTrashCan[1];
+                    staff.transGarbage = listTrashCan[1].staffPos.position;
+                    staff.transIdle = listIdlePos[1].position;
+                }
                 break;
             case StaffType.WORKER:
-                staff.curGarbage = listTrashCan[1];
-                staff.transGarbage = listTrashCan[1].staffPos.position;
-                staff.transIdle = listIdlePos[2].position;
+                if (listWorkers.Count == 1)
+                {
+                    staff.curGarbage = listTrashCan[2];
+                    staff.transGarbage = listTrashCan[2].staffPos.position;
+                    staff.transIdle = listIdlePos[2].position;
+                }
+                else if(listWorkers.Count == 2)
+                {
+                    staff.curGarbage = listTrashCan[3];
+                    staff.transGarbage = listTrashCan[3].staffPos.position;
+                    staff.transIdle = listIdlePos[3].position;
+                }
                 break;
         }
 
@@ -66,7 +84,7 @@ public class StaffManager : Singleton<StaffManager>
                     curStaff.ResetStaff();
                     curStaff.ingredientType = curMachine.ingredientType;
                     Habitat curHabitat = null;
-                    curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithType(curMachine.ingredientType);
+                    curHabitat = gameManager.listLevelManagers[gameManager.curLevel].habitatManager.GetHabitatWithTypeForStaff(curMachine.ingredientType);
                     if (curHabitat != null)
                     { 
                         curStaff.onMission = true;
