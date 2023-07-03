@@ -69,5 +69,8 @@ public enum NameObject_This
     HireAnimal_Bear,
     HireStaff_4,
     HireStaff_5,
+    NextLevel_2,
+    NextLevel_3,
+
 }
 

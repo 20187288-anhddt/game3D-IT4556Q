@@ -470,6 +470,10 @@ public class MissionProcess
                 return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_4);
             case EventName.HireStaff_5_OnComplete:
                 return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_5);
+            case EventName.NextLevel_2_Complete:
+                return Is_Complete(IngredientType.NEXTLEVEL, NameObject_This.NextLevel_2);
+            case EventName.NextLevel_3_Complete:
+                return Is_Complete(IngredientType.NEXTLEVEL, NameObject_This.NextLevel_3);
 
         }
         return false;
@@ -815,6 +819,12 @@ public class RewardProcessCompleteMission
                 break;
             case EventName.HireStaff_5_OnBuy:
                 OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_5);
+                break;
+            case EventName.NextLevel_2_OnBuy:
+                OnBuy(IngredientType.NEXTLEVEL, NameObject_This.NextLevel_2);
+                break;
+            case EventName.NextLevel_3_OnBuy:
+                OnBuy(IngredientType.NEXTLEVEL, NameObject_This.NextLevel_3);
                 break;
         }
     }

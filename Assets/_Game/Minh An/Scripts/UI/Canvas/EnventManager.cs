@@ -171,6 +171,11 @@ public enum EventName {
     HireStaff_5_OnBuy,
     HireStaff_4_OnComplete,
     HireStaff_5_OnComplete,
+
+    NextLevel_2_OnBuy,
+    NextLevel_2_Complete,
+    NextLevel_3_OnBuy,
+    NextLevel_3_Complete,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

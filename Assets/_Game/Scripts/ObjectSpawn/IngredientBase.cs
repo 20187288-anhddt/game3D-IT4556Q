@@ -135,5 +135,6 @@ public enum IngredientType
     LION_BAG,
     CROC_BAG,
     ELE_BAG,
-    ZEBRA_BAG
+    ZEBRA_BAG,
+    NEXTLEVEL
 }
