@@ -49,13 +49,16 @@ public class UI_Bonus_DoubleMoney : UI_Bonus
     }
     public override void Reward()
     {
-        base.Reward();
-        //DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD,
-        //     DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD));
-        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Money_Double, timeBuff,
-            StopReward);
-        Set_OnBonus(false);
-        EnventManager.TriggerEvent(EventName.OnEventDoubleMoney.ToString());
+        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_Double_Money_Collect", () =>
+        {
+            base.Reward();
+            //DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD,
+            //     DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD));
+            UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Money_Double, timeBuff,
+                StopReward);
+            Set_OnBonus(false);
+            EnventManager.TriggerEvent(EventName.OnEventDoubleMoney.ToString());
+        });
     }
     public override void StopReward()
     {

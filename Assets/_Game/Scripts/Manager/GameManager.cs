@@ -12,7 +12,7 @@ public class GameManager : MenuManager
     public List<TutManager> tutManagers;
     public int curLevel;
     public DataPrice dataPrice;
-
+   
     public void Start()
     {
         LoadLevelInGame(0);
@@ -49,6 +49,10 @@ public class GameManager : MenuManager
         EnventManager.TriggerEvent(EventName.QuitGame.ToString());
         if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
         {
+            Dictionary<string, string> pairs_ = new Dictionary<string, string>();
+            pairs_.Add("af_success", "false");
+            pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
+            SDK.ABIAppsflyerManager.SendEvent("af_tutorial_completion", pairs_);
             //  DataManager.Instance.ClearAllData();
             EnventManager.TriggerEvent(EventName.ClearData.ToString());
         }

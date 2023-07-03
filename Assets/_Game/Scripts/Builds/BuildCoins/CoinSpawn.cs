@@ -59,6 +59,13 @@ public class CoinSpawn : MonoBehaviour
             checkOut.coins.Remove(checkOut.coins[checkOut.coins.Count-1]);
             checkOut.coinSave--;
             DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
+
+        Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+        parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+        parameters[1] = new Firebase.Analytics.Parameter("value", 10);
+        parameters[2] = new Firebase.Analytics.Parameter("source", "Purchase_In_Map");
+        SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
+
         //for (int i = 0; i < checkOut.coins.Count; i++)
         //{
         //    checkOut.coins[i].MoveToPlayerSpeed(player);
@@ -67,7 +74,7 @@ public class CoinSpawn : MonoBehaviour
         //    i--;
         //    break;
         //}
-            Player.Instance.DelayCatch(0.01f);
+        Player.Instance.DelayCatch(0.01f);
         //}
     }
 

@@ -40,8 +40,12 @@ public class TutManager : MonoBehaviour
         line.positionCount = 2;
         fxTUT.SetActive(false);
         player.tutPanel.SetActive(false);
-        CheckDoneAllTuT();
-      //  EnventManager.AddListener(EventName.QuitGame.ToString(), Quit_Game);
+        bool isCompleteTuT = CheckDoneAllTuT();
+        if (!isCompleteTuT)
+        {
+            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("checkpoint_01", "tutorial_start", 1);
+        }
+        //  EnventManager.AddListener(EventName.QuitGame.ToString(), Quit_Game);
     }
 
     // Update is called once per frame
@@ -290,8 +294,14 @@ public class TutManager : MonoBehaviour
     public void DoneAllTuT()
     {
         EnventManager.TriggerEvent(EventName.DoneAllTuT.ToString());
+        SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("checkpoint_02", "tutorial_end", 1);
+
+        Dictionary<string, string> pairs_ = new Dictionary<string, string>();
+        pairs_.Add("af_success", "true");
+        pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
+        SDK.ABIAppsflyerManager.SendEvent("af_tutorial_completion", pairs_);
     }
-    public void CheckDoneAllTuT()
+    public bool CheckDoneAllTuT()
     {
         foreach (NameTuT nameTuT in nameTuTs_Taget)
         {
@@ -300,30 +310,32 @@ public class TutManager : MonoBehaviour
                 case NameTuT.MachineTUT:
                     if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneMachineTUT)
                     {
-                        return;
+                        return false;
                     }
                     break;
                 case NameTuT.ClosetTUT:
                     if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneClosetTUT)
                     {
-                        return;
+                        return false;
                     }
                     break;
                 case NameTuT.BagClosetTUT:
                     if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneBagClosetTUT)
                     {
-                        return;
+                        return false;
                     }
                     break;
                 case NameTuT.CarTUT:
                     if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneCarTUT)
                     {
-                        return;
+                        return false;
                     }
                     break;
             }
         }
+
         DoneAllTuT();
+        return true;
     }
     //private void Quit_Game()
     //{

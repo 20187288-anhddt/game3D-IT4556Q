@@ -249,6 +249,12 @@ public class Group_InfoUpdate : UI_Child
                         (dataStatusObject as MachineDataStatusObject).NextLevel_Stack();
                         break;
                 }
+
+                Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                parameters[1] = new Firebase.Analytics.Parameter("value", Value_MoneyCurent);
+                parameters[2] = new Firebase.Analytics.Parameter("source", "Upgrade_" + dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+                SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
                 break;
         }
         #endregion
@@ -336,8 +342,17 @@ public class Group_InfoUpdate : UI_Child
             case TypeCost.Money:
                 Debug.Log("Buy Money");
                 DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, Value_MoneyCurent);
+
+                Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                parameters[1] = new Firebase.Analytics.Parameter("value", Value_MoneyCurent);
+                parameters[2] = new Firebase.Analytics.Parameter("source", "Upgrade_" + staffType.ToString());
+                SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
+
+
                 if (scriptableObject_Staff_Boss as infoCapacity)
                 {
+
                     switch (staffType)
                     {
                         case StaffType.FARMER:
@@ -405,6 +420,8 @@ public class Group_InfoUpdate : UI_Child
                             break;
                     }
                 }
+
+              
                 break;
         }
         #endregion

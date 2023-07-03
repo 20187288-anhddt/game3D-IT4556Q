@@ -50,10 +50,14 @@ public class UI_Bonus_NoShit : UI_Bonus
     }
     public override void Reward()
     {
-        base.Reward();
-        Set_OnBonus(false);
-        EnventManager.TriggerEvent(EventName.NoShit_Play.ToString());
-        UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff, StopReward);
+        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_NoShit", () => 
+        {
+            base.Reward();
+            Set_OnBonus(false);
+            EnventManager.TriggerEvent(EventName.NoShit_Play.ToString());
+            UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.NoShit, timeBuff, StopReward);
+        });
+      
     }
     public override void StopReward()
     {

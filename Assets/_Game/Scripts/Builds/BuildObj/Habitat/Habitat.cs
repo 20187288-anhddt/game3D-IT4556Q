@@ -60,6 +60,7 @@ public class Habitat : BuildObj, ILock
       //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
         unlockModel.SetActive(true);
         unlockFx.SetActive(true);
+      
         //lockModel.SetActive(false);
         //switch (habitatType)
         //{

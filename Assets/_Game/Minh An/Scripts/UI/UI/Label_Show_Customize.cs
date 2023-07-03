@@ -144,15 +144,20 @@ public class Label_Show_Customize : UI_Child
         switch (typeCost)
         {
             case TypeCost.WatchVideo:
-                DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddValueWatchVideo(ID_This, 1);
-                bool isBought = false;
-                if (DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().GetValueWatchVideo(ID_This) >= Value_CostCurent)
+
+                SDK.AdsManager.Instance.ShowRewardVideo("Customize", () =>
                 {
-                    isBought = true;
-                    DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddID_Onboughts(ID_This);
-                    SetTagetID(ID_This);
-                }
-                Load(infoSkinPlayerTaget, isBought, ID_This);
+                    DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddValueWatchVideo(ID_This, 1);
+                    bool isBought = false;
+                    if (DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().GetValueWatchVideo(ID_This) >= Value_CostCurent)
+                    {
+                        isBought = true;
+                        DataManager.Instance.GetDataCustomizeController().GetDataCustomize_Head().AddID_Onboughts(ID_This);
+                        SetTagetID(ID_This);
+                    }
+                    Load(infoSkinPlayerTaget, isBought, ID_This);
+                });
+              
                 break;
             case TypeCost.Money:
              
@@ -163,6 +168,12 @@ public class Label_Show_Customize : UI_Child
                     SetTagetID(ID_This);
                     btn_This.onClick.RemoveAllListeners();
                     Load(infoSkinPlayerTaget, true, ID_This);
+
+                    Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                    parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                    parameters[1] = new Firebase.Analytics.Parameter("value", Value_CostCurent);
+                    parameters[2] = new Firebase.Analytics.Parameter("source", "Customize_" + infoSkinPlayerTaget.ID);
+                    SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
                 }
                 break;
 

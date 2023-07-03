@@ -97,6 +97,15 @@ public class MapCurrent //luu data
     }
     public void SetLevelCurrent(int value)
     {
+        if (value != dataMapCurrent.GetLevelCurrent())
+        {
+            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("checkpoint_0" + 2 + value, "Map_Expansion", value);
+
+            Dictionary<string, string> pairs_ = new Dictionary<string, string>();
+            pairs_.Add("content_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
+            pairs_.Add("af_level", value.ToString());
+            SDK.ABIAppsflyerManager.SendEvent("af_achievement_unlocked", pairs_);
+        }
         dataMapCurrent.SetLevelCurrent(value);
         SaveData();
         LoadData();
@@ -152,6 +161,7 @@ public class DataMapCurrent //dong goi de quan li
     }
     public void SetLevelInMapCurrent(MiniMapController.TypeLevel value)
     {
+     
         LevelInMapCurrent = value;
     }
 }
@@ -215,7 +225,24 @@ public class DataMap //luu data
         data_Map = new Data_Map();
         data_Map.LevelMap = levelCurrent;
         InItData();
+        if (GetData_Map().LevelMapMax < levelCurrent)
+        {
+            SetLevelMapMax(levelCurrent);
+        }
+     
     }
+    public void SetLevelMapMax(int value)
+    {
+        GetData_Map().LevelMapMax = value;
+        SaveData();
+        LoadData();
+
+        Dictionary<string, string> pairs_ = new Dictionary<string, string>();
+        pairs_.Add("af_level", GetData_Map().LevelMapMax.ToString());
+        pairs_.Add("af_score", DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelCurrent().ToString());
+        SDK.ABIAppsflyerManager.SendEvent("af_level_achieved", pairs_);
+    }
+
     #region Boss
     public void SetLevel_Capacity_Boss(int value)
     {
@@ -326,10 +353,11 @@ public class Data_Map //dong goi de quan li
     public DataPlayer dataPlayer;
     public Data_InCheckout data_InCheckout;
     public int LevelMap;
-
+    public int LevelMapMax;
     public Data_Map ResetData()
     {
         if(LevelMap < 1) { LevelMap = 1; }
+        LevelMapMax = LevelMap;
         dataPlayer.ResetData();
         data_InCheckout.ResetData();
         return this;
@@ -347,7 +375,10 @@ public class Data_Map //dong goi de quan li
         if (LevelMap < 1) { LevelMap = 1; }
         return LevelMap;
     }
-
+    public int GetLevelMapMax()
+    {
+        return LevelMapMax;
+    }
 }
 [System.Serializable]
 public class Data_InCheckout

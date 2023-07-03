@@ -58,10 +58,18 @@ public class UI_Bonus_BuffMoney : UI_Bonus
     }
     public override void Reward()
     {
-        base.Reward();
-        DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
-            DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) +
-            moneyBuff);
+        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>
+        {
+            base.Reward();
+            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+                DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) +
+                moneyBuff);
+            Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+            parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+            parameters[1] = new Firebase.Analytics.Parameter("value", moneyBuff);
+            parameters[2] = new Firebase.Analytics.Parameter("source", "Bonus_Buff_AddMoney");
+            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
+        });
        // Set_OnBonus(false);
     }
     public override void StopReward()

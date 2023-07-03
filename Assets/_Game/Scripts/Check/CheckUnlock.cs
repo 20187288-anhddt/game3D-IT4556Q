@@ -48,7 +48,8 @@ public class CheckUnlock : MonoBehaviour
             {
                 return;
             }
-            IUnlock unlock = other.GetComponent<IUnlock>();
+            //IUnlock unlock = other.GetComponent<IUnlock>();
+            IUnlock unlock = Cache.getIUnlock(other);
             //if (unlock != null)
             //{
                 
@@ -88,7 +89,8 @@ public class CheckUnlock : MonoBehaviour
         else
         {
             if (!normal.IsLock) return;
-            IUnlock unlock = other.GetComponent<IUnlock>();
+            //IUnlock unlock = other.GetComponent<IUnlock>();
+            IUnlock unlock = Cache.getIUnlock(other);
             if (unlock == null)
                 return;
             if (!isUnlockAds)
@@ -116,31 +118,32 @@ public class CheckUnlock : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        t = 0;
-        var player = other.GetComponent<Player>();
-        //if (player != null)
-        //{
-            player.canCatch = true;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    t = 0;
+    //    var player = other.GetComponent<Player>();
+    //    //if (player != null)
+    //    //{
+    //        player.canCatch = true;
             
-        //}
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        IUnlock unlock = other.GetComponent<IUnlock>();
-        //if (unlock != null)
-        //{
-            
-            if (isUnlockAds)
-            {
-                //bound[1].DOKill();
-                //bound[1].fillAmount = 0;
-                tmp = 2.5f;
-            }
-            t = 0;
-        //}
-    }
+    //    //}
+    //}
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    //IUnlock unlock = other.GetComponent<IUnlock>();
+    //    IUnlock unlock = Cache.getIUnlock(other);
+    //    //if (unlock != null)
+    //    //{
+
+    //    if (isUnlockAds)
+    //        {
+    //            //bound[1].DOKill();
+    //            //bound[1].fillAmount = 0;
+    //            tmp = 2.5f;
+    //        }
+    //        t = 0;
+    //    //}
+    //}
     private void unlockQuick(IUnlock player)
     {
         if (normal.CurrentCoin <= 0 && normal.IsLock)
@@ -152,6 +155,11 @@ public class CheckUnlock : MonoBehaviour
         {
             if (player.CoinValue < normal.CurrentCoin)
             {
+                Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                parameters[1] = new Firebase.Analytics.Parameter("value", player.CoinValue);
+                parameters[2] = new Firebase.Analytics.Parameter("source", "UnLock_" + dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+                SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
                 text.DOTextInt((int)normal.CurrentCoin, (int)(normal.CurrentCoin - player.CoinValue), 0.75f);
                 normal.CurrentCoin -= player.CoinValue;
                 dataStatusObject.AddAmountPaid((int)player.CoinValue);
@@ -161,6 +169,9 @@ public class CheckUnlock : MonoBehaviour
                 //});
                 (player as Player).coinValue = 0;
                 DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD, 0);
+
+               
+
             }
             else
             {
@@ -168,6 +179,13 @@ public class CheckUnlock : MonoBehaviour
                 {
                     (player as Player).coinValue -= normal.CurrentCoin;
                     DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, (int)normal.CurrentCoin);
+
+                    Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                    parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                    parameters[1] = new Firebase.Analytics.Parameter("value", (int)normal.CurrentCoin);
+                    parameters[2] = new Firebase.Analytics.Parameter("source", "UnLock_" + dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+                    SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
+
                     dataStatusObject.AddAmountPaid((int)normal.CurrentCoin);
                     normal.CurrentCoin = 0;
                     //normal.UnLock(true, true);
@@ -216,6 +234,11 @@ public class CheckUnlock : MonoBehaviour
                 //effect.DOPause();
             }
 
+            Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+            parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+            parameters[1] = new Firebase.Analytics.Parameter("value", value);
+            parameters[2] = new Firebase.Analytics.Parameter("source", "UnLock_" + dataStatusObject.GetStatus_All_Level_Object().nameObject_This);
+            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("spend_virtual_currency", parameters);
         }
     }
     //IEnumerator IE_AnimProcessUnLock(float Speed = 1)

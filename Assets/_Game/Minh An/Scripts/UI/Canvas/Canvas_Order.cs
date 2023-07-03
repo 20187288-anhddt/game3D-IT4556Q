@@ -128,6 +128,12 @@ public class Canvas_Order : UI_Canvas
             isCompleteAllMission = false;
             UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
             actionCollect?.Invoke();
+
+            Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+            parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+            parameters[1] = new Firebase.Analytics.Parameter("value", MoneyCurrent);
+            parameters[2] = new Firebase.Analytics.Parameter("source", "Collect_Normal_In_Car");
+            SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
         }
     }
     public void WatchVideo_CollectX3()
@@ -135,11 +141,21 @@ public class Canvas_Order : UI_Canvas
         if (isCompleteAllMission)
         {
           //  Debug.Log("Collect WatchVideo");
-            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
-                 DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent * 3);
-            isCompleteAllMission = false;
-            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
-            actionCollect?.Invoke();
+          
+            SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>
+            {
+                DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+                DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent * 3);
+                isCompleteAllMission = false;
+                UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
+                actionCollect?.Invoke();
+
+                Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
+                parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
+                parameters[1] = new Firebase.Analytics.Parameter("value", MoneyCurrent * 3);
+                parameters[2] = new Firebase.Analytics.Parameter("source", "Collect_WatchVideo_In_Car");
+                SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
+            });
         }
     }
     public void SetActionCollect(System.Action action)
