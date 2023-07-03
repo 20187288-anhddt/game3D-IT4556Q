@@ -42,7 +42,7 @@ public class Canvas_Iap : UI_Canvas
     }
     public void BuySuperPack()
     {
-        (EventBounsController.Instance?.GetUIBonus(TypeBonus.DoubleSpeed_Player) as UI_Bonus_DoubleSpeed_Player).Reward(1800);
+        (EventBounsController.Instance?.GetUIBonus(TypeBonus.DoubleSpeed_Player) as UI_Bonus_DoubleSpeed_Player).Reward(1800, false);
         DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
              DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + 20000);
 

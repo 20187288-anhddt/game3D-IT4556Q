@@ -183,7 +183,7 @@ public class Customer : BaseCustomer,IAct
         {
             //myTransform.DORotate(Vector3.zero, 0f);
             navMeshAgent.transform.LookAt(checkOut.transform.position);
-            //CountDownWatingTime();
+            CountDownWatingTime();
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
@@ -424,42 +424,59 @@ public class Customer : BaseCustomer,IAct
     {
         if(waitingTime <= 0)
         {
-
-        }
-        if (n == 0)
-        {
-            emojiPanel.SetActive(false);
-            //for (int i = 0; i < listEmojis.Count; i++)
-            //{
-            //    listEmojis[i].SetActive(false);
-            //}
-        }
-        else
-        {
-            int r = Random.Range(0, 10);
-            if (r < 5)
+            if (!emojiPanel.activeSelf)
+            {
+                emojiPanel.SetActive(true);
+            }
+            if (!listEmojis[1].activeSelf)
             {
                 for (int i = 1; i <= listEmojis.Count; i++)
                 {
-                    if (i != n)
+                    if (i != 1)
                     {
                         listEmojis[i - 1].SetActive(false);
                     }
-                    else
+                }
+                listEmojis[1].SetActive(true);
+            }      
+        }
+        else
+        {
+            if (n == 0)
+            {
+                emojiPanel.SetActive(false);
+                //for (int i = 0; i < listEmojis.Count; i++)
+                //{
+                //    listEmojis[i].SetActive(false);
+                //}
+            }
+            else
+            {
+                int r = Random.Range(0, 10);
+                if (r < 5)
+                {
+                    for (int i = 1; i <= listEmojis.Count; i++)
                     {
-                        if (!listEmojis[i - 1].activeSelf)
+                        if (i != n)
                         {
-                            listEmojis[i - 1].SetActive(true);
+                            listEmojis[i - 1].SetActive(false);
+                        }
+                        else
+                        {
+                            if (!listEmojis[i - 1].activeSelf)
+                            {
+                                listEmojis[i - 1].SetActive(true);
+                            }
                         }
                     }
+                    emojiPanel.SetActive(true);
                 }
-                emojiPanel.SetActive(true);
+                //CounterHelper.Instance.QueueAction(5f, () =>
+                //{
+                //    ChangeEmoji(0);
+                //});
             }
-            //CounterHelper.Instance.QueueAction(5f, () =>
-            //{
-            //    ChangeEmoji(0);
-            //});
-        }
+        }   
     }
     public void CountDownWatingTime()
     {

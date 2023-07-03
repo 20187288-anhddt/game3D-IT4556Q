@@ -53,16 +53,26 @@ public class UI_Bonus_DoubleSpeed_Player : UI_Bonus
         });
        
     }
-    public void Reward(float timeBuff)
+    public void Reward(float timeBuff, bool IsAds = true)
     {
-        SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_Double_Speed_All_Player", () =>
+        if (IsAds)
+        {
+            SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_Double_Speed_All_Player", () =>
+            {
+                Set_OnBonus(false);
+                EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
+                UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
+                    StopReward);
+            });
+
+        }
+        else
         {
             Set_OnBonus(false);
             EnventManager.TriggerEvent(EventName.Player_Double_Speed_Play.ToString());
             UI_GroupInfoBuffController.Instance.SpawnInfoBuff(UI_GroupInfoBuffController.NameBonusSpawn.Player_Speed, timeBuff,
                 StopReward);
-        });
-      
+        }
     }
     public override void StopReward()
     {
