@@ -13,6 +13,7 @@ public class BagMachine : MachineBase
     public CheckUnlock checkUnlock;
     public CheckPush checkPushBagMachine;
     public CheckCollectBagCloth checkCollectBagCloth;
+    public GameObject workingFx;
     private void LoadAndSetData()
     {
         maxObjOutput = maxObjInput = (int)(dataStatusObject as MachineDataStatusObject).GetInfoPirceObject_Stack().infoThese[0].value;
@@ -251,13 +252,14 @@ public class BagMachine : MachineBase
             }
         }
     }
+    private static string ANIM_WORKING = "Working";
     private void ChangeAnim(bool isWorking)
     {
         anim.speed = Speed_Anim * (2 * timeDelay_DeFault - timeDelay);
         if (isWorking)
         {
             anim.enabled = true;
-            anim.Play("Working");
+            anim.Play(ANIM_WORKING);
         }
         else
         {
@@ -310,6 +312,7 @@ public class BagMachine : MachineBase
         ShortCutIngredients();
         curIngredient.myTransform.DOMove(cenIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
+            workingFx.SetActive(true);
             AllPoolContainer.Instance.Release(curIngredient);
             isReadyMidToOut = true;
         });
@@ -317,11 +320,13 @@ public class BagMachine : MachineBase
     }
     private void OutputMoveToEnd()
     {
+        
         GetClothPos(outCloths.Count);
         var curCloth = AllPoolContainer.Instance.Spawn(clothPrefab, cenIngredientPos.position, myTransform.rotation);
         curCloth.transform.parent = outIngredientPos;
         curCloth.transform.DOMove(outIngredientPos.position, timeDelay / 2).OnComplete(() =>
         {
+            workingFx.SetActive(false);
             outCloths.Add(curCloth as BagBase);
             numOutputSave++;
             curCloth.transform.position = curClothPos;
@@ -368,6 +373,7 @@ public class BagMachine : MachineBase
                 UnLock(true, true);
             }
         }
+        workingFx.SetActive(false);
         //numInputSave = 5;
         //numOutputSave = 5;
         //else

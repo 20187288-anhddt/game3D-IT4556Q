@@ -135,8 +135,8 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             gun.SetActive(false);
         ReLoadCointValue();
         EnventManager.AddListener(EventName.ReLoadMoney.ToString(), ReLoadCointValue);
-        EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
-        EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
+        //EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
+        //EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
         EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
         EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
         tmpSpeed = speed;
@@ -171,8 +171,16 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         //{
         //    UpdateMove(speed);
         //}
+        if (Input.GetMouseButton(0) && Canvas_Joystick.Instance.IsOpend())
+        {
+            OnMove();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            StopMove();
+        }
         #region checkUI_Max
-        if (uI_ProcessPlayer != null)
+            if (uI_ProcessPlayer != null)
         {
             if (!uI_ProcessPlayer.isActive())
             {
@@ -265,23 +273,21 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     }
     public virtual void UpdateMove(float speed)
     {
-        if (Input.GetMouseButton(0))
+       
+        // Canvas_Joystick joystick = Canvas_Joystick.Instance;
+        Vector3 Diraction = Canvas_Joystick.Instance.Get_Diraction();
+        //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
+        //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
+        characterController.Move(Diraction * speed * Time.deltaTime);
+        if (Diraction.x != 0 || Diraction.z != 0)
         {
-           // Canvas_Joystick joystick = Canvas_Joystick.Instance;
-            Vector3 Diraction = Canvas_Joystick.Instance.Get_Diraction();
-            //Vector3 direction = new Vector3(joystick.Vertical, 0f, -joystick.Horizontal);
-            //rig.velocity = new Vector3(inputAxist.x * speed, rig.velocity.y, inputAxist.z * speed);
-            characterController.Move(Diraction * speed * Time.deltaTime);
-            if (Diraction.x != 0 || Diraction.z != 0)
-            {
-              //  Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
-                Diraction.y = 0;
-                Quaternion rotate = Quaternion.LookRotation(Diraction).normalized;
-                Vector3 Euler = Vector3.right * rotate.eulerAngles.x + Vector3.up * (rotate.eulerAngles.y + Camera.main.transform.eulerAngles.y) + Vector3.forward * rotate.eulerAngles.z;
-                rotate.eulerAngles = Euler;
-                myTransform.rotation = rotate;
-                // transform.Translate(Vector3.forward * speed * 0.02f);
-            }
+            //  Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
+            Diraction.y = 0;
+            Quaternion rotate = Quaternion.LookRotation(Diraction).normalized;
+            Vector3 Euler = Vector3.right * rotate.eulerAngles.x + Vector3.up * (rotate.eulerAngles.y + Camera.main.transform.eulerAngles.y) + Vector3.forward * rotate.eulerAngles.z;
+            rotate.eulerAngles = Euler;
+            myTransform.rotation = rotate;
+            // transform.Translate(Vector3.forward * speed * 0.02f);
         }
 
     }
