@@ -198,6 +198,12 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         }
         #endregion
     }
+    private static string ANIM_IDLE_NORMAL = "IdleNormal";
+    private static string ANIM_IDLE_WITH_GUN = "IdleWithGun";
+    private static string ANIM_IDLE_CARRING = "IdleCarring";
+    private static string ANIM_WALK_NORMAL = "WalkNormal";
+    private static string ANIM_WALK_WITH_GUN = "WalkWithGun";
+    private static string ANIM_WALK_CARRING = "WalkCarring";
     public void ChangeAnim()
     {
         if (STATE_ACTOR == IDLE_STATE)
@@ -205,16 +211,16 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             anim.speed = 1;
             if (gun.activeSelf)
             {
-                anim.Play("IdleWithGun");
+                anim.Play(ANIM_IDLE_WITH_GUN);
             }
             else
             {
                 if (objHave > 0)
                 {
-                    anim.Play("IdleCarring");
+                    anim.Play(ANIM_IDLE_CARRING);
                 }
                 else
-                    anim.Play("IdleNormal");
+                    anim.Play(ANIM_IDLE_NORMAL);
             }
         }
         else if (STATE_ACTOR == RUN_STATE)
@@ -222,17 +228,17 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             anim.speed = SpeedAnim_Run_InOneSpeed * speed;
             if (gun.activeSelf)
             {
-                anim.Play("WalkWithGun");
+                anim.Play(ANIM_WALK_WITH_GUN);
             }
             else
             {
                 if (objHave > 0)
                 {
-                    anim.Play("WalkCarring");
+                    anim.Play(ANIM_WALK_CARRING);
                 }
                 else
                 {
-                    anim.Play("WalkNormal");
+                    anim.Play(ANIM_WALK_NORMAL);
                 }
             }
 
@@ -694,10 +700,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
                 }
                 else
                 {
-                    if (!listEmojisTUT[i].activeSelf)
-                    {
-                        listEmojisTUT[i].SetActive(true);
-                    }
+                    listEmojisTUT[i].SetActive(true);
                 }
             }
         }

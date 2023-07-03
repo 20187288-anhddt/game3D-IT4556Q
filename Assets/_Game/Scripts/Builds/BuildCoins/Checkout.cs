@@ -205,53 +205,70 @@ public class Checkout : BuildCoins,ILock
         if (!listGrCusCheckout.Contains(grCustomer))
         {
             listGrCusCheckout.Add(grCustomer);
-        }
-        for(int i = 0; i < grCustomer.grNum ; i++)
-        {
-            if (!listCusCheckout.Contains(grCustomer.listCus[i]))
+            Customer curLeader = grCustomer.leader;
+            listCusCheckout.Add(curLeader);
+            curLeader.checkOut = this;
+            curLeader.transCheckOut = listCheckoutPos[listCusCheckout.Count - 1].position;
+            curLeader.transExit = transExit.position;
+            curLeader.UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
+            for (int i = 0; i < grCustomer.teammates.Count; i++)
             {
-                Customer curCus = grCustomer.listCus[i];
+                Customer curCus = grCustomer.teammates[i];
                 listCusCheckout.Add(curCus);
                 curCus.checkOut = this;
                 curCus.transCheckOut = listCheckoutPos[listCusCheckout.Count - 1].position;
                 curCus.transExit = transExit.position;
-                if (curCus.isLeader)
-                {
-                    curCus.UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
-                }
-                else
-                {
-                    curCus.UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
-                }
+                curCus.UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
             }
-        }
+        }  
     }
     public void CheckStatus()
     {
         if(listGrCusCheckout.Count > 0 && isHaveStaff && !isCheckout)
         {
-            for(int i = 0; i < listGrCusCheckout.Count; i++)
+            //for(int i = 0; i < listGrCusCheckout.Count; i++)
+            //{
+            //    if (listGrCusCheckout[i].CheckonCheckoutPos())
+            //    {
+            //        isCheckout = true;
+            //        staffModel.GetComponent<Animator>().Play("Wave");
+            //        GroupCustomer curGr = listGrCusCheckout[i];
+            //        listGrCusCheckout.Remove(curGr);
+            //        curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
+            //        curGr.leader.isExit = true;
+            //        listCusCheckout.Remove(curGr.leader);
+            //        for (int j = 0; j < curGr.teammates.Count; j++)
+            //        {
+            //            curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
+            //            listCusCheckout.Remove(curGr.teammates[j]);
+            //        }
+            //        SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
+            //                curGr.leader.transform);
+            //        for (int x = 0; x < curGr.listCus.Count; x++)
+            //        {
+            //            levelManager.customerManager.customerList.Remove(curGr.listCus[x]);
+            //        }
+            //    }
+            //}
+            if (listGrCusCheckout[0].CheckonCheckoutPos())
             {
-                if (listGrCusCheckout[i].CheckonCheckoutPos())
+                isCheckout = true;
+                staffModel.GetComponent<Animator>().Play("Wave");
+                GroupCustomer curGr = listGrCusCheckout[0];
+                listGrCusCheckout.Remove(curGr);
+                curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
+                curGr.leader.isExit = true;
+                listCusCheckout.Remove(curGr.leader);
+                for (int j = 0; j < curGr.teammates.Count; j++)
                 {
-                    isCheckout = true;
-                    staffModel.GetComponent<Animator>().Play("Wave");
-                    GroupCustomer curGr = listGrCusCheckout[i];
-                    listGrCusCheckout.Remove(listGrCusCheckout[i]);
-                    curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
-                    curGr.leader.isExit = true;
-                    listCusCheckout.Remove(curGr.leader);
-                    for (int j = 0; j < curGr.teammates.Count ; j++)
-                    {
-                        curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
-                        listCusCheckout.Remove(curGr.teammates[j]);
-                    }
-                    SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
-                            curGr.leader.transform);
-                    for (int x = 0; x < curGr.listCus.Count; x++)
-                    {
-                        levelManager.customerManager.customerList.Remove(curGr.listCus[x]);
-                    }
+                    curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
+                    listCusCheckout.Remove(curGr.teammates[j]);
+                }
+                SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
+                        curGr.leader.transform);
+                for (int x = 0; x < curGr.listCus.Count; x++)
+                {
+                    levelManager.customerManager.customerList.Remove(curGr.listCus[x]);
                 }
             }
         }
@@ -392,19 +409,20 @@ public class Checkout : BuildCoins,ILock
     }
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<Player>();
-        if (player != null)
-        {
+        //var player = other.GetComponent<Player>();
+        //Player player = Player.Instance;
+        //if (player != null)
+        //{
             isHaveStaff = true;
-        }
+        //}
     }
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Player>();
-        if (player != null)
-        {
+        //var player = other.GetComponent<Player>();
+        //if (player != null)
+        //{
             isHaveStaff = false;
-        }
+        //}
     }
     public void BuyStaff()
     {

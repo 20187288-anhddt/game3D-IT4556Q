@@ -59,9 +59,9 @@ public class GroupCustomer : AllPool
     }
     public bool CheckonCheckoutPos()
     {
-        for(int i = 0; i < grNum; i++)
+        for(int i = 0; i < teammates.Count; i++)
         {
-            if (!listCus[i].onCheckoutPos)
+            if (!teammates[i].onCheckoutPos)
             {
                 return false;
             }

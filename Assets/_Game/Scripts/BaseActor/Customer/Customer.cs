@@ -219,10 +219,10 @@ public class Customer : BaseCustomer,IAct
                 UpdateState(MOVE_CHECKOUT_STATE);
             }
         }
-        if( leader.gotOutfit && leader.gotBag && leader.isExit)
-        {
+        //if( leader.gotOutfit && leader.gotBag && leader.isExit)
+        //{
 
-        }
+        //}
     }
     public virtual void MoveToExit()
     {
@@ -278,6 +278,14 @@ public class Customer : BaseCustomer,IAct
         }
         UpdateState(IDLE_STATE);
     }
+    private static string ANIM_IDLE_NORMAL = "IdleNormal";
+    private static string ANIM_IDLE_COW = "IdleCow";
+    private static string ANIM_IDLE_BEAR = "IdleBear";
+    private static string ANIM_IDLE_CHICKEN = "IdleChicken";
+    private static string ANIM_WALK_NORMAL = "Walk";
+    private static string ANIM_WALK_COW = "CowWalk";
+    private static string ANIM_WALK_CHICKEN = "ChickenWalk";
+    private static string ANIM_WALK_BEAR = "BearWalk";
     public void ChangeAnim()
     {
         //anim = GetComponentInChildren<Animator>();
@@ -286,20 +294,20 @@ public class Customer : BaseCustomer,IAct
         {
             if (!gotOutfit)
             {
-                anim.Play("IdleNormal");
+                anim.Play(ANIM_IDLE_NORMAL);
             }
             else
             {
                 switch (this.outfitType)
                 {
                     case IngredientType.COW:
-                        anim.Play("IdleCow");
+                        anim.Play(ANIM_IDLE_COW);
                         break;
                     case IngredientType.CHICKEN:
-                        anim.Play("IdleChicken");
+                        anim.Play(ANIM_IDLE_CHICKEN);
                         break;
                     case IngredientType.BEAR:
-                        anim.Play("IdleBear");
+                        anim.Play(ANIM_IDLE_BEAR);
                         break;
                 }
             }
@@ -308,20 +316,20 @@ public class Customer : BaseCustomer,IAct
         {
             if (!gotOutfit)
             {
-                anim.Play("Walk");
+                anim.Play(ANIM_WALK_NORMAL);
             }
             else
             {
                 switch (this.outfitType)
                 {
                     case IngredientType.COW:
-                        anim.Play("CowWalk");
+                        anim.Play(ANIM_WALK_COW);
                         break;
                     case IngredientType.CHICKEN:
-                        anim.Play("ChickenWalk");
+                        anim.Play(ANIM_WALK_CHICKEN);
                         break;
                     case IngredientType.BEAR:
-                        anim.Play("BearWalk");
+                        anim.Play(ANIM_WALK_BEAR);
                         break;
                 }
             }
@@ -392,7 +400,7 @@ public class Customer : BaseCustomer,IAct
         if (!isAct)
         {
             isAct = true;
-            int r = Random.Range(4, 6);
+            int r = Random.Range(4, 7);
             ChangeEmoji(r);
         }
         if (isAct)
@@ -401,9 +409,9 @@ public class Customer : BaseCustomer,IAct
         }
         if (delayAct < 0)
         {
-            isAct = false;
-            ChangeEmoji(0);
             delayAct = consDelayAct;
+            ChangeEmoji(0);
+            isAct = false;
         }
 
     }
@@ -419,21 +427,25 @@ public class Customer : BaseCustomer,IAct
         }
         else
         {
-            for (int i = 1; i <= listEmojis.Count; i++)
+            int r = Random.Range(0, 10);
+            if (r < 5)
             {
-                if (i != n)
+                for (int i = 1; i <= listEmojis.Count; i++)
                 {
-                    listEmojis[i - 1].SetActive(false);
-                }
-                else
-                {
-                    if (!listEmojis[i - 1].activeSelf)
+                    if (i != n)
                     {
-                        listEmojis[i - 1].SetActive(true);
+                        listEmojis[i - 1].SetActive(false);
+                    }
+                    else
+                    {
+                        if (!listEmojis[i - 1].activeSelf)
+                        {
+                            listEmojis[i - 1].SetActive(true);
+                        }
                     }
                 }
+                emojiPanel.SetActive(true);
             }
-            emojiPanel.SetActive(true);
             //CounterHelper.Instance.QueueAction(5f, () =>
             //{
             //    ChangeEmoji(0);
