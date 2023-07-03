@@ -166,6 +166,11 @@ public enum EventName {
     Camera_Follow_CowBagCloset,
     Camera_Follow_BearBagMachine,
     Camera_Follow_BearBagCloset,
+
+    HireStaff_4_OnBuy,
+    HireStaff_5_OnBuy,
+    HireStaff_4_OnComplete,
+    HireStaff_5_OnComplete,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

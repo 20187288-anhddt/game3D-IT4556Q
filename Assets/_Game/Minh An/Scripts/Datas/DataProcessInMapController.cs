@@ -466,6 +466,10 @@ public class MissionProcess
                 return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_2);
             case EventName.HireStaff_3_OnComplete:
                 return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_3);
+            case EventName.HireStaff_4_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_4);
+            case EventName.HireStaff_5_OnComplete:
+                return Is_Complete(IngredientType.HIRESTAFF, NameObject_This.HireStaff_5);
 
         }
         return false;
@@ -805,6 +809,12 @@ public class RewardProcessCompleteMission
             case EventName.Camera_Follow_BearBagCloset:
                 CameraFollowObject(IngredientType.BEAR, NameObject_This.BearBagCloset, true, 0.5f, 2.5f, 2.5f, 2.5f, 2.5f
                   , PlayerStopMove, PlayerContinueMove);
+                break;
+            case EventName.HireStaff_4_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_4);
+                break;
+            case EventName.HireStaff_5_OnBuy:
+                OnBuy(IngredientType.HIRESTAFF, NameObject_This.HireStaff_5);
                 break;
         }
     }
