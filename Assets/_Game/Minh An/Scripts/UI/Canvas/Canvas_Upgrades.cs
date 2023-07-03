@@ -25,6 +25,7 @@ public class Canvas_Upgrades : UI_Canvas
     [SerializeField] private Color color_On;
     [SerializeField] private Color color_Off;
 
+
     private void Awake()
     {
         OnInIt();
@@ -36,10 +37,12 @@ public class Canvas_Upgrades : UI_Canvas
         btn_Worker.onClick.AddListener(ClickBtn_Worker);
         btn_Machine.onClick.AddListener(ClickBtn_Machine);
     }
+  
     private void OnEnable()
     {
         ClickBtn_Machine();
     }
+   
     private void ClickBtn_Worker()
     {
         OpenBtn(img_BG_Worker, img_BG_Machine, txt_Worker, txt_Machine);
@@ -50,6 +53,7 @@ public class Canvas_Upgrades : UI_Canvas
         OpenBtn(img_BG_Machine, img_BG_Worker, txt_Machine, txt_Worker);
         OpenUpdateMachine();
     }
+  
     private void OpenBtn(Image imageOP, Image imageCl, Text textOP, Text textCl)
     {
         imageOP.sprite = spr_BG_On;
@@ -63,7 +67,8 @@ public class Canvas_Upgrades : UI_Canvas
         CloseAllUI();
         UI_LabelShow uI_LabelShow = null;
         #region Load UI Level chua max
-        foreach (MachineBase machineBase in MachineManager.Instance.allActiveMachine)
+        foreach (MachineBase machineBase in 
+            GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].machineManager.allActiveMachine)
         {
             uI_LabelShow = null;
             if (!(machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -93,7 +98,7 @@ public class Canvas_Upgrades : UI_Canvas
         #endregion
       
         #region Load UI level max
-        foreach (MachineBase machineBase in MachineManager.Instance.allActiveMachine)
+        foreach (MachineBase machineBase in GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].machineManager.allActiveMachine)
         {
             uI_LabelShow = null;
             if ((machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -152,7 +157,15 @@ public class Canvas_Upgrades : UI_Canvas
         //     , DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetLevel_Price());
         #endregion
         #region Load Data Staff
-        foreach(BaseStaff baseStaff in StaffManager.Instance.listAllActiveStaffs)
+        Dictionary<StaffType, BaseStaff> dict_Staff = new Dictionary<StaffType, BaseStaff>();
+        foreach (BaseStaff baseStaff in GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].staffManager.listAllActiveStaffs)
+        {
+            if (!dict_Staff.ContainsKey(baseStaff.staffType))
+            {
+                dict_Staff.Add(baseStaff.staffType, baseStaff);
+            }
+        }
+        foreach (BaseStaff baseStaff in dict_Staff.Values)
         {
             uI_LabelShow = null;
             foreach (UI_LabelShow uI_LabelShow1 in uI_LabelShows)
@@ -194,9 +207,12 @@ public class Canvas_Upgrades : UI_Canvas
         base.Open();
         Close();
         base.Open();
+        UI_Manager.Instance.AddUI_To_Stack_UI_Open(this);
     }
     public override void Close()
     {
         base.Close();
+        UI_Manager.Instance.ReMoveUI_To_Stack_UI_Open();
     }
+ 
 }
