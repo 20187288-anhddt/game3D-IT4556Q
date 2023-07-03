@@ -13,10 +13,11 @@ public class CheckPushBagMachine : MonoBehaviour
     {
         if (machine.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            if (player is Player)
+        if (player is Player)
                 player.canCatch = true;
             if (player is Staff)
             {
@@ -29,10 +30,11 @@ public class CheckPushBagMachine : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            if (player is Staff)
+        if (player is Staff)
             {
                 if ((player as Staff).ingredientType != machine.ingredientType)
                 {
@@ -104,7 +106,7 @@ public class CheckPushBagMachine : MonoBehaviour
                 }
                 if (curIngredient != null)
                 {
-                    (curIngredient as FurBase).MoveToMachine(machine);
+                    (curIngredient as FurBase).MoveToMachine(machine,player);
                     player.RemoveIngredient(curIngredient);
                     player.objHave--;
                     //(player as BaseActor).ShortObj();

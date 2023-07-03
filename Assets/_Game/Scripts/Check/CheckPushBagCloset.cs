@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.NiceVibrations;
 public class CheckPushBagCloset : MonoBehaviour
 {
     [SerializeField]
@@ -14,10 +14,11 @@ public class CheckPushBagCloset : MonoBehaviour
     {
         if (closet.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            if (player is Player)
+        if (player is Player)
                 player.canCatch = true;
             if (player is Staff)
             {
@@ -30,10 +31,11 @@ public class CheckPushBagCloset : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            if (player is Staff)
+        if (player is Staff)
             {
                 if ((player as Staff).ingredientType != closet.ingredientType)
                 {
@@ -118,6 +120,11 @@ public class CheckPushBagCloset : MonoBehaviour
                     //    }).SetEase(Ease.Linear);
                     //});
                     AllPoolContainer.Instance.Release(curBag);
+                    if (player is Player)
+                    {
+                        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    }
                     closet.SpawnOutfit();
                     player.DelayCatch(player.timeDelayCatch);
                     //(player as BaseActor).ShortObj();

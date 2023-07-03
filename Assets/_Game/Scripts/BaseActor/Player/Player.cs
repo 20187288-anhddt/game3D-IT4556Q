@@ -135,8 +135,8 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             gun.SetActive(false);
         ReLoadCointValue();
         EnventManager.AddListener(EventName.ReLoadMoney.ToString(), ReLoadCointValue);
-        //EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
-        //EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
+        EnventManager.AddListener(EventName.PlayJoystick.ToString(), OnMove);
+        EnventManager.AddListener(EventName.StopJoyStick.ToString(), StopMove);
         EnventManager.AddListener(EventName.Player_Double_Speed_Play.ToString(), DoubleSpeed);
         EnventManager.AddListener(EventName.Player_Double_Speed_Stop.ToString(), ResetSpeed);
         tmpSpeed = speed;
@@ -171,14 +171,14 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         //{
         //    UpdateMove(speed);
         //}
-        if (Input.GetMouseButton(0) && Canvas_Joystick.Instance.IsOpend())
-        {
-            OnMove();
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            StopMove();
-        }
+        //if (Input.GetMouseButton(0) && Canvas_Joystick.Instance.IsOpend())
+        //{
+        //    OnMove();
+        //}
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    StopMove();
+        //}
         #region checkUI_Max
             if (uI_ProcessPlayer != null)
         {

@@ -20,20 +20,17 @@ public class TrashCan : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       // var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        player.canCatch = true;
-        //if (player != null)
-        //{
-        //    player.canCatch = true;
-        //}
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = true;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
             if (!throwFood)
             {
                 t -= Time.deltaTime;
@@ -57,16 +54,14 @@ public class TrashCan : MonoBehaviour
                 throwFood = true;
                 t = timeStay;
             }
-        //}
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        //var player = other.GetComponent<ICollect>();
-        //var player = Cache.getICollect(other);
-        //if (player != null)
-        //{
-            //player.canCatch = false;
-        //}
-        t = timeStay;
+        var player = other.GetComponent<ICollect>();
+        if (player != null)
+        {
+            player.canCatch = false;
+        }
     }
 }

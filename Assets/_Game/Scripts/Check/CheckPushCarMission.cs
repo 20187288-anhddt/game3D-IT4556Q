@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MoreMountains.NiceVibrations;
 
 public class CheckPushCarMission : MonoBehaviour
 {
@@ -166,6 +167,7 @@ public class CheckPushCarMission : MonoBehaviour
                         player.RemoveIngredient(curIngredient);
                         player.objHave--;
                         //(player as BaseActor).ShortObj();
+                        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
                         player.DelayCatch(player.timeDelayCatch);
                         //foreach (IngredientType key in carMission.listMission.Keys)
                         //{

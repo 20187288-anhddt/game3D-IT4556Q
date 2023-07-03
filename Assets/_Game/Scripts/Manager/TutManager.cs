@@ -216,6 +216,7 @@ public class TutManager : MonoBehaviour
                 player.OpenPanelTUT(8);
                 fxTUT.transform.position = Vector3.right * bagCloset.myTransform.position.x + Vector3.up * 8 + Vector3.forward * bagCloset.myTransform.position.z;
                 fxTUT.SetActive(true);
+                line.gameObject.SetActive(true);
                 line.SetPosition(0, player.myTransform.position);
                 line.SetPosition(1, Vector3.right * bagCloset.myTransform.position.x + Vector3.up * 0 + Vector3.forward * bagCloset.myTransform.position.z);
             }
@@ -224,7 +225,6 @@ public class TutManager : MonoBehaviour
                 player.OpenPanelTUT(7);
                 fxTUT.transform.position = Vector3.right * bagMachine.myTransform.position.x + Vector3.up * 8 + Vector3.forward * bagMachine.myTransform.position.z;
                 fxTUT.SetActive(true);
-                line.gameObject.SetActive(true);
                 line.SetPosition(0, player.myTransform.position);
                 line.SetPosition(1, Vector3.right * bagMachine.myTransform.position.x + Vector3.up * 0 + Vector3.forward * bagMachine.myTransform.position.z);
             }
@@ -300,6 +300,40 @@ public class TutManager : MonoBehaviour
         pairs_.Add("af_success", "true");
         pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
         SDK.ABIAppsflyerManager.SendEvent("af_tutorial_completion", pairs_);
+    }
+    public bool IsDoneAllTuT()
+    {
+        foreach (NameTuT nameTuT in nameTuTs_Taget)
+        {
+            switch (nameTuT)
+            {
+                case NameTuT.MachineTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneMachineTUT)
+                    {
+                        return false;
+                    }
+                    break;
+                case NameTuT.ClosetTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneClosetTUT)
+                    {
+                        return false;
+                    }
+                    break;
+                case NameTuT.BagClosetTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneBagClosetTUT)
+                    {
+                        return false;
+                    }
+                    break;
+                case NameTuT.CarTUT:
+                    if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].isDoneCarTUT)
+                    {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
     }
     public bool CheckDoneAllTuT()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using MoreMountains.NiceVibrations;
 
 public class IngredientBase : AllPool
 {
@@ -27,16 +28,17 @@ public class IngredientBase : AllPool
         this.transform.DOLocalJump(Vector3.up * actor.yOffset+ Vector3.right * x + Vector3.forward * z, 5f, 1, 0.5f).OnComplete(() =>
         {
             //baseActor.ShortObj();
+            if (actor is Player)
+            {
+                MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+            }
+
         }).SetEase(Ease.OutCirc);
-        //});
-        //if (baseActor is Player)
-        //{
-        //    Vibration.Vibrate(25);
-        //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
-        //}
+        //});  
     }
    
-    public void MoveToTrash(TrashCan gar)
+    public void MoveToTrash(TrashCan gar,ICollect actor)
     {
         float x = Random.Range(-0.05f, 0.05f);
         float z = Random.Range(-0.05f, 0.05f);
@@ -46,11 +48,11 @@ public class IngredientBase : AllPool
             {
                 this.transform.parent = null;
                 AllPoolContainer.Instance.Release(this);
-                //if (isPlayer)
-                //{
-                //    Vibration.Vibrate(25);
-                //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
-                //}
+                if (actor is Player)
+                {
+                    MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                }
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
     }
@@ -62,11 +64,7 @@ public class IngredientBase : AllPool
             {
                 this.transform.parent = null;
                 AllPoolContainer.Instance.Release(this);
-                //if (isPlayer)
-                //{
-                //    Vibration.Vibrate(25);
-                //    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
-                //}
+                MMVibrationManager.Haptic(HapticTypes.MediumImpact);
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
         //AllPoolContainer.Instance.Release(this);

@@ -125,25 +125,25 @@ public class CheckUnlock : MonoBehaviour
     //    //if (player != null)
     //    //{
     //        player.canCatch = true;
-            
-    //    //}
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    //IUnlock unlock = other.GetComponent<IUnlock>();
-    //    IUnlock unlock = Cache.getIUnlock(other);
-    //    //if (unlock != null)
-    //    //{
 
-    //    if (isUnlockAds)
-    //        {
-    //            //bound[1].DOKill();
-    //            //bound[1].fillAmount = 0;
-    //            tmp = 2.5f;
-    //        }
-    //        t = 0;
     //    //}
     //}
+    private void OnTriggerExit(Collider other)
+    {
+        //IUnlock unlock = other.GetComponent<IUnlock>();
+        //IUnlock unlock = Cache.getIUnlock(other);
+        //if (unlock != null)
+        //{
+
+        //if (isUnlockAds)
+        //{
+        //    //bound[1].DOKill();
+        //    //bound[1].fillAmount = 0;
+        //    tmp = 2.5f;
+        //}
+        t = 0;
+        //}
+    }
     private void unlockQuick(IUnlock player)
     {
         if (normal.CurrentCoin <= 0 && normal.IsLock)
