@@ -21,6 +21,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
     public Transform handPos { get => HandPos; set => HandPos = value; }
     public Transform backPos { get => BackPos; set => BackPos = value; }
     public Transform carryPos { get => CarryPos; set => CarryPos = value; }
+    public Transform gunPos { get => GunPos; set => GunPos = value; }
     public List<IngredientBase> allIngredients { get => AllIngredients; set => AllIngredients = value; }
 
     public List<Fleece> fleeces { get => Fleeces; set => Fleeces = value; }
@@ -107,7 +108,7 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
         isBuff = true;
         fxBuffSpeed.SetActive(true);
         speed = DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().GetDataPlayer().GetDataBoss().GetInfoSpeedTaget().Speed;
-        speed *= 1.25f;
+        speed *= 1.3f;
     }
     private void ResetSpeed()
     {

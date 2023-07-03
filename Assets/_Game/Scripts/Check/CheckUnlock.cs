@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using MoreMountains.NiceVibrations;
 
 public class CheckUnlock : MonoBehaviour
 {
@@ -227,6 +228,7 @@ public class CheckUnlock : MonoBehaviour
             Player player = Player.Instance;
             AllPool c = AllPoolContainer.Instance.Spawn(coinPrefab, player.transform.position + Vector3.up * 0.5f);
             (c as Coin).MoveToBuildLock(this.transform.position, 0.1f);
+            MMVibrationManager.Haptic(HapticTypes.LightImpact);
             UpdateUI();
             if (normal.CurrentCoin <= 0)
             {

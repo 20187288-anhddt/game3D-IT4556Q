@@ -167,7 +167,7 @@ public class CheckPushCarMission : MonoBehaviour
                         player.RemoveIngredient(curIngredient);
                         player.objHave--;
                         //(player as BaseActor).ShortObj();
-                        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
                         player.DelayCatch(player.timeDelayCatch);
                         //foreach (IngredientType key in carMission.listMission.Keys)
                         //{

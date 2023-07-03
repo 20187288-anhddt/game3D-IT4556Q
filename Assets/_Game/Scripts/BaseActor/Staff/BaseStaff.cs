@@ -29,6 +29,7 @@ public class BaseStaff : AllPool
     public Transform HandPos;
     public Transform BackPos;
     public Transform CarryPos;
+    public Transform GunPos;
 
     [Header("-----ListIngredients-----")]
     public List<IngredientBase> AllIngredients;

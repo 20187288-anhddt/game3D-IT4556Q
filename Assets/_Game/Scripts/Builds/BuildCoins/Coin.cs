@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using MoreMountains.NiceVibrations;
 
 public class Coin : AllPool
 {
@@ -25,6 +26,7 @@ public class Coin : AllPool
         float time = (float)distance / moveSpeed;
         transform.rotation = Quaternion.identity;
         transform.DOJump(player.myTransform.position+ Vector3.up*1.5f, 5f, 1, 0.15f).OnComplete(() => {
+            MMVibrationManager.Haptic(HapticTypes.LightImpact);
             AllPoolContainer.Instance.Release(this);
             //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
             //Vibration.Vibrate(25);

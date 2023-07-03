@@ -22,7 +22,7 @@ public class FurBase :  IngredientBase
             machine.ShortCutIngredients();
             if (actor is Player)
             {
-                MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                MMVibrationManager.Haptic(HapticTypes.LightImpact);
                 //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
             }
             //baseActor.ShortObj();

@@ -118,7 +118,7 @@ public class CheckPushCloset : MonoBehaviour
                     AllPoolContainer.Instance.Release(curCloth);
                     if (player is Player)
                     {
-                        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
                     //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                     }
                     closet.SpawnOutfit();

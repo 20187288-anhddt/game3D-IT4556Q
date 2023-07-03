@@ -838,6 +838,37 @@ Transform:
   m_Father: {fileID: 7429231831915773975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2520277776541714235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5987585510086442650}
+  m_Layer: 0
+  m_Name: GunPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5987585510086442650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2520277776541714235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.31, y: 0.94, z: 2.399}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4567294145521889763}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2718162151731659863
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +900,7 @@ Transform:
   - {fileID: 6150482312668415317}
   - {fileID: 7987490919694190778}
   m_Father: {fileID: 4567294145521889763}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2778533573612115332
 GameObject:
@@ -1223,7 +1254,7 @@ GameObject:
   - component: {fileID: 303888481105284568}
   - component: {fileID: 1288348940122836268}
   - component: {fileID: 3829092117582956619}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,6 +1276,7 @@ Transform:
   - {fileID: 2733802351479381876}
   - {fileID: 8683428248071359970}
   - {fileID: 881397979267701667}
+  - {fileID: 5987585510086442650}
   - {fileID: 2620732329291080862}
   - {fileID: 8953878289337714542}
   - {fileID: 5033757868568670451}
@@ -1310,6 +1342,7 @@ MonoBehaviour:
   HandPos: {fileID: 8683428248071359970}
   BackPos: {fileID: 881397979267701667}
   CarryPos: {fileID: 4314186039011339035}
+  GunPos: {fileID: 5987585510086442650}
   AllIngredients: []
   Fleeces: []
   SheepCloths: []
@@ -2244,7 +2277,7 @@ RectTransform:
   - {fileID: 1617272992761233850}
   - {fileID: 8186702494674188433}
   m_Father: {fileID: 4567294145521889763}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2515,7 +2548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3986535071356739521, guid: e06f00ebb5f708843b323644f70454d7, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3986535071356739521, guid: e06f00ebb5f708843b323644f70454d7, type: 3}
       propertyPath: m_LocalScale.x
@@ -2602,7 +2635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6637863024284630099, guid: 936a547c43514a740a45aef19d227256, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6637863024284630099, guid: 936a547c43514a740a45aef19d227256, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2669,7 +2702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7386876042415648464, guid: 6c6e49cd282c30d45872f1ccb7a52344, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7386876042415648464, guid: 6c6e49cd282c30d45872f1ccb7a52344, type: 3}
       propertyPath: m_LocalPosition.x

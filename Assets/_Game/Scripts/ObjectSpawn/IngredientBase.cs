@@ -17,24 +17,56 @@ public class IngredientBase : AllPool
     {
         float x = Random.Range(-0.05f, 0.05f);
         float z = Random.Range(-0.05f, 0.05f);
-        (actor as ICollect).AddIngredient(this);
-        actor.objHave++;
-        this.transform.parent = actor.carryPos;
-        transform.localRotation = Quaternion.identity;
-        // yOffset += ingreScale;
-        actor.yOffset += ingreScale;
+
         //transform.DOMove(baseActor.CarryPos.position, 0.1f).OnComplete(() =>
         //{
-        this.transform.DOLocalJump(Vector3.up * actor.yOffset+ Vector3.right * x + Vector3.forward * z, 5f, 1, 0.5f).OnComplete(() =>
+        if(this is FurBase)
         {
-            //baseActor.ShortObj();
-            if (actor is Player)
+            this.transform.DOMove(actor.gunPos.position, 0.15f).OnComplete(() =>
             {
-                MMVibrationManager.Haptic(HapticTypes.MediumImpact);
-                //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
-            }
+                (actor as ICollect).AddIngredient(this);
+                actor.objHave++;
+                this.transform.parent = actor.carryPos;
+                transform.localRotation = Quaternion.identity;
+                // yOffset += ingreScale;
+                actor.yOffset += ingreScale;
+                this.transform.DOLocalJump(Vector3.up * actor.yOffset + Vector3.right * x + Vector3.forward * z,5f, 1, 0.35f).OnComplete(() =>
+                {
+                    //baseActor.ShortObj();
+                    if (actor is Player)
+                    {
+                        MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    }
 
-        }).SetEase(Ease.OutCirc);
+                }).SetEase(Ease.OutCirc);
+                //baseActor.ShortObj();
+                //if (actor is Player)
+                //{
+                //    MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                //    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                //}
+            }).SetEase(Ease.OutCirc);
+        }
+        else
+        {
+            (actor as ICollect).AddIngredient(this);
+            actor.objHave++;
+            this.transform.parent = actor.carryPos;
+            transform.localRotation = Quaternion.identity;
+            // yOffset += ingreScale;
+            actor.yOffset += ingreScale;
+            this.transform.DOLocalJump(Vector3.up * actor.yOffset + Vector3.right * x + Vector3.forward * z, 5f, 1, 0.5f).OnComplete(() =>
+            {
+                //baseActor.ShortObj();
+                if (actor is Player)
+                {
+                    MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                }
+
+            }).SetEase(Ease.OutCirc);
+        }
         //});  
     }
    
@@ -50,7 +82,7 @@ public class IngredientBase : AllPool
                 AllPoolContainer.Instance.Release(this);
                 if (actor is Player)
                 {
-                    MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                    MMVibrationManager.Haptic(HapticTypes.LightImpact);
                     //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                 }
             }).SetEase(Ease.OutCirc);
@@ -64,7 +96,7 @@ public class IngredientBase : AllPool
             {
                 this.transform.parent = null;
                 AllPoolContainer.Instance.Release(this);
-                MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+                MMVibrationManager.Haptic(HapticTypes.LightImpact);
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
         //AllPoolContainer.Instance.Release(this);

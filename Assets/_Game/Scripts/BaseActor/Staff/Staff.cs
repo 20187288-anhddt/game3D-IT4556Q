@@ -45,6 +45,7 @@ public class Staff : BaseStaff, ICollect,IAct
     public Transform handPos { get => HandPos; set => HandPos = value; }
     public Transform backPos { get => BackPos; set => BackPos = value; }
     public Transform carryPos { get => CarryPos; set => CarryPos = value; }
+    public Transform gunPos { get => GunPos; set => GunPos = value; }
     public List<IngredientBase> allIngredients { get => AllIngredients; set => AllIngredients = value; }
 
     public List<Fleece> fleeces { get => Fleeces; set => Fleeces = value; }
@@ -449,6 +450,12 @@ public class Staff : BaseStaff, ICollect,IAct
             }
         }
     }
+    private static string ANIM_IDLE_NORMAL = "IdleNormal";
+    private static string ANIM_IDLE_WITH_GUN = "IdleWithGun";
+    private static string ANIM_IDLE_CARRING = "IdleCarring";
+    private static string ANIM_WALK_NORMAL = "WalkNormal";
+    private static string ANIM_WALK_WITH_GUN = "RunWithGun";
+    private static string ANIM_WALK_CARRING = "WalkCarring";
     public void ChangeAnim()
     {
         //anim.SetFloat("Speed", navMeshAgent.velocity.magnitude);
@@ -457,16 +464,16 @@ public class Staff : BaseStaff, ICollect,IAct
             anim.speed = 1;
             if (gun.activeSelf)
             {
-                anim.Play("IdleWithGun");
+                anim.Play(ANIM_IDLE_WITH_GUN);
             }
             else
             {
                 if (objHave > 0)
                 {
-                    anim.Play("IdleCarring");
+                    anim.Play(ANIM_IDLE_CARRING);
                 }
                 else
-                    anim.Play("IdleNormal");
+                    anim.Play(ANIM_IDLE_NORMAL);
             }   
         }
         else
@@ -475,7 +482,7 @@ public class Staff : BaseStaff, ICollect,IAct
             if (gun.activeSelf)
             {
                 anim.speed = 1/4.0f * speed;
-                anim.Play("RunWithGun");
+                anim.Play(ANIM_WALK_WITH_GUN);
             }
             else
             {
@@ -483,12 +490,12 @@ public class Staff : BaseStaff, ICollect,IAct
                 if (objHave > 0)
                 {
                     anim.speed = 0.3f * speed;
-                    anim.Play("WalkCarring");
+                    anim.Play(ANIM_WALK_CARRING);
                 }
                 else
                 {
                     anim.speed = 0.3f * speed;
-                    anim.Play("WalkNormal");
+                    anim.Play(ANIM_WALK_NORMAL);
                 }
                  
             }
