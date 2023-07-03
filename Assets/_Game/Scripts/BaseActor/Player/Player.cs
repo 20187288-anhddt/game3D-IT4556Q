@@ -276,9 +276,10 @@ public class Player : BaseActor,ICollect,IUnlock,IAct
             {
               //  Vector3 moveDir = new Vector3(inputAxist.x, 0, inputAxist.z);
                 Diraction.y = 0;
-                myTransform.rotation = Quaternion.LookRotation(Diraction).normalized;
-                Vector3 Euler = Vector3.right * myTransform.eulerAngles.x + Vector3.up * (myTransform.eulerAngles.y + Camera.main.transform.eulerAngles.y) + Vector3.forward * transform.eulerAngles.z;
-                myTransform.eulerAngles = Euler;
+                Quaternion rotate = Quaternion.LookRotation(Diraction).normalized;
+                Vector3 Euler = Vector3.right * rotate.eulerAngles.x + Vector3.up * (rotate.eulerAngles.y + Camera.main.transform.eulerAngles.y) + Vector3.forward * rotate.eulerAngles.z;
+                rotate.eulerAngles = Euler;
+                myTransform.rotation = rotate;
                 // transform.Translate(Vector3.forward * speed * 0.02f);
             }
         }

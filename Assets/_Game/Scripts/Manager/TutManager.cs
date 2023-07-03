@@ -74,35 +74,35 @@ public class TutManager : MonoBehaviour
     {
         if (levelManager.habitatManager.allActiveHabitats.Count <= 0)
         {
-            fxTUT.transform.position = new Vector3(habitat.transform.position.x, 8f, habitat.transform.position.z);
+            fxTUT.transform.position = Vector3.right * habitat.myTransform.position.x + Vector3.up * 8f + Vector3.forward * habitat.myTransform.position.z;
             player.OpenPanelTUT(0);
             fxTUT.SetActive(true);
-            line.SetPosition(0, player.transform.position);
-            line.SetPosition(1, new Vector3(habitat.transform.position.x, 0, habitat.transform.position.z));
+            line.SetPosition(0, player.myTransform.position);
+            line.SetPosition(1, Vector3.right * habitat.myTransform.position.x + Vector3.up * 0 + Vector3.forward * habitat.myTransform.position.z);
         }
         else if (levelManager.machineManager.allActiveClothMachine.Count <= 0)
         {
             player.OpenPanelTUT(1);
-            fxTUT.transform.position = new Vector3(clothMachine.transform.position.x, 8f, clothMachine.transform.position.z);
+            fxTUT.transform.position = Vector3.right * clothMachine.myTransform.position.x + Vector3.up * 8f + Vector3.forward * clothMachine.myTransform.position.z;
             fxTUT.SetActive(true);
-            line.SetPosition(0, player.transform.position);
-            line.SetPosition(1, new Vector3(clothMachine.transform.position.x, 0, clothMachine.transform.position.z));
+            line.SetPosition(0, player.myTransform.position);
+            line.SetPosition(1, Vector3.right * clothMachine.myTransform.position.x + Vector3.up * 0 + Vector3.forward * clothMachine.myTransform.position.z);
         }
         else if (levelManager.closetManager.listClosets.Count <= 0)
         {
             player.OpenPanelTUT(2);
-            fxTUT.transform.position = new Vector3(closet.transform.position.x, 8f, closet.transform.position.z);
+            fxTUT.transform.position = Vector3.right * closet.myTransform.position.x + Vector3.up * 8f + Vector3.forward * closet.myTransform.position.z;
             fxTUT.SetActive(true);
-            line.SetPosition(0, player.transform.position);
-            line.SetPosition(1, new Vector3(closet.transform.position.x, 0, closet.transform.position.z));
+            line.SetPosition(0, player.myTransform.position);
+            line.SetPosition(1, Vector3.right * closet.myTransform.position.x + Vector3.up * 0 + Vector3.forward * closet.myTransform.position.z);
         }
         else if (levelManager.checkOutManager.listCheckout.Count <= 0)
         {
             player.OpenPanelTUT(3);
-            fxTUT.transform.position = new Vector3(checkOut.transform.position.x, 8f, checkOut.transform.position.z);
+            fxTUT.transform.position = Vector3.right * checkOut.myTransform.position.x + Vector3.up * 8f + Vector3.forward * checkOut.myTransform.position.z;
             fxTUT.SetActive(true);
-            line.SetPosition(0, player.transform.position);
-            line.SetPosition(1, new Vector3(checkOut.transform.position.x, 0, checkOut.transform.position.z));
+            line.SetPosition(0, player.myTransform.position);
+            line.SetPosition(1, Vector3.right * checkOut.myTransform.position.x + Vector3.up * 0 + Vector3.forward * checkOut.myTransform.position.z);
         }
         else
         {
@@ -129,14 +129,14 @@ public class TutManager : MonoBehaviour
                             if (player.objHave < 1)
                             {
                                 player.OpenPanelTUT(4);
-                                line.SetPosition(0, player.transform.position);
-                                line.SetPosition(1, new Vector3(habitat.transform.position.x, 0, habitat.transform.position.z));
+                                line.SetPosition(0, player.myTransform.position);
+                                line.SetPosition(1, Vector3.right * habitat.myTransform.position.x + Vector3.up * 0 + Vector3.forward * habitat.myTransform.position.z);
                             }
                             else
                             {
                                 player.OpenPanelTUT(1);
-                                line.SetPosition(0, player.transform.position);
-                                line.SetPosition(1, new Vector3(clothMachine.inIngredientPos.transform.position.x, 0, clothMachine.inIngredientPos.transform.position.z));
+                                line.SetPosition(0, player.myTransform.position);
+                                line.SetPosition(1, new Vector3(clothMachine.inIngredientPos.position.x, 0, clothMachine.inIngredientPos.transform.position.z));
                                 fxTUT.transform.position = new Vector3(clothMachine.inIngredientPos.transform.position.x, 8, clothMachine.inIngredientPos.transform.position.z);
                                 fxTUT.SetActive(true);
                             }
@@ -144,18 +144,18 @@ public class TutManager : MonoBehaviour
                         else
                         {
                             habitat.checkCollect.gameObject.SetActive(false);
-                            line.SetPosition(0, player.transform.position);
-                            line.SetPosition(1, new Vector3(clothMachine.inIngredientPos.transform.position.x, 0, clothMachine.inIngredientPos.transform.position.z));
-                            fxTUT.transform.position = new Vector3(clothMachine.inIngredientPos.transform.position.x, 8, clothMachine.inIngredientPos.transform.position.z);
+                            line.SetPosition(0, player.myTransform.position);
+                            line.SetPosition(1, new Vector3(clothMachine.inIngredientPos.position.x, 0, clothMachine.inIngredientPos.position.z));
+                            fxTUT.transform.position = new Vector3(clothMachine.inIngredientPos.position.x, 8, clothMachine.inIngredientPos.position.z);
                             player.OpenPanelTUT(1);
                             fxTUT.SetActive(true);
                         }
                     }
                     else
                     {
-                        line.SetPosition(0, player.transform.position);
-                        line.SetPosition(1, new Vector3(clothMachine.outIngredientPos.transform.position.x, 0, clothMachine.outIngredientPos.transform.position.z));
-                        fxTUT.transform.position = new Vector3(clothMachine.outIngredientPos.transform.position.x, 8, clothMachine.outIngredientPos.transform.position.z);
+                        line.SetPosition(0, player.myTransform.position);
+                        line.SetPosition(1, new Vector3(clothMachine.outIngredientPos.position.x, 0, clothMachine.outIngredientPos.position.z));
+                        fxTUT.transform.position = new Vector3(clothMachine.outIngredientPos.position.x, 8, clothMachine.outIngredientPos.position.z);
                         player.OpenPanelTUT(5);
                         fxTUT.SetActive(true);
                     }
@@ -166,8 +166,8 @@ public class TutManager : MonoBehaviour
                     fxTUT.SetActive(false);
                     clothMachine.checkPush.gameObject.SetActive(false);
                     clothMachine.checkCollectCloth.gameObject.SetActive(false);
-                    line.SetPosition(0, player.transform.position);
-                    line.SetPosition(1, new Vector3(closet.transform.position.x, 0, closet.transform.position.z));
+                    line.SetPosition(0, player.myTransform.position);
+                    line.SetPosition(1, new Vector3(closet.myTransform.position.x, 0, closet.myTransform.position.z));
                 }
             }
             else
@@ -185,13 +185,13 @@ public class TutManager : MonoBehaviour
                 {
                     player.OpenPanelTUT(3);
                     line.gameObject.SetActive(true);
-                    line.SetPosition(0, player.transform.position);
+                    line.SetPosition(0, player.myTransform.position);
                     line.SetPosition(1, new Vector3(checkOut.fxPos.transform.position.x, 0, checkOut.fxPos.transform.position.z));
                 }
                 else
                 {
                     player.OpenPanelTUT(6);
-                    line.SetPosition(0, player.transform.position);
+                    line.SetPosition(0, player.myTransform.position);
                     line.SetPosition(1, new Vector3(checkOut.coins[0].transform.position.x, 0, checkOut.coins[0].transform.position.z));
                     fxTUT.transform.position = fxTUT.transform.position = new Vector3(checkOut.coins[0].transform.position.x, 8f, checkOut.coins[0].transform.position.z);
                     fxTUT.SetActive(true);
@@ -214,19 +214,19 @@ public class TutManager : MonoBehaviour
             if (levelManager.machineManager.allActiveBagMachine.Count <= 0)
             {
                 player.OpenPanelTUT(7);
-                fxTUT.transform.position = new Vector3(bagMachine.transform.position.x, 8f, bagMachine.transform.position.z);
+                fxTUT.transform.position = new Vector3(bagMachine.myTransform.position.x, 8f, bagMachine.myTransform.position.z);
                 fxTUT.SetActive(true);
                 line.gameObject.SetActive(true);
-                line.SetPosition(0, player.transform.position);
-                line.SetPosition(1, new Vector3(bagMachine.transform.position.x, 0, bagMachine.transform.position.z));
+                line.SetPosition(0, player.myTransform.position);
+                line.SetPosition(1, new Vector3(bagMachine.myTransform.position.x, 0, bagMachine.myTransform.position.z));
             }
             else if (levelManager.closetManager.listBagClosets.Count <= 0)
             {
                 player.OpenPanelTUT(8);
-                fxTUT.transform.position = new Vector3(bagCloset.transform.position.x, 8f, bagCloset.transform.position.z);
+                fxTUT.transform.position = new Vector3(bagCloset.myTransform.position.x, 8f, bagCloset.myTransform.position.z);
                 fxTUT.SetActive(true);
-                line.SetPosition(0, player.transform.position);
-                line.SetPosition(1, new Vector3(bagCloset.transform.position.x, 0, bagCloset.transform.position.z));
+                line.SetPosition(0, player.myTransform.position);
+                line.SetPosition(1, new Vector3(bagCloset.myTransform.position.x, 0, bagCloset.myTransform.position.z));
             }
             else if (player.chickenBags.Count < 1)
             {
@@ -240,15 +240,15 @@ public class TutManager : MonoBehaviour
                             player.OpenPanelTUT(4);
                             fxTUT.SetActive(false);
                             habitat.checkCollect.gameObject.SetActive(true);
-                            line.SetPosition(0, player.transform.position);
-                            line.SetPosition(1, new Vector3(habitat.transform.position.x, 0, habitat.transform.position.z));
+                            line.SetPosition(0, player.myTransform.position);
+                            line.SetPosition(1, new Vector3(habitat.myTransform.position.x, 0, habitat.myTransform.position.z));
                         }
                         else
                         {
                             player.OpenPanelTUT(7);
-                            line.SetPosition(0, player.transform.position);
-                            line.SetPosition(1, new Vector3(bagMachine.inIngredientPos.transform.position.x, 0, bagMachine.inIngredientPos.transform.position.z));
-                            fxTUT.transform.position = new Vector3(bagMachine.inIngredientPos.transform.position.x, 8, bagMachine.inIngredientPos.transform.position.z);
+                            line.SetPosition(0, player.myTransform.position);
+                            line.SetPosition(1, new Vector3(bagMachine.inIngredientPos.position.x, 0, bagMachine.inIngredientPos.position.z));
+                            fxTUT.transform.position = new Vector3(bagMachine.inIngredientPos.position.x, 8, bagMachine.inIngredientPos.position.z);
                             fxTUT.SetActive(true);
                         }
                     }
@@ -256,18 +256,18 @@ public class TutManager : MonoBehaviour
                     {
                         player.OpenPanelTUT(7);
                         habitat.checkCollect.gameObject.SetActive(false);
-                        line.SetPosition(0, player.transform.position);
-                        line.SetPosition(1, new Vector3(bagMachine.inIngredientPos.transform.position.x, 0, bagMachine.inIngredientPos.transform.position.z));
-                        fxTUT.transform.position = new Vector3(bagMachine.inIngredientPos.transform.position.x, 8, bagMachine.inIngredientPos.transform.position.z);
+                        line.SetPosition(0, player.myTransform.position);
+                        line.SetPosition(1, new Vector3(bagMachine.inIngredientPos.position.x, 0, bagMachine.inIngredientPos.position.z));
+                        fxTUT.transform.position = new Vector3(bagMachine.inIngredientPos.position.x, 8, bagMachine.inIngredientPos.position.z);
                         fxTUT.SetActive(true);
                     }
                 }
                 else
                 {
                     player.OpenPanelTUT(9);
-                    line.SetPosition(0, player.transform.position);
-                    line.SetPosition(1, new Vector3(bagMachine.outIngredientPos.transform.position.x, 0, bagMachine.outIngredientPos.transform.position.z));
-                    fxTUT.transform.position = new Vector3(bagMachine.outIngredientPos.transform.position.x, 8, bagMachine.outIngredientPos.transform.position.z);
+                    line.SetPosition(0, player.myTransform.position);
+                    line.SetPosition(1, new Vector3(bagMachine.outIngredientPos.position.x, 0, bagMachine.outIngredientPos.position.z));
+                    fxTUT.transform.position = new Vector3(bagMachine.outIngredientPos.position.x, 8, bagMachine.outIngredientPos.position.z);
                     fxTUT.SetActive(true);
                 }
             }
@@ -276,8 +276,8 @@ public class TutManager : MonoBehaviour
                 player.OpenPanelTUT(8);
                 fxTUT.SetActive(false);
                 line.gameObject.SetActive(true);
-                line.SetPosition(0, player.transform.position);
-                line.SetPosition(1, new Vector3(bagCloset.transform.position.x, 0, bagCloset.transform.position.z));
+                line.SetPosition(0, player.myTransform.position);
+                line.SetPosition(1, new Vector3(bagCloset.myTransform.position.x, 0, bagCloset.myTransform.position.z));
             }
         }
         else

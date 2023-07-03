@@ -27,6 +27,7 @@ public class HireAnimal : BaseBuild, ILock
  
     public override void UnLock(bool isPushEvent = false, bool isPlayAnimUnlock = false)
     {
+        unlockFx.SetActive(true);
         Player p = Player.Instance;
         base.UnLock();
         if (!IsLock)
@@ -40,6 +41,7 @@ public class HireAnimal : BaseBuild, ILock
         p.isUnlock = true;
         if (isPlayAnimUnlock) //anim
         {
+
             p.isUnlock = false;
         }
         else
@@ -51,6 +53,10 @@ public class HireAnimal : BaseBuild, ILock
         {
            // Debug.Log("bbbb");
             habitat.SpawnAnimal(true,new Vector3(this.transform.position.x, habitat.transform.position.y, this.transform.position.z));
+            //CounterHelper.Instance.QueueAction(2f, () =>
+            //{
+            //    unlockFx.SetActive(false);
+            //});
         }
         EnventManager.TriggerEvent(EventName.StatusData_OnLoad.ToString());
         StartInGame();
@@ -73,6 +79,7 @@ public class HireAnimal : BaseBuild, ILock
      //   Debug.Log(dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis() - 1);
         if (isLock)
         {
+            unlockFx.SetActive(false);
             checkUnlock.gameObject.SetActive(true);
             //Debug.Log(CurrentCoin);
             if (CurrentCoin <= 0)
