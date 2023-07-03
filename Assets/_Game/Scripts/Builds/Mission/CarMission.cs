@@ -44,7 +44,7 @@ public class CarMission : BaseBuild
         isReadyMission = true;
         isOnMission = false;
         carWaiting = consCarWaiting;
-        checkPushCarMission.gameObject.SetActive(false);
+        checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         for (int i = 0; i < carModel.Length; i++)
         {
             carModel[i].SetActive(false);
@@ -61,7 +61,7 @@ public class CarMission : BaseBuild
         base.UnLock(isPushEvent, isPlayAnimUnlock);
         //vfx.gameObject.SetActive(true);
         IsLock = false;
-        checkPushCarMission.gameObject.SetActive(true);
+        //checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
         car.SetActive(true);
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
         //levelManager.CheckUnlockBuildID(IDUnlock, this); 
@@ -91,7 +91,7 @@ public class CarMission : BaseBuild
                         isOnMission = true;
                         checkColliPlayer.SetActive(false);
                         StartCountDown();
-                        checkPushCarMission.gameObject.SetActive(true);
+                        checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
                         if (Canvas_Home.Instance != null)
                         {
                             if (!Canvas_Home.Instance.IsShow_Btn_Oder())
@@ -291,10 +291,11 @@ public class CarMission : BaseBuild
         Canvas_Home.Instance.NotShow_Btn_Oder();
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
+       // checkPushCarMission.GetComponent<>().SetActive(true);
+        checkColliPlayer.gameObject.SetActive(true);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
             carSmoke.gameObject.SetActive(false);
-            checkPushCarMission.gameObject.SetActive(true);
             ClearMission();
             if (isWin)
             {
@@ -313,7 +314,7 @@ public class CarMission : BaseBuild
     }
     public void ClearMission()
     {
-        checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
+      //  checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         for (int i = 0; i < carModel.Length; i++)
         {
             carModel[i].SetActive(false);

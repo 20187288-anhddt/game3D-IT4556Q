@@ -14,17 +14,18 @@ public class CheckPushCarMission : MonoBehaviour
     {
         //if (carMission.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
         //    return;
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            if (player is Player)
+        if (player is Player)
                 player.canCatch = true;
+        UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
             if (!isInItDataUI)
             {
                 isInItDataUI = true;
                 carMission.InItDataMissionCurrent();
             }
-            UI_Manager.Instance.OpenUI(NameUI.Canvas_Order);
         //}
     }
     private void OnTriggerExit(Collider other)
@@ -37,10 +38,11 @@ public class CheckPushCarMission : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            int v = -1;
+        int v = -1;
             for(int i = 0;i<carMission.listMission.Keys.Count;i++)
             {
                 switch (carMission.listMission.ElementAt(i).Key)
