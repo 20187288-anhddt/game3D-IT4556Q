@@ -43,7 +43,6 @@ public class SceneAutoLoad : MonoBehaviour
                // SceneManager.LoadSceneAsync(gameObject.name, LoadSceneMode.Additive);
 
             }
-            SDK.AdsManager.Instance.UpdateAdsMediation();
             AppOpenAdLauncher.Instance.ShowAOA();
         }, timeDelayLoadMain));
         //onLoadSuccess.Invoke();
@@ -93,7 +92,8 @@ public class SceneAutoLoad : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(gameObject.name));
-       // SDK.AdsManager.Instance._ShowBannerAds();
+        SDK.AdsManager.Instance.UpdateAdsMediation();
+       
         if (disableLoaderAfterLoadScene)
             gameObject.SetActive(false);
     }

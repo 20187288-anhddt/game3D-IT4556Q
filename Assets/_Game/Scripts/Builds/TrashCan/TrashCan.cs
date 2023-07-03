@@ -63,5 +63,6 @@ public class TrashCan : MonoBehaviour
         {
             player.canCatch = false;
         }
+        t = timeStay;
     }
 }
