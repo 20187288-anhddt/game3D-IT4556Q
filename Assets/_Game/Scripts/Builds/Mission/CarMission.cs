@@ -24,6 +24,7 @@ public class CarMission : BaseBuild
     [SerializeField]
     private CheckPushCarMission checkPushCarMission;
     [SerializeField] private GameObject checkColliPlayer;
+    [SerializeField] private GameObject ColliCar;
     public Dictionary<IngredientType, int> listMission;
     public List<ClothMachine> listCurClothMachine;
     public List<BagMachine> listCurBagMachine;
@@ -85,6 +86,7 @@ public class CarMission : BaseBuild
                     //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
                     //}
                     checkColliPlayer.SetActive(true);
+                    ColliCar.SetActive(true);
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {
                         carSmoke.gameObject.SetActive(true);
@@ -295,6 +297,8 @@ public class CarMission : BaseBuild
         checkColliPlayer.gameObject.SetActive(true);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
+            ColliCar.SetActive(false);
+            checkColliPlayer.SetActive(false);
             carSmoke.gameObject.SetActive(false);
             ClearMission();
             if (isWin)
