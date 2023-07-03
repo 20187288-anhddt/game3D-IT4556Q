@@ -32,6 +32,7 @@ public class Canvas_Joystick : UI_Canvas
 
     private static float m_MaxTimeDeactiveTouch = 30;
     private float m_TimeDeactiveTouch = 0;
+    private bool isPauseMain = false;
 
     public void Awake()
     {
@@ -47,8 +48,16 @@ public class Canvas_Joystick : UI_Canvas
         base.OnInIt();
         isStopJoysick = false;
     }
+    private void OnApplicationPause(bool pause)
+    {
+        isPauseMain = pause;
+    }
     private void Update()
     {
+        if (isPauseMain)
+        {
+            return;
+        }
         if (Input.GetMouseButton(0))
         {
             m_TimeDeactiveTouch = m_MaxTimeDeactiveTouch;

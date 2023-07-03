@@ -132,4 +132,19 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     {
         gameObject.SetActive(true);
     }
+
+    public void DeactiveLookAllUI()
+    {
+        foreach(UI_Canvas uI_Canvas in canvasUI)
+        {
+            uI_Canvas.GetComponent<Canvas>().enabled = false;
+        }
+    }
+    public void ActiveLookAllUI()
+    {
+        foreach (UI_Canvas uI_Canvas in canvasUI)
+        {
+            uI_Canvas.GetComponent<Canvas>().enabled = true;
+        }
+    }
 }
