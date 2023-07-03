@@ -22,10 +22,16 @@ public class Canvas_Joystick : UI_Canvas
     [SerializeField] private Transform Trans_Touch;
     [SerializeField] private Transform Trans_BG;
     [SerializeField] private GameObject JoyStick;
-
+    [SerializeField] private Animator animTuT;
+    [SerializeField] private GameObject hand;
+    [SerializeField] private RectTransform Rect_JoyStick;
+    [SerializeField] private Vector3 Position_TuT_Mouse;
     private Vector3 Diraction = Vector3.zero;
     private Vector3 Position_Mouse;
     public bool isStopJoysick;
+
+    private static float m_MaxTimeDeactiveTouch = 30;
+    private float m_TimeDeactiveTouch = 0;
 
     public void Awake()
     {
@@ -43,6 +49,27 @@ public class Canvas_Joystick : UI_Canvas
     }
     private void Update()
     {
+        if (Input.GetMouseButton(0))
+        {
+            m_TimeDeactiveTouch = m_MaxTimeDeactiveTouch;
+            animTuT.enabled = false;
+            hand.SetActive(false);
+        }
+        else
+        {
+            if (m_TimeDeactiveTouch > 0)
+            {
+                m_TimeDeactiveTouch -= Time.deltaTime;
+            }
+            else
+            {
+                animTuT.enabled = true;
+                hand.SetActive(true);
+                Rect_JoyStick.anchoredPosition3D = Position_TuT_Mouse;
+                return;
+            }
+        }
+       
         if (isStopJoysick || EventSystem.current.currentSelectedGameObject != null)
         {
             if (EventSystem.current.currentSelectedGameObject != null)

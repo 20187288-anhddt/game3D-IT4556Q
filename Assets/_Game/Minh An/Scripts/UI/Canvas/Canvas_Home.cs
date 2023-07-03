@@ -40,14 +40,15 @@ public class Canvas_Home : UI_Canvas
         btn_Oder.onClick.AddListener(Open_UI_Oder);
         btn_Upgrade.onClick.AddListener(Open_UI_Upgrade);
         NotShow_Btn_Oder();
-        if (!DataManager.Instance.GetDataUIController().Get_IsOpenUIUpgrade())
-        {
-            NotShow_Btn_Upgrade();
-        }
-        else
-        {
-            Show_Btn_Upgrade();
-        }
+        Show_Btn_Upgrade();
+        //if (!DataManager.Instance.GetDataUIController().Get_IsOpenUIUpgrade())
+        //{
+        //    NotShow_Btn_Upgrade();
+        //}
+        //else
+        //{
+        //    Show_Btn_Upgrade();
+        //}
         if (!DataManager.Instance.GetDataUIController().Get_IsOpenCanvasHome())
         {
             Close();

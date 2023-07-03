@@ -61,7 +61,9 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate_.myTransform.SetParent(transParent);
             group_InfoUpdates.Add(group_InfoUpdate_);
         }
-        txt_Name.text = infoPirceObject.nameString/*.Replace(' ', '\n')*/;
+        string name_ = infoPirceObject.nameString.Substring(0, 1).ToUpper() + infoPirceObject.nameString.Substring(1).ToLower();
+        char.ToUpper(name_[0]);
+        txt_Name.text = name_;
         group_InfoUpdate_.myTransform.localScale = Vector3.one;
         group_InfoUpdate_.InItData(dataStatusObject, infoPirceObject);
         switch ((dataStatusObject as MachineDataStatusObject).GetBaseBuild().nameObject_This)
@@ -105,17 +107,20 @@ public class UI_LabelShow : UI_Child
             group_InfoUpdate_.myTransform.SetParent(transParent);
             group_InfoUpdates.Add(group_InfoUpdate_);
         }
-       // name = name.Replace(' ', '\n');
-        txt_Name.text = name;
+        // name = name.Replace(' ', '\n');
+        string name_ = name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
+        txt_Name.text = name_;
         group_InfoUpdate_.myTransform.localScale = Vector3.one;
         group_InfoUpdate_.InItData(scriptableObject, Level, staffType);
         switch (staffType)
         {
             case StaffType.FARMER:
                 IconThis.sprite = spr_Staff_Farmer;
+                txt_Name.text = txt_Name.text + "s";
                 break;
             case StaffType.WORKER:
                 IconThis.sprite = spr_Staff_Worker;
+                txt_Name.text = txt_Name.text + "s";
                 break;
             default:
                 IconThis.sprite = spr_Player;

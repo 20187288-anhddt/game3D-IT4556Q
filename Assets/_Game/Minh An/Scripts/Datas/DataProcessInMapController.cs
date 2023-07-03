@@ -165,6 +165,7 @@ public class DataEventProcess
     }
     public void CheckAndLoadRewardMissionComplete(EventName eventName)
     {
+        CheckInInData();
         if (eventInMapProcessCurrent == null) { LoadData(); }
         foreach(EventInMap eventInMap in eventInMapProcessCurrent.eventInMaps)
         {
@@ -270,6 +271,7 @@ public class DataApparatusProcess
     }
     public void CheckAndLoadRewardMissionComplete(EventName eventName)
     {
+        CheckInInData();
         if (apparatusProcessCurrent == null) { LoadData(); }
         if (apparatusProcessCurrent.missionProcess.isCompleteMission())
         {
@@ -293,6 +295,7 @@ public class DataApparatusProcess
     }
     public void LoadData()
     {
+      //  CheckInInData();
         if (!File.Exists(Application.persistentDataPath + "/" + GetFileName()))
         {
             FileStream file = new FileStream(Application.persistentDataPath + "/" + GetFileName(), FileMode.Create);
@@ -307,6 +310,7 @@ public class DataApparatusProcess
     }
     public ApparatusProcess GetApparatusProcess_Current()
     {
+        //CheckInInData();
         string PathResource = "Data_ScriptTable" + "\\Map " + DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap + "\\ApparatusProcess\\"
              + "Mission " + dataApparatusProcessCurrent.LevelCurrent;
         apparatusProcessCurrent = (ApparatusProcess)Resources.Load(PathResource, typeof(ApparatusProcess));
@@ -314,6 +318,7 @@ public class DataApparatusProcess
     }
     public void NextProcess()
     {
+        CheckInInData();
         dataApparatusProcessCurrent.NextProcess();
         if (GetApparatusProcess_Current() == null)
         {
@@ -339,6 +344,7 @@ public class DataApparatusProcess
     }
     public void SetDataApparatusProcessCurrent(IngredientType ingredientType, int LevelCurrent)
     {
+        CheckInInData();
         dataApparatusProcessCurrent.ingredientType = ingredientType;
         dataApparatusProcessCurrent.LevelCurrent = LevelCurrent;
         SaveData();
