@@ -2,23 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineManager : Singleton<MachineManager>
+public class MachineManager : MonoBehaviour
 {
     public List<MachineBase> allActiveMachine;
     public List<ClothMachine> allActiveClothMachine;
     public List<BagMachine> allActiveBagMachine;
+
     public List<ClothMachine> listBearClothMachineActive;
     public List<ClothMachine> listCowClothMachineActive;
     public List<ClothMachine> listSheepClothMachineActive;
     public List<ClothMachine> listChickenClothMachineActive;
+    public List<ClothMachine> listLionClothMachineActive;
+    public List<ClothMachine> listCrocClothMachineActive;
+    public List<ClothMachine> listEleClothMachineActive;
+
+    public List<ClothMachine> listZebraClothMachineActive;
     public List<BagMachine> listChickenBagMachineActive;
     public List<BagMachine> listBearBagMachineActive;
     public List<BagMachine> listCowBagMachineActive;
     public List<BagMachine> listSheepBagMachineActive;
+    public List<BagMachine> listLionBagMachineActive;
+    public List<BagMachine> listCrocBagMachineActive;
+    public List<BagMachine> listEleBagMachineActive;
+    public List<BagMachine> listZebraBagMachineActive;
+
     public List<Habitat> listSheepHabitatActive;
     public List<Habitat> listCowHabitatActive;
     public List<Habitat> listChickenHabitatActive;
     public List<Habitat> listBearHabitatActive;
+    public List<Habitat> listLionHabitatActive;
+    public List<Habitat> listCrocHabitatActive;
+    public List<Habitat> listEleHabitatActive;
+    public List<Habitat> listZebraHabitatActive;
 
     public MachineBase CheckMachineInputEmtyWithType()
     {
@@ -162,6 +177,46 @@ public class MachineManager : Singleton<MachineManager>
                     }
                 }
                 break;
+            case IngredientType.LION:
+                for (int i = 0; i < listLionClothMachineActive.Count; i++)
+                {
+                    if (listLionClothMachineActive[i].outCloths.Count > 3 || !listLionClothMachineActive[i].isHaveOutStaff)
+                    {
+                        curClothMachine = listLionClothMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.CROC:
+                for (int i = 0; i < listCrocClothMachineActive.Count; i++)
+                {
+                    if (listCrocClothMachineActive[i].outCloths.Count > 3 || !listCrocClothMachineActive[i].isHaveOutStaff)
+                    {
+                        curClothMachine = listCrocClothMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.ELE:
+                for (int i = 0; i < listEleClothMachineActive.Count; i++)
+                {
+                    if (listEleClothMachineActive[i].outCloths.Count > 3 || !listEleClothMachineActive[i].isHaveOutStaff)
+                    {
+                        curClothMachine = listEleClothMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.ZEBRA:
+                for (int i = 0; i < listZebraClothMachineActive.Count; i++)
+                {
+                    if (listZebraClothMachineActive[i].outCloths.Count > 3 || !listZebraClothMachineActive[i].isHaveOutStaff)
+                    {
+                        curClothMachine = listZebraClothMachineActive[i];
+                        break;
+                    }
+                }
+                break;
         }
         return curClothMachine;
     }
@@ -212,14 +267,60 @@ public class MachineManager : Singleton<MachineManager>
                     }
                 }
                 break;
+            case IngredientType.LION:
+                for (int i = 0; i < listLionBagMachineActive.Count; i++)
+                {
+                    if (listLionBagMachineActive[i].outCloths.Count > 3 || !listLionBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listLionBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.CROC:
+                for (int i = 0; i < listCrocBagMachineActive.Count; i++)
+                {
+                    if (listCrocBagMachineActive[i].outCloths.Count > 3 || !listCrocBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listCrocBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.ELE:
+                for (int i = 0; i < listEleBagMachineActive.Count; i++)
+                {
+                    if (listEleBagMachineActive[i].outCloths.Count > 3 || !listEleBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listEleBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
+            case IngredientType.ZEBRA:
+                for (int i = 0; i < listZebraBagMachineActive.Count; i++)
+                {
+                    if (listZebraBagMachineActive[i].outCloths.Count > 3 || !listZebraBagMachineActive[i].isHaveOutStaff)
+                    {
+                        curBagMachine = listZebraBagMachineActive[i];
+                        break;
+                    }
+                }
+                break;
         }
         return curBagMachine;
     }
     public ClothMachine GetRandomTypeClothMachine()
     {
         ClothMachine curMachine = null ;
-        int r = Random.Range(0, allActiveClothMachine.Count);
-        curMachine = allActiveClothMachine[r];
+        while(curMachine == null)
+        {
+            int r = Random.Range(0, allActiveClothMachine.Count);
+            if (allActiveClothMachine[r].levelManager.habitatManager.CheckHabitatWithTypeForCus(allActiveClothMachine[r].ingredientType))
+            {
+                curMachine = allActiveClothMachine[r];
+            }
+        }
         return curMachine;
     }
     public BagMachine GetRandomTypeBagMachine()
@@ -228,5 +329,63 @@ public class MachineManager : Singleton<MachineManager>
         int r = Random.Range(0, allActiveBagMachine.Count);
         curMachine = allActiveBagMachine[r];
         return curMachine;
+    }
+    public bool CheckAvailableBagMachineWithType(IngredientType type)
+    {
+        bool isHaveBagMachine = false;
+        if (allActiveMachine.Count <= 0 || allActiveBagMachine.Count <= 0)
+            isHaveBagMachine = false;
+        switch (type)
+        {
+            case IngredientType.SHEEP:
+                if(listSheepBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.COW:
+                if (listCowBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.CHICKEN:
+                if (listChickenBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.BEAR:
+                if (listBearBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.LION:
+                if (listLionBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.CROC:
+                if (listCrocBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.ELE:
+                if (listEleBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+            case IngredientType.ZEBRA:
+                if (listZebraBagMachineActive.Count > 0)
+                {
+                    isHaveBagMachine = true;
+                }
+                break;
+        }
+        return isHaveBagMachine;
     }
 }

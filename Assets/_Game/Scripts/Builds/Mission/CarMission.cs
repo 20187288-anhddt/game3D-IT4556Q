@@ -28,6 +28,7 @@ public class CarMission : BaseBuild
     public Dictionary<IngredientType, int> listMission;
     public List<ClothMachine> listCurClothMachine;
     public List<BagMachine> listCurBagMachine;
+    private Animator anim;
     public int SpeedUpMoney = 100;
     public override void Start()
     {
@@ -89,6 +90,7 @@ public class CarMission : BaseBuild
                     ColliCar.SetActive(true);
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {
+                        anim.Play("Open");
                         carSmoke.gameObject.SetActive(true);
                         isOnMission = true;
                         checkColliPlayer.SetActive(false);
@@ -120,7 +122,6 @@ public class CarMission : BaseBuild
             if (!isReadyMission && isOnMission)
             {
                 CheckMission();
-            
             }
         }
     }
@@ -148,6 +149,7 @@ public class CarMission : BaseBuild
             {
 
                 carModel[i].SetActive(true);
+                anim = carModel[i].GetComponent<Animator>();
             }
             else
             {
@@ -287,28 +289,23 @@ public class CarMission : BaseBuild
     }
     public void MissionEnd(bool isWin)
     {
-        Debug.Log("End");
+        anim.SetTrigger("Close");
         isOnMission = false;
+        ColliCar.SetActive(false);
         //StopCoroutine(CountDownCarWait());
         Canvas_Home.Instance.NotShow_Btn_Oder();
         checkPushCarMission.GetComponent<BoxCollider>().enabled = false;
         UI_Manager.Instance.CloseUI(NameUI.Canvas_Order);
        // checkPushCarMission.GetComponent<>().SetActive(true);
-        checkColliPlayer.gameObject.SetActive(true);
+        checkColliPlayer.gameObject.SetActive(false);
         car.transform.DOMove(startPos.position, 3f).OnComplete(() =>
         {
-            ColliCar.SetActive(false);
-            checkColliPlayer.SetActive(false);
+            //checkColliPlayer.SetActive(false);
             carSmoke.gameObject.SetActive(false);
             ClearMission();
             if (isWin)
             {
-                Debug.Log("Win");
                 AddReward();
-            }
-            else
-            {
-                Debug.Log("Fail");
             }
         });
     }

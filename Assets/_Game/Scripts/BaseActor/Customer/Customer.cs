@@ -15,6 +15,7 @@ public class Customer : BaseCustomer,IAct
     public PlaceToBuy placeToBuy;
     public PlaceToBuyBag placeToBuyBag;
     public Checkout checkOut;
+    public CheckoutPos placeCheckout;
     public bool onPlacePos;
     public bool onBagPos;
     public bool onCheckoutPos;
@@ -41,6 +42,8 @@ public class Customer : BaseCustomer,IAct
     private float delayAct;
     private bool isAct;
     public GameObject emojiPanel;
+    private float waitingTime;
+    public float consWaitingTime;
     public List<GameObject> listEmojis { get => ListEmojis; set => ListEmojis = value; }
     public override void Awake()
     {
@@ -180,6 +183,7 @@ public class Customer : BaseCustomer,IAct
         {
             //myTransform.DORotate(Vector3.zero, 0f);
             navMeshAgent.transform.LookAt(checkOut.transform.position);
+            //CountDownWatingTime();
             this.onCheckoutPos = true;
             UpdateState(IDLE_STATE);
         }
@@ -264,6 +268,7 @@ public class Customer : BaseCustomer,IAct
         mainModel.SetActive(true);
         outfitType = IngredientType.NONE;
         bagType = IngredientType.NONE;
+        waitingTime = consWaitingTime;
         for (int i = 0; i < outfitModel.Length; i++)
         {
             outfitModel[i].SetActive(false);
@@ -417,6 +422,10 @@ public class Customer : BaseCustomer,IAct
     }
     public void ChangeEmoji(int n)
     {
+        if(waitingTime <= 0)
+        {
+
+        }
         if (n == 0)
         {
             emojiPanel.SetActive(false);
@@ -451,5 +460,17 @@ public class Customer : BaseCustomer,IAct
             //    ChangeEmoji(0);
             //});
         }
+    }
+    public void CountDownWatingTime()
+    {
+        if (waitingTime < 0)
+        {
+            return;
+        }
+        CounterHelper.Instance.QueueAction(1, () =>
+        {
+            waitingTime--;
+            CountDownWatingTime();
+        }, 1);
     }
 }
