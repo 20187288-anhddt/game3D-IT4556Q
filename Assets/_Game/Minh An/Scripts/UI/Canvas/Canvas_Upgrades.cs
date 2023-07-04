@@ -71,8 +71,18 @@ public class Canvas_Upgrades : UI_Canvas
         CloseAllUI();
         UI_LabelShow uI_LabelShow = null;
         #region Load UI Level chua max
-        foreach (MachineBase machineBase in 
-            GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].machineManager.allActiveMachine)
+        LevelManager levelManager = null;
+        switch (GameManager.Instance.curLevel)
+        {
+            case 0:
+                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
+                break;
+            case 1:
+                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
+                break;
+        }
+        foreach (MachineBase machineBase in
+           levelManager.machineManager.allActiveMachine)
         {
             uI_LabelShow = null;
             if (!(machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -100,9 +110,19 @@ public class Canvas_Upgrades : UI_Canvas
             }
         }
         #endregion
-      
+
         #region Load UI level max
-        foreach (MachineBase machineBase in GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].machineManager.allActiveMachine)
+       // LevelManager levelManager = null;
+        //switch (GameManager.Instance.curLevel)
+        //{
+        //    case 0:
+        //        levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
+        //        break;
+        //    case 1:
+        //        levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
+        //        break;
+        //}
+        foreach (MachineBase machineBase in levelManager.machineManager.allActiveMachine)
         {
             uI_LabelShow = null;
             if ((machineBase.dataStatusObject as MachineDataStatusObject).isMaxLevelSpeed()
@@ -133,6 +153,16 @@ public class Canvas_Upgrades : UI_Canvas
 
     private void OpenUpdateWorkers()
     {
+        LevelManager levelManager = null;
+        switch (GameManager.Instance.curLevel)
+        {
+            case 0:
+                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_1);
+                break;
+            case 1:
+                levelManager = GameManager.Instance.GetLevelManager(NameMap.Map_2);
+                break;
+        }
         CloseAllUI();
         UI_LabelShow uI_LabelShow = null;
         #region Load Data Player
@@ -162,7 +192,8 @@ public class Canvas_Upgrades : UI_Canvas
         #endregion
         #region Load Data Staff
         Dictionary<StaffType, BaseStaff> dict_Staff = new Dictionary<StaffType, BaseStaff>();
-        foreach (BaseStaff baseStaff in GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].staffManager.listAllActiveStaffs)
+
+        foreach (BaseStaff baseStaff in levelManager.staffManager.listAllActiveStaffs)
         {
             if (!dict_Staff.ContainsKey(baseStaff.staffType))
             {

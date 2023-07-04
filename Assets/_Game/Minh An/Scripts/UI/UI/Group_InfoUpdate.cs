@@ -242,7 +242,7 @@ public class Group_InfoUpdate : UI_Child
                
                 break;
             case TypeCost.Money:
-                Debug.Log("Buy Money");
+                //Debug.Log("Buy Money");
                 DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, Value_MoneyCurent);
                 switch (typeBuff)
                 {
@@ -344,7 +344,7 @@ public class Group_InfoUpdate : UI_Child
                 }
                 break;
             case TypeCost.Money:
-                Debug.Log("Buy Money");
+               // Debug.Log("Buy Money");
                 DataManager.Instance.GetDataMoneyController().RemoveMoney(Money.TypeMoney.USD, Value_MoneyCurent);
 
                 Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
@@ -565,6 +565,7 @@ public class Group_InfoUpdate : UI_Child
         }
         InItData(dataStatusObject, infoPirceObject);
     }
+  
     private void ReLoadData_2()
     {
         if (scriptableObject_Staff_Boss as infoCapacity)

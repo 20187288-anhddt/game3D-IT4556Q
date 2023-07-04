@@ -252,6 +252,8 @@ public enum EventName {
     HireAnimal_Zebra_OnComplete,
     #endregion
     ReLoadBonusMoneyBuff,
+    Open_Canvas_Tutorial,
+    Close_Canvas_Tutorial
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

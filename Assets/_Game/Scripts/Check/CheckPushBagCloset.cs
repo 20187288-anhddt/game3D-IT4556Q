@@ -127,7 +127,7 @@ public class CheckPushBagCloset : MonoBehaviour
                         AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                     }
                     closet.SpawnOutfit();
-                    player.DelayCatch(player.timeDelayCatch);
+                    player.DelayCatch(0.1f);
                     //(player as BaseActor).ShortObj();
                 }
             }

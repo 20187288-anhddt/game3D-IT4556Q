@@ -44,5 +44,7 @@ public enum NameUI
     Canvas_Iap,
     Canvas_Customize,
     Canvas_Order,
-    Canvas_Bonus
+    Canvas_Bonus,
+    Canvas_LoadAnim,
+    Canvas_Tutorial,
 }
