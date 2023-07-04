@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Components;
 
 public class Canvas_Iap : UI_Canvas
 {
@@ -77,7 +78,9 @@ public class Canvas_Iap : UI_Canvas
     public override void OnInIt()
     {
         base.OnInIt();
-        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
+        btn_Close.onClick.AddListener(() => {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+            UI_Manager.Instance.CloseUI(nameUI); });
         //btn_BuySuperPack.onClick.AddListener(() => { BuySuperPack(); });
         //btn_BuyMoneyOffer.onClick.AddListener(() => { BuyMoneyOffer(); });
         //btn_BuySimpleOffer.onClick.AddListener(() => { BuySimpleOffer(); });

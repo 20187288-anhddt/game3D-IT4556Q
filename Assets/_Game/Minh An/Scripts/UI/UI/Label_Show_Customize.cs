@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Components;
 
 public class Label_Show_Customize : UI_Child
 {
@@ -72,13 +73,17 @@ public class Label_Show_Customize : UI_Child
                     break;
             }
             btn_This.onClick.RemoveAllListeners();
-            btn_This.onClick.AddListener(() => { Buy(infoSkinPlayer.infoBuy.typeCost); });
+            btn_This.onClick.AddListener(() => {
+                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+                Buy(infoSkinPlayer.infoBuy.typeCost); });
         }
         else
         {
             CloseAll();
             btn_This.onClick.RemoveAllListeners();
-            btn_This.onClick.AddListener(() => { SetTagetID(ID_This); EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString()); });
+            btn_This.onClick.AddListener(() => {
+                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+                SetTagetID(ID_This); EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString()); });
         }
         EnventManager.TriggerEvent(EventName.CheckTickInCustomize.ToString());
     }

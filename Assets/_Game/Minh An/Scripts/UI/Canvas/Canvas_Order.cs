@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Utilities.Components;
 public class Canvas_Order : UI_Canvas
 {
     private static Canvas_Order instane;
@@ -45,8 +45,12 @@ public class Canvas_Order : UI_Canvas
     private void InItData()
     {
         if(instane == null) { instane = this; }
-        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
-        btn_CloseAll.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
+        btn_Close.onClick.AddListener(() => {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
+        btn_CloseAll.onClick.AddListener(() => {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+            UI_Manager.Instance.CloseUI(NameUI.Canvas_Order); });
         btn_Collect.onClick.AddListener(Collect);
         btn_WatchVideo_CollectX3.onClick.AddListener(WatchVideo_CollectX3);
     }
@@ -122,7 +126,8 @@ public class Canvas_Order : UI_Canvas
     {
         if (isCompleteAllMission)
         {
-           // Debug.Log("Collect");
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+            // Debug.Log("Collect");
             DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
                  DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + MoneyCurrent);
             isCompleteAllMission = false;
@@ -140,8 +145,8 @@ public class Canvas_Order : UI_Canvas
     {
         if (isCompleteAllMission)
         {
-          //  Debug.Log("Collect WatchVideo");
-          
+            //  Debug.Log("Collect WatchVideo");
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
             SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>
             {
                 DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,

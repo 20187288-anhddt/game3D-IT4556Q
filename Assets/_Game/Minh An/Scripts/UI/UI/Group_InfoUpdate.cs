@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Utilities.Components;
 public class Group_InfoUpdate : UI_Child
 {
     public Transform myTransform;
@@ -85,7 +85,9 @@ public class Group_InfoUpdate : UI_Child
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
-                    btn_Money.onClick.AddListener(() => { Buying(TypeCost.Money); });
+                    btn_Money.onClick.AddListener(() => {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+                        Buying(TypeCost.Money); });
                     
                     imageBG_Money.sprite = spr_BG_Green;
                 }
@@ -179,7 +181,9 @@ public class Group_InfoUpdate : UI_Child
                 if (DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) >= Value_MoneyCurent)
                 {
                     btn_Money.onClick.RemoveAllListeners();
-                    btn_Money.onClick.AddListener(() => { Buying_2(TypeCost.Money); });
+                    btn_Money.onClick.AddListener(() => {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+                        Buying_2(TypeCost.Money); });
                   
                     imageBG_Money.sprite = spr_BG_Green;
                 }

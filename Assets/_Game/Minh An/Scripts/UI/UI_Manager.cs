@@ -1,6 +1,7 @@
 //using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities.Components;
 
 public class UI_Manager : GenerticSingleton<UI_Manager>
 {
@@ -22,8 +23,10 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     }
     private void Start()
     {
-        EnventManager.AddListener(EventName.OpenUIHome.ToString(), () => { OpenUI(NameUI.Canvas_Home); });
-        EnventManager.AddListener(EventName.OpenUIBonus.ToString(), () => { OpenUI(NameUI.Canvas_Bonus); });
+        EnventManager.AddListener(EventName.OpenUIHome.ToString(), () => {
+            OpenUI(NameUI.Canvas_Home); });
+        EnventManager.AddListener(EventName.OpenUIBonus.ToString(), () => {
+            OpenUI(NameUI.Canvas_Bonus); });
     }
     private void Update()
     {

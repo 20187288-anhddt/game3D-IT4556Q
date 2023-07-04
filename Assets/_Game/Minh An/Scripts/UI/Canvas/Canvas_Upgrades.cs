@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Utilities.Components;
 public class Canvas_Upgrades : UI_Canvas
 {
     [SerializeField] private Button btn_Close;
@@ -33,7 +33,9 @@ public class Canvas_Upgrades : UI_Canvas
     public override void OnInIt()
     {
         base.OnInIt();
-        btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
+        btn_Close.onClick.AddListener(() => {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
+            UI_Manager.Instance.CloseUI(nameUI); });
         btn_Worker.onClick.AddListener(ClickBtn_Worker);
         btn_Machine.onClick.AddListener(ClickBtn_Machine);
     }
@@ -45,11 +47,13 @@ public class Canvas_Upgrades : UI_Canvas
    
     private void ClickBtn_Worker()
     {
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
         OpenBtn(img_BG_Worker, img_BG_Machine, txt_Worker, txt_Machine);
         OpenUpdateWorkers();
     }
     private void ClickBtn_Machine()
     {
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[18], 1, false);
         OpenBtn(img_BG_Machine, img_BG_Worker, txt_Machine, txt_Worker);
         OpenUpdateMachine();
     }
