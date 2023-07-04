@@ -45,7 +45,7 @@ public class TutManager : MonoBehaviour
         {
             SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("checkpoint_01", "tutorial_start", 1);
         }
-        //  EnventManager.AddListener(EventName.QuitGame.ToString(), Quit_Game);
+        //EnventManager.AddListener(EventName.QuitGame.ToString(), Quit_Game);
     }
 
     // Update is called once per frame
@@ -296,6 +296,7 @@ public class TutManager : MonoBehaviour
         EnventManager.TriggerEvent(EventName.DoneAllTuT.ToString());
         SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("checkpoint_02", "tutorial_end", 1);
         SDK.AdsManager.Instance._ShowBannerAds();
+        AppOpenAdManager.Instance.ActiveAoANotShowFistOneShot();
         Dictionary<string, string> pairs_ = new Dictionary<string, string>();
         pairs_.Add("af_success", "true");
         pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());

@@ -20,7 +20,7 @@ public class GameManager : MenuManager
     public bool IsSound { get; set; }
     public bool IsVibrate { get; set; }
     public bool IsJoystick { get; set; }
-   
+
     public void Start()
     {
         LoadLevelInGame(0);
@@ -28,9 +28,9 @@ public class GameManager : MenuManager
         point_SpawnPlayer.y = Player.Instance.myTransform.position.y;
         Player.Instance.myTransform.position = point_SpawnPlayer;
         MMVibrationManager.SetHapticsActive(true);
-        AudioManager.Instance.EnableMusic(true);
-        AudioManager.Instance.EnableSFX(true);
-        AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 0, 0.5f);
+        //AudioManager.Instance.EnableMusic(IsMusic);
+        //AudioManager.Instance.EnableSFX(IsSound);
+        //AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 0, 0.25f);
         //if (IsJoystick)
         //{
         //    //Hien thi joystick
@@ -68,6 +68,7 @@ public class GameManager : MenuManager
         //AllPoolContainer.Instance.ReleaseAll();
         //BuildUnitPoolContainer.Instance.ReleaseAll();
     }
+#if UNITY_ANDROID
     public void OnApplicationFocus(bool focus)
     {
         if (!focus)
@@ -96,6 +97,7 @@ public class GameManager : MenuManager
             EnventManager.TriggerEvent(EventName.QuitGame.ToString());
         }
     }
+#endif
     public void OnApplicationQuit()
     {
         Debug.Log("Quit");

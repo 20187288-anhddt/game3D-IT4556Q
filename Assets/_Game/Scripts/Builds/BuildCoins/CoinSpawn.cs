@@ -45,8 +45,14 @@ public class CoinSpawn : MonoBehaviour
        // Player player = Player.Instance;
         //if (player != null)
         //{
+        if(checkOut.coins.Count <= 0)
+        {
+            AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
+        }
         if (!Player.Instance.canCatch || checkOut.coins.Count <= 0)
+        {
             return;
+        }
         Player.Instance.canCatch = false;
             //if(checkOut.coins.Count < 25)
             //{
@@ -57,14 +63,14 @@ public class CoinSpawn : MonoBehaviour
         checkOut.coins[checkOut.coins.Count-1].MoveToPlayerSpeed(Player.Instance);
             //}
         checkOut.coins.Remove(checkOut.coins[checkOut.coins.Count-1]);
-        if(checkOut.coins.Count > 1)
-        {
+        //if(checkOut.coins.Count > 0)
+        //{
             AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[3], 1, false);
-        }
-        else
-        {
-            AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
-        }
+        //}
+        //else
+        //{
+           
+        //}
         checkOut.coinSave--;
         DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
         Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];

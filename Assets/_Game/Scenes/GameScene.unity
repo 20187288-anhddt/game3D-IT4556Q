@@ -63922,7 +63922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1533095885
 Transform:
   m_ObjectHideFlags: 0
@@ -92217,15 +92217,15 @@ PrefabInstance:
       objectReference: {fileID: 607031188}
     - target: {fileID: 7923582628217163977, guid: 603c335ae57d02b40a91d1f3abad18db, type: 3}
       propertyPath: SpeedUpMoney
-      value: 100
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7923582628217163977, guid: 603c335ae57d02b40a91d1f3abad18db, type: 3}
       propertyPath: consCarWaiting
-      value: 600
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7923582628217163977, guid: 603c335ae57d02b40a91d1f3abad18db, type: 3}
       propertyPath: consDelayMission
-      value: 120
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8267831697860025280, guid: 603c335ae57d02b40a91d1f3abad18db, type: 3}
       propertyPath: m_RootOrder

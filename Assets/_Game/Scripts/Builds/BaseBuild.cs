@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities.Components;
 
 public class BaseBuild : MonoBehaviour 
 {
@@ -85,6 +86,7 @@ public class BaseBuild : MonoBehaviour
             //Debug.Log("Bought");
             OnBought();
         }
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[7], 1, false);
         //GameManager.Instance.CheckShowInter();
         //FirebaseManager.ins.unlock_new_build(name, GameManager.Instance.buildUnlock);
     }

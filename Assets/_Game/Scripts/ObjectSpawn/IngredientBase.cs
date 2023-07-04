@@ -63,7 +63,14 @@ public class IngredientBase : AllPool
                 if (actor is Player)
                 {
                     MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    if(this is Shit)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[14], 1, false);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    }     
                 }
 
             }).SetEase(Ease.OutCirc);
@@ -84,7 +91,14 @@ public class IngredientBase : AllPool
                 if (actor is Player)
                 {
                     MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    if (this is Shit)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[14], 1, false);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    }
                 }
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
