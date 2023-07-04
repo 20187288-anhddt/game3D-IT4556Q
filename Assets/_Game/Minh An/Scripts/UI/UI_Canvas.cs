@@ -18,7 +18,7 @@ public class UI_Canvas : MonoBehaviour
     public virtual void Close()
     {
         gameObject.SetActive(false);
-        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[19], 1, false);
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
     }
     public bool IsOpend()
     {

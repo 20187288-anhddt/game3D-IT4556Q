@@ -301,6 +301,7 @@ public class TutManager : MonoBehaviour
         pairs_.Add("af_success", "true");
         pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
         SDK.ABIAppsflyerManager.SendEvent("af_tutorial_completion", pairs_);
+        //player.coinValue += 20000;
     }
     public bool IsDoneAllTuT()
     {

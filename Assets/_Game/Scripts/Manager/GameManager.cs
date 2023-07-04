@@ -114,7 +114,7 @@ public class GameManager : MenuManager
     {
         int r = Random.Range(0, AudioCollection.Instance.musicClips.Length);
         AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[r], true, 5f, 0.5f);
-        int x = Random.Range(16, 18);
+        //int x = Random.Range(16, 18);
         //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[x], 1, true);
         CounterHelper.Instance.QueueAction(180f, () =>
          {

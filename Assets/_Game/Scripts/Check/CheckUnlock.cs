@@ -54,7 +54,10 @@ public class CheckUnlock : MonoBehaviour
             IUnlock unlock = Cache.getIUnlock(other);
             //if (unlock != null)
             //{
-                
+              if(unlock.CoinValue <= 0)
+                {
+                AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
+                }  
                 t += Time.deltaTime;
                 if (t > 0.75f)
                 {

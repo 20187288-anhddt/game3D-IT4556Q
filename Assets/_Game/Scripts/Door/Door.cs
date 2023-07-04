@@ -18,7 +18,8 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        var actor = other.GetComponent<IAct>();
+        //var actor = other.GetComponent<IAct>();
+        var actor = Cache.getIAct(other);
         //if (actor != null)
         //{
             if (!actorInDoor.Contains(actor))
@@ -34,17 +35,18 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        var actor = other.GetComponent<IAct>();
+        //var actor = other.GetComponent<IAct>();
+        var actor = Cache.getIAct(other);
         //if (actor != null)
         //{
-            if (actorInDoor.Contains(actor))
+        if (actorInDoor.Contains(actor))
             {
                 actorInDoor.Remove(actor);
             }
             if (actorInDoor.Count == 0)
             {
-                leftDoor.transform.DOLocalMoveZ(-1.318865f, 0.5f);
-                rightDoor.transform.DOLocalMoveZ(1.318865f, 0.5f);
+                leftDoor.transform.DOLocalMoveZ(0f, 0.5f);
+                rightDoor.transform.DOLocalMoveZ(0f, 0.5f);
             }
         //}
     }
