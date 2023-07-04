@@ -13,7 +13,15 @@ public class UI_Bonus_BuffMoney : UI_Bonus
         base.Awake();
         Close();
     }
+    private void Start()
+    {
+        EnventManager.AddListener(EventName.ReLoadBonusMoneyBuff.ToString(), LoadMoneyBuff);
+    }
     private void OnEnable()
+    {
+        LoadMoneyBuff();
+    }
+    private void LoadMoneyBuff()
     {
         moneyBuff = DataManager.Instance.GetData_Bonus_BuffMoney().GetMoneyBuff();
         if (moneyBuff > 1000)
@@ -39,23 +47,23 @@ public class UI_Bonus_BuffMoney : UI_Bonus
         }
 
     }
-    private void Update()
-    {
-        if (isInItTime)
-        {
-            if (timeSecond > 0)
-            {
-                timeSecond -= Time.deltaTime;
-            }
-            if (timeSecond <= 0)
-            {
-                timeSecond = 0;
-                Close();
-            }
-            LoadUI();
-        }
+    //private void Update()
+    //{
+    //    if (isInItTime)
+    //    {
+    //        if (timeSecond > 0)
+    //        {
+    //            timeSecond -= Time.deltaTime;
+    //        }
+    //        if (timeSecond <= 0)
+    //        {
+    //            timeSecond = 0;
+    //            Close();
+    //        }
+    //        LoadUI();
+    //    }
 
-    }
+    //}
     public override void Reward()
     {
         SDK.AdsManager.Instance.ShowRewardVideo("Bonus_Buff_AddMoney", () =>

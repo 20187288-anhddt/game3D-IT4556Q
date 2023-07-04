@@ -69,6 +69,7 @@ public class Data_Bonus_BuffMoney : DataBase
         level_MoneyBuff++;
         SaveData();
         GetMoneyBuff();
+        EnventManager.TriggerEvent(EventName.ReLoadBonusMoneyBuff.ToString());
         //LoadData();
     }
 }

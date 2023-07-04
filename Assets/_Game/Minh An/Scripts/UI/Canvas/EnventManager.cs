@@ -6,7 +6,7 @@ public enum EventName {
     PlayJoystick,
     StopJoyStick,
 
-
+    #region Map 1
     CowHabitat_Complete,
     CowClothMachine_Complete,
     CowCloset_Complete,
@@ -171,13 +171,87 @@ public enum EventName {
     HireStaff_5_OnBuy,
     HireStaff_4_OnComplete,
     HireStaff_5_OnComplete,
-
+    #endregion
     NextLevel_2_OnBuy,
     NextLevel_2_Complete,
     NextLevel_3_OnBuy,
     NextLevel_3_Complete,
 
-    Call_Car_Mission
+    Call_Car_Mission,
+    #region Map 2
+    CrocHabitat_OnBuy,
+    CrocHabitat_OnComplete,
+
+    EleHabitat_OnBuy,
+    EleHabitat_OnComplete,
+
+    LionHabitat_OnBuy,
+    LionHabitat_OnComplete,
+
+    ZebraHabitat_OnBuy,
+    ZebraHabitat_OnComplete,
+
+    CrocClothMachine_OnBuy,
+    CrocClothMachine_OnComplete,
+
+    EleClothMachine_OnBuy,
+    EleClothMachine_OnComplete,
+
+    LionClothMachine_OnBuy,
+    LionClothMachine_OnComplete,
+
+    ZebraClothMachine_OnBuy,
+    ZebraClothMachine_OnComplete,
+
+    CrocBagMachine_OnBuy,
+    CrocBagMachine_OnComplete,
+
+    EleBagMachine_OnBuy,
+    EleBagMachine_OnComplete,
+
+    LionBagMachine_OnBuy,
+    LionBagMachine_OnComplete,
+
+    ZebraBagMachine_OnBuy,
+    ZebraBagMachine_OnComplete,
+
+    CrocCloset_OnBuy,
+    CrocCloset_OnComplete,
+
+    EleCloset_OnBuy,
+    EleCloset_OnComplete,
+
+    LionCloset_OnBuy,
+    LionCloset_OnComplete,
+
+    ZebraCloset_OnBuy,
+    ZebraCloset_OnComplete,
+
+    CrocBagCloset_OnBuy,
+    CrocBagCloset_OnComplete,
+
+    EleBagCloset_OnBuy,
+    EleBagCloset_OnComplete,
+
+    LionBagCloset_OnBuy,
+    LionBagCloset_OnComplete,
+
+    ZebraBagCloset_OnBuy,
+    ZebraBagCloset_OnComplete,
+
+    HireAnimal_Croc_OnBuy,
+    HireAnimal_Croc_OnComplete,
+
+    HireAnimal_Ele_OnBuy,
+    HireAnimal_Ele_OnComplete,
+
+    HireAnimal_Lion_OnBuy,
+    HireAnimal_Lion_OnComplete,
+
+    HireAnimal_Zebra_OnBuy,
+    HireAnimal_Zebra_OnComplete,
+    #endregion
+    ReLoadBonusMoneyBuff,
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {
