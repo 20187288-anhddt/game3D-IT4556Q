@@ -832,6 +832,9 @@ public class RewardProcessCompleteMission
             case EventName.NextLevel_3_OnBuy:
                 OnBuy(IngredientType.NEXTLEVEL, NameObject_This.NextLevel_3);
                 break;
+            case EventName.Call_Car_Mission:
+                CarMission.Instance?.CallCar();
+                break;
         }
     }
 

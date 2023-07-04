@@ -7,6 +7,18 @@ using System.Linq;
 using Utilities.Components;
 public class CarMission : BaseBuild
 {
+    private static CarMission instance;
+    public static CarMission Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = GameObject.FindObjectOfType<CarMission>();
+            }
+            return instance;
+        }
+    }
     public bool IsLock { get => isLock; set => isLock = value; }
     public Transform startPos;
     public Transform idlePos;
@@ -69,6 +81,45 @@ public class CarMission : BaseBuild
         //levelManager.CheckUnlockBuildID(IDUnlock, this); 
         //  EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
+    public void CallCar()
+    {
+        RandomCar();
+        EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
+        //if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
+        //{
+        //    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
+        //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
+        //}
+        checkColliPlayer.SetActive(true);
+        ColliCar.SetActive(true);
+        car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
+        {
+            anim.Play("Open");
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[8], 1, false);
+            carSmoke.gameObject.SetActive(true);
+            isOnMission = true;
+            checkColliPlayer.SetActive(false);
+            StartCountDown();
+            checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
+            if (Canvas_Home.Instance != null)
+            {
+                if (!Canvas_Home.Instance.IsShow_Btn_Oder())
+                {
+                    Canvas_Home.Instance.Show_Btn_Oder(() =>
+                    {
+                        if (!checkPushCarMission.GetisInItDataUI())
+                        {
+                            //InItDataMissionCurrent();
+                            //checkPushCarMission.SetisInItDataUI(true);
+                            checkPushCarMission.OnTriggerEnter(Player.Instance.GetComponent<CharacterController>());
+                            UpdateMission();
+                        }
+                    });
+                }
+
+            }
+        });
+    }
     void Update()
     {
         if (!isLock && levelManager.machineManager.allActiveClothMachine.Count > 0 && levelManager.machineManager.allActiveBagMachine.Count > 0)
@@ -79,43 +130,7 @@ public class CarMission : BaseBuild
                 RandomMission();
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
-                    RandomCar();
-                    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
-                    //if (!(dataStatusObject as CarDataStatusObject).IsOpenOneShot())
-                    //{
-                    //    EnventManager.TriggerEvent(EventName.Camera_Follow_PosCar.ToString());
-                    //    (dataStatusObject as CarDataStatusObject).SetIsOpenOneShot(true);
-                    //}
-                    checkColliPlayer.SetActive(true);
-                    ColliCar.SetActive(true);
-                    car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
-                    {
-                        anim.Play("Open");
-                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[8], 1, false);
-                        carSmoke.gameObject.SetActive(true);
-                        isOnMission = true;
-                        checkColliPlayer.SetActive(false);
-                        StartCountDown();
-                        checkPushCarMission.GetComponent<BoxCollider>().enabled = true;
-                        if (Canvas_Home.Instance != null)
-                        {
-                            if (!Canvas_Home.Instance.IsShow_Btn_Oder())
-                            {
-                                Canvas_Home.Instance.Show_Btn_Oder(() =>
-                                {
-                                    if (!checkPushCarMission.GetisInItDataUI())
-                                    {
-                                        //InItDataMissionCurrent();
-                                        //checkPushCarMission.SetisInItDataUI(true);
-                                        checkPushCarMission.OnTriggerEnter(Player.Instance.GetComponent<CharacterController>());
-                                        UpdateMission();
-                                    }
-                                });
-                            }
-
-                        }
-                    });
-
+                    CallCar();
                 },1);
                
 

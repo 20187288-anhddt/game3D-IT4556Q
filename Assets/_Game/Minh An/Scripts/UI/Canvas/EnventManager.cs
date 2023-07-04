@@ -176,6 +176,8 @@ public enum EventName {
     NextLevel_2_Complete,
     NextLevel_3_OnBuy,
     NextLevel_3_Complete,
+
+    Call_Car_Mission
 }
 public class EnventManager : GenerticSingleton<EnventManager>
 {

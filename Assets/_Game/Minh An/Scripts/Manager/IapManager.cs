@@ -32,6 +32,7 @@ public class IapManager : GenerticSingleton<IapManager>
                 PlayerPrefs.SetInt(NameData_isBuy_NoAds, 1);
                 Canvas_Iap.Instance.BuySuperPack();
                 Canvas_Iap.Instance.LoadIap();
+                SDK.AdsManager.Instance.HideBannerAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs_ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs_.Add("af_revenue", "5.99");
@@ -44,8 +45,9 @@ public class IapManager : GenerticSingleton<IapManager>
             case "moneyoffer":
                 PlayerPrefs.SetInt(NameData_isBuy_MoneyOffer, 1);
                 PlayerPrefs.SetInt(NameData_isBuy_NoAds, 1);
-                Canvas_Iap.Instance.BuySimpleOffer();
+                Canvas_Iap.Instance.BuyMoneyOffer();
                 Canvas_Iap.Instance.LoadIap();
+                SDK.AdsManager.Instance.HideBannerAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs__ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs__.Add("af_revenue", "3.99");
@@ -57,8 +59,9 @@ public class IapManager : GenerticSingleton<IapManager>
                 break;
             case "simpleoffer":
                 PlayerPrefs.SetInt(NameData_isBuy_NoAds, 1);
-                Canvas_Iap.Instance.BuyMoneyOffer();
+                Canvas_Iap.Instance.BuySimpleOffer();
                 Canvas_Iap.Instance.LoadIap();
+                SDK.AdsManager.Instance.HideBannerAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs___ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs___.Add("af_revenue", "2.99");
@@ -68,7 +71,7 @@ public class IapManager : GenerticSingleton<IapManager>
                 SDK.ABIAppsflyerManager.SendEvent("af_purchase", pairs___);
                 break;
         }
-  
+        
     }
 
     public void OnPurChaseFailed(Product product, PurchaseFailureReason failureReason)
