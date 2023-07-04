@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Components;
+using MoreMountains.NiceVibrations;
 
 public class UI_InfoGroupSettingChild : UI_Child
 {
@@ -49,11 +51,44 @@ public class UI_InfoGroupSettingChild : UI_Child
     {
         img_BG.sprite = spr_BG_On;
         StartCoroutine(IE_AnimTouch(true, SpeedAnim));
+
+        switch (name_SettingChild)
+        {
+            case Name_SettingChild.Setting_JoyStick:
+                UI_Manager.Instance.ActiveLook_Joystick();
+                break;
+            case Name_SettingChild.Setting_Vibration:
+                MMVibrationManager.SetHapticsActive(true);
+                break;
+            case Name_SettingChild.Setting_Sound:
+                AudioManager.Instance.EnableSFX(true);
+                break;
+            case Name_SettingChild.Setting_Music:
+                AudioManager.Instance.EnableMusic(true);
+                break;
+        }
+       
     }
     public void TouchOff()
     {
         img_BG.sprite = spr_BG_Off;
         StartCoroutine(IE_AnimTouch(false, SpeedAnim));
+
+        switch (name_SettingChild)
+        {
+            case Name_SettingChild.Setting_JoyStick:
+                UI_Manager.Instance.DeactiveLook_Joystick();
+                break;
+            case Name_SettingChild.Setting_Vibration:
+                MMVibrationManager.SetHapticsActive(false);
+                break;
+            case Name_SettingChild.Setting_Sound:
+                AudioManager.Instance.EnableSFX(false);
+                break;
+            case Name_SettingChild.Setting_Music:
+                AudioManager.Instance.EnableMusic(false);
+                break;
+        }
     }
     IEnumerator IE_AnimTouch(bool isOn, float speed = 1)
     {

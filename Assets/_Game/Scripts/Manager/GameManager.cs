@@ -27,10 +27,8 @@ public class GameManager : MenuManager
         Vector3 point_SpawnPlayer = MapController.Instance.GetMiniMapController(DataManager.Instance.GetDataMap().GetMapCurrent().GetDataMapCurrent().GetLevelInMapCurrent()).GetPoint_SpwanPlayer();
         point_SpawnPlayer.y = Player.Instance.myTransform.position.y;
         Player.Instance.myTransform.position = point_SpawnPlayer;
-        MMVibrationManager.SetHapticsActive(true);
-        //AudioManager.Instance.EnableMusic(IsMusic);
-        //AudioManager.Instance.EnableSFX(IsSound);
-        //AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 0, 0.25f);
+        RandomBGMusic();
+        //AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 1f, 1f);
         //if (IsJoystick)
         //{
         //    //Hien thi joystick
@@ -68,7 +66,7 @@ public class GameManager : MenuManager
         //AllPoolContainer.Instance.ReleaseAll();
         //BuildUnitPoolContainer.Instance.ReleaseAll();
     }
-#if UNITY_ANDROID
+#if !UNITY_EDITOR
     public void OnApplicationFocus(bool focus)
     {
         if (!focus)
@@ -160,5 +158,16 @@ public class GameManager : MenuManager
             MMVibrationManager.SetHapticsActive(false);
             IsVibrate = false;
         }
+    }
+    public void RandomBGMusic()
+    {
+        int r = Random.Range(0, AudioCollection.Instance.musicClips.Length);
+        AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[r], true, 5f, 0.5f);
+        int x = Random.Range(16, 18);
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[x], 1, true);
+        CounterHelper.Instance.QueueAction(180f, () =>
+         {
+             RandomBGMusic();
+         });
     }
 }

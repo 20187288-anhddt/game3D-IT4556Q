@@ -202,6 +202,7 @@ MonoBehaviour:
         - NameObject_This: 25
           isActiveStaff: 0
       LevelMap: 0
+      LevelMapMax: 0
   mapCurrent:
     dataMapCurrent:
       LevelCurrent: 0
@@ -293,6 +294,8 @@ Transform:
   - {fileID: 5942351683882657360}
   - {fileID: 8991708362123594728}
   - {fileID: 8068599368349422902}
+  - {fileID: 4831304631472261221}
+  - {fileID: 2734333306359281056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -314,6 +317,53 @@ MonoBehaviour:
   dataMoneyController: {fileID: 2751444141086479436}
   dataCustomizeController: {fileID: 7571196996313159246}
   dataUIController: {fileID: 2248334570631547935}
+  data_Bonus_BuffMoney: {fileID: 1225095087284160702}
+--- !u!1 &5524933643474257415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4831304631472261221}
+  - component: {fileID: 1225095087284160702}
+  m_Layer: 0
+  m_Name: Data_Bonus_BuffMoney
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4831304631472261221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524933643474257415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5408763061545696402}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225095087284160702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524933643474257415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682f10b450b7e7d408e50d9628315352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyBuff: 0
+  level_MoneyBuff: 0
 --- !u!1 &5702914814168093419
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,3 +420,60 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d66c8bbe573d1445895a2fe33b6f937, type: 2}
   - {fileID: 11400000, guid: bb07f0539a9ad6148b9d1a818ffb9f3e, type: 2}
   - {fileID: 11400000, guid: c2bf1f64fb5b71e43992bef8f6aa5f3c, type: 2}
+  - {fileID: 11400000, guid: 52836e91f78bd844c836d283dec89745, type: 2}
+  - {fileID: 11400000, guid: 0addcdfebca15834691cf6d31a23056e, type: 2}
+--- !u!1 &6951984246648987336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2734333306359281056}
+  - component: {fileID: 5640021212199298770}
+  m_Layer: 0
+  m_Name: DataSettingsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2734333306359281056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951984246648987336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5408763061545696402}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5640021212199298770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951984246648987336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c464683d1580554e99368e4a8584c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataSetting:
+    dataInfoSetting:
+      dataDictInfoSettings:
+      - isOn: 1
+        name_SettingChild: 0
+      - isOn: 1
+        name_SettingChild: 1
+      - isOn: 1
+        name_SettingChild: 2
+      - isOn: 1
+        name_SettingChild: 3

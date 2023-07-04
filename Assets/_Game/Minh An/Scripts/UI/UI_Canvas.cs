@@ -5,10 +5,10 @@ using UnityEngine;
 public class UI_Canvas : MonoBehaviour
 {
     public NameUI nameUI;
-  
+    public Canvas canvasThis;
     public virtual void OnInIt()
     {
-
+        if(canvasThis == null) { canvasThis = this.GetComponent<Canvas>(); }
     }
     public virtual void Open()
     {
