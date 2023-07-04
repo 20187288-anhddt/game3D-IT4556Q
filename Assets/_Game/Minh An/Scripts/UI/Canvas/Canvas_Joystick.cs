@@ -47,7 +47,11 @@ public class Canvas_Joystick : UI_Canvas
         base.OnInIt();
         isStopJoysick = false;
     }
-  
+    private void OnApplicationPause(bool pause)
+    {
+        Trans_Touch.localPosition = Vector3.zero;
+        Diraction = Trans_Touch.transform.localPosition.normalized;
+    }
     private void Update()
     {
        

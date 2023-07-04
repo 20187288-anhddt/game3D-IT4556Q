@@ -1,7 +1,7 @@
 //using System.Collections;
 //using System.Collections.Generic;
 using UnityEngine;
-
+using Utilities.Components;
 public class UI_Canvas : MonoBehaviour
 {
     public NameUI nameUI;
@@ -13,10 +13,12 @@ public class UI_Canvas : MonoBehaviour
     public virtual void Open()
     {
         gameObject.SetActive(true);
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[20], 1, false);
     }
     public virtual void Close()
     {
         gameObject.SetActive(false);
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[19], 1, false);
     }
     public bool IsOpend()
     {

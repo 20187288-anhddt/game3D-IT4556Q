@@ -29,17 +29,7 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     {
         CheckBack();
     }
-    private void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            CloseUI(NameUI.Canvas_Joystick);
-        }
-        else
-        {
-            OpenUI(NameUI.Canvas_Joystick);
-        }
-    }
+   
     private void CheckBack()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -143,7 +133,14 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     {
         gameObject.SetActive(true);
     }
-
+    public void DeactiveLook_Joystick()
+    {
+        OpenUI(NameUI.Canvas_Joystick).canvasThis.enabled = false;
+    }
+    public void ActiveLook_Joystick()
+    {
+        OpenUI(NameUI.Canvas_Joystick).canvasThis.enabled = true;
+    }
     public void DeactiveLookAllUI()
     {
         foreach(UI_Canvas uI_Canvas in canvasUI)
