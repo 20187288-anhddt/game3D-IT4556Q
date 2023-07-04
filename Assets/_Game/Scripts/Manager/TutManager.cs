@@ -29,6 +29,7 @@ public class TutManager : MonoBehaviour
     private LevelManager levelManager;
     [SerializeField]
     private GameObject fxTUT;
+    public bool isBuildTest;
 
     void Start()
     {
@@ -302,6 +303,13 @@ public class TutManager : MonoBehaviour
         pairs_.Add("af_tutorial_id", DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap.ToString());
         SDK.ABIAppsflyerManager.SendEvent("af_tutorial_completion", pairs_);
         //player.coinValue += 20000;
+        //nho xoa khi build 
+        if (isBuildTest)
+        {
+            DataManager.Instance.GetDataMoneyController().SetMoney(Money.TypeMoney.USD,
+       DataManager.Instance.GetDataMoneyController().GetMoney(Money.TypeMoney.USD) + 999000);
+        }
+    
     }
     public bool IsDoneAllTuT()
     {

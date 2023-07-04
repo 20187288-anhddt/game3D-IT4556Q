@@ -73,6 +73,17 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
             }
         }
     }
+    public UI_Canvas GetUI(NameUI nameUI)
+    {
+        foreach (UI_Canvas UI_canvas in canvasUI)
+        {
+            if (UI_canvas.nameUI == nameUI)
+            {
+                return UI_canvas;
+            }
+        }
+        return null;
+    }
     public bool isOpenUI(NameUI nameUI)
     {
         foreach (UI_Canvas UI_canvas in canvasUI)

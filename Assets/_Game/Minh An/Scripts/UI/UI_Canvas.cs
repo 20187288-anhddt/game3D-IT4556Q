@@ -22,7 +22,7 @@ public class UI_Canvas : MonoBehaviour
     }
     public bool IsOpend()
     {
-        if (gameObject.activeInHierarchy)
+        if (gameObject.activeSelf)
         {
             return true;
         }

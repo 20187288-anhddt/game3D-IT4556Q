@@ -100,6 +100,7 @@ public class Canvas_Order : UI_Canvas
         Process_Item process_Item_ = null;
         foreach (Process_Item process_Item in process_Items)
         {
+            Debug.Log(process_Item);
             if (process_Item.IsClosed())
             {
                 process_Item.Open();
