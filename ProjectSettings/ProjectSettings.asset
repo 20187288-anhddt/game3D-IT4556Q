@@ -12,6 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
+  companyName: ABI Games Studio
   productName: Zoo Fashion
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -19,7 +20,7 @@ PlayerSettings:
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
-  m_SplashScreenAnimation: 1
+  m_SplashScreenAnimation: 0
   m_SplashScreenLogoStyle: 1
   m_SplashScreenDrawMode: 0
   m_SplashScreenBackgroundAnimationZoom: 1
@@ -38,7 +39,9 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
+  m_SplashScreenLogos:
+  - logo: {fileID: 21300000, guid: 3177b4858176cbf4e853d43124019f44, type: 3}
+    duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
@@ -133,7 +136,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 0.0.2
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -160,9 +163,9 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 22
-  AndroidTargetSdkVersion: 30
+  AndroidTargetSdkVersion: 31
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -272,7 +275,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 19d99a62e14994c4f8996d3ebe895d0e, type: 3}
+      m_Icon: {fileID: 2800000, guid: 0257888c02c6b394fa864f8569d7e37d, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -280,8 +283,8 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: 19d99a62e14994c4f8996d3ebe895d0e, type: 3}
-      - {fileID: 2800000, guid: 19d99a62e14994c4f8996d3ebe895d0e, type: 3}
+      - {fileID: 2800000, guid: 0257888c02c6b394fa864f8569d7e37d, type: 3}
+      - {fileID: 2800000, guid: 0257888c02c6b394fa864f8569d7e37d, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
@@ -312,7 +315,7 @@ PlayerSettings:
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 19d99a62e14994c4f8996d3ebe895d0e, type: 3}
+      - {fileID: 2800000, guid: 0257888c02c6b394fa864f8569d7e37d, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 1
@@ -343,7 +346,7 @@ PlayerSettings:
       m_Kind: 1
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 19d99a62e14994c4f8996d3ebe895d0e, type: 3}
+      - {fileID: 2800000, guid: 0257888c02c6b394fa864f8569d7e37d, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
@@ -648,7 +651,7 @@ PlayerSettings:
     PS5: UNITY_POST_PROCESSING_STACK_V2
     Stadia: UNITY_POST_PROCESSING_STACK_V2
     Standalone: UNITY_POST_PROCESSING_STACK_V2
-    WebGL: UNITY_POST_PROCESSING_STACK_V2
+    WebGL: UNITY_POST_PROCESSING_STACK_V2;MOREMOUNTAINS_NICEVIBRATIONS;ODIN_INSPECTOR;ODIN_INSPECTOR_3
     Windows Store Apps: UNITY_POST_PROCESSING_STACK_V2
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
     tvOS: UNITY_POST_PROCESSING_STACK_V2
@@ -747,10 +750,10 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: d0beda51-f6d9-48a3-bf97-aece2c5f4e15
+  cloudProjectId: 2ebbd641-9dbc-415d-8e3d-cdb08e5eddb6
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: ZooFashion
+  projectName: Zoo Fashion
   organizationId: leeccssangg
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

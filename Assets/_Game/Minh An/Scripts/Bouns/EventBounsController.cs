@@ -42,7 +42,10 @@ public class EventBounsController : Singleton<EventBounsController>
         if (dataBonus.Get_OnShowBouns())
         {
             m_TimeCheck += Time.deltaTime;
-            m_TimeCheck_BonusMMoney += Time.deltaTime;
+            if (infoBouns_Money_Buff.uI_Bonus.IsClosed())
+            {
+                m_TimeCheck_BonusMMoney += Time.deltaTime;
+            }
             if (isLoop)
             {
                 if (m_TimeCheck >= m_timeLoop)
