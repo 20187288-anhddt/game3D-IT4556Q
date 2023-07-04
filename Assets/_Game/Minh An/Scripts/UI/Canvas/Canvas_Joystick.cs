@@ -51,6 +51,7 @@ public class Canvas_Joystick : UI_Canvas
     {
         Trans_Touch.localPosition = Vector3.zero;
         Diraction = Trans_Touch.transform.localPosition.normalized;
+        EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
     }
     private void Update()
     {
@@ -124,6 +125,16 @@ public class Canvas_Joystick : UI_Canvas
                 Trans_Touch.transform.position = Position_Mouse;
             }
             EnventManager.TriggerEvent(EventName.PlayJoystick.ToString());
+        }
+        else if(Trans_Touch.localPosition != Vector3.zero || JoyStick.activeSelf)
+        {
+            Trans_Touch.localPosition = Vector3.zero;
+            Diraction = Trans_Touch.transform.localPosition.normalized;
+            if (JoyStick.activeSelf)
+            {
+                JoyStick.SetActive(false);
+                EnventManager.TriggerEvent(EventName.StopJoyStick.ToString());
+            }
         }
         if (Input.GetMouseButtonUp(0))
         {

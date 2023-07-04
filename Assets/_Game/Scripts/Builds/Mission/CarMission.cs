@@ -129,7 +129,8 @@ public class CarMission : BaseBuild
             if (isReadyMission && !isOnMission)
             {
                 isReadyMission = false;
-               // RandomMission();
+                // RandomMission();
+                Debug.Log("callcar" + consDelayMission);
                 CounterHelper.Instance.QueueAction(consDelayMission, () =>
                 {
                     CallCar();
