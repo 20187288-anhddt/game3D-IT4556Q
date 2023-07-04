@@ -37,7 +37,7 @@ public class NMA_IronSourceMediationController : AdsMediationController
 
         // SDK init
         Debug.Log("unity-script: IronSource.Agent.init");
-        IronSource.Agent.init(m_ApplicationKey);
+        IronSource.Agent.init(m_ApplicationKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
         string uniqueUserID = SystemInfo.deviceUniqueIdentifier;
         IronSource.Agent.setUserId(uniqueUserID);
         IronSource.Agent.setConsent(true);
@@ -132,7 +132,7 @@ public class NMA_IronSourceMediationController : AdsMediationController
         //IronSourceInterstitialEvents.onAdShowFailedEvent += InterstitialOnAdShowFailedEvent;
         //IronSourceInterstitialEvents.onAdClosedEvent += InterstitialOnAdClosedEvent;
         #endregion
-        #region
+        #region AdInfo Banner Events
         ////Add AdInfo Banner Events
         //IronSourceBannerEvents.onAdLoadedEvent += BannerOnAdLoadedEvent;
         //IronSourceBannerEvents.onAdLoadFailedEvent += BannerOnAdLoadFailedEvent;
@@ -239,6 +239,8 @@ public class NMA_IronSourceMediationController : AdsMediationController
     public override void ShowBannerAds()
     {
         base.ShowBannerAds();
+        IronSource.Agent.destroyBanner();
+        BannerAdLoadedEvent();
         IronSource.Agent.displayBanner();
         Debug.Log("Show banner");
     }
@@ -328,8 +330,8 @@ public class NMA_IronSourceMediationController : AdsMediationController
     void SdkInitializationCompletedEvent()
     {
         Debug.Log("unity-script: I got SdkInitializationCompletedEvent");
-        IronSource.Agent.init(m_ApplicationKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
-        BannerAdLoadedEvent();
+    
+        //BannerAdLoadedEvent();
     }
 
     #endregion
@@ -679,13 +681,16 @@ public class NMA_IronSourceMediationController : AdsMediationController
     void BannerAdLoadedEvent()
     {
         Debug.Log("unity-script: I got BannerAdLoadedEvent");
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        IronSourceBannerSize size = IronSourceBannerSize.BANNER;
+        size.SetAdaptive(true);
+        IronSource.Agent.loadBanner(size, IronSourceBannerPosition.BOTTOM);
 
     }
 
     void BannerAdLoadFailedEvent(IronSourceError error)
     {
         Debug.Log("unity-script: I got BannerAdLoadFailedEvent, code: " + error.getCode() + ", description : " + error.getDescription());
+        ShowBannerAds();
     }
 
     void BannerAdClickedEvent()

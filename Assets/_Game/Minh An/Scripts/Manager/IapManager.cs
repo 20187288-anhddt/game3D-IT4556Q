@@ -33,6 +33,7 @@ public class IapManager : GenerticSingleton<IapManager>
                 Canvas_Iap.Instance.BuySuperPack();
                 Canvas_Iap.Instance.LoadIap();
                 SDK.AdsManager.Instance.HideBannerAds();
+                SDK.AdsManager.Instance.ReLoadDataAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs_ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs_.Add("af_revenue", "5.99");
@@ -48,6 +49,7 @@ public class IapManager : GenerticSingleton<IapManager>
                 Canvas_Iap.Instance.BuyMoneyOffer();
                 Canvas_Iap.Instance.LoadIap();
                 SDK.AdsManager.Instance.HideBannerAds();
+                SDK.AdsManager.Instance.ReLoadDataAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs__ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs__.Add("af_revenue", "3.99");
@@ -62,6 +64,7 @@ public class IapManager : GenerticSingleton<IapManager>
                 Canvas_Iap.Instance.BuySimpleOffer();
                 Canvas_Iap.Instance.LoadIap();
                 SDK.AdsManager.Instance.HideBannerAds();
+                SDK.AdsManager.Instance.ReLoadDataAds();
 
                 System.Collections.Generic.Dictionary<string, string> pairs___ = new System.Collections.Generic.Dictionary<string, string>();
                 pairs___.Add("af_revenue", "2.99");
