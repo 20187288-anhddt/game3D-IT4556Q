@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.NiceVibrations;
+using Utilities.Components;
 public class CheckPushBagCloset : MonoBehaviour
 {
     [SerializeField]
@@ -123,7 +124,7 @@ public class CheckPushBagCloset : MonoBehaviour
                     if (player is Player)
                     {
                         MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                     }
                     closet.SpawnOutfit();
                     player.DelayCatch(player.timeDelayCatch);

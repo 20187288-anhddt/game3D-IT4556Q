@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Utilities.Components;
 using MoreMountains.NiceVibrations;
 
 public class FurBase :  IngredientBase
@@ -23,7 +24,7 @@ public class FurBase :  IngredientBase
             if (actor is Player)
             {
                 MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
             }
             //baseActor.ShortObj();
         }).SetEase(Ease.OutCirc);

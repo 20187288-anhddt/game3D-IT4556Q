@@ -28,9 +28,9 @@ public class GameManager : MenuManager
         point_SpawnPlayer.y = Player.Instance.myTransform.position.y;
         Player.Instance.myTransform.position = point_SpawnPlayer;
         MMVibrationManager.SetHapticsActive(true);
-        //AudioManager.Instance.EnableMusic(IsMusic);
-        //AudioManager.Instance.EnableSFX(IsSound);
-        //AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 0, 0.25f);
+        AudioManager.Instance.EnableMusic(true);
+        AudioManager.Instance.EnableSFX(true);
+        AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[0], true, 0, 0.5f);
         //if (IsJoystick)
         //{
         //    //Hien thi joystick
@@ -39,7 +39,7 @@ public class GameManager : MenuManager
         //{
         //    //An joystick
         //}
-        if(listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
+        if (listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
         {
             SDK.AdsManager.Instance._ShowBannerAds();
         }
@@ -86,13 +86,15 @@ public class GameManager : MenuManager
     }
     public void OnApplicationPause(bool pause)
     {
-
-        EnventManager.TriggerEvent(EventName.QuitGame.ToString());
-        if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT())
+        if (!GameManager.Instance.listLevelManagers[DataManager.Instance.GetDataMap().GetDataMap().GetData_Map().LevelMap - 1].dataLevelManager.Get_isDoneAllTUT()/* &&*/
+              /*!AppOpenAdManager.Instance.IsShowingAd()*/)
         {
             Application.Quit();
         }
-       
+        else
+        {
+            EnventManager.TriggerEvent(EventName.QuitGame.ToString());
+        }
     }
     public void OnApplicationQuit()
     {

@@ -29,6 +29,17 @@ public class UI_Manager : GenerticSingleton<UI_Manager>
     {
         CheckBack();
     }
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            CloseUI(NameUI.Canvas_Joystick);
+        }
+        else
+        {
+            OpenUI(NameUI.Canvas_Joystick);
+        }
+    }
     private void CheckBack()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

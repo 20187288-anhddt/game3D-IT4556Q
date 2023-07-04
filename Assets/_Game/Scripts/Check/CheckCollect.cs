@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities.Components;
 
 public class CheckCollect : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class CheckCollect : MonoBehaviour
     {
         if (habitat.isLock /*|| habitat.animalsIsReady.Count <= 0*/)
             return;
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
             if(player is Player)
@@ -33,7 +35,8 @@ public class CheckCollect : MonoBehaviour
     {
         if (habitat.isLock)
             return;
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         if (/*player != null && */player.objHave < player.maxCollectObj)
         {
             if (player is Staff)
@@ -66,9 +69,22 @@ public class CheckCollect : MonoBehaviour
                         return;
                     player.canCatch = false;
                     var curAnimal = habitat.animalsIsReady[value];
+                    curAnimal.CollectWool();
+                    switch (habitat.ingredientType)
+                    {
+                        case IngredientType.COW:
+                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
+                            break;
+                        case IngredientType.BEAR:
+                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[0], 1, false);
+                            break;
+                        case IngredientType.CHICKEN:
+                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
+                            break;
+                    }
                     var curIngredient = AllPoolContainer.Instance.Spawn(habitat.ingredientPrefabs, curAnimal.transform);
                     (curIngredient as IngredientBase).MoveToICollect(player);
-                    curAnimal.CollectWool();
+                   
                     player.DelayCatch(player.timeDelayCatch);
                 }
             }
@@ -76,11 +92,12 @@ public class CheckCollect : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<ICollect>();
+        //var player = other.GetComponent<ICollect>();
+        var player = Cache.getICollect(other);
         //if (player != null)
         //{
-            player.canCatch = false;
-            player.CollectDone();
+        player.canCatch = false;
+        player.CollectDone();
         //}
     }
 }

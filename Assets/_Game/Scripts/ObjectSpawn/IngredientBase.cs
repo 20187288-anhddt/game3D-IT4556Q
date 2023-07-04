@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Utilities.Components;
 using MoreMountains.NiceVibrations;
 
 public class IngredientBase : AllPool
@@ -36,7 +37,7 @@ public class IngredientBase : AllPool
                     if (actor is Player)
                     {
                         MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                     }
 
                 }).SetEase(Ease.OutCirc);
@@ -62,7 +63,7 @@ public class IngredientBase : AllPool
                 if (actor is Player)
                 {
                     MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                 }
 
             }).SetEase(Ease.OutCirc);
@@ -83,7 +84,7 @@ public class IngredientBase : AllPool
                 if (actor is Player)
                 {
                     MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                    AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
                 }
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
@@ -95,8 +96,9 @@ public class IngredientBase : AllPool
             transform.DOMove(car.transform.position, 0.25f).OnComplete(() =>
             {
                 this.transform.parent = null;
-                AllPoolContainer.Instance.Release(this);
                 MMVibrationManager.Haptic(HapticTypes.LightImpact);
+                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[5], 1, false);
+                AllPoolContainer.Instance.Release(this);
             }).SetEase(Ease.OutCirc);
         }).SetEase(Ease.OutCirc);
         //AllPoolContainer.Instance.Release(this);
