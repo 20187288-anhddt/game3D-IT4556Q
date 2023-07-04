@@ -110,61 +110,12 @@ public class GameManager : MenuManager
             //  DataManager.Instance.ClearAllData();
         }
     }
-    public void EnableJoystick(bool on)
-    {
-        if (on)
-        {
-            foreach (Image i in joystickImage)
-            {
-                i.enabled = true;
-            }
-            IsJoystick = true;
-        }
-        else
-        {
-            foreach (Image i in joystickImage)
-            {
-                i.enabled = false;
-            }
-            IsJoystick = false;
-        }
-    }
-    public void SoundSwitch(bool on)
-    {
-        if (on)
-        {
-            IsMusic = true;
-            IsSound = true;
-            AudioManager.Instance.EnableMusic(IsMusic);
-            AudioManager.Instance.EnableSFX(IsSound);
-        }
-        else
-        {
-            IsMusic = false;
-            IsSound = false;
-            AudioManager.Instance.EnableMusic(IsMusic);
-            AudioManager.Instance.EnableSFX(IsSound);
-        }
-    }
-    public void VibrationSwitch(bool on)
-    {
-        if (on)
-        {
-            MMVibrationManager.SetHapticsActive(true);
-            IsVibrate = true;
-        }
-        else
-        {
-            MMVibrationManager.SetHapticsActive(false);
-            IsVibrate = false;
-        }
-    }
     public void RandomBGMusic()
     {
         int r = Random.Range(0, AudioCollection.Instance.musicClips.Length);
         AudioManager.Instance.PlayMusic(AudioCollection.Instance.musicClips[r], true, 5f, 0.5f);
         int x = Random.Range(16, 18);
-        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[x], 1, true);
+        //AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[x], 1, true);
         CounterHelper.Instance.QueueAction(180f, () =>
          {
              RandomBGMusic();

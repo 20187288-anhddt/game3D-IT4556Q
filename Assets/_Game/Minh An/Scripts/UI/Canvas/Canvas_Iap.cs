@@ -5,18 +5,70 @@ using UnityEngine.UI;
 
 public class Canvas_Iap : UI_Canvas
 {
+    private static Canvas_Iap instance;
+    public static Canvas_Iap Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = GameObject.FindObjectOfType<Canvas_Iap>();
+            }
+            return instance;
+        }
+    }
     [SerializeField] private Button btn_Close;
     [SerializeField] private Button btn_BuySuperPack;
     [SerializeField] private Button btn_BuyMoneyOffer;
     [SerializeField] private Button btn_BuySimpleOffer;
-    private void Start()
+
+    [Header("Sprite")]
+    [SerializeField] private Image img_BuySuperPack;
+    [SerializeField] private Image img_BuyMoneyOffer;
+    [SerializeField] private Image img_BuySimpleOffer;
+    [SerializeField] Sprite spr_On;
+    [SerializeField] Sprite spr_Off;
+    //private void Start()
+    //{
+    //    //Dictionary<string, string> pairs_ = new Dictionary<string, string>();
+    //    //pairs_.Add("af_revenue", "12.97");
+    //    //pairs_.Add("af_currency", "USD");
+    //    //pairs_.Add("af_quantity", "So_luong_mat_hang_da_mua");
+    //    //pairs_.Add("af_content_id", "ten mat hang mua");
+    //    //SDK.ABIAppsflyerManager.SendEvent("af_purchase", pairs_);
+    //}
+    public void LoadIap()
     {
-        //Dictionary<string, string> pairs_ = new Dictionary<string, string>();
-        //pairs_.Add("af_revenue", "12.97");
-        //pairs_.Add("af_currency", "USD");
-        //pairs_.Add("af_quantity", "So_luong_mat_hang_da_mua");
-        //pairs_.Add("af_content_id", "ten mat hang mua");
-        //SDK.ABIAppsflyerManager.SendEvent("af_purchase", pairs_);
+        if (IapManager.Instance.isPurchase_SuperPack_Bought())
+        {
+            btn_BuySuperPack.enabled = false;
+            img_BuySuperPack.sprite = spr_Off;
+        }
+        else
+        {
+            img_BuySuperPack.sprite = spr_On;
+            btn_BuySuperPack.enabled = true;
+        }
+        if (IapManager.Instance.isPurchase_MoneyOffer_Bought())
+        {
+            btn_BuyMoneyOffer.enabled = false;
+            img_BuyMoneyOffer.sprite = spr_Off;
+        }
+        else
+        {
+            img_BuyMoneyOffer.sprite = spr_On;
+            btn_BuyMoneyOffer.enabled = true;
+        }
+        if (IapManager.Instance.isPurchase_SimpleOffer_Bought())
+        {
+            btn_BuySimpleOffer.enabled = false;
+            img_BuySimpleOffer.sprite = spr_Off;
+        }
+        else
+        {
+            img_BuySimpleOffer.sprite = spr_On;
+            btn_BuySimpleOffer.enabled = true;
+        }
     }
     private void Awake()
     {
@@ -26,9 +78,10 @@ public class Canvas_Iap : UI_Canvas
     {
         base.OnInIt();
         btn_Close.onClick.AddListener(() => { UI_Manager.Instance.CloseUI(nameUI); });
-        btn_BuySuperPack.onClick.AddListener(() => { BuySuperPack(); });
-        btn_BuyMoneyOffer.onClick.AddListener(() => { BuyMoneyOffer(); });
-        btn_BuySimpleOffer.onClick.AddListener(() => { BuySimpleOffer(); });
+        //btn_BuySuperPack.onClick.AddListener(() => { BuySuperPack(); });
+        //btn_BuyMoneyOffer.onClick.AddListener(() => { BuyMoneyOffer(); });
+        //btn_BuySimpleOffer.onClick.AddListener(() => { BuySimpleOffer(); });
+        LoadIap();
     }
     public override void Open()
     {
@@ -51,6 +104,7 @@ public class Canvas_Iap : UI_Canvas
         parameters[1] = new Firebase.Analytics.Parameter("value", 20000);
         parameters[2] = new Firebase.Analytics.Parameter("source", "Iap_SuperPack");
         SDK.ABIFirebaseManager.Instance.LogFirebaseEvent("earn_virtual_currency", parameters);
+
 
     }
     public void BuyMoneyOffer()

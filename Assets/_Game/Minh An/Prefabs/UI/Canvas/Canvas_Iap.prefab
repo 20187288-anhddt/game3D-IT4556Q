@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 4748907354226740777}
   - component: {fileID: 8960323626537128109}
   - component: {fileID: 8636088719894645936}
+  - component: {fileID: 5355054654743279921}
   m_Layer: 0
   m_Name: Btn_Money
   m_TagString: Untagged
@@ -269,6 +270,54 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5355054654743279921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714561721735351680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: simpleoffer
+  buttonType: 0
+  consumePurchase: 0
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  priceText: {fileID: 0}
 --- !u!1 &779935066865219013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,7 +1575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7693230489595928160}
   m_Layer: 0
-  m_Name: Label Show (1)
+  m_Name: Label Show_MoneyOffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2131,7 +2180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7356685399708933704}
   m_Layer: 0
-  m_Name: Label Show (2)
+  m_Name: Label Show_SimpleOffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2288,6 +2337,7 @@ GameObject:
   - component: {fileID: 3881099993384536634}
   - component: {fileID: 5751612682022811570}
   - component: {fileID: 4717047567822087104}
+  - component: {fileID: 9065463093089053737}
   m_Layer: 0
   m_Name: Btn_Money
   m_TagString: Untagged
@@ -2399,6 +2449,54 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9065463093089053737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3400678747915311394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: simpleoffer
+  buttonType: 0
+  consumePurchase: 0
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  priceText: {fileID: 0}
 --- !u!1 &3455490423487561807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8253721572932770234}
   m_Layer: 0
-  m_Name: Label Show
+  m_Name: Label Show_SuperPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2764,10 +2862,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameUI: 5
+  canvasThis: {fileID: 0}
   btn_Close: {fileID: 8609665764660078923}
   btn_BuySuperPack: {fileID: 4717047567822087104}
   btn_BuyMoneyOffer: {fileID: 2057043882061599310}
   btn_BuySimpleOffer: {fileID: 8636088719894645936}
+  img_BuySuperPack: {fileID: 6425950741889647177}
+  img_BuyMoneyOffer: {fileID: 5499296736094378373}
+  img_BuySimpleOffer: {fileID: 1145027181188162037}
+  spr_On: {fileID: 21300000, guid: 565bc057d45cdb64e9f38cad711fc8e3, type: 3}
+  spr_Off: {fileID: 21300000, guid: 722512b2a3f15ee489ab644b3e2db0a3, type: 3}
 --- !u!1 &3792719671893664350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,6 +3571,7 @@ GameObject:
   - component: {fileID: 4165002780137028229}
   - component: {fileID: 4734091770713170534}
   - component: {fileID: 2057043882061599310}
+  - component: {fileID: 124275024499311617}
   m_Layer: 0
   m_Name: Btn_Money
   m_TagString: Untagged
@@ -3578,6 +3683,54 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &124275024499311617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103603803413997729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productId: simpleoffer
+  buttonType: 0
+  consumePurchase: 0
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  priceText: {fileID: 0}
 --- !u!1 &5118109604302611375
 GameObject:
   m_ObjectHideFlags: 0
