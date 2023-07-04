@@ -335,6 +335,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 576709853282486223, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: IsCheatAds
       value: 0
@@ -346,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_BannerAdsConfig.adsMediations.Array.data[0]
       value: 
-      objectReference: {fileID: 2082046844}
+      objectReference: {fileID: 1725110314}
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_BannerAdsConfig.adsMediations.Array.data[1]
       value: 
@@ -362,7 +366,7 @@ PrefabInstance:
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_RewardVideoAdsConfig.adsMediations.Array.data[0]
       value: 
-      objectReference: {fileID: 2082046844}
+      objectReference: {fileID: 1725110314}
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_RewardVideoAdsConfig.adsMediations.Array.data[1]
       value: 
@@ -370,7 +374,7 @@ PrefabInstance:
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_InterstitialAdsConfig.adsMediations.Array.data[0]
       value: 
-      objectReference: {fileID: 2082046844}
+      objectReference: {fileID: 1725110314}
     - target: {fileID: 6685391519484111099, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
       propertyPath: m_InterstitialAdsConfig.adsMediations.Array.data[1]
       value: 
@@ -439,6 +443,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8929703242961252456, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
   m_PrefabInstance: {fileID: 1649701247}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1649701249 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6685391519484111092, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
+  m_PrefabInstance: {fileID: 1649701247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1725110312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1725110313}
+  - component: {fileID: 1725110314}
+  m_Layer: 0
+  m_Name: NMA_IronSourceMediationController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1725110313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725110312}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1649701249}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1725110314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725110312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bfceab8c98192418b1a740c11491e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsActive: 1
+  IsInited: 0
+  Android_Key: 178cac815
+  IOS_Key: 
 --- !u!114 &1736698571 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3744565625552255737, guid: 72fec712b86322e4a86060c37a805d29, type: 3}
