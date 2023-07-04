@@ -70,21 +70,23 @@ public class CheckCollect : MonoBehaviour
                     player.canCatch = false;
                     var curAnimal = habitat.animalsIsReady[value];
                     curAnimal.CollectWool();
-                    switch (habitat.ingredientType)
+                    if(player is Player)
                     {
-                        case IngredientType.COW:
-                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
-                            break;
-                        case IngredientType.BEAR:
-                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[0], 1, false);
-                            break;
-                        case IngredientType.CHICKEN:
-                            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
-                            break;
+                        switch (habitat.ingredientType)
+                        {
+                            case IngredientType.COW:
+                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[2], 1, false);
+                                break;
+                            case IngredientType.BEAR:
+                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[0], 1, false);
+                                break;
+                            case IngredientType.CHICKEN:
+                                AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[1], 1, false);
+                                break;
+                        }
                     }
                     var curIngredient = AllPoolContainer.Instance.Spawn(habitat.ingredientPrefabs, curAnimal.transform);
                     (curIngredient as IngredientBase).MoveToICollect(player);
-                   
                     player.DelayCatch(player.timeDelayCatch);
                 }
             }

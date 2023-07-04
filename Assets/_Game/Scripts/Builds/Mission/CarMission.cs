@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using System.Linq;
-
+using Utilities.Components;
 public class CarMission : BaseBuild
 {
     public bool IsLock { get => isLock; set => isLock = value; }
@@ -91,6 +91,7 @@ public class CarMission : BaseBuild
                     car.transform.DOMove(idlePos.position, 3f).OnComplete(() =>
                     {
                         anim.Play("Open");
+                        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[8], 1, false);
                         carSmoke.gameObject.SetActive(true);
                         isOnMission = true;
                         checkColliPlayer.SetActive(false);
@@ -290,6 +291,7 @@ public class CarMission : BaseBuild
     public void MissionEnd(bool isWin)
     {
         anim.SetTrigger("Close");
+        AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[9], 1, false);
         isOnMission = false;
         ColliCar.SetActive(false);
         //StopCoroutine(CountDownCarWait());

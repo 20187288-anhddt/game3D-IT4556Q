@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using Utilities.Components;
 public class Checkout : BuildCoins,ILock
 {
     public List<GroupCustomer> listGrCusCheckout;
     public List<Customer> listCusCheckout;
-    public Transform[] listCheckoutPos;
+    public List<CheckoutPos> listCheckOutPos;
+    public List<CheckoutPos> listEmtyCheckOutPos;
     [SerializeField]
     public CoinSpawn coinSpawn;
     [SerializeField]
@@ -48,6 +49,12 @@ public class Checkout : BuildCoins,ILock
             dataStatusObject.GetStatus_All_Level_Object().GetStatusObject_Current().GetLevelThis(), ingredientType).infoBuys[0].value;
         isHaveStaff = false;
         isCheckout = false;
+        foreach (CheckoutPos p in listCheckOutPos)
+        {
+            p.SetCheckOut(this);
+            p.StartInGame();
+            //p.gameObject.SetActive(false);
+        }
         delayTime = consDelayCheckout;
         listGrCusCheckout.Clear();
         listCusCheckout.Clear();
@@ -114,6 +121,11 @@ public class Checkout : BuildCoins,ILock
                     unlockModel.transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 10, 0, false).OnComplete(() =>
                     {
                         unlockFx.SetActive(false);
+                        foreach (CheckoutPos place in listCheckOutPos)
+                        {
+                            place.gameObject.SetActive(true);
+
+                        }
                         if (isHired)
                         {
                             GetComponent<BoxCollider>().enabled = false;
@@ -142,28 +154,8 @@ public class Checkout : BuildCoins,ILock
                 }); ;
             });
         }
-        //else
-        //{
-        //    p.isUnlock = false;
-        //    if (isHired)
-        //    {
-        //        GetComponent<BoxCollider>().enabled = false;
-        //        staffModel.SetActive(true);
-        //        isHaveStaff = true;
-        //    }
-        //    else
-        //    {
-        //        GetComponent<BoxCollider>().enabled = true;
-        //        staffModel.SetActive(false);
-        //    }
-        //}
         checkUnlock.gameObject.SetActive(false);
         coinSpawn.gameObject.SetActive(true);
-      
-        //checkPush.gameObject.SetActive(true);
-        //GetComponent<BoxCollider>().enabled = true;
-
-
         switch (nameObject_This)
         {
             case NameObject_This.CheckOutTable:
@@ -200,69 +192,51 @@ public class Checkout : BuildCoins,ILock
             }
         }
     }
-    public void AddGrCus(GroupCustomer grCustomer)
+    public void GetEmtyPlaceNum(int n)
     {
-        if (!listGrCusCheckout.Contains(grCustomer))
+        listEmtyCheckOutPos.Clear();
+        for (int i = 0; i < listCheckOutPos.Count; i++)
         {
-            listGrCusCheckout.Add(grCustomer);
-            Customer curLeader = grCustomer.leader;
-            listCusCheckout.Add(curLeader);
-            curLeader.checkOut = this;
-            curLeader.transCheckOut = listCheckoutPos[listCusCheckout.Count - 1].position;
-            curLeader.transExit = transExit.position;
-            curLeader.UpdateState(BaseCustomer.MOVE_CHECKOUT_STATE);
-            for (int i = 0; i < grCustomer.teammates.Count; i++)
+            if (!listCheckOutPos[i].isHaveCus)
             {
-                Customer curCus = grCustomer.teammates[i];
-                listCusCheckout.Add(curCus);
-                curCus.checkOut = this;
-                curCus.transCheckOut = listCheckoutPos[listCusCheckout.Count - 1].position;
-                curCus.transExit = transExit.position;
-                curCus.UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
+                if (!listEmtyCheckOutPos.Contains(listCheckOutPos[i]))
+                {
+                    listEmtyCheckOutPos.Add(listCheckOutPos[i]);
+                }
             }
-        }  
+        }
+        if (listEmtyCheckOutPos.Count < n)
+        {
+            listEmtyCheckOutPos.Clear();
+        }
     }
     public void CheckStatus()
     {
         if(listGrCusCheckout.Count > 0 && isHaveStaff && !isCheckout)
         {
-            //for(int i = 0; i < listGrCusCheckout.Count; i++)
-            //{
-            //    if (listGrCusCheckout[i].CheckonCheckoutPos())
-            //    {
-            //        isCheckout = true;
-            //        staffModel.GetComponent<Animator>().Play("Wave");
-            //        GroupCustomer curGr = listGrCusCheckout[i];
-            //        listGrCusCheckout.Remove(curGr);
-            //        curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
-            //        curGr.leader.isExit = true;
-            //        listCusCheckout.Remove(curGr.leader);
-            //        for (int j = 0; j < curGr.teammates.Count; j++)
-            //        {
-            //            curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
-            //            listCusCheckout.Remove(curGr.teammates[j]);
-            //        }
-            //        SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
-            //                curGr.leader.transform);
-            //        for (int x = 0; x < curGr.listCus.Count; x++)
-            //        {
-            //            levelManager.customerManager.customerList.Remove(curGr.listCus[x]);
-            //        }
-            //    }
-            //}
             if (listGrCusCheckout[0].CheckonCheckoutPos())
             {
                 isCheckout = true;
                 staffModel.GetComponent<Animator>().Play("Wave");
                 GroupCustomer curGr = listGrCusCheckout[0];
                 listGrCusCheckout.Remove(curGr);
-                curGr.leader.UpdateState(BaseCustomer.EXIT_STATE);
-                curGr.leader.isExit = true;
-                listCusCheckout.Remove(curGr.leader);
-                for (int j = 0; j < curGr.teammates.Count; j++)
+                for (int i = 0; i < curGr.listCus.Count; i++)
                 {
-                    curGr.teammates[j].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
-                    listCusCheckout.Remove(curGr.teammates[j]);
+                    curGr.listCus[i].placeCheckout.isHaveCus = false;
+                    curGr.listCus[i].placeCheckout.readyGo = false;
+                    curGr.listCus[i].placeCheckout.cusMoving = false;
+                    curGr.listCus[i].onCheckoutPos = false;
+                    listCusCheckout.Remove(curGr.listCus[i]);
+                    curGr.listCus[i].isExit = true;
+                    if (curGr.listCus[i].isLeader)
+                    {
+                        
+                        curGr.listCus[i].UpdateState(BaseCustomer.EXIT_STATE);
+                    }
+                    else
+                    {
+                        curGr.listCus[i].UpdateState(BaseCustomer.FOLLOW_LEADER_STATE);
+                    }
                 }
                 SpawnMoney(false, curGr.grNum, curGr.typeOutfit, curGr.typeBag,
                         curGr.leader.transform);
@@ -270,6 +244,7 @@ public class Checkout : BuildCoins,ILock
                 {
                     levelManager.customerManager.customerList.Remove(curGr.listCus[x]);
                 }
+                //levelManager.checkOutManager.grCheckoutCount++;
             }
         }
         if (isCheckout)
@@ -370,37 +345,10 @@ public class Checkout : BuildCoins,ILock
                 });
             }
         }
-        //TODO
-        //StartCoroutine(Spawn(timeDelay, () =>
-        //{
-        //    indexMoney += n*2;
-        //    if (indexMoney > maxMoneyPrefabs)
-        //    {
-        //       indexMoney = maxMoneyPrefabs;
-        //    }
-        //    if (coins.Count <= 40)
-        //    {
-        //        for (int i = 0; i < 2; i++)
-        //        {
-        //            var g = AllPoolContainer.Instance.Spawn(coinPrefab, cusPos.position, Quaternion.identity);
-        //            Vector3 cur = coinSpawn.SpawnObjectOnComplete(coins.Count);
-        //            g.transform.DOLocalJump(cur, 0.75f, 1, 0.25f).OnComplete(() =>
-        //            {
-        //                float r = UnityEngine.Random.Range(-5, 5);
-        //                g.transform.DORotate(new Vector3(0, r, 0), 0f);
-        //                coins.Add(g as Coin);
-        //            });
-        //        }
-        //        //var g = AllPoolContainer.Instance.Spawn(coinPrefab, cusPos.position, Quaternion.identity);
-        //        //Vector3 cur = coinSpawn.SpawnObjectOnComplete(coins.Count);
-        //        //g.transform.DOLocalJump(cur, 2f, 1, 0.25f).OnComplete(() =>
-        //        //{
-        //        //    float r = UnityEngine.Random.Range(-5, 5);
-        //        //    g.transform.DORotate(new Vector3(0, r, 0), 0f);
-        //        //    coins.Add(g as Coin);
-        //        //});
-        //    }
-        //}));
+        if (!isHired)
+        {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[4], 1, false);
+        }
     }
     IEnumerator Spawn(float time, Action spawnMoney)
     {

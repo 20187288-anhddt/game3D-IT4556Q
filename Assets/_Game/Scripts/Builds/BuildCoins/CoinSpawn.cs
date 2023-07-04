@@ -45,21 +45,28 @@ public class CoinSpawn : MonoBehaviour
        // Player player = Player.Instance;
         //if (player != null)
         //{
-            if (!Player.Instance.canCatch || checkOut.coins.Count <= 0)
-                return;
-            Player.Instance.canCatch = false;
+        if (!Player.Instance.canCatch || checkOut.coins.Count <= 0)
+            return;
+        Player.Instance.canCatch = false;
             //if(checkOut.coins.Count < 25)
             //{
             //    checkOut.coins[0].MoveToPlayerSpeed(player,0.1f);
             //}
             //else
             //{
-                checkOut.coins[checkOut.coins.Count-1].MoveToPlayerSpeed(Player.Instance);
+        checkOut.coins[checkOut.coins.Count-1].MoveToPlayerSpeed(Player.Instance);
             //}
-            checkOut.coins.Remove(checkOut.coins[checkOut.coins.Count-1]);
-            checkOut.coinSave--;
-            DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
-
+        checkOut.coins.Remove(checkOut.coins[checkOut.coins.Count-1]);
+        if(checkOut.coins.Count > 1)
+        {
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[3], 1, false);
+        }
+        else
+        {
+            AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
+        }
+        checkOut.coinSave--;
+        DataManager.Instance.GetDataMoneyController().AddMoney(Money.TypeMoney.USD, 10);
         Firebase.Analytics.Parameter[] parameters = new Firebase.Analytics.Parameter[3];
         parameters[0] = new Firebase.Analytics.Parameter("virtual_currency_name", "Money");
         parameters[1] = new Firebase.Analytics.Parameter("value", 10);
@@ -77,5 +84,8 @@ public class CoinSpawn : MonoBehaviour
         Player.Instance.DelayCatch(0.01f);
         //}
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
+    }
 }

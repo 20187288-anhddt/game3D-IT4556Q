@@ -10905,7 +10905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &258201760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72946,7 +72946,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5472753466279169357, guid: 283369e952483094d86b50941f5f6bfa, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 4194263
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5472753466826477490, guid: 283369e952483094d86b50941f5f6bfa, type: 3}
       propertyPath: m_Follow

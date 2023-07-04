@@ -6,6 +6,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using MoreMountains.NiceVibrations;
+using Utilities.Components;
 
 public class CheckUnlock : MonoBehaviour
 {
@@ -135,7 +136,7 @@ public class CheckUnlock : MonoBehaviour
         //IUnlock unlock = Cache.getIUnlock(other);
         //if (unlock != null)
         //{
-
+        AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
         //if (isUnlockAds)
         //{
         //    //bound[1].DOKill();
@@ -228,11 +229,13 @@ public class CheckUnlock : MonoBehaviour
             Player player = Player.Instance;
             AllPool c = AllPoolContainer.Instance.Spawn(coinPrefab, player.transform.position + Vector3.up * 0.5f);
             (c as Coin).MoveToBuildLock(this.transform.position, 0.1f);
+            AudioManager.Instance.PlaySFX(AudioCollection.Instance.sfxClips[3], 1, false);
             MMVibrationManager.Haptic(HapticTypes.LightImpact);
             UpdateUI();
             if (normal.CurrentCoin <= 0)
             {
                 normal.UnLock(true, true);
+                AudioManager.Instance.StopSFX(AudioCollection.Instance.sfxClips[3]);
                 //effect.DOPause();
             }
 
