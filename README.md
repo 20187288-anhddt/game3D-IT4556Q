@@ -15,7 +15,7 @@ Công nghệ : C#, Unity
 Để tạo và phát triển một ứng dụng trò chơi, cần có nhiều công cụ và công nghệ khác nhau. Những công cụ này được sử dụng để chỉnh sửa mã, quản lý các cảnh trong trò chơi, sắp xếp mã nguồn của trò chơi và cung cấp các tính năng bổ sung. Bảng dưới đây liệt kê tất cả các thư viện và công cụ đã được sử dụng trong suốt quá trình phát triển :
 
 | Purpose | Tools and libraries | URL |
-| :—– | :———- | :————– |
+| :—–--------------------------------------: | :———--------------: | :---------------------------------------------------------------------------------------: |
 | Programming | Visual Studio 2019 | https://visualstudio.microsoft.com/ |
 | Prototyping game | Unity 2021.3.8f1 | https://unity.com/ |
 | Creating and managing animation sequences | Dotween V1.2.632 | http://dotween.demigiant.com/ |
